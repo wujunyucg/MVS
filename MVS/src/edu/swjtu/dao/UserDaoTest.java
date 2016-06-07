@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import edu.swjtu.impl.UserDaoImpl;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
 
@@ -22,7 +23,7 @@ public class UserDaoTest {
 		user.setNumber("1");
 		user.setPassword("1");
 		
-		User u = new UserDao().login(user, new DBUtil().getCon());
+		User u = new UserDaoImpl().login(user, new DBUtil().getCon());
 		if(u!=null){
 			System.out.println("yes");
 		}
@@ -35,7 +36,7 @@ public class UserDaoTest {
 		user.setNumber("1");
 		user.setPassword("1");
 		
-		int u = new UserDao().addUser(user, new DBUtil().getCon());
+		int u = new UserDaoImpl().addUser(user, new DBUtil().getCon());
 		System.out.println(u);//1
 	}
 }
