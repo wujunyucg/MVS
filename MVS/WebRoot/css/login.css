@@ -3,8 +3,8 @@
 body{
   /*background-image:url("../images/login-bg.jpg") ;
   background-size:cover;*/
-  background-color:#fff;
-  font-family:'Open Sans',sans-serif;
+  /*background-color:#fff;
+  /*font-family:'Open Sans',sans-serif;*/
 }
 
 #login{
@@ -26,7 +26,7 @@ body{
 }
 
 form{
-  background:#f0f0f0;
+  background:#ffffff;
   padding:6% 4%;
 }
 

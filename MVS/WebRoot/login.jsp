@@ -13,15 +13,11 @@
 
 <title>Login</title>
 
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/login.css" />
 <script src='scripts/jquery.js'></script>
+	<script src='scripts/bootstrap.min.js'></script>
 <script type="text/javascript">
 	//支持Enter键登录
 	document.onkeydown = function(e) {
@@ -77,7 +73,7 @@
 <body>
 	<div id="login">
 		<h1>厂车管理后台</h1>
-		<form id="form_id" action="servlet/LoginServlet" method="POST">
+		<form id="form_id">
 			<input id="name" name="username" type="text" placeholder="用户名" /> <input
 				name="password" id="pass" type="password" placeholder="密码" /> <input
 				id="submit_btn" type="submit" value="登    录" />
@@ -99,7 +95,5 @@
 		</div>
 	</div>
 
-	<script src='scripts/jquery.js'></script>
-	<script src='scripts/bootstrap.min.js'></script>
 </body>
 </html>
