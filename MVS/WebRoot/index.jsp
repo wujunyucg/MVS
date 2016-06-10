@@ -20,7 +20,7 @@
 
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
-
+<link rel="stylesheet" type="text/css" href="css/index.css">
 
 </head>
 
@@ -61,6 +61,7 @@
 		</div>
 	</nav>
 	<!-- 导航栏结束 -->
+	<!-- 
 		<div id="left_menu" class="" style="margin-top:60px;">
 			<div class="row">
 				<div class="col-sm-3 col-md-2 sidebar ">
@@ -109,9 +110,45 @@
 				</div>
 			</div>
 		</div>
-	<div class="" style="margin-top:60px;width:100%;height:100%;">
-		<div id="main_page" class="">main page</div>
+	-->
+	<div class="main-body">
+		<div class="left-menu">
+			<div class="container">
+
+				<ul>
+					<li class="dropdown1"><a href="#" data-toggle="dropdown1">First
+							Menu <i class="icon-arrow"></i>
+					</a>
+						<ul class="dropdown1-menu">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Services</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul></li>
+					<li class="dropdown1"><a href="#" data-toggle="dropdown1">Second
+							Menu <i class="icon-arrow"></i>
+					</a>
+						<ul class="dropdown1-menu">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Services</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul></li>
+					<li class="dropdown1"><a href="#" data-toggle="dropdown1">Third
+							Menu <i class="icon-arrow"></i>
+					</a>
+						<ul class="dropdown1-menu">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Services</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+		<div id="main_page" class="main-page">main page</div>
 	</div>
+
 	<!-- 模态框 -->
 	<div id="load_modal" class="modal fade" tabindex="-1" role="dialog"
 		aria-labelledby="mySmallModalLabel">
@@ -125,6 +162,7 @@
 	<script type="text/javascript">
 		$(function() {
 
+			/*
 			$("#control_left_menu").click(function() {
 				//$("#left_menu").collapse('toggle');
 				$("#left_menu").toggle();
@@ -145,20 +183,57 @@
 							//alert("yes");
 							$("#load_modal").modal('hide');
 							$("#left_menu").hide();
-							$("#main_page").load("login.jsp");
+							$("#main_page").load("user.jsp");
 						},
 						error : function() {
 							alert("no")
-							$("#main_page").load("login.jsp");
+							$("#main_page").load("user.jsp");
 						}
 					});
 				});
+			});*/
+			
+			/*隐藏左侧菜单*/
+			$("#control_left_menu").click(function() {
+				//$("#left_menu").collapse('toggle');
+				$(".left-menu").toggle();
 			});
 		});
 
-		function load() {
+		
+		
 
-		}
+		/*下面是下拉菜单的响应事件*/
+		var dropdown = document.querySelectorAll('.dropdown1');
+		var dropdownArray = Array.prototype.slice.call(dropdown, 0);
+		dropdownArray
+				.forEach(function(el) {
+					var button = el.querySelector('a[data-toggle="dropdown1"]'), menu = el
+							.querySelector('.dropdown1-menu'), arrow = button
+							.querySelector('i.icon-arrow');
+
+					button.onclick = function(event) {
+						if (!menu.hasClass('show')) {
+							menu.classList.add('show');
+							menu.classList.remove('hide');
+							arrow.classList.add('open');
+							arrow.classList.remove('close');
+							event.preventDefault();
+						} else {
+							menu.classList.remove('show');
+							menu.classList.add('hide');
+							arrow.classList.remove('open');
+							arrow.classList.add('close');
+							event.preventDefault();
+						}
+					};
+				})
+
+		Element.prototype.hasClass = function(className) {
+			return this.className
+					&& new RegExp("(^|\\s)" + className + "(\\s|$)")
+							.test(this.className);
+		};
 	</script>
 </body>
 </html>
