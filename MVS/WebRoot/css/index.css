@@ -6,11 +6,11 @@
 .myleft-menu{
 	margin-top:50px;
 	width: 20%;
-	height: 100%;
+	
 	min-width:200px;
 	background-color: #ffffff;
 	position:absolute;
-	z-index: 10;
+	z-index: 250;
 }
 .main-page{
 	margin-top:60px;
