@@ -7,11 +7,11 @@
 %>
 <%
 	//不能直接通过链接访问
-	if(null==session.getAttribute("user")){
+	if (null == session.getAttribute("user")) {
 		response.sendRedirect("login.jsp");
-		return ;
+		return;
 	}
- %>
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,8 +29,41 @@
 	href="css/bootstrap/bootstrap.min.css">
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
+
+<link rel="stylesheet"
+	href="http://cache.amap.com/lbs/static/main1119.css" />
+<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+<script src="http://webapi.amap.com/js/marker.js"></script>
+<script type="text/javascript"
+	src="http://webapi.amap.com/maps?v=1.3&key=12f941dddbe64260f57468811bb77c77&plugin=AMap.DistrictSearch,AMap.PlaceSearch,AMap.AdvancedInfoWindow,AMap.Driving,AMap.MapType"></script>
+<script type="text/javascript"
+	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+	<script src="scripts/map/map.js"></script>
+	<script src="scripts/map/map2.js"></script>
+
+
+<script type="text/javascript">
+	/*页面加载时分配权限*/
+	function jimoOnLoad() {
+		/*先隐藏所有权限*/
+		$(".dropdown1-menu li a").each(function(index, elm) {
+			//$(this).removeAttr('onclick');
+			$(this).hide();
+		});
+
+		var power = "${power}";//获得权限
+		//alert(power)
+		var pa = power.split(",");//解析成数组
+		//alert(pa)
+		for(var i=0;i<pa.length;i++){
+			//alert(pa[i])
+			$("#"+pa[i]).show();
+		}
+	}
+</script>
 </head>
-<body>
+
+<body onload="jimoOnLoad()">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-header">
@@ -71,19 +104,19 @@
 					管理用户<i class="icon-arrow"></i>
 			</a>
 				<ul class="dropdown1-menu">
-					<li><a href="javascript:;">增加</a></li>
-					<li><a href="#">删除</a></li>
-					<li><a href="#">修改</a></li>
-					<li><a href="#">查找</a></li>
+					<li><a id="1" href="javascript:;">增加</a></li>
+					<li><a id="2" href="#">删除</a></li>
+					<li><a id="3" href="#">修改</a></li>
+					<li><a id="4" href="#">查找</a></li>
 				</ul></li>
 			<li class="dropdown1"><a href="#" data-toggle="dropdown1">Second
 					Menu <i class="icon-arrow"></i>
 			</a>
 				<ul class="dropdown1-menu">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Services</a></li>
-					<li><a href="#">Contact</a></li>
+					<li><a id="5" href="#">Home</a></li>
+					<li><a id="6" href="#">About Us</a></li>
+					<li><a id="7" href="#">Services</a></li>
+					<li><a id="8" href="#">Contact</a></li>
 				</ul></li>
 			<li class="dropdown1"><a href="#" data-toggle="dropdown1">Third
 					Menu <i class="icon-arrow"></i>
@@ -133,7 +166,7 @@
 							$("#loadpage_modal").modal('hide');
 							//$("#left_menu").hide();
 							//$("#main_page").load("login.jsp");
-							$("#main_page").load("login.jsp");
+							$("#main_page").load("map.jsp");
 							$(".myleft-menu").fadeToggle("fast", "linear");
 						},
 						error : function() {

@@ -63,6 +63,10 @@ public class LoginServlet extends HttpServlet {
 			if(null!=result){
 				session.setAttribute("user", result);
 				pw.write("yes");
+				
+				/*加载相应的权限*/
+				session.setAttribute("power", "1,2,3,7");
+				
 				//System.out.println("yes");
 			}else{
 				pw.write("no");
