@@ -1,23 +1,21 @@
 *{margin:0;padding:0;}
 
-body{
+/*body{
   /*background-image:url("../images/login-bg.jpg") ;
   background-size:cover;*/
   /*background-color:#fff;
-  /*font-family:'Open Sans',sans-serif;*/
-}
+  /*font-family:'Open Sans',sans-serif;
+}*/
 
 #login{
   width:400px;
-  margin:200px auto;
-  margin-top:100px;
-  margin-bottom:2%;
+  margin:150px auto;
   transition:opacity 1s;
   -webkit-transition:opacity 1s;
 }
 
 #login h1{
-  background:#3399cc;
+  background:#222;
   padding:20px 0;
   font-size:140%;
   font-weight:300;
@@ -43,7 +41,7 @@ input[type="text"],input[type="password"]{
 
 input[type="submit"]{
   width:100%;
-  background:#3399cc;
+  background:#222;
   border:0;
   padding:4%;
   font-family:'Open Sans',sans-serif;

@@ -29,21 +29,12 @@
 		}
 	}
 
-	function check() {
-		var name = $("#name").val();
-		var pass = $("#pass").val();
-		if (name == "" || pass == "") {
-			$("#load_modal").modal('show');
-			return false;
-		}
-		return true;
-	}
 
 	$(function() {
 		$("#submit_btn").click(function() {
 			var name = $("#name").val();
 			var pass = $("#pass").val();
-			if (check()) {
+			if (name != "" && pass != "") {
 				$("#load_modal").modal('show');
 
 				$.ajax({

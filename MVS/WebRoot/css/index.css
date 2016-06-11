@@ -3,31 +3,29 @@
 	margin:0;
 	padding:0;
 }
-.main-body{
-	margin:50px auto;
-	width: 100%;
-	height:100%;
-	background-color: #ffffff;
-}
-.left-menu{
+.myleft-menu{
+	margin-top:50px;
 	width: 20%;
 	height: 100%;
 	min-width:200px;
 	background-color: #ffffff;
 	position:absolute;
+	z-index: 10;
 }
 .main-page{
+	margin-top:60px;
 	width:100%;
 	height: 100%;
 	min-width:600px;
 	background-color: #ffffff;
+	position: absolute;
 }
 
 
 
 /*下面是左侧下拉菜单的css*/
 body {
-  font-family: "Lato", Helvetica, Arial;
+  font-family: "Lato", Helvetica, Arial !important;
   font-size: 16px;
 }
 
@@ -41,7 +39,7 @@ body {
   border-sizing: border-box;
 }
 
-.left-menu > ul {
+.myleft-menu > ul {
   list-style: none;
   padding: 0;
   margin: 0 0 20px 0;
@@ -57,6 +55,7 @@ body {
 }
 a{
 	text-decoration: none !important;
+	text-align: center;
 }
 
 .dropdown1 [data-toggle="dropdown1"] {

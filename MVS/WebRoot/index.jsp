@@ -5,6 +5,13 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<%
+	//不能直接通过链接访问
+	if(null==session.getAttribute("user")){
+		response.sendRedirect("login.jsp");
+		return ;
+	}
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +27,8 @@
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
-	<script src='scripts/jquery.js'></script>
-	<script src='scripts/bootstrap.min.js'></script>
+<script src='scripts/jquery.js'></script>
+<script src='scripts/bootstrap.min.js'></script>
 </head>
 <body>
 
@@ -57,40 +64,39 @@
 			</ul>
 		</div>
 	</nav>
-	<div class="main-body">
-		<div class="left-menu">
-			<ul>
-				<li class="dropdown1"><a href="#" data-toggle="dropdown1">
+
+	<div class="myleft-menu">
+		<ul>
+			<li class="dropdown1"><a href="#" data-toggle="dropdown1">
 					管理用户<i class="icon-arrow"></i>
-				</a>
-					<ul class="dropdown1-menu">
-						<li><a href="#" style="text-decoration: none;">增加</a></li>
-						<li><a href="#">删除</a></li>
-						<li><a href="#">修改</a></li>
-						<li><a href="#">查找</a></li>
-					</ul></li>
-				<li class="dropdown1"><a href="#" data-toggle="dropdown1">Second
-						Menu <i class="icon-arrow"></i>
-				</a>
-					<ul class="dropdown1-menu">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Services</a></li>
-						<li><a href="#">Contact</a></li>
-					</ul></li>
-				<li class="dropdown1"><a href="#" data-toggle="dropdown1">Third
-						Menu <i class="icon-arrow"></i>
-				</a>
-					<ul class="dropdown1-menu">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Services</a></li>
-						<li><a href="#">Contact</a></li>
-					</ul></li>
-			</ul>
-			</div>
-			<div id="main_page" class="main-page"></div>
+			</a>
+				<ul class="dropdown1-menu">
+					<li><a href="javascript:;">增加</a></li>
+					<li><a href="#">删除</a></li>
+					<li><a href="#">修改</a></li>
+					<li><a href="#">查找</a></li>
+				</ul></li>
+			<li class="dropdown1"><a href="#" data-toggle="dropdown1">Second
+					Menu <i class="icon-arrow"></i>
+			</a>
+				<ul class="dropdown1-menu">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul></li>
+			<li class="dropdown1"><a href="#" data-toggle="dropdown1">Third
+					Menu <i class="icon-arrow"></i>
+			</a>
+				<ul class="dropdown1-menu">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul></li>
+		</ul>
 	</div>
+	<div id="main_page" class="main-page"></div>
 
 	<!-- 模态框 -->
 	<div id="loadpage_modal" class="modal fade" tabindex="-1" role="dialog"
@@ -105,11 +111,11 @@
 		$(function() {
 			/*控制导航栏菜单的下拉*/
 			$('#dropdownMenu_user').dropdown('toggle');
-			
+
 			/*隐藏左侧菜单*/
 			$("#control_left_menu").click(function() {
 				//$("#left_menu").collapse('toggle');
-				$(".left-menu").fadeToggle("fast", "linear");
+				$(".myleft-menu").fadeToggle("fast", "linear");
 			});
 
 			/*监听下拉菜单选项的点击事件*/
@@ -128,7 +134,7 @@
 							//$("#left_menu").hide();
 							//$("#main_page").load("login.jsp");
 							$("#main_page").load("login.jsp");
-							$(".left-menu").fadeToggle("fast", "linear");
+							$(".myleft-menu").fadeToggle("fast", "linear");
 						},
 						error : function() {
 							//alert("no")
