@@ -21,7 +21,7 @@ public class AdminDaoImpl implements AdminDao {
 	 * @return 
 	 * @throws SQLException 
 	 */
-	public Admin getAdminOne(ResultSet rs) throws SQLException{
+	private Admin getAdminOne(ResultSet rs) throws SQLException{
 		Admin admin = new Admin();
 		admin.setAdminId(rs.getInt("admin_id"));
 		admin.setName(rs.getString("admin_name"));
@@ -102,9 +102,9 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public List getAllAdmin(Connection con) throws SQLException {
+	public ArrayList getAllAdmin(Connection con) throws SQLException {
 		// TODO Auto-generated method stub
-		List<Admin> adminList = new ArrayList<Admin>(); 
+		ArrayList<Admin> adminList = new ArrayList<Admin>(); 
 		String sql = "select * from admin";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);

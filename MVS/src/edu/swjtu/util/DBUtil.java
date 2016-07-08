@@ -5,11 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBUtil {
+	/*private String url = "jdbc:mysql://119.29.143.245:3306/car_factory?useSSL=false";
+	private String username = "root";
+	private String password = "mysqlroot";
+	private String jdbcName = "com.mysql.jdbc.Driver";*/
 	private String url = "jdbc:mysql://localhost:3306/car_factory?useSSL=false";
 	private String username = "root";
 	private String password = "root";
 	private String jdbcName = "com.mysql.jdbc.Driver";
-	
 	/**
 	 * 2016年6月5日下午2:04:46
 	 * @author jimolonely

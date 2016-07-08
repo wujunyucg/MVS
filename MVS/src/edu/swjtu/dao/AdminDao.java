@@ -1,6 +1,7 @@
 package edu.swjtu.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.swjtu.model.Admin;
@@ -67,5 +68,5 @@ public interface AdminDao {
 	 * @return list
 	 * @throws SQLException
 	 */
-	public List getAllAdmin(Connection con) throws SQLException;
+	public ArrayList getAllAdmin(Connection con) throws SQLException;
 }
