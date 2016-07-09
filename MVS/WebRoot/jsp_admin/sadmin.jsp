@@ -92,7 +92,7 @@
 			
 			$("#manage-user").click(function(){
 			
-				$("#content").load("jsp_admin/manage_user.jsp");
+				$("#content").load("<%=path%>rvlet/ManageUserServlet");
 			});
 		});
 	</script>
