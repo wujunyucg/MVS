@@ -11,9 +11,9 @@ public class DBUtil {
 	private String jdbcName = "com.mysql.jdbc.Driver";
 	
 	/**
-	 * 2016Äê6ÔÂ5ÈÕÏÂÎç2:04:46
+	 * 2016.6.5 2:04:46
 	 * @author jimolonely
-	 * Êı¾İ¿âÁ¬½Ó
+	 * æ•°æ®åº“è¿æ¥
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -25,8 +25,8 @@ public class DBUtil {
 	}
 	
 	/**
-	 * ¹Ø±ÕÊı¾İ¿âÁ¬½Ó
-	 * 2016Äê6ÔÂ5ÈÕÏÂÎç2:06:39
+	 * å…³é—­è¿æ¥
+	 * 2016ï¿½ï¿½6ï¿½ï¿½5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2:06:39
 	 * @author jimolonely
 	 * @param con
 	 * @throws SQLException
