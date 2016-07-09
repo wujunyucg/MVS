@@ -82,7 +82,7 @@
 			
 			$("#create-user").click(function(){
 			
-				$("#content").load("create_user.jsp");
+				$("#content").load("jsp_admin/create_user.jsp");
 			});
 			
 			$("#manage-admin").click(function(){
