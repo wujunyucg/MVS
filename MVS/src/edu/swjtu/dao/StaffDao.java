@@ -8,8 +8,8 @@ import edu.swjtu.model.Staff;
 
 /**
  * 
- * StaffDao.javaÀà
- * 2016Äê7ÔÂ8ÈÕ
+ * StaffDao.javaç±»
+ * 2016å¹´7æœˆ9æ—¥
  * @author wujunyu
  * TODo
  */
@@ -17,9 +17,9 @@ public interface StaffDao {
 
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:21:55
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:52:27
 	 * @author wujunyu
-	 * TODO Ìí¼ÓÒ»¸öÔ±¹¤
+	 * TODO æ·»åŠ ä¸€ä¸ªå‘˜å·¥
 	 * @param staff
 	 * @param con
 	 * @return
@@ -27,9 +27,9 @@ public interface StaffDao {
 	public int addOneStaff(Staff staff,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:22:58
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:52:44
 	 * @author wujunyu
-	 * TODO Ìí¼ÓÒ»ÈºÔ±¹¤
+	 * TODO æ·»åŠ ä¸€ä¸ªåˆ—è¡¨çš„å‘˜å·¥
 	 * @param staffList
 	 * @param con
 	 * @return
@@ -37,9 +37,9 @@ public interface StaffDao {
 	public int addListStaff(ArrayList<Staff> staffList,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:24:15
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:53:04
 	 * @author wujunyu
-	 * TODO É¾³ıÒ»¸öÔ±¹¤
+	 * TODO åˆ é™¤ä¸€ä¸ªå‘˜å·¥
 	 * @param staffId
 	 * @param con
 	 * @return
@@ -47,9 +47,9 @@ public interface StaffDao {
 	public int deleteOneStaff(int staffId,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:26:20
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:53:21
 	 * @author wujunyu
-	 * TODO É¾³ıÒ»ÈºÔ±¹¤
+	 * TODO åˆ é™¤ä¸€ä¸ªåˆ—è¡¨çš„å‘˜å·¥
 	 * @param staffList
 	 * @param con
 	 * @return
@@ -57,9 +57,9 @@ public interface StaffDao {
 	public int deleteListStaff(ArrayList<Staff> staffList, Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:28:16
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:53:38
 	 * @author wujunyu
-	 * TODO ¸ü¸ÄÔ±¹¤ĞÅÏ¢
+	 * TODO æ›´æ–°ä¸€ä¸ªå‘˜å·¥
 	 * @param staff
 	 * @param con
 	 * @return
@@ -68,9 +68,9 @@ public interface StaffDao {
 	
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:28:37
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:53:57
 	 * @author wujunyu
-	 * TODO ¸ù¾İid²éÑ¯Ô±¹¤
+	 * TODO æ ¹æ®å‘˜å·¥idæŸ¥è¯¢ä¸€ä¸ªå‘˜å·¥
 	 * @param staffId
 	 * @param con
 	 * @return
@@ -78,19 +78,19 @@ public interface StaffDao {
 	public Staff getStaffByStaffId(int staffId,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:37:19
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:54:21
 	 * @author wujunyu
-	 * TODO ¸ù¾İ¹¤ºÅ²éÑ¯Ô±¹¤
-	 * @param staffId
+	 * TODO æ ¹æ®å·¥å·å¾—åˆ°ä¸€ä¸ªå‘˜å·¥
+	 * @param number
 	 * @param con
 	 * @return
 	 */
 	public Staff getStaffByNumber(String number,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:38:01
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:54:44
 	 * @author wujunyu
-	 * TODO ¸ù¾İÔ±¹¤ĞÕÃû²éÑ¯Ô±¹¤
+	 * TODO æ ¹æ®å‘˜å·¥å§“åå¾—åˆ°å‘˜å·¥åˆ—è¡¨
 	 * @param name
 	 * @param con
 	 * @return
@@ -98,9 +98,9 @@ public interface StaffDao {
 	public ArrayList getStaffByName(String name,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:38:47
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:55:09
 	 * @author wujunyu
-	 * TODO ¸ù¾İ²¿ÃÅ²éÑ¯Ô±¹¤
+	 * TODO æ ¹æ®éƒ¨é—¨å¾—åˆ°å‘˜å·¥åˆ—è¡¨
 	 * @param department
 	 * @param con
 	 * @return
@@ -108,9 +108,9 @@ public interface StaffDao {
 	public ArrayList  getStaffByDepartment(String department,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:39:07
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:55:30
 	 * @author wujunyu
-	 * TODO ¸ù¾İ×é±ğ²éÑ¯Ô±¹¤
+	 * TODO æ ¹æ®ç»„åˆ«å¾—åˆ°å‘˜å·¥åˆ—è¡¨
 	 * @param group
 	 * @param con
 	 * @return
@@ -118,9 +118,9 @@ public interface StaffDao {
 	public ArrayList getStaffByGroup(String group,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:39:23
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:55:48
 	 * @author wujunyu
-	 * TODO ¸ù¾İ°à´Îid²éÑ¯Ô±¹¤
+	 * TODO æ ¹æ®ç­æ¬¡idå¾—åˆ°å‘˜å·¥åˆ—è¡¨
 	 * @param arrangeId
 	 * @param con
 	 * @return
@@ -128,9 +128,9 @@ public interface StaffDao {
 	public ArrayList  getStaffByArrangeId(int arrangeId,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:39:56
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:56:08
 	 * @author wujunyu
-	 * TODO ¸ù¾İÏßÂ·id²éÑ¯Ô±¹¤
+	 * TODO æ ¹æ®çº¿è·¯idå¾—åˆ°å‘˜å·¥åˆ—è¡¨
 	 * @param lineId
 	 * @param con
 	 * @return
@@ -138,9 +138,9 @@ public interface StaffDao {
 	public ArrayList getStaffByLineId(int lineId,Connection con);
 	/**
 	 * 
-	 * 2016Äê7ÔÂ8ÈÕÏÂÎç4:40:15
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:56:37
 	 * @author wujunyu
-	 * TODO ¸ù¾İÕ¾µãid²éÑ¯Ô±¹¤
+	 * TODO æ ¹æ®ç«™ç‚¹idå¾—åˆ°å‘˜å·¥åˆ—è¡¨
 	 * @param siteId
 	 * @param con
 	 * @return

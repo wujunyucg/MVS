@@ -8,17 +8,17 @@ import edu.swjtu.model.Admin;
 
 /**
  * 
- * AdminDao.javaÀà
- * 2016Äê6ÔÂ20ÈÕ
+ * AdminDao.java
+ * 2016 6 20 
  * @author wujunyu
  * TODo
  */
 public interface AdminDao {
 	/**
 	 * 
-	 * 2016Äê6ÔÂ20ÈÕÏÂÎç8:52:18
+	 * 2016 6 20  8:52:18
 	 * @author wujunyu
-	 * TODO Ôö¼Ó½ÇÉ«
+	 * TODO æ·»åŠ ä¸€ä¸ªç®¡ç†å‘˜
 	 * @param admin
 	 * @param con
 	 * @return int
@@ -27,9 +27,9 @@ public interface AdminDao {
 	public int addAdmin(Admin admin,Connection con) throws SQLException;
 	/**
 	 * 
-	 * 2016Äê6ÔÂ20ÈÕÏÂÎç8:53:12
+	 * 2016ï¿½ï¿½6ï¿½ï¿½20ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½8:53:12
 	 * @author wujunyu
-	 * TODO  ¸ù¾İadminIdÉ¾³ı½ÇÉ«
+	 * TODO  æ ¹æ®adminIdåˆ é™¤ä¸€ä¸ªç®¡ç†å‘˜
 	 * @param id
 	 * @param con
 	 * @return
@@ -38,11 +38,10 @@ public interface AdminDao {
 	public int deleteAdmin(int adminId,Connection con) throws SQLException;
 	/**
 	 * 
-	 * 2016Äê6ÔÂ20ÈÕÏÂÎç8:56:12
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:50:35
 	 * @author wujunyu
-	 * TODO		¸üĞÂ½ÇÉ«
-	 * @param adminId
-	 * @param admnin
+	 * TODO æ›´æ–°ä¸€ä¸ªç®¡ç†å‘˜
+	 * @param admin
 	 * @param con
 	 * @return
 	 * @throws SQLException
@@ -50,22 +49,22 @@ public interface AdminDao {
 	public int updateAdmin(Admin admin,Connection con) throws SQLException;
 	/**
 	 * 
-	 * 2016Äê6ÔÂ20ÈÕÏÂÎç8:56:56
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:51:07
 	 * @author wujunyu
-	 * TODO		¸ù¾İadminIdµÃµ½½ÇÉ«
-	 * @param id
+	 * TODO æ ¹æ®adminIDæŸ¥è¯¢ä¸€ä¸ªç®¡ç†å‘˜
+	 * @param adminId
 	 * @param con
-	 * @return	
+	 * @return
 	 * @throws SQLException
 	 */
 	public Admin getAdminById(int adminId,Connection con) throws SQLException;
 	/**
 	 * 
-	 * 2016Äê6ÔÂ20ÈÕÏÂÎç8:57:25
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ9:51:50
 	 * @author wujunyu
-	 * TODO	µÃµ½ËùÓĞ½ÇÉ«ĞÅÏ¢£¬·µ»ØÁĞ±í
+	 * TODO å¾—åˆ°æ‰€æœ‰ç®¡ç†å‘˜è§’è‰²
 	 * @param con
-	 * @return list
+	 * @return
 	 * @throws SQLException
 	 */
 	public ArrayList getAllAdmin(Connection con) throws SQLException;

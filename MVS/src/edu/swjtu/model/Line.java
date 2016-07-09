@@ -1,8 +1,8 @@
 package edu.swjtu.model;
  /**
   * 
-  * Line.javaÀà
-  * 2016Äê6ÔÂ17ÈÕ
+  * Line.javaç±»
+  * 2016å¹´7æœˆ9æ—¥
   * @author wujunyu
   * TODo
   */

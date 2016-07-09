@@ -25,7 +25,7 @@ public class AdminDaoImpl implements AdminDao {
 		Admin admin = new Admin();
 		admin.setAdminId(rs.getInt("admin_id"));
 		admin.setName(rs.getString("admin_name"));
-		admin.setPowerId(rs.getInt("admin_powerid"));
+		admin.setPowerId(rs.getString("admin_powerid"));
 		return admin;
 	}
 	
@@ -36,7 +36,7 @@ public class AdminDaoImpl implements AdminDao {
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setInt(1, admin.getPowerId());
+			pstm.setString(1, admin.getPowerId());
 			pstm.setString(2, admin.getName());
 			rs = pstm.executeUpdate();
 		} catch (SQLException e) {
@@ -71,7 +71,7 @@ public class AdminDaoImpl implements AdminDao {
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setInt(1, admin.getPowerId());
+			pstm.setString(1, admin.getPowerId());
 			pstm.setString(2, admin.getName());
 			pstm.setInt(3, admin.getAdminId());
 			rs = pstm.executeUpdate();

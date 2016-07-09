@@ -2,15 +2,15 @@ package edu.swjtu.model;
 
 /**
  * 
- * Admin.javaÀà
- * 2016Äê6ÔÂ17ÈÕ
+ * Admin.javaç±»
+ * 2016å¹´7æœˆ9æ—¥
  * @author wujunyu
  * TODo
  */
 public class Admin {
 	private int adminId;
 	private String name;
-	private int powerId;
+	private String powerId;
 	public int getAdminId() {
 		return adminId;
 	}
@@ -23,10 +23,10 @@ public class Admin {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getPowerId() {
+	public String getPowerId() {
 		return powerId;
 	}
-	public void setPowerId(int powerId) {
+	public void setPowerId(String powerId) {
 		this.powerId = powerId;
 	}
 }

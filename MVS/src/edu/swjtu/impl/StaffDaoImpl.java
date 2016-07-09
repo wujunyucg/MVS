@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import edu.swjtu.dao.StaffDao;
-import edu.swjtu.model.Admin;
 import edu.swjtu.model.Staff;
 
 public class StaffDaoImpl implements StaffDao {
@@ -262,7 +259,7 @@ public class StaffDaoImpl implements StaffDao {
 	}
 
 	@Override
-	public ArrayList getStaffBySiteId(int siteId, Connection con) {
+	public ArrayList<Staff> getStaffBySiteId(int siteId, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
 		String sql = "select * from staff where staff_siteId=?";
