@@ -1,10 +1,9 @@
 *{margin:0;padding:0;}
 
 /*body{
-  /*background-image:url("../images/login-bg.jpg") ;
-  background-size:cover;*/
-  /*background-color:#fff;
-  /*font-family:'Open Sans',sans-serif;
+  background-image:url("../images/bg.png" ) ;
+  background-repeat: repeat;
+  font-family:'Open Sans',sans-serif;
 }*/
 
 #login{
@@ -12,6 +11,7 @@
   margin:150px auto;
   transition:opacity 1s;
   -webkit-transition:opacity 1s;
+  background:#ffffff;
 }
 
 #login h1{
@@ -24,7 +24,7 @@
 }
 
 form{
-  background:#ffffff;
+  
   padding:6% 4%;
 }
 

@@ -109,17 +109,15 @@
 					<li><a id="3" href="#">修改</a></li>
 					<li><a id="4" href="#">查找</a></li>
 				</ul></li>
-			<li class="dropdown1"><a href="#" data-toggle="dropdown1">Second
-					Menu <i class="icon-arrow"></i>
+			<li class="dropdown1"><a href="#" data-toggle="dropdown1">线路管理 <i class="icon-arrow"></i>
 			</a>
 				<ul class="dropdown1-menu">
-					<li><a id="5" href="#">Home</a></li>
-					<li><a id="6" href="#">About Us</a></li>
-					<li><a id="7" href="#">Services</a></li>
-					<li><a id="8" href="#">Contact</a></li>
+					<li><a id="5" href="#">增加</a></li>
+					<li><a id="6" href="#">删除</a></li>
+					<li><a id="7" href="#">查找</a></li>
+					<li><a id="8" href="#">修改</a></li>
 				</ul></li>
-			<li class="dropdown1"><a href="#" data-toggle="dropdown1">Third
-					Menu <i class="icon-arrow"></i>
+			<li class="dropdown1"><a href="#" data-toggle="dropdown1">角色管理 <i class="icon-arrow"></i>
 			</a>
 				<ul class="dropdown1-menu">
 					<li><a href="#">Home</a></li>
@@ -146,8 +144,12 @@
 			$('#dropdownMenu_user').dropdown('toggle');
 
 			/*隐藏左侧菜单*/
-			$("#control_left_menu").click(function() {
+			$("#control_left_menu").mouseenter(function() {
 				//$("#left_menu").collapse('toggle');
+				$(".myleft-menu").fadeIn("fast", "linear");
+			});
+			
+			$('.myleft-menu').mouseleave(function(){
 				$(".myleft-menu").fadeToggle("fast", "linear");
 			});
 
@@ -161,11 +163,11 @@
 						url : "",
 						type : "POST",
 						data : "",
-						success : function() {
+						success : function(data) {
 							//alert("yes");
 							$("#loadpage_modal").modal('hide');
 							//$("#left_menu").hide();
-							//$("#main_page").load("login.jsp");
+					+		//$("#main_page").load("login.jsp");
 							$("#main_page").load("map.jsp");
 							$(".myleft-menu").fadeToggle("fast", "linear");
 						},
