@@ -61,9 +61,9 @@
 			<div class="list-group">
 				<button id="create-admin" type="button"
 					class="list-group-item btn-menu">创建角色</button>
-				<button id="create-user"type="button" class="list-group-item">创建用户</button>
+				<button id="create-user"type="button" class="list-group-item  btn-menu">创建用户</button>
 				<button id="manage-admin"type="button" class="list-group-item  btn-menu">管理角色</button>
-				<button id="manage-user"type="button" class="list-group-item">管理用户</button>
+				<button id="manage-user"type="button" class="list-group-item  btn-menu">管理用户</button>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
@@ -92,7 +92,7 @@
 			
 			$("#manage-user").click(function(){
 			
-				$("#content").load("jsp_admin/manage_user.jsp");
+				$("#content").load("<%=path%>rvlet/ManageUserServlet");
 			});
 		});
 	</script>
