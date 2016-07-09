@@ -1,6 +1,7 @@
 package edu.swjtu.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -9,9 +10,9 @@ import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
 
 /**
- * ²âÊÔÀà
- * 2016Äê6ÔÂ7ÈÕÏÂÎç6:55:52
- * @author jimolonely
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½6:55:52
+ * @author mischief7
  * TODO
  */
 public class UserDaoTest {
@@ -22,6 +23,7 @@ public class UserDaoTest {
 		user.setAdminId(1);
 		user.setNumber("1");
 		user.setPassword("1");
+		user.setType(2);
 		
 		User u = new UserDaoImpl().login(user, new DBUtil().getCon());
 		if(u!=null){
@@ -33,10 +35,48 @@ public class UserDaoTest {
 	public void testAddUser() throws ClassNotFoundException, SQLException{
 		User user = new User();
 		user.setAdminId(1);
-		user.setNumber("1");
-		user.setPassword("1");
+		user.setNumber("555");
+		user.setPassword("555");
+		user.setType(1);
 		
 		int u = new UserDaoImpl().addUser(user, new DBUtil().getCon());
 		System.out.println(u);//1
 	}
+	
+	@Test
+	public void testDeleteUser() throws ClassNotFoundException, SQLException{
+		UserDaoImpl testdelete = new UserDaoImpl();
+		testdelete.deleteUser(3, new DBUtil().getCon());
+		System.out.println("111");
+	}
+	
+	@Test
+	public void testUpdataUser() throws ClassNotFoundException, SQLException{
+		User use = new User();
+		UserDaoImpl userDao = new UserDaoImpl();
+		
+		use.setUserId(4);
+		use.setNumber("wang1111");
+		use.setPassword("189");
+		use.setAdminId(12);
+		use.setType(1);
+		
+		int u = new UserDaoImpl().updateUser(use, new DBUtil().getCon());
+		System.out.println(u);//1
+	}
+	
+	@Test
+	public void testFindAllUser() throws ClassNotFoundException, SQLException{
+		 ArrayList<User> list = new UserDaoImpl().getAllUser(new DBUtil().getCon());
+		 System.out.println(list.get(0).getNumber());
+		 System.out.println(list.get(1).getNumber());
+	}
+	
+	@Test
+	public void testFindUser() throws ClassNotFoundException, SQLException{
+		User use = new UserDaoImpl().getUserById(4, new DBUtil().getCon());
+		 System.out.println(use.getNumber());
+	}
+	
+	
 }

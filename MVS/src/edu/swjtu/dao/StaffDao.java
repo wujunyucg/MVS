@@ -95,7 +95,7 @@ public interface StaffDao {
 	 * @param con
 	 * @return
 	 */
-	public ArrayList getStaffByName(String name,Connection con);
+	public ArrayList<Staff> getStaffByName(String name,Connection con);
 	/**
 	 * 
 	 * 2016年7月9日上午9:55:09
@@ -105,7 +105,7 @@ public interface StaffDao {
 	 * @param con
 	 * @return
 	 */
-	public ArrayList  getStaffByDepartment(String department,Connection con);
+	public ArrayList<Staff>  getStaffByDepartment(String department,Connection con);
 	/**
 	 * 
 	 * 2016年7月9日上午9:55:30
@@ -115,7 +115,7 @@ public interface StaffDao {
 	 * @param con
 	 * @return
 	 */
-	public ArrayList getStaffByGroup(String group,Connection con);
+	public ArrayList<Staff> getStaffByGroup(String group,Connection con);
 	/**
 	 * 
 	 * 2016年7月9日上午9:55:48
@@ -125,7 +125,7 @@ public interface StaffDao {
 	 * @param con
 	 * @return
 	 */
-	public ArrayList  getStaffByArrangeId(int arrangeId,Connection con);
+	public ArrayList <Staff> getStaffByArrangeId(int arrangeId,Connection con);
 	/**
 	 * 
 	 * 2016年7月9日上午9:56:08
@@ -135,7 +135,7 @@ public interface StaffDao {
 	 * @param con
 	 * @return
 	 */
-	public ArrayList getStaffByLineId(int lineId,Connection con);
+	public ArrayList<Staff> getStaffByLineId(int lineId,Connection con);
 	/**
 	 * 
 	 * 2016年7月9日上午9:56:37
@@ -145,5 +145,5 @@ public interface StaffDao {
 	 * @param con
 	 * @return
 	 */
-	public ArrayList getStaffBySiteId(int siteId,Connection con);
+	public ArrayList<Staff> getStaffBySiteId(int siteId,Connection con);
 }

@@ -1,33 +1,75 @@
 package edu.swjtu.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import edu.swjtu.model.Admin;
 import edu.swjtu.model.User;
 
 /**
- * Î´Íê³É
- * 2016Äê6ÔÂ7ÈÕÏÂÎç6:33:16
+ * Î´ï¿½ï¿½ï¿½
+ * 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½6:33:16
  * @author jimolonely
  * TODO
  */
 public interface UserDao {
 	/**
-	 * µÇÂ½ÑéÖ¤
-	 * 2016Äê6ÔÂ7ÈÕÏÂÎç6:48:34
+	 * ï¿½ï¿½Â½ï¿½ï¿½Ö¤
+	 * 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½6:48:34
 	 * @author jimolonely
 	 * @param user
 	 * @param con
-	 * @return Ê§°ÜÔò·µ»Ønull
+	 * @return Ê§ï¿½ï¿½ï¿½ò·µ»ï¿½null
 	 */
 	public User login(User user,Connection con);
 	/**
-	 * Ôö¼ÓÒ»¸öÓÃ»§
-	 * 2016Äê6ÔÂ7ÈÕÏÂÎç6:47:44
+	 * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ã»ï¿½
+	 * 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½6:47:44
 	 * @author jimolonely
 	 * @param user
 	 * @param con
-	 * @return ·µ»ØÊÜÓ°ÏìµÄĞĞÊı
+	 * @return ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @throws SQLException
 	 */
 	public int addUser(User user,Connection con) throws SQLException;
+	/**
+	 * 
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ10:14:04
+	 * @author mischief7
+	 * @param userId
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public int deleteUser(int userId,Connection con) throws SQLException;
+	/**
+	 * 
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ10:14:13
+	 * @author mischief7
+	 * @param user
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updateUser(User user,Connection con) throws SQLException;
+	/**
+	 * 
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ10:15:58
+	 * @author mischief7
+	 * @param userId
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public User getUserById(int userId,Connection con) throws SQLException;
+	/**
+	 * 
+	 * 2016å¹´7æœˆ9æ—¥ä¸Šåˆ10:16:02
+	 * @author mischief7
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList getAllUser(Connection con) throws SQLException;
+	
 }

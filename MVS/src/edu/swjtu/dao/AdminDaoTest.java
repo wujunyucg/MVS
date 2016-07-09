@@ -11,9 +11,11 @@ import org.junit.Test;
 
 import edu.swjtu.impl.AdminDaoImpl;
 import edu.swjtu.impl.CarDaoImpl;
+import edu.swjtu.impl.SiteDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.model.Admin;
 import edu.swjtu.model.Car;
+import edu.swjtu.model.Site;
 import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
 
@@ -22,7 +24,7 @@ public class AdminDaoTest {
 	@Test
 	public void test() throws ClassNotFoundException, SQLException {
 		
-		Car car = new Car();
+		/*Car car = new Car();
 		car.setArrangeId("1,2,3");
 		car.setBrand("宝马");
 		car.setCarId(0);
@@ -54,13 +56,27 @@ public class AdminDaoTest {
 		
 		//carList = cdi.getCarByBrand("宝马", new DBUtil().getCon());
 		/*for(Car c : carList)
-				System.out.println(c.getCarId());*/
+				System.out.println(c.getCarId());
 		//car=cdi.getCarById(2, new DBUtil().getCon());
 		//car=cdi.getCarByLicensePlate("fth5475d", new DBUtil().getCon());
 		//car=cdi.getCarByLicense("sdrtgsdra", new DBUtil().getCon());
 		//car=cdi.getCarByDriver("吴俊宇", new DBUtil().getCon());
 		int num=cdi.getCarNumberByCarId(8, new DBUtil().getCon());
-		System.out.println(num);
+		System.out.println(num);*/
+		
+		
+		Site site = new Site();
+		site.setAddress("四川");
+		site.setDelay(5);
+		site.setLatitude("199,,656,");
+		site.setLineId(1);
+		site.setLongitude("465456");
+		site.setName("一号战带你");
+		site.setOrder(1);
+		site.setPeoNum(55);
+		site.setSiteId(0);
+		SiteDaoImpl sdi = new SiteDaoImpl();
+		sdi.addOneSite(site, new DBUtil().getCon());
 		}
 		
 }
