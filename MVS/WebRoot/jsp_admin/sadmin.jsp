@@ -77,7 +77,7 @@
 		$(function() {
 			$("#create-admin").click(function(){
 			
-				$("#content").load("create_admin.jsp");
+				$("#content").load("jsp_admin/create_admin.jsp");
 			});
 			
 			$("#create-user").click(function(){
@@ -87,12 +87,12 @@
 			
 			$("#manage-admin").click(function(){
 			
-				$("#content").load("manage_admin.jsp");
+				$("#content").load("jsp_admin/manage_admin.jsp");
 			});
 			
 			$("#manage-user").click(function(){
 			
-				$("#content").load("manage_user.jsp");
+				$("#content").load("jsp_admin/manage_user.jsp");
 			});
 		});
 	</script>
