@@ -103,7 +103,7 @@
 
 
 	<script type="text/javascript">
-		var powerIds = null;
+		var powerIds = "";
 		$(function() {
 
 			//控制页面的切换
@@ -137,6 +137,7 @@
 				} else {
 				$("#btn_finish").attr("disabled",false);
 					$("#show_power").html(powers);
+					alert(powerIds)
 				}
 			});
 
@@ -148,6 +149,8 @@
 			$("#btn_pre3").click(function() {
 				$("#page3").hide();
 				$("#page2").show();
+				
+				powerIds = "";//必须清空
 			});
 
 			//当文本框文字改变监听
