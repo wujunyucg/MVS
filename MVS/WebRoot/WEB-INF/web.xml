@@ -7,7 +7,6 @@
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.LoginServlet</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/servlet/LoginServlet</url-pattern>
@@ -20,4 +19,24 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>UpdateUserServlet</display-name>
+    <servlet-name>UpdateUserServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.UpdateUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateUserServlet</servlet-name>
+    <url-pattern>/servlet/UpdateUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ManageUserServlet</display-name>
+    <servlet-name>ManageUserServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ManageUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManageUserServlet</servlet-name>
+    <url-pattern>/servlet/ManageUserServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

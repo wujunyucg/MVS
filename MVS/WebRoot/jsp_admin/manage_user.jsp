@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td></td>
             <td>0</td>
             <td>${user.getNumber()}</td>
-            <td>${user_map.get(user)}</td>
+            <td></td>
             <td></td>
             <td></td>
             <td>1</td>
