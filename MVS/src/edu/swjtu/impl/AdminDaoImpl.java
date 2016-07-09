@@ -15,9 +15,9 @@ public class AdminDaoImpl implements AdminDao {
 	
 	/**
 	 * 
-	 * 2016Äê6ÔÂ20ÈÕÏÂÎç9:19:38
+	 * 2016ï¿½ï¿½6ï¿½ï¿½20ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½9:19:38
 	 * @author wujunyu
-	 * TODO ÉèÖÃ´ÓÊý¾Ý¿âµÃµ½µÄ½ÇÉ«
+	 * TODO ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½Ý¿ï¿½Ãµï¿½ï¿½Ä½ï¿½É«
 	 * @return 
 	 * @throws SQLException 
 	 */
@@ -102,7 +102,7 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public ArrayList getAllAdmin(Connection con) throws SQLException {
+	public ArrayList<Admin> getAllAdmin(Connection con) throws SQLException {
 		// TODO Auto-generated method stub
 		ArrayList<Admin> adminList = new ArrayList<Admin>(); 
 		String sql = "select * from admin";

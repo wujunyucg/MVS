@@ -1,17 +1,12 @@
 package edu.swjtu.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import javax.xml.crypto.Data;
-
 import edu.swjtu.dao.CarDao;
 import edu.swjtu.model.Car;
-import edu.swjtu.model.Staff;
 
 public class CarDaoImpl implements CarDao {
 
