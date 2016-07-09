@@ -1,7 +1,7 @@
 package edu.swjtu.model;
 /**
- * UserÀà
- * 2016Äê6ÔÂ7ÈÕÏÂÎç5:54:15
+ * Userï¿½ï¿½
+ * 2016ï¿½ï¿½6ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5:54:15
  * @author jimolonely
  * TODO
  */
@@ -10,7 +10,14 @@ public class User {
 	private String number;
 	private String password;
 	int adminId;
+	private int type;
 	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	public int getUserId() {
 		return userId;
 	}
