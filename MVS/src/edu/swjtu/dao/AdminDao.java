@@ -2,8 +2,6 @@ package edu.swjtu.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import edu.swjtu.model.Admin;
 
 /**
@@ -27,7 +25,7 @@ public interface AdminDao {
 	public int addAdmin(Admin admin,Connection con) throws SQLException;
 	/**
 	 * 
-	 * 2016��6��20������8:53:12
+	 * 2016 6 20 8:53:12
 	 * @author wujunyu
 	 * TODO  根据adminId删除一个管理员
 	 * @param id
@@ -67,5 +65,5 @@ public interface AdminDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList getAllAdmin(Connection con) throws SQLException;
+	public ArrayList<Admin> getAllAdmin(Connection con) throws SQLException;
 }

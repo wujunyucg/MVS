@@ -1,6 +1,8 @@
 package edu.swjtu.model;
 
-import javax.xml.crypto.Data;
+import java.sql.Date;
+
+
 
 /**
  * 
@@ -18,8 +20,8 @@ public class Car {
 	private String license;
 	private String arrangeId;
 	private String driver;
-	private Data registrationDate;
-	private Data insuranceDate;
+	private Date registrationDate;
+	private Date insuranceDate;
 	public int getCarId() {
 		return carId;
 	}
@@ -68,16 +70,16 @@ public class Car {
 	public void setDriver(String driver) {
 		this.driver = driver;
 	}
-	public Data getRegistrationDate() {
+	public Date getRegistrationDate() {
 		return registrationDate;
 	}
-	public void setRegistrationDate(Data registrationDate) {
+	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
-	public Data getInsuranceDate() {
+	public Date getInsuranceDate() {
 		return insuranceDate;
 	}
-	public void setInsuranceDate(Data insuranceDate) {
+	public void setInsuranceDate(Date insuranceDate) {
 		this.insuranceDate = insuranceDate;
 	}
 }
