@@ -33,8 +33,10 @@
 </head>
 
 <body>
-	<h1>create admin</h1>
-	<!-- 第一个页面获取角色名称 -->
+	
+	<ol class="breadcrumb">
+		<li><h1>创建角色</h1></li> </ol>
+		<!-- 第一个页面获取角色名称 -->
 	<div id="page1" class="mypage first">
 		<div class="input-group input-group-lg">
 			<span class="input-group-addon" id="sizing-addon1">请输入角色名称：</span> <input
