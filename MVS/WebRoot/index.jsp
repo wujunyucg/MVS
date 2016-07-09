@@ -137,7 +137,6 @@
 		</div>
 	</div>
 
-
 	<script type="text/javascript">
 		$(function() {
 			/*控制导航栏菜单的下拉*/
@@ -167,7 +166,7 @@
 							//alert("yes");
 							$("#loadpage_modal").modal('hide');
 							//$("#left_menu").hide();
-					+		//$("#main_page").load("login.jsp");
+							//$("#main_page").load("login.jsp");
 							$("#main_page").load("map.jsp");
 							$(".myleft-menu").fadeToggle("fast", "linear");
 						},
