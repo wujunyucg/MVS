@@ -1,6 +1,7 @@
 package edu.swjtu.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -26,9 +27,10 @@ public class Powers {
 	 * @author jimolonely
 	 * @return
 	 */
-	public static ArrayList<String> getPower(String[]ids){
+	public static ArrayList<String> getPower(String ids){
 		ArrayList<String>list = new ArrayList<String>();
-		for(String s : ids){
+		String[]ss = ids.split(",");
+		for(String s : ss){
 			int i = Integer.parseInt(s);
 			list.add(power[i]);
 		}
@@ -41,11 +43,21 @@ public class Powers {
 	 * @param ids
 	 * @return
 	 */
-	public static String getPowerType(Set<Integer>ids){
-		String re = "";
-		for(int i : ids){
-			re+=powerType[i]+" ";
+	public static String getPowerType(String ids){
+		String[]powers = ids.split(",");
+		Set<Integer> set = new HashSet<Integer>();//集合为了保证数据不重复 
+		for(int i=0;i<powers.length;i++){
+			int id = Integer.parseInt(powers[i]);
+			if(id<8){
+				set.add(id/4);
+			}else{
+				set.add((id+2)/5);
+			}
 		}
-		return re;
+		String p = "";
+		for(int i : set){
+			p+=powerType[i];
+		}
+		return p;
 	}
 }
