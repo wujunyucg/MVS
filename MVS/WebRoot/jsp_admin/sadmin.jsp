@@ -29,7 +29,12 @@
 	href="css/bootstrap/bootstrap.min.css">
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
-
+ <script src="layer/layer.js"></script>
+<script type="text/javascript" language="javascript">
+$.ajaxSetup ({ 
+    cache: false //关闭AJAX相应的缓存 
+}); 
+</script>
 </head>
 
 <body>
@@ -92,7 +97,7 @@
 			
 			$("#manage-user").click(function(){
 			
-				$("#content").load("<%=path%>rvlet/ManageUserServlet");
+				$("#content").load("<%=basePath%>/servlet/ManageUserServlet?random"+Math.random());
 			});
 		});
 	</script>
