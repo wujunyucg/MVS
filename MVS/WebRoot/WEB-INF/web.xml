@@ -13,7 +13,7 @@
     <servlet-name>CreateUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.CreateUserServlet</servlet-class>
   </servlet>
-    <servlet>
+  <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>CreUserNSServlet</servlet-name>
@@ -23,7 +23,7 @@
     <servlet-name>CreateUserServlet</servlet-name>
     <url-pattern>/servlet/CreateUserServlet</url-pattern>
   </servlet-mapping>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>CreUserNSServlet</servlet-name>
     <url-pattern>/servlet/CreUserNSServlet</url-pattern>
   </servlet-mapping>
@@ -40,6 +40,24 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
+    <servlet-name>CreateAdminServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.CreateAdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateAdminServlet</servlet-name>
+    <url-pattern>/servlet/CreateAdminServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ManageUserServlet</display-name>
+    <servlet-name>ManageUserServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ManageUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManageUserServlet</servlet-name>
+    <url-pattern>/servlet/ManageUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <description></description>
     <display-name>UpdateUserServlet</display-name>
     <servlet-name>UpdateUserServlet</servlet-name>
@@ -48,24 +66,5 @@
   <servlet-mapping>
     <servlet-name>UpdateUserServlet</servlet-name>
     <url-pattern>/servlet/UpdateUserServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ManageUserServlet</display-name>
-    <servlet-name>ManageUserServlet</servlet-name>
-    <servlet-class>edu.swjtu.servlet.ManageUserServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>CreateAdminServlet</servlet-name>
-    <servlet-class>edu.swjtu.servlet.CreateAdminServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>ManageUserServlet</servlet-name>
-    <url-pattern>/servlet/ManageUserServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>CreateAdminServlet</servlet-name>
-    <url-pattern>/servlet/CreateAdminServlet</url-pattern>
   </servlet-mapping>
 </web-app>
