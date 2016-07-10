@@ -52,22 +52,22 @@ function  layer2(userid,number,password,admin,type,staus){
  document.getElementById("modalBut"). style.display="inline "; 
   var tab= '<form id="updateuser">'
   	  +'<table class="table table-hover table-bordered" style="width:100%;">'
-  	  +'<input type="text" name="userid" value="'+userid+'" style="display:none;"/>'
+  	  +'<input type="text" id= "userid" name="userid" value="'+userid+'" style="display:none;"/>'
 	  +'<tr><td class="td1">管理员账号</td><td ><input type="text" id="username" name="number" value="'+number+'" /></td></tr>'
-	  +'<tr><td class="td1">管理员密码</td><td><input type="text" name="password" value="'+password+'"/></td></tr>'
+	  +'<tr><td class="td1" >管理员密码</td><td><input type="text" id ="userpass" name="password" value="'+password+'"/></td></tr>'
 	  +'<tr><td class="td1">管理员角色</td><td  >'
-	  +' <select name="admin" >';
+	  +' <select name="admin" id="useradmin" >';
 	  <c:forEach items="${user_admin_list}" var="admin1" varStatus="status" >
 	  	if(admin != '${admin1.getName()}')
   		 tab=tab+'<option >${admin1.getName()}</option>';
   		 else
-   			tab=tab+'<option id="useradmin" selected="selected">${admin1.getName()}</option>';
+   			tab=tab+'<option selected="selected">${admin1.getName()}</option>';
 		</c:forEach>
 		tab=tab+'</select>'
 	  +'</td></tr>'
-	   +'<tr><td class="td1">管理员类型</td><td>'+type+'</td></tr>'
-	  +'<input type="text" name="type" value="'+type+'" style="display:none;"/>'
-	  +'<input type="text" name="staus" value="'+staus+'" style="display:none;"/>'
+	   +'<tr><td class="td1" >管理员类型</td><td >'+type+'</td></tr>'
+	  +'<input type="text" id="usertype" name="type" value="'+type+'" style="display:none;"/>'
+	  +'<input type="text" id="userstatus" name="staus" value="'+staus+'" style="display:none;"/>'
 	  +'<table> </form>';
 	 
 	   document.getElementById("p1"). innerHTML = '修改';
@@ -86,9 +86,20 @@ function update(){
 		if(request == 1){
 			document.getElementById("p2"). innerHTML = '修改成功';
 			var name =$("#username").val();
-			var ad= $("#useradmin").html();	
+			var ad= $("#useradmin").val();	
+			var lay1='<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1('
+			+'\''+name+'\',\''+$("#userpass").val()+'\', \''+ad+'\',\''+$("#usertype").val()+'\''
+			+')">查看详情</a>';
+			var lay2='<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('
+			+'\''+$("#userid").val()+'\',\''+'\''+name+'\',\''+$("#userpass").val()+'\', \''+ad+'\',\''+$("#usertype").val()+'\''
+			+'\','+$("#userstatus").val()+'\''
+			+')">修改</a>';
 	   	 	$("#"+tr+"0").html(name);		
-           	$("#"+tr+'1').html(ad);
+           	$("#"+tr+"1").html(ad);
+           	alert(lay1);
+           	alert(lay2);
+           	$("#"+tr+"2").html(lay1);		
+           	$("#"+tr+"3").html(lay2);
            	
 		}
         else{
@@ -127,8 +138,8 @@ function update(){
             <td id="tr${status.index}0">${user.getNumber()}</td>
              <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
            <c:if test="${user.getAdminId() == admin.getAdminId() }"> <td id="tr${status.index}1"> ${admin.getName()}</td>
-            <td><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1('${user.getNumber()}','${user.getPassword()}', '${admin.getName()}','${user.getType()}')">查看详情</a></td>
-            <td><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index})">修改</a></td>
+            <td id="tr${status.index}2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1('${user.getNumber()}','${user.getPassword()}', '${admin.getName()}','${user.getType()}')">查看详情</a></td>
+            <td id="tr${status.index}3"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index})">修改</a></td>
            </c:if>
             </c:forEach>
             <td><a >删除</a></td>
