@@ -18,6 +18,12 @@ public class Powers {
 			"增加班次","删除班次","修改班次","查询班次","班次数据导出",
 			"增加站点","删除站点","修改站点","查询站点","站点数据导出",
 			"新车入厂","删除车辆","更新车辆信息","查询车辆信息","车辆数据导出"};
+	final static String[]power_n={
+		"A","D","C","F",
+		"A","D","C","F",
+		"A","D","C","F","E",
+		"A","D","C","F","E",
+		"A","D","C","F","E"};
 	final static String[]powerType = {
 		"人员管理","线路管理","排班管理","站点管理","车辆管理"	
 	};
@@ -58,6 +64,51 @@ public class Powers {
 		for(int i : set){
 			p+=powerType[i];
 		}
+		return p;
+	}
+	
+	public static String getPowerType_CU(String ids){
+		String[]powers = ids.split(",");
+		Set<Integer> set = new HashSet<Integer>();//集合为了保证数据不重复 
+		for(int i=0;i<powers.length;i++){
+			int id = Integer.parseInt(powers[i]);
+			if(id<8){
+				set.add(id/4);
+			}else{
+				set.add((id+2)/5);
+			}
+		}
+		String p = "";
+		for(int i : set){
+			p+=powerType[i] + "(";
+			if(i<2){
+				for(int j=0;j<powers.length;j++){
+					if(Integer.parseInt(powers[j]) >= i*4 && Integer.parseInt(powers[j]) <= i*4+3)
+						p += power_n[Integer.parseInt(powers[j])] + " ";
+					else if(Integer.parseInt(powers[j]) > i*4+3)
+						break;
+				}
+			}
+			else if(i==2){
+				for(int j=0;j<powers.length;j++){
+					if(Integer.parseInt(powers[j]) >= 8 && Integer.parseInt(powers[j]) <= 12)
+						p += power_n[Integer.parseInt(powers[j])] + " ";
+					else if(Integer.parseInt(powers[j]) > 12)
+						break;
+				}
+			}
+			else{
+				for(int j=0;j<powers.length;j++){
+					if(Integer.parseInt(powers[j]) >= i*5-2 && Integer.parseInt(powers[j]) <= i*5+2)
+						p += power_n[Integer.parseInt(powers[j])] + " ";
+					else if(Integer.parseInt(powers[j]) > i*5+2)
+						break;
+				}
+			}
+			p = p.substring(0,p.length()-1); 
+			p += ") , ";
+		}
+		p = p.substring(0,p.length()-1); 
 		return p;
 	}
 }
