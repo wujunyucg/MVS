@@ -42,7 +42,7 @@ public class CreateAdminServlet extends HttpServlet {
 				if(null==admin){
 					pw.write("yes");
 				}else{
-					pw.write("no");
+					pw.write(admin.getName());
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				pw.write("no");
