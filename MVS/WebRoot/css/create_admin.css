@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+.first{
+	padding: 50px !important;
+}
+.mypage{
+	background-color: #fff;
+	padding: 10px !important;
+}
+#btn_next1{
+	float:right;
+	margin-top: 20px;
+}
+.text-primary{
+	padding: 20px !important;
+	margin-top: 10px !important;
+}
