@@ -92,7 +92,7 @@ $.ajaxSetup ({
 			
 			$("#manage-admin").click(function(){
 			
-				$("#content").load("jsp_admin/manage_admin.jsp");
+				$("#content").load("<%=path%>/servlet/ManageAdminServlet");
 			});
 			
 			$("#manage-user").click(function(){
