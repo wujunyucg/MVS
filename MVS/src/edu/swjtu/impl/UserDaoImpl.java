@@ -134,4 +134,23 @@ public class UserDaoImpl implements UserDao{
 		return userList;
 	}
 
+	@Override
+	public User getUserByNumber(String userNumber, Connection con)
+			throws SQLException {
+		User user = null;
+		String sql = "select * from user where user_number=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, userNumber);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				user = getUserOne(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return user;
+	}
+
 }

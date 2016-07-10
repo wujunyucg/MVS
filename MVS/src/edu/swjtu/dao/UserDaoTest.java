@@ -74,8 +74,15 @@ public class UserDaoTest {
 	
 	@Test
 	public void testFindUser() throws ClassNotFoundException, SQLException{
-		User use = new UserDaoImpl().getUserById(4, new DBUtil().getCon());
+		User use = new UserDaoImpl().getUserById(11, new DBUtil().getCon());
 		 System.out.println(use.getNumber());
+	}
+	
+	@Test
+	public void testFindUserByNumber() throws ClassNotFoundException, SQLException{
+		User use = new UserDaoImpl().getUserByNumber("wang1111", new DBUtil().getCon());
+		System.out.println(use.getPassword());
+		System.out.println("123");
 	}
 	
 	

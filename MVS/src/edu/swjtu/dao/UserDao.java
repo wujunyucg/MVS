@@ -62,6 +62,17 @@ public interface UserDao {
 	 * @throws SQLException
 	 */
 	public User getUserById(int userId,Connection con) throws SQLException;
+	
+	/**
+	 * 
+	 * 2016年7月10日下午1:47:44
+	 * @author mischief7
+	 * @param userId
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public User getUserByNumber(String userNumber,Connection con) throws SQLException;
 	/**
 	 * 
 	 * 2016年7月9日上午10:16:02
