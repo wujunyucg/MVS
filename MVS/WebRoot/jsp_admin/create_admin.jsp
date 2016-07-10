@@ -37,8 +37,14 @@
 	<ol class="breadcrumb">
 		<li><h1>创建角色</h1></li>
 	</ol>
+
+	<div id="result" class="alert alert-success" role="alert"
+		style="display:none;">很好，您已成功创建了一个角色</div>
+
 	<!-- 第一个页面获取角色名称 -->
 	<div id="page1" class="mypage first">
+		<div id="judgeAdminName" class="alert alert-danger" role="alert"
+			style="display:none;">此角色名已存在</div>
 		<div class="input-group input-group-lg">
 			<span class="input-group-addon" id="sizing-addon1">请输入角色名称：</span> <input
 				id="admintext" type="text" class="form-control" placeholder="name"
@@ -97,13 +103,13 @@
 
 		<div id="show_name" class="alert alert-success" role="alert"></div>
 		<div id="show_power" class="alert alert-success" role="alert"></div>
-		<button id="btn_pre3"type="button" class="btn btn-default">上一步</button>
-		<button id="btn_finish"type="button" class="btn btn-default">完成</button>
+		<button id="btn_pre3" type="button" class="btn btn-default">上一步</button>
+		<button id="btn_finish" type="button" class="btn btn-default">完成</button>
 	</div>
-
 
 	<script type="text/javascript">
 		var powerIds = "";
+		var adminname = "";
 		$(function() {
 
 			//控制页面的切换
@@ -126,18 +132,20 @@
 						powerIds += index + ",";
 						powers += ($(this).text() + "  &nbsp;&nbsp");
 						cnt++;
-					}
-					if (cnt % 4 == 0) {
-						powers += "<br/>";
+
+						if (cnt % 4 == 0) {
+							powers += "<br/>";
+						}
 					}
 				});
 				if (0 == cnt) {
 					$("#show_power").text("此角色难道没有权限？抱歉，您不能完成此次角色创建");
-					$("#btn_finish").attr("disabled",true);
+					$("#btn_finish").attr("disabled", true);
 				} else {
-				$("#btn_finish").attr("disabled",false);
+					$("#btn_finish").attr("disabled", false);
 					$("#show_power").html(powers);
-					alert(powerIds)
+					//去掉最后的一个逗号
+					powerIds = powerIds.substr(0, powerIds.length - 1);
 				}
 			});
 
@@ -149,16 +157,35 @@
 			$("#btn_pre3").click(function() {
 				$("#page3").hide();
 				$("#page2").show();
-				
+
 				powerIds = "";//必须清空
 			});
 
 			//当文本框文字改变监听
 			$("#admintext").keyup(function() {
 				if ($(this).val() == "") {
+					$("#judgeAdminName").hide();
 					$("#btn_next1").attr("disabled", true);
 				} else {
-					$("#btn_next1").attr("disabled", false);
+					//异步检测名字是否重复
+					adminname = $(this).val();
+					$.ajax({
+						url : "servlet/CreateAdminServlet",
+						type : "POST",
+						data : {
+							type : "1",
+							adminName : adminname,
+						},
+						success : function(re) {
+							if (re == "yes") {
+								$("#judgeAdminName").hide();
+								$("#btn_next1").attr("disabled", false);
+							} else {
+								$("#judgeAdminName").show();
+								$("#btn_next1").attr("disabled", true);
+							}
+						}
+					});
 				}
 			});
 
@@ -183,6 +210,30 @@
 					$("#btn_select_all").text("全选");
 					t = true;
 				}
+			});
+
+			//点击完成后保存角色数据到数据库
+			$("#btn_finish").click(function() {
+				adminname = $("#admintext").val();
+				$.ajax({
+					url : "servlet/CreateAdminServlet",
+					type : "POST",
+					data : {
+						type : "2",
+						adminName : adminname,
+						powerId : powerIds
+					},
+					success : function(re) {
+						$("#result").show();
+						if ("yes" == re) {
+							$("#page3").hide("1000");
+						} else {
+							$("#result").removeClass("alert-success");
+							$("#result").addClass("alert-danger");
+							$("#result").text("抱歉，未知原因创建失败");
+						}
+					}
+				});
 			});
 		});
 	</script>
