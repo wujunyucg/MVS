@@ -55,8 +55,17 @@
     <servlet-name>ManageUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageUserServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>CreateAdminServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.CreateAdminServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>ManageUserServlet</servlet-name>
     <url-pattern>/servlet/ManageUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CreateAdminServlet</servlet-name>
+    <url-pattern>/servlet/CreateAdminServlet</url-pattern>
   </servlet-mapping>
 </web-app>
