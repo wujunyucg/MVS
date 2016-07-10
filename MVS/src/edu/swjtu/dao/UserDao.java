@@ -61,6 +61,7 @@ public interface UserDao {
 	 * @return
 	 * @throws SQLException
 	 */
+	public User getUserByNumber(String userNumber,Connection con) throws SQLException;
 	public User getUserById(int userId,Connection con) throws SQLException;
 	
 	/**
