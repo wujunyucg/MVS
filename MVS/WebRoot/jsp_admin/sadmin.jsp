@@ -82,7 +82,7 @@
 			
 			$("#create-user").click(function(){
 			
-				$("#content").load("jsp_admin/create_user.jsp");
+				$("#content").load("<%=request.getContextPath()%>/servlet/CreateUserServlet");
 			});
 			
 			$("#manage-admin").click(function(){
