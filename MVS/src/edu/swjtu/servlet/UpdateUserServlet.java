@@ -1,6 +1,7 @@
 package edu.swjtu.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,32 +19,56 @@ import edu.swjtu.model.Admin;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
 
-/**
- * Servlet implementation class UpdateUserServlet
- */
 public class UpdateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public UpdateUserServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doPost(request,response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		PrintWriter out = response.getWriter();
+		User user = new User();
+		user.setUserId(Integer.valueOf(request.getParameter("userid")).intValue());  
+		//System.out.println(user.getUserId());
+		String adminname=request.getParameter("admin");
+		AdminDaoImpl adi = new AdminDaoImpl();
+		DBUtil db = new DBUtil();
+		Connection con;
+		try {
+			con = db.getCon();
+			Admin admin = adi.getAdminByName(adminname, con);
+			user.setAdminId(admin.getAdminId());
+			user.setNumber(request.getParameter("number"));
+			user.setPassword(request.getParameter("password"));
+			user.setType(Integer.valueOf(request.getParameter("type")).intValue());
+			UserDaoImpl udi = new UserDaoImpl();
+			udi.updateUser(user, con);
+			ArrayList<User> userList =new ArrayList<User>();
+			userList=(ArrayList<User>) request.getSession().getAttribute("user_list");
+			int status = Integer.valueOf(request.getParameter("staus")).intValue();
+			userList.set(status,user);
+			db.closeCon(con);
+			out.print(1);
+			out.close();
+			
+		} catch (ClassNotFoundException e) {
+			out.print(0);
+			out.close();
+			e.printStackTrace();
+		} catch (SQLException e) {
+			out.print(0);
+			out.close();
+			e.printStackTrace();
+		}
+		
 		
 	}
 
