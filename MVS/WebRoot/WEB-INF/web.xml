@@ -63,8 +63,17 @@
     <servlet-name>UpdateUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.UpdateUserServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ManageAdminServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ManageAdminServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>UpdateUserServlet</servlet-name>
     <url-pattern>/servlet/UpdateUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ManageAdminServlet</servlet-name>
+    <url-pattern>/servlet/ManageAdminServlet</url-pattern>
   </servlet-mapping>
 </web-app>
