@@ -84,7 +84,6 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public Admin getAdminById(int adminId, Connection con) throws SQLException {
-		// TODO Auto-generated method stub
 		Admin admin = null;
 		String sql = "select * from admin where admin_id=?";
 		try {
@@ -118,6 +117,25 @@ public class AdminDaoImpl implements AdminDao {
 		}
 		return adminList;
 		
+	}
+
+	@Override
+	public Admin getAdminByName(String name, Connection con)
+			throws SQLException {
+		Admin admin = null;
+		String sql = "select * from admin where admin_name=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, name);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				admin = getAdminOne(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return admin;
 	}
 
 }

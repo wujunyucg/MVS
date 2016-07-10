@@ -78,6 +78,18 @@ public class AdminDaoTest {
 		SiteDaoImpl sdi = new SiteDaoImpl();
 		sdi.addOneSite(site, new DBUtil().getCon());
 		}
+	/**
+	 * 测试
+	 * 2016年7月10日上午11:36:19
+	 * @author jimolonely
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Test
+	public void jimoTest() throws ClassNotFoundException, SQLException{
+		String name = "1";
+		System.out.println(new AdminDaoImpl().getAdminByName(name, new DBUtil().getCon()));
+	}
 		
 }
 

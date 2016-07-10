@@ -57,6 +57,16 @@ public interface AdminDao {
 	 */
 	public Admin getAdminById(int adminId,Connection con) throws SQLException;
 	/**
+	 * 根据角色名称查询角色
+	 * 2016年7月10日上午11:26:18
+	 * @author jimolonely
+	 * @param name
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public Admin getAdminByName(String name,Connection con)throws SQLException;
+	/**
 	 * 
 	 * 2016年7月9日上午9:51:50
 	 * @author wujunyu
