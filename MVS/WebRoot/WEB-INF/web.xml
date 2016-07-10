@@ -71,8 +71,6 @@
     <servlet-name>ManageAdminServlet2</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageAdminServlet2</servlet-class>
   </servlet>
-
-
   <servlet-mapping>
     <servlet-name>UpdateUserServlet</servlet-name>
     <url-pattern>/servlet/UpdateUserServlet</url-pattern>
@@ -84,5 +82,15 @@
   <servlet-mapping>
     <servlet-name>ManageAdminServlet2</servlet-name>
     <url-pattern>/servlet/ManageAdminServlet2</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteUserServlet</display-name>
+    <servlet-name>DeleteUserServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.DeleteUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteUserServlet</servlet-name>
+    <url-pattern>/servlet/DeleteUserServlet</url-pattern>
   </servlet-mapping>
 </web-app>
