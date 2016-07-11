@@ -153,4 +153,20 @@ public class UserDaoImpl implements UserDao{
 		return user;
 	}
 
+	@Override
+	public int deleteUserByAdminId(int adminId, Connection con)
+			throws SQLException {
+		String sql = "delete  from user where user_adminId = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, adminId);
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
+
 }

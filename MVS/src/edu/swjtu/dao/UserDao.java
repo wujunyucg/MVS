@@ -83,5 +83,15 @@ public interface UserDao {
 	 * @throws SQLException
 	 */
 	public ArrayList getAllUser(Connection con) throws SQLException;
+	/**
+	 * 根据角色id删除用户
+	 * 2016年7月11日上午8:54:00
+	 * @author jimolonely
+	 * @param adminId
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public int deleteUserByAdminId(int adminId,Connection con) throws SQLException;
 	
 }

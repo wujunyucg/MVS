@@ -84,6 +84,15 @@ public class UserDaoTest {
 		System.out.println(use.getPassword());
 		System.out.println("123");
 	}
-	
-	
+	/**
+	 * 2016年7月11日上午8:57:15
+	 * @author jimolonely
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void testDeleteUserByAdminId() throws ClassNotFoundException, SQLException{
+		int re = new UserDaoImpl().deleteUserByAdminId(1,new DBUtil().getCon());
+		System.out.println(re);
+	}
 }
