@@ -29,7 +29,7 @@
 	href="css/bootstrap/bootstrap.min.css">
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
- <script src="layer/layer.js"></script>
+<script src="layer/layer.js"></script>
 <script type="text/javascript" language="javascript">
 $.ajaxSetup ({ 
     cache: false //关闭AJAX相应的缓存 
@@ -42,6 +42,10 @@ $.ajaxSetup ({
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">超级管理员后台</a>
+			<button id="nav_toggle"type="button" class="btn btn-default" aria-label="Left Align"
+			style="margin-top:8px;color:#fff;background-color:#000;border:0;">
+				<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+			</button>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
@@ -62,13 +66,40 @@ $.ajaxSetup ({
 	</nav>
 
 	<div id="main">
-		<div id=left-menu>
+		<div id="left-menu">
 			<div class="list-group">
-				<button id="create-admin" type="button"
-					class="list-group-item btn-menu">创建角色</button>
-				<button id="create-user"type="button" class="list-group-item  btn-menu">创建用户</button>
-				<button id="manage-admin"type="button" class="list-group-item  btn-menu">管理角色</button>
-				<button id="manage-user"type="button" class="list-group-item  btn-menu">管理用户</button>
+				<button type="button"
+					class="list-group-item btn-menu btn_text create-admin">
+					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+					创建角色</button>
+				<button type="button"style="display:none;"
+					class="list-group-item btn-menu btn_icon create-admin">
+					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+					</button>
+				<button type="button"
+					class="list-group-item  btn-menu btn_text create-user">
+					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
+					创建用户</button>
+					<button  type="button"style="display:none;"
+					class="list-group-item  btn-menu btn_icon create-user">
+					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
+					</button>
+				<button type="button"
+					class="list-group-item  btn-menu btn_text manage-admin">
+					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+					管理角色</button>
+					<button id="manage-admin" type="button"style="display:none;"
+					class="list-group-item  btn-menu btn_icon manage-admin">
+					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+					</button>
+				<button type="button"
+					class="list-group-item  btn-menu btn_text manage-user">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					管理用户</button>
+					<button type="button"style="display:none;"
+					class="list-group-item  btn-menu btn_icon manage-user">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					</button>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
@@ -80,24 +111,42 @@ $.ajaxSetup ({
 
 	<script type="text/javascript">
 		$(function() {
-			$("#create-admin").click(function(){
+			$(".create-admin").click(function(){
 			
 				$("#content").load("jsp_admin/create_admin.jsp");
 			});
 			
-			$("#create-user").click(function(){
+			$(".create-user").click(function(){
 			
 				$("#content").load("<%=request.getContextPath()%>/servlet/CreateUserServlet");
 			});
 			
-			$("#manage-admin").click(function(){
+			$(".manage-admin").click(function(){
 			
 				$("#content").load("<%=path%>/servlet/ManageAdminServlet");
 			});
 			
-			$("#manage-user").click(function(){
+			$(".manage-user").click(function(){
 			
-				$("#content").load("<%=basePath%>/servlet/ManageUserServlet?random"+Math.random());
+				$("#content").load("<%=basePath%>/servlet/ManageUserServlet?random" + Math.random());
+			});
+			
+			var turn = true;
+			$("#nav_toggle").click(function(){
+				if(turn){
+					$("#left-menu").css("width","60px");
+					$("#content").css("marginLeft","80px");
+					//
+					$(".btn_text").hide();
+					$(".btn_icon").show();
+					turn = false;
+				}else{
+					$("#left-menu").css("width","250px");
+					$("#content").css("marginLeft","260px");
+					$(".btn_text").show();
+					$(".btn_icon").hide();
+					turn = true;
+				}
 			});
 		});
 	</script>
