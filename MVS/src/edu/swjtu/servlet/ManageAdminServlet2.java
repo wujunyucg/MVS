@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.swjtu.impl.AdminDaoImpl;
+import edu.swjtu.impl.UserDaoImpl;
 import edu.swjtu.model.Admin;
 import edu.swjtu.model.Powers;
 import edu.swjtu.util.DBUtil;
@@ -26,7 +27,7 @@ public class ManageAdminServlet2 extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 		
-		//type==1代表查看详情，2代表返回角色的权限,3代表更新角色
+		//type==1代表查看详情，2代表返回角色的权限,3代表更新角色,4代表删除角色
 		String type = request.getParameter("type");
 		String adminname = request.getParameter("adminName");
 		
@@ -112,8 +113,34 @@ public class ManageAdminServlet2 extends HttpServlet {
 					}
 				}
 			}
+		}else if(type.equals("4")){
+			try {
+				con = db.getCon();
+				Admin admin = adi.getAdminByName(adminname, con);
+				if(null!=admin){
+					int id = admin.getAdminId();
+					int user = new UserDaoImpl().deleteUserByAdminId(id, con);
+					int re = adi.deleteAdmin(id, con);
+					if(re>0){
+						pw.write(user+"");
+					}else{
+						pw.write("no");
+					}
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				if(null!=con){
+					try {
+						db.closeCon(con);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		}
-		
 		pw.close();
 	}
 }

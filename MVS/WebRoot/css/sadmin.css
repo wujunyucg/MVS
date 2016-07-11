@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 
+.navbar{
+	background-color: #37a0bb !important;
+	color:#ffff80!important;
+	border-color: #fff !important;
+}
 #main{
 	margin-top:50px;
 	width: 100%;
@@ -18,11 +23,11 @@
 	margin-left: 20% !important;
 }
 .btn-menu{
-	background-color: #101010 !important;
+	background-color: #37a0bd !important;
 	height:100px !important;
 	color: #fff !important;
 	text-align: center !important;
 }
 .btn-menu:hover{
-	background-color: #10cccc !important;
+	background-color: #9ab9e7!important;
 }

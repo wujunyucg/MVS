@@ -52,7 +52,7 @@
 								<td>${admin.value}</td>
 								<td><a class="admin_detail" href="javascript:;">查看详情</a></td>
 								<td><a class="admin_modify" href="javascript:;">修改</a></td>
-								<td><a>删除</a></td>
+								<td><a class="admin_delete" href="javascript:;">删除</a></td>
 							</tr>
 						</c:forEach>
 					</tr>
@@ -181,6 +181,33 @@
 	</div>
 	<!-- /.modal -->
 
+	<!-- 删除的提示模态框 -->
+	<div class="modal fade" id="modal_delete" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">删除角色</h3>
+				</div>
+				<div class="modal-body">
+					<h4 id="delete_info" style="color:red;">
+						严重警告：<br />您将删除此角色，并且角色下面的所有用户都将不存在，任继续吗？
+					</h4>
+				</div>
+				<div class="modal-footer">
+					<button id="btn_delete" type="button" class="btn btn-danger">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 	<script type="text/javascript">
 		$(function() {
 			//查看详情点击事件
@@ -207,6 +234,7 @@
 				});
 			});
 
+			//下面是对角色的修改
 			var lastModify = "-1";//看是否是与上一次相同的修改
 			var initialName;//原始角色名称
 			var powerIds = "";
@@ -389,6 +417,46 @@
 					}
 				});
 			});
+
+			//下面是对角色的删除
+			$(".admin_delete").click(
+					function() {
+						//取得此行的角色名称
+						var adminname = $(this).parent().prev().prev().prev()
+								.prev().text();
+						$(this).attr("data-toggle", "modal");
+						$(this).attr("data-target", "#modal_delete");
+						var thisDelete = this;
+						
+						$("#btn_delete").click(
+								function() {
+									$(this).attr("disabled", true);
+									$.ajax({
+										url : "servlet/ManageAdminServlet2",
+										type : "POST",
+										data : {
+											type : "4",
+											adminName : adminname,
+										},
+										success : function(re) {
+											//$("#btn_delete").attr("disabled", false);
+											if ("no" != re) {
+												$("#delete_info").text(
+														"删除成功，共删除了此角色下的" + re
+																+ "个用户");
+												//在页面上移出表格的这一行
+												$(thisDelete).parent().parent().remove();
+											} else {
+												$("#delete_info").text(
+														"未知原因删除失败");
+											}
+										},
+										error : function() {
+											$(this).attr("disabled", false);
+										}
+									});
+								});
+					});
 		});
 	</script>
 </body>
