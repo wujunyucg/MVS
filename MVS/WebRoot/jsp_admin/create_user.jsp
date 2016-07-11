@@ -77,7 +77,7 @@
 		<div class="col-lg-6">
 		<div class="input-group">
 			<span class="input-group-addon" id="sizing-addon2">用户角色：</span>
-			<div class="form-control" id="admincho" aria-describedby="sizing-addon2">请从下列中选取一个权限(必选)</div>
+			<div class="form-control" id="admincho" aria-describedby="sizing-addon2">请从下列中选取一个角色(必选)</div>
 		</div>
 		</div>
 		<div class="col-lg-6">
@@ -93,7 +93,7 @@
 			</table></tr>
 	</div>
 
-	<div class="table-responsive"  style="height:150px;overflow-y:auto">	
+	<div class="table-responsive"  style="height:230px;overflow-y:auto">	
 		<table class="table">	
 			<c:if test="${list != null }">
 				<c:forEach items="${list}" var="admin">
@@ -122,7 +122,7 @@
 	      </div>
 	      <div id="page2" class="mypage">
 	      	<div class="modal-body">
-		      	<div class="alert alert-info" role="alert">下面是您创建的用户信息，若核实无误，请点击确认创建</div>
+		      	<div class="alert alert-info" role="alert">下面是您创建的用户信息，若核实无误，请点击-确认创建</div>
 		        <div id="show_number" class="alert alert-success" role="alert"></div>
 				<div id="show_password" class="alert alert-success" role="alert"></div>
 				<div id="show_power" class="alert alert-success" role="alert"></div>
@@ -138,7 +138,7 @@
 		      	<div id="result" class="alert alert-success" role="alert" style="display:none;">已成功创建了一个用户</div>
 		      </div>
 		      <div class="modal-footer">
-		       	<button id="btn_ne" type="button" class="btn btn-default">确认</button>
+		       	<button id="btn_ne" type="button" class="btn btn-primary">确认</button>
 		      </div>
 		  </div>
 		  
