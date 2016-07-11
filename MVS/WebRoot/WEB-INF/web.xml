@@ -93,4 +93,14 @@
     <servlet-name>DeleteUserServlet</servlet-name>
     <url-pattern>/servlet/DeleteUserServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PageUserServlet</display-name>
+    <servlet-name>PageUserServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.PageUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PageUserServlet</servlet-name>
+    <url-pattern>/servlet/PageUserServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

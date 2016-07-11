@@ -45,14 +45,20 @@ public class ManageUserServlet extends HttpServlet {
 			ArrayList<User> userList = usi.getAllUser(con);
 			AdminDaoImpl adi = new AdminDaoImpl();
 			ArrayList<Admin> adminList = adi.getAllAdmin(con);
+			int userPage = 1;
+			int pageNum = 5;
+			int pageAll = (int) Math.ceil((double)userList.size()/(double)pageNum);
+			request.getSession().setAttribute("user_page_num", pageNum);
+			request.getSession().setAttribute("user_page_all", pageAll);
+			request.getSession().setAttribute("user_page", userPage);
 			request.getSession().setAttribute("user_list", userList);
 			request.getSession().setAttribute("user_admin_list", adminList);
 			db.closeCon(con);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		response.sendRedirect("../jsp_admin/manage_user.jsp");

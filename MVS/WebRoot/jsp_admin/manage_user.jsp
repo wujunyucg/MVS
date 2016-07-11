@@ -108,7 +108,63 @@ function update(){
 	    
       }});
 }
+
+function deleteone(userid,statu){
+	$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/DeleteUserServlet", 
+		data:{
+						onlyOne : "1",
+						userId : userid,
+						status : statu
+			},
+		error: function(request) {
+          alert('修改失败，请重新修改');
+         },
+		success: function(request){
+		if(request == 1){
+			 window.location.reload();
+           	
+		}
+        else{
+        	 alert('修改失败，请重新修改');
+        }
+	    
+      }});
+}
+
+function pagination(page){
+	for(var i= ${user_page} ; i<=${user_page+4<user_page_all?user_page+4:user_page_all };i++){
+		$("#li"+i).attr('class','');
+		$("#li_a"+i).attr('onclick','pagination('+i+')');
+	}
+	$("#li"+page).attr('class','active');
+	$("#li_a"+page).attr('onclick','');
+	var tab ='<thead><tr><th>#</th><th>#</th><th>管理员账号</th><th>管理员角色</th><th>查看详情</th><th>修改</th><th>删除</th></tr></thead><tbody><tr>';
+	<c:forEach items="${user_list}" var="user" varStatus="status" begin="1" end="2" >
+        tab = tab +'<tr id="tr${status.index}">'
+            +'<td></td>'
+            +'<td >${status.index+1}</td>'
+            +'<td id="tr${status.index}0">${user.getNumber()}</td>';
+            <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
+			if(${user.getAdminId()} == ${admin.getAdminId() }{
+           tab = tab+'<td id="tr${status.index}1"> ${admin.getName()}</td>'
+            +'<td id="tr${status.index}2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1(\'${user.getNumber()}\',\'${user.getPassword()}\', \'${admin.getName()}\',\'${user.getType()}\')">查看详情</a></td>'
+            +'<td id="tr${status.index}3">'
+            +'<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2(\'${user.getUserId()}\',\'${user.getNumber()}\',\'${user.getPassword()}\',\'${admin.getName()}\',\'${user.getType()}\',${status.index})">'
+            +'修改</a></td>';
+         
+           }
+           </c:forEach>
+            tab=tab+'<td><a onclick="javascript:deleteone(\'${user.getUserId()}\',\'${status.index}\')">删除</a></td>'
+          	+'</tr>';
+          </c:forEach>
+         tab=tab +'</tr></tbody></table>';
+          $("#usertab").html(tab);
+}
+
 </script>
+
   </head>
   
   <body style = "text-align: center;">
@@ -131,10 +187,10 @@ function update(){
 	  </thead>
 	  <tbody>
 	    <tr>
-	       <c:forEach items="${user_list}" var="user" varStatus="status" >
+	       <c:forEach items="${user_list}" var="user" varStatus="status" begin="${(user_page-1)*user_page_num}" end="${user_page*user_page_num-1}">
           <tr id="tr${status.index}">
             <td></td>
-            <td >${status.index}</td>
+            <td >${status.index+1}</td>
             <td id="tr${status.index}0">${user.getNumber()}</td>
              <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
            <c:if test="${user.getAdminId() == admin.getAdminId() }"> <td id="tr${status.index}1"> ${admin.getName()}</td>
@@ -142,12 +198,34 @@ function update(){
             <td id="tr${status.index}3"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index})">修改</a></td>
            </c:if>
             </c:forEach>
-            <td><a >删除</a></td>
+            <td><a onclick="javascript:deleteone('${user.getUserId()}','${status.index}')">删除</a></td>
           </tr>
            </c:forEach>
 	    </tr>
 	  </tbody>
 	</table>
+	<nav>
+  <ul class="pagination">
+    <li class="disabled">
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <c:forEach var="i" begin="${user_page}" end="${user_page+4<user_page_all?user_page+4:user_page_all }">
+    <c:if test="${i == user_page }">
+    <li id="li${i}" class="active" ><a id="li_a${i}" onclick="">${i}</a></li>
+    </c:if>
+     <c:if test="${i != user_page }">
+    <li id="li${i}" class=""><a id="li_a${i}"onclick="pagination(${i})">${i}</a></li>
+    </c:if>
+    </c:forEach>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
     </div>
     </c:if>
     
@@ -186,3 +264,4 @@ function update(){
   <script src="scripts/bootstrap.min.js"></script>
  
 </html>
+    
