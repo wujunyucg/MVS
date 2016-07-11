@@ -36,9 +36,7 @@ $.ajaxSetup ({
 }); 
 </script>
 </head>
-
 <body>
-
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">超级管理员后台</a>
@@ -108,26 +106,26 @@ $.ajaxSetup ({
 		<div id="content">content</div>
 	</div>
 
-
 	<script type="text/javascript">
 		$(function() {
+			var cnt = -1;//表示页面的编号
 			$(".create-admin").click(function(){
-			
+				cnt = 0;
 				$("#content").load("jsp_admin/create_admin.jsp");
 			});
 			
 			$(".create-user").click(function(){
-			
+				cnt=1;
 				$("#content").load("<%=request.getContextPath()%>/servlet/CreateUserServlet");
 			});
 			
 			$(".manage-admin").click(function(){
-			
+				cnt=2;
 				$("#content").load("<%=path%>/servlet/ManageAdminServlet");
 			});
 			
 			$(".manage-user").click(function(){
-			
+				cnt=3;
 				$("#content").load("<%=basePath%>/servlet/ManageUserServlet?random" + Math.random());
 			});
 			
@@ -140,13 +138,41 @@ $.ajaxSetup ({
 					$(".btn_text").hide();
 					$(".btn_icon").show();
 					turn = false;
+					
+					$(".btn_icon").each(function(index){
+						if(index==cnt){
+							$(this).css("cssText","background-color:red!important");
+						}else{
+							$(this).css("cssText","background-color:#020202!important");
+						}
+					});
 				}else{
 					$("#left-menu").css("width","250px");
 					$("#content").css("marginLeft","260px");
 					$(".btn_text").show();
 					$(".btn_icon").hide();
 					turn = true;
+					$(".btn_text").each(function(index){
+						if(index==cnt){
+							$(this).css("cssText","background-color:red!important");
+						}else{
+							$(this).css("cssText","background-color:#020202!important");
+						}
+					});
 				}
+			});
+			
+			$(".btn_text").click(function(){
+				$(".btn_text").each(function(){
+					$(this).css("cssText","background-color:#020202!important");
+				});
+				$(this).css("cssText","background-color:red!important");
+			});
+			$(".btn_icon").click(function(){
+				$(".btn_icon").each(function(){
+					$(this).css("cssText","background-color:#020202!important");
+				});
+				$(this).css("cssText","background-color:red!important");
 			});
 		});
 	</script>

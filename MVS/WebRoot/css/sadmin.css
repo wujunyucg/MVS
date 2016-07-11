@@ -8,13 +8,14 @@
 #main{
 	margin-top:50px;
 	width: 100%;
-	min-height: 300px;
+	min-height: 600px !important;
 	min-width: 800px;
 }
 #left-menu{
 	width: 250px;
+	min-height: 600px;
 	min-width:50px;
-	background-color: #fff;
+	background-color: #ececec;
 	float:left;
 	margin-right: 20px;
 }
