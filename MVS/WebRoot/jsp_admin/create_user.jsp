@@ -38,44 +38,46 @@
   
   	<ol class="breadcrumb"><li><h4>创建用户</h4></li></ol>
   
-  	<div id="result" class="123" role="alert"
-			style="display:none;">已成功创建了一个用户</div>
-		
   	<!-- 第一个页面创建用户属性 -->
   	 <div class="mypage1">
   	 	
   		<div class="row">
   		<div class="col-lg-6">
-  		<div class="input-group input-group-lg">
-			<span class="input-group-addon" id="sizing-addon1">用户帐号：</span> <input
+  		<div class="input-group">
+			<span class="input-group-addon" id="sizing-addon2">用户帐号：</span> <input
 				id="numbertext" type="text" class="form-control" placeholder="请输入帐号(必填)"
-				aria-describedby="sizing-addon1">		
+				aria-describedby="sizing-addon2">		
 		</div>
 		</div>
 		<div class="col-lg-6">
-		<div id="judgeUserNumber"  class="alert alert-danger" role="alert" style="display:none;">此角色名已存在</div>
+			<h6>
+				<div id="judgeUserNumber"  class="label label-danger" role="alert" style="display:none;">此用户账号已存在</div>
+				<div id="judgeUN"  class="label label-danger" role="alert" style="display:none;">请填写用户账号</div>
+			</h6>
 		</div>
 		</div>
 		<br/>
 		<div class="row">
 		<div class="col-lg-6">
-		<div class="input-group input-group-lg">
-			<span class="input-group-addon" id="sizing-addon1">用户密码：</span> <input
+		<div class="input-group">
+			<span class="input-group-addon" id="sizing-addon2">用户密码：</span> <input
 				id="passwordtext" type="password" class="form-control" placeholder="默认密码为123456"
-				aria-describedby="sizing-addon1">
+				aria-describedby="sizing-addon2">
 		</div>
 		</div>
 		<div class="col-lg-6">
-
+			<h6>
+				<div id="judgePL"  class="label label-danger" role="alert" style="display:none;">密码长度不能小于6个字符</div>
+			</h6>
 		</div>
 		</div>
 		
 	<br/>
 		<div class="row">
 		<div class="col-lg-6">
-		<div class="input-group input-group-lg">
-			<span class="input-group-addon" id="sizing-addon1">管理角色：</span>
-			<div class="form-control" id="admincho" aria-describedby="sizing-addon1">请从下列中选取一个权限(必选)</div>
+		<div class="input-group">
+			<span class="input-group-addon" id="sizing-addon2">用户角色：</span>
+			<div class="form-control" id="admincho" aria-describedby="sizing-addon2">请从下列中选取一个权限(必选)</div>
 		</div>
 		</div>
 		<div class="col-lg-6">
@@ -91,7 +93,7 @@
 			</table></tr>
 	</div>
 
-	<div class="table-responsive"  style="height:220px;overflow-y:auto">	
+	<div class="table-responsive"  style="height:150px;overflow-y:auto">	
 		<table class="table">	
 			<c:if test="${list != null }">
 				<c:forEach items="${list}" var="admin">
@@ -105,19 +107,45 @@
 	<br/>
 	</div>
 	</div>
-			<button id="btn_next" type="button" class="btn btn-default" 
-			disabled="disabled" style="align:left">下一步</button>
+			<button id="btn_next" type="button" class="btn btn-primary" data-toggle="modal" 
+			data-target="#myModal"disabled="disabled" style="align:left">下一步</button>
 	</div>
 	<br/>
 	
-	<div id="page2" class="mypage " style="display: none;">
-		<div class="alert alert-info" role="alert">下面是您创建的角色信息，若有错误，请返回上一步修改！否则请点击完成</div>
-
-		<div id="show_number" class="alert alert-success" role="alert"></div>
-		<div id="show_password" class="alert alert-success" role="alert"></div>
-		<div id="show_power" class="alert alert-success" role="alert"></div>
-		<button id="btn_pre" type="button" class="btn btn-default">上一步</button>
-		<button id="btn_finish" type="button" class="btn btn-default">确认创建</button>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">创建用户</h4>
+	      </div>
+	      <div id="page2" class="mypage">
+	      	<div class="modal-body">
+		      	<div class="alert alert-info" role="alert">下面是您创建的用户信息，若核实无误，请点击确认创建</div>
+		        <div id="show_number" class="alert alert-success" role="alert"></div>
+				<div id="show_password" class="alert alert-success" role="alert"></div>
+				<div id="show_power" class="alert alert-success" role="alert"></div>
+		      </div>
+		      <div class="modal-footer">
+		       	<button id="btn_pre" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button id="btn_finish" type="button" class="btn btn-primary">确认创建</button>
+		      </div>
+		  </div>
+		  
+		   <div id="page3" class="mypage3">
+	      	<div class="modal-body">
+		      	<div id="result" class="alert alert-success" role="alert" style="display:none;">已成功创建了一个用户</div>
+		      </div>
+		      <div class="modal-footer">
+		       	<button id="btn_ne" type="button" class="btn btn-default">确认</button>
+		      </div>
+		  </div>
+		  
+	    </div>
+	  </div>
+	</div>
+	
 	</div>
 	
 	
@@ -126,15 +154,22 @@
 		var usernumber = "";
 		var userpassword = "";
 		var adminid = "";
+		var adminname = "";
 		var numkey = 0;
 		var powkey = 0;
+		var paskey = 1;
 		$(function() {
 
 			//控制页面的切换
+			
+			$("#btn_ne").click(function() {
+				window.location.href="jsp_admin/sadmin.jsp"; 
+			});
+				
 			$("#btn_next").click(function() {
 			
-				$(".mypage1").hide();
 				$("#page2").show();
+				$("#page3").hide();
 				
 				usernumber = $("#numbertext").val();
 				userpassword = $("#passwordtext").val();		
@@ -145,33 +180,25 @@
 				$(".admin_id").each(function() {
 					if ($(this).hasClass("btn-success")) {
 						adminid = $(this).attr("id");
+						adminname = $(this).attr("title");
 					}
 				});
 				
 				$("#show_number").text("用户帐号：" + usernumber);
-				$("#show_password").text("用户密码：" + userpassword);
+				$("#show_password").text("用户密码：" + userpassword);		
+				$("#show_power").text("用户角色：" + adminname);
+				
+			});
 
-				
-				$("#show_power").text("用户角色：" + adminid);
-				
-				var powers = "<h2>拥有的权限：</h2><br/>";
-				
-			});
-			
-			$("#btn_pre").click(function() {
-			
-				$("#page2").hide();
-				$(".mypage1").show();
-			});
 			//当文本框文字改变监听
 			$("#numbertext").keyup(function() {
-				if($(this).val() == "" || $(this).val() == null){
-					numkey = 0; 
-					$("#btn_next").attr("disabled", true);}	
-				if ($(this).val() == "") {
+				if ($(this).val() == "" || $(this).val() == null) {
 					$("#judgeUserNumber").hide();
+					numkey = 0; 
+					$("#judgeUN").show();
 					$("#btn_next").attr("disabled", true);
 				} else {
+					$("#judgeUN").hide();
 					//异步检测名字是否重复
 					usernumber = $(this).val();
 					$.ajax({
@@ -185,16 +212,41 @@
 							if (re == "yes") {
 								$("#judgeUserNumber").hide();
 								numkey = 1;
-								if(numkey == 1 && powkey == 1){
+								if(numkey == 1 && powkey == 1 && paskey == 1){
 									$("#btn_next").attr("disabled", false); }
+								else{
+									$("#btn_next").attr("disabled", true); }
 							} else {
 								$("#judgeUserNumber").show();
+								numkey = 0;
 								$("#btn_next").attr("disabled", true);
 							}
 						}
 					});
 				}
 			});
+
+			$("#passwordtext").keyup(function() {
+				if ($(this).val() != "" &&  $(this).val() != null) {
+					if($(this).val().length < 6){
+						paskey = 0;
+						$("#judgePL").show();
+					}
+					else{
+						$("#judgePL").hide();
+						paskey = 1;
+					}
+				}
+				else{
+					$("#judgePL").hide();
+					paskey = 1;
+				}
+				if(numkey == 1 && powkey == 1 && paskey == 1){
+					$("#btn_next").attr("disabled", false); }
+				else{
+					$("#btn_next").attr("disabled", true); }
+			});
+
 
 			var t = -1;
 			$(".admin_id").click(function() {			
@@ -216,6 +268,7 @@
 
 			//点击完成后保存用户数据到数据库
 			$("#btn_finish").click(function() {
+				//$("#btn_finish").attr("data-dismiss", "modal");
 				if(adminid != null && adminid != ""){
 					$.ajax({
 						url : "servlet/CreUserNSServlet",
@@ -229,7 +282,9 @@
 						success : function(re) {
 						$("#result").show();
 						if ("yes" == re) {
+							$("#btn_finish").attr("data-dismiss", "modal");
 							$("#page2").hide("1000");
+							$("#page3").show();
 						} else {
 							$("#result").removeClass("alert-success");
 							$("#result").addClass("alert-danger");
