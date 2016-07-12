@@ -41,8 +41,12 @@ public class PageUserServlet extends HttpServlet {
 		int page = Integer.valueOf(request.getParameter("page")).intValue();
 		
 		int pageNum =  (int) request.getSession().getAttribute("user_page_num");
+		
 		ArrayList<User> userList = (java.util.ArrayList<User>) request.getSession().getAttribute("user_list");
+		
+		 int pageAll = (int) Math.ceil((double)userList.size()/(double)pageNum);
 		 request.getSession().setAttribute("user_page",page);
+		 request.getSession().setAttribute("user_page_all",pageAll);
 		 ArrayList<User> newUserList = new ArrayList<User>();
 		 int start = (page - 1) * pageNum;
 		 int end = page * pageNum - 1;
@@ -51,6 +55,7 @@ public class PageUserServlet extends HttpServlet {
 		 }
 		 JSONObject jsonObject = new JSONObject();  
 	        jsonObject.put("user", newUserList);  
+	        jsonObject.put("user_all", pageAll);  
 	        out.print(jsonObject.toString());
 			out.close();
 			

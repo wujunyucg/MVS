@@ -43,15 +43,34 @@ public class DeleteUserServlet extends HttpServlet {
 		UserDaoImpl udi = new UserDaoImpl();
 		DBUtil db = new DBUtil();
 		Connection con;
+		
 		try {
 			con = db.getCon();
-			if(onlyOne != null){
+			if(onlyOne.equals("1")){
 				int userId = Integer.valueOf(request.getParameter("userId")).intValue();
 				int status = Integer.valueOf(request.getParameter("status")).intValue();
 				udi.deleteUser(userId, con);
 				ArrayList<User> userList =new ArrayList<User>();
 				userList=(ArrayList<User>) request.getSession().getAttribute("user_list");
 				userList.remove(status);
+				db.closeCon(con);
+				out.print(1);
+				out.close();
+			}
+			else if(onlyOne .equals("0")){
+				 String status[] = request.getParameter("status").replace("[", "").replace("]", "").split(","); 
+				 String userIds[] = request.getParameter("ids").replace("[", "").replace("]", "").split(","); 
+				// System.out.println(a[0]);
+				 for(String userId : userIds){
+					 udi.deleteUser(Integer.valueOf(userId).intValue(), con);
+				 }
+				
+				ArrayList<User> userList =new ArrayList<User>();
+				userList=(ArrayList<User>) request.getSession().getAttribute("user_list");
+				for(String statu :status){
+					userList.remove(Integer.valueOf(statu).intValue());
+				}
+				
 				db.closeCon(con);
 				out.print(1);
 				out.close();
