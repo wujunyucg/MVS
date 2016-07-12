@@ -23,7 +23,6 @@
 	<link rel="stylesheet" type="text/css" href="css/create_user.css">
 	<link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
-   <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<script src='scripts/jquery.js'></script>
 	<script src='scripts/bootstrap.min.js'></script>
 
@@ -93,7 +92,7 @@
 			</table></tr>
 	</div>
 
-	<div class="table-responsive"  style="height:230px;overflow-y:auto">	
+	<div class="table-responsive"  style="height:400px;overflow-y:auto">	
 		<table class="table">	
 			<c:if test="${list != null }">
 				<c:forEach items="${list}" var="admin">
