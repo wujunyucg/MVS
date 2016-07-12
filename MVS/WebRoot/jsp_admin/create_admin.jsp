@@ -45,13 +45,20 @@
 	<div id="page1" class="mypage first">
 		<div id="judgeAdminName" class="alert alert-danger" role="alert"
 			style="display:none;">此角色名已存在</div>
+		<div class="row">
+		<div class="col-lg-6">
 		<div class="input-group input-group-lg">
-			<span class="input-group-addon" id="sizing-addon1">请输入角色名称：</span> <input
+			<span class="input-group-addon" id="sizing-addon2">请输入角色名称：</span> <input
 				id="admintext" type="text" class="form-control" placeholder="name"
-				aria-describedby="sizing-addon1">
+				aria-describedby="sizing-addon2">
 		</div>
+		</div>
+		<div class="col-lg-6">
 		<button type="button" class="btn btn-default" id="btn_next1"
 			disabled="disabled">下一步</button>
+		</div>
+		</div>
+		
 	</div>
 
 	<!-- 第二个页面选择权限 -->
