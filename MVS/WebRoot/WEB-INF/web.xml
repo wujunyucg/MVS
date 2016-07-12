@@ -112,6 +112,11 @@
     <servlet-name>ManageCarServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageCarServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.FileUploadServlet</servlet-class>
+  </servlet>
+
 
 
   <servlet-mapping>
@@ -125,6 +130,10 @@
   <servlet-mapping>
     <servlet-name>ManageCarServlet</servlet-name>
     <url-pattern>/servlet/ManageCarServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/servlet/FileUploadServlet</url-pattern>
   </servlet-mapping>
   
   
