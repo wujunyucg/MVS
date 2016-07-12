@@ -28,13 +28,14 @@ $.ajaxSetup ({
     cache: false //关闭AJAX相应的缓存 
 }); 
 
-var tr;
+/*var tr;
  $(function(){
  $("#usertab td").click(function() {
                tr=$(this).parent().attr("id");
+               alert(tr);
             });
      });
-     
+     */
 function  layer1(number,password,admin,type ){
 	  var tab='<table class="table table-hover table-bordered" style="width:100%;">'
 	  +'<tr><td class="td1">管理员账号</td><td>'+number+'</td></tr>'
@@ -47,7 +48,8 @@ function  layer1(number,password,admin,type ){
 	  document.getElementById("modalBut"). style.display="none"; 
 }
 
-function  layer2(userid,number,password,admin,type,staus){
+function  layer2(userid,number,password,admin,type,staus,tr){
+alert(tr);
  document.getElementById("p2"). innerHTML = '';
  document.getElementById("modalBut"). style.display="inline "; 
   var tab= '<form id="updateuser">'
@@ -68,6 +70,7 @@ function  layer2(userid,number,password,admin,type,staus){
 	   +'<tr><td class="td1" >管理员类型</td><td >'+type+'</td></tr>'
 	  +'<input type="text" id="usertype" name="type" value="'+type+'" style="display:none;"/>'
 	  +'<input type="text" id="userstatus" name="staus" value="'+staus+'" style="display:none;"/>'
+	  +'<input type="text" id="usertr" name="usertr" value="'+tr+'" style="display:none;"/>'
 	  +'<table> </form>';
 	 
 	   document.getElementById("p1"). innerHTML = '修改';
@@ -77,7 +80,7 @@ function  layer2(userid,number,password,admin,type,staus){
 function update(){
 	$.ajax({ 
 		type:"post",
-		url: "<%=basePath%>/servlet/UpdateUserServlet", 
+		url: "<%=basePath%>servlet/UpdateUserServlet", 
 		data:$('#updateuser').serialize(), 
 		error: function(request) {
             document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
@@ -87,17 +90,18 @@ function update(){
 			document.getElementById("p2"). innerHTML = '修改成功';
 			var name =$("#username").val();
 			var ad= $("#useradmin").val();	
+			var tr =$("#usertr").val();	
 			var lay1='<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1('
 			+'\''+name+'\',\''+$("#userpass").val()+'\', \''+ad+'\',\''+$("#usertype").val()+'\''
 			+')">查看详情</a>';
 			var lay2='<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('
 			+'\''+$("#userid").val()+'\',\''+'\''+name+'\',\''+$("#userpass").val()+'\', \''+ad+'\',\''+$("#usertype").val()+'\''
 			+'\','+$("#userstatus").val()+'\''
-			+')">修改</a>';
+			+',\$(this).parent().parent().attr(\'id\'))">修改</a>';
+			//alert(tr);
+			alert(lay2);
 	   	 	$("#"+tr+"0").html(name);		
            	$("#"+tr+"1").html(ad);
-           	alert(lay1);
-           	alert(lay2);
            	$("#"+tr+"2").html(lay1);		
            	$("#"+tr+"3").html(lay2);
            	
@@ -133,34 +137,81 @@ function deleteone(userid,statu){
       }});
 }
 
-function pagination(page){
-	for(var i= ${user_page} ; i<=${user_page+4<user_page_all?user_page+4:user_page_all };i++){
-		$("#li"+i).attr('class','');
-		$("#li_a"+i).attr('onclick','pagination('+i+')');
-	}
-	$("#li"+page).attr('class','active');
-	$("#li_a"+page).attr('onclick','');
-	var tab ='<thead><tr><th>#</th><th>#</th><th>管理员账号</th><th>管理员角色</th><th>查看详情</th><th>修改</th><th>删除</th></tr></thead><tbody><tr>';
-	<c:forEach items="${user_list}" var="user" varStatus="status" begin="1" end="2" >
-        tab = tab +'<tr id="tr${status.index}">'
-            +'<td></td>'
-            +'<td >${status.index+1}</td>'
-            +'<td id="tr${status.index}0">${user.getNumber()}</td>';
-            <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
-			if(${user.getAdminId()} == ${admin.getAdminId() }{
-           tab = tab+'<td id="tr${status.index}1"> ${admin.getName()}</td>'
-            +'<td id="tr${status.index}2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1(\'${user.getNumber()}\',\'${user.getPassword()}\', \'${admin.getName()}\',\'${user.getType()}\')">查看详情</a></td>'
-            +'<td id="tr${status.index}3">'
-            +'<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2(\'${user.getUserId()}\',\'${user.getNumber()}\',\'${user.getPassword()}\',\'${admin.getName()}\',\'${user.getType()}\',${status.index})">'
-            +'修改</a></td>';
-         
-           }
-           </c:forEach>
-            tab=tab+'<td><a onclick="javascript:deleteone(\'${user.getUserId()}\',\'${status.index}\')">删除</a></td>'
-          	+'</tr>';
-          </c:forEach>
-         tab=tab +'</tr></tbody></table>';
-          $("#usertab").html(tab);
+function pagination(page1){
+	
+	var st = (page1-1)*2;
+	var ed= page1*2 -1;
+	
+	$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/PageUserServlet", 
+		data:{
+					page :page1
+			},
+		error: function(request) {
+          alert('修改失败，请重新修改');
+         },
+		success: function(request){
+		var list = eval('(' + request + ')');
+		var userlist = list.user;
+			
+		var tab ='<thead><tr><th>#</th><th>#</th><th>管理员账号</th><th>管理员角色</th><th>查看详情</th><th>修改</th><th>删除</th></tr></thead><tbody><tr>';
+			
+			for(var i= 0; i<userlist.length ;i++){
+	        tab = tab +'<tr id="tr'+st+'">'
+	            +'<td></td>'
+	            +'<td >'+parseInt(parseInt(st)+1)+'</td>'
+	            +'<td id="tr'+st+'0">'+userlist[i].number+'</td>';
+	         
+	            <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
+				if(userlist[i].adminId == ${admin.getAdminId() }){
+				   
+	         tab = tab+'<td id="tr'+st+'1"> ${admin.getName()}</td>'
+	            +'<td id="tr'+st+'2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1(\''+userlist[i].number+'\',\''+userlist[i].password+'\', \'${admin.getName()}\',\''+userlist[i].type+'\')">查看详情</a></td>'
+	            +'<td id="tr'+st+'3">'
+	            +'<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2(\''+userlist[i].userId+'\',\''+userlist[i].number+'\',\''+userlist[i].password+'\',\'${admin.getName()}\',\''+userlist[i].type+'\',\''+st+'\',\$(this).parent().parent().attr(\'id\'))">'
+	            +'修改</a></td>';
+	         
+	           }
+	           
+	           </c:forEach>
+	            tab=tab+'<td><a onclick="javascript:deleteone(\''+userlist[i].userId+'\',\''+st+'\')">删除</a></td>'
+	          	+'</tr>';
+	          	 st++;
+         }  
+	        tab=tab +'</tr></tbody></table>';
+	        
+	      $("#usertab").html(tab);
+	      for(var i= (parseInt((page1-1) / 5) )*5 +1 ; i<=(parseInt((page1-1) / 5) )*5 +5 ;i++){
+		$("#li"+(i%5==0?5:i%5)).attr('style','display:none');
+		}
+	   for(var i= (parseInt((page1-1) / 5) )*5 +1 ; i<=(parseInt((page1-1) / 5) )*5 +5 && i <= ${user_page_all};i++){
+	   $("#li"+(i%5==0?5:i%5)).attr('style','dispaly:inline;');
+		$("#li"+(i%5==0?5:i%5)).attr('class','');
+		$("#li_a"+(i%5==0?5:i%5)).attr('onclick','javascript:pagination('+i+')');
+		$("#li_a"+(i%5==0?5:i%5)).html(i);
+		}
+		$("#li"+(page1%5==0?5:page1%5)).attr('class','active');
+		$("#li_a"+(page1%5==0?5:page1%5)).attr('onclick','');
+		if(page1 == 1){
+			$("#pre_li").attr('class','disabled');
+			$("#pre_li_a").attr('onclick','');
+		}
+	    else{
+	    	$("#pre_li").attr('class','');
+			$("#pre_li_a").attr('onclick','javascript:pagination('+parseInt(parseInt(page1)-1)+')');
+	    }
+	    if(page1 == ${user_page_all}){
+			$("#next_li").attr('class','disabled');
+			$("#next_li_a").attr('onclick','');
+		}
+	    else{
+	    	$("#next_li").attr('class','');
+			$("#next_li_a").attr('onclick','javascript:pagination('+parseInt(parseInt(page1)+1)+')');
+	    }
+	    	
+	    
+      }});
 }
 
 </script>
@@ -195,7 +246,7 @@ function pagination(page){
              <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
            <c:if test="${user.getAdminId() == admin.getAdminId() }"> <td id="tr${status.index}1"> ${admin.getName()}</td>
             <td id="tr${status.index}2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1('${user.getNumber()}','${user.getPassword()}', '${admin.getName()}','${user.getType()}')">查看详情</a></td>
-            <td id="tr${status.index}3"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index})">修改</a></td>
+            <td id="tr${status.index}3"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index},$(this).parent().parent().attr('id'))">修改</a></td>
            </c:if>
             </c:forEach>
             <td><a onclick="javascript:deleteone('${user.getUserId()}','${status.index}')">删除</a></td>
@@ -206,8 +257,8 @@ function pagination(page){
 	</table>
 	<nav>
   <ul class="pagination">
-    <li class="disabled">
-      <a href="#" aria-label="Previous">
+    <li class="disabled" id= "pre_li">
+      <a   aria-label="Previous" id= "pre_li_a" onclick="">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -216,14 +267,27 @@ function pagination(page){
     <li id="li${i}" class="active" ><a id="li_a${i}" onclick="">${i}</a></li>
     </c:if>
      <c:if test="${i != user_page }">
-    <li id="li${i}" class=""><a id="li_a${i}"onclick="pagination(${i})">${i}</a></li>
+    <li id="li${i}" class=""><a id="li_a${i}" onclick="javascript:pagination(${i})">${i}</a></li>
     </c:if>
     </c:forEach>
-    <li>
-      <a href="#" aria-label="Next">
+     <c:if test="${user_page_all==1 }">
+    <li class="disabled" id= "next_li">
+   
+      <a  aria-label="Next" id= "next_li_a" onclock="">
         <span aria-hidden="true">&raquo;</span>
       </a>
+     
     </li>
+     </c:if>
+      <c:if test="${user_page_all !=1 }">
+    <li id= "next_li">
+   
+      <a  aria-label="Next" id= "next_li_a" onclock="javascript:pagination(2)">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+     
+    </li>
+     </c:if>
   </ul>
 </nav>
     </div>

@@ -46,7 +46,7 @@ public class ManageUserServlet extends HttpServlet {
 			AdminDaoImpl adi = new AdminDaoImpl();
 			ArrayList<Admin> adminList = adi.getAllAdmin(con);
 			int userPage = 1;
-			int pageNum = 5;
+			int pageNum = 2;
 			int pageAll = (int) Math.ceil((double)userList.size()/(double)pageNum);
 			request.getSession().setAttribute("user_page_num", pageNum);
 			request.getSession().setAttribute("user_page_all", pageAll);

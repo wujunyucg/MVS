@@ -1,37 +1,60 @@
 package edu.swjtu.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import edu.swjtu.model.User;
 /**
- * Servlet implementation class PageUserServlet
+ * 
+ * PageUserServlet.java类
+ * 2016年7月11日
+ * @author wujunyu
+ * TODo
  */
 public class PageUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final int ArrayList = 0;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public PageUserServlet() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+		
+		int page = Integer.valueOf(request.getParameter("page")).intValue();
+		
+		int pageNum =  (int) request.getSession().getAttribute("user_page_num");
+		ArrayList<User> userList = (java.util.ArrayList<User>) request.getSession().getAttribute("user_list");
+		 request.getSession().setAttribute("user_page",page);
+		 ArrayList<User> newUserList = new ArrayList<User>();
+		 int start = (page - 1) * pageNum;
+		 int end = page * pageNum - 1;
+		 for(int i = start ;i<userList.size() && i<=end  ;i++){
+			 newUserList.add(userList.get(i));
+		 }
+		 JSONObject jsonObject = new JSONObject();  
+	        jsonObject.put("user", newUserList);  
+	        out.print(jsonObject.toString());
+			out.close();
+			
+		 
 	}
 
 }
