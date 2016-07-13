@@ -87,4 +87,13 @@ public interface AdminDao {
 	 * @throws SQLException 
 	 */
 	public ArrayList<Admin> getPageAdmin(Connection con,int startPage,int pageNum) throws SQLException;
+	/**
+	 * 取得总数据量
+	 * 2016年7月13日下午1:31:08
+	 * @author jimolonely
+	 * @param con
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getTotal(Connection con) throws SQLException;
 }

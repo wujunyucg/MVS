@@ -151,4 +151,14 @@ public class AdminDaoImpl implements AdminDao {
 		return re;
 	}
 
+	@Override
+	public int getTotal(Connection con) throws SQLException {
+		String sql = "select count(*) from admin";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();//移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
 }

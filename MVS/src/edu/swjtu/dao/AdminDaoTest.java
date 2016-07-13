@@ -58,5 +58,9 @@ public class AdminDaoTest {
 		System.out.println(new AdminDaoImpl().getPageAdmin(
 				new DBUtil().getCon(), 1, 10));
 	}
+	@Test
+	public void testAdminTotal() throws ClassNotFoundException, SQLException{
+		System.out.println(new AdminDaoImpl().getTotal(new DBUtil().getCon()));
+	}
 }
 
