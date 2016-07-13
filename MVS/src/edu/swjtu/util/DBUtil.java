@@ -9,7 +9,8 @@ public class DBUtil {
 	private String username = "root";
 	private String password = "mysqlroot";
 	private String jdbcName = "com.mysql.jdbc.Driver";*/
-	private String url = "jdbc:mysql://localhost:3306/car_factory?useSSL=false";
+	//private String url = "jdbc:mysql://localhost:3306/car_factory?useSSL=false";
+	private String url = "jdbc:mysql://192.168.1.136:3306/car_factory?useSSL=false";
 	private String username = "root";
 	private String password = "root";
 	private String jdbcName = "com.mysql.jdbc.Driver";
