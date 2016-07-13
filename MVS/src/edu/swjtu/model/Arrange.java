@@ -1,7 +1,5 @@
 package edu.swjtu.model;
 
-import javax.xml.crypto.Data;
-
 /**
  * 
  * Arrange.java类
@@ -14,7 +12,7 @@ public class Arrange {
 	private int lineId;
 	private int carId;
 	private String name;
-	private Data time;
+	private String time;
 	public int getArrangeId() {
 		return arrangeId;
 	}
@@ -39,10 +37,10 @@ public class Arrange {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Data getTime() {
+	public String getTime() {
 		return time;
 	}
-	public void setTime(Data time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 }
