@@ -24,13 +24,13 @@
 	margin-left: 260px ;
 }
 .btn-menu{
-	background-color: #020202 !important;
+	background-color: #ececec !important;
 	height:40px !important;
-	color: #fff !important;
-	text-align: center !important;
+	color: #3c3c3c !important;
+	border:1px solid #fff !important;
 }
 .btn-menu:hover{
-	background-color: #404040!important;
+	background-color: #f9f9f9!important;
 }
 #nav_toggle:hover{
 	background-color:#ccc !important;

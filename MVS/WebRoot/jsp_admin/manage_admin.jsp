@@ -25,7 +25,7 @@
 <script src="scripts/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body style = "text-align: center;">
 	<h1>管理角色</h1>
 	<c:if test="${admin_map != null }">
 		<div style="text-align: center;margin-right: auto;margin-left: auto;">
@@ -63,7 +63,7 @@
 	</c:if>
 	<!-- 异步分页 -->
 	<nav>
-	<ul class="pagination">
+	<ul class="pagination" style="magin:0 auto !important; ">
 		<li><a id="page_pre" href="javascript:;" aria-label="Previous">
 				<span aria-hidden="true">&laquo;</span>
 		</a></li>

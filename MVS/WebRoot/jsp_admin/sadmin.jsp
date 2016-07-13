@@ -8,7 +8,7 @@
 <%
 	//不能直接通过链接访问
 	if (null == session.getAttribute("user")) {
-		response.sendRedirect("login.jsp");
+		response.sendRedirect(path+"/login.jsp");
 		return;
 	}
 %>
@@ -141,9 +141,9 @@ $.ajaxSetup ({
 					
 					$(".btn_icon").each(function(index){
 						if(index==cnt){
-							$(this).css("cssText","background-color:red!important");
+							$(this).css("cssText","background-color:#f9f9f9!important");
 						}else{
-							$(this).css("cssText","background-color:#020202!important");
+							$(this).css("cssText","background-color:#ececec!important");
 						}
 					});
 				}else{
@@ -154,9 +154,9 @@ $.ajaxSetup ({
 					turn = true;
 					$(".btn_text").each(function(index){
 						if(index==cnt){
-							$(this).css("cssText","background-color:red!important");
+							$(this).css("cssText","background-color:#f9f9f9!important");
 						}else{
-							$(this).css("cssText","background-color:#020202!important");
+							$(this).css("cssText","background-color:#ececec!important");
 						}
 					});
 				}
@@ -164,15 +164,15 @@ $.ajaxSetup ({
 			
 			$(".btn_text").click(function(){
 				$(".btn_text").each(function(){
-					$(this).css("cssText","background-color:#020202!important");
+					$(this).css("cssText","background-color:#ececec!important");
 				});
-				$(this).css("cssText","background-color:red!important");
+				$(this).css("cssText","background-color:#f9f9f9!important");
 			});
 			$(".btn_icon").click(function(){
 				$(".btn_icon").each(function(){
-					$(this).css("cssText","background-color:#020202!important");
+					$(this).css("cssText","background-color:#ececec!important");
 				});
-				$(this).css("cssText","background-color:red!important");
+				$(this).css("cssText","background-color:#f9f9f9!important");
 			});
 		});
 	</script>
