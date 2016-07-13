@@ -58,7 +58,7 @@
 		<div id="j-left-menu">
 			<div class="list-group">
 				<button type="button"
-					class="j-btn-active list-group-item btn-menu btn_text create-admin">
+					class="j-btn-active list-group-item btn-menu btn_text">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 					人员管理 <span style="float:right;"class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 				</button>
@@ -67,43 +67,43 @@
 					<button type="button" class="list-group-item">数据同步</button>
 				</div>
 				<button type="button" style="display:none;"
-					class="list-group-item btn-menu btn_icon create-admin">
+					class="list-group-item btn-menu btn_icon">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 				</button>
 				<button type="button"
-					class="list-group-item  btn-menu btn_text create-user">
+					class="list-group-item  btn-menu btn_text">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 					线路管理
 				</button>
 				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon create-user">
+					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 				</button>
 				<button type="button"
-					class="list-group-item  btn-menu btn_text manage-admin">
+					class="list-group-item  btn-menu btn_text">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 					站点管理
 				</button>
 				<button id="manage-admin" type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-admin">
+					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 				</button>
 				<button type="button"
-					class="list-group-item  btn-menu btn_text manage-user">
+					class="list-group-item  btn-menu btn_text">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 					车辆管理
 				</button>
 				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-user">
+					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</button>
 				<button type="button"
-					class="list-group-item  btn-menu btn_text manage-user">
+					class="list-group-item  btn-menu btn_text">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 					班次管理
 				</button>
 				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-user">
+					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</button>
 			</div>
