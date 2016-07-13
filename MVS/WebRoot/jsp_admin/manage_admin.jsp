@@ -69,7 +69,7 @@
 		</a></li>
 		<c:forEach begin="1" end="${admin_total}" varStatus="status">
 			<c:choose>
-				<c:when test="'${adminStartPage}'=='${status.index}'">
+				<c:when test="${adminStartPage == status.index}">
 					<li class="active admin-page"><a href="javascript:;">${status.index}</a></li>
 				</c:when>
 				<c:otherwise>
