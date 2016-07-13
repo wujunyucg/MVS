@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.junit.Test;
 
+import edu.swjtu.impl.AdminDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
@@ -41,10 +42,21 @@ public class AdminDaoTest {
 	 * @throws SQLException
 	 */
 
-	/*public void jimoTest() throws ClassNotFoundException, SQLException{
+	public void jimoTest() throws ClassNotFoundException, SQLException{
 		String name = "1";
 		System.out.println(new AdminDaoImpl().getAdminByName(name, new DBUtil().getCon()));
 	}
-		*/
+	/**
+	 * 测试分页语句功能
+	 * 2016年7月13日下午1:01:58
+	 * @author jimolonely
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void testAdminPage() throws ClassNotFoundException, SQLException{
+		System.out.println(new AdminDaoImpl().getPageAdmin(
+				new DBUtil().getCon(), 1, 10));
+	}
 }
 

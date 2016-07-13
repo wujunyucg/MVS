@@ -138,4 +138,17 @@ public class AdminDaoImpl implements AdminDao {
 		return admin;
 	}
 
+	@Override
+	public ArrayList<Admin> getPageAdmin(Connection con, int startPage,
+			int pageNum) throws SQLException {
+		String sql = "select *from admin limit "+((startPage-1)*pageNum+1)+","+pageNum;
+		ArrayList<Admin> re = new ArrayList<Admin>();
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while(rs.next()){
+			re.add(getAdminOne(rs));
+		}
+		return re;
+	}
+
 }

@@ -76,4 +76,15 @@ public interface AdminDao {
 	 * @throws SQLException
 	 */
 	public ArrayList<Admin> getAllAdmin(Connection con) throws SQLException;
+	/**
+	 * 分页查询：从startPage开始查询pageNum这么多数据
+	 * 2016年7月13日下午12:51:21
+	 * @author jimolonely
+	 * @param con
+	 * @param startPage
+	 * @param pageNum
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<Admin> getPageAdmin(Connection con,int startPage,int pageNum) throws SQLException;
 }
