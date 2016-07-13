@@ -64,9 +64,10 @@ public class ManageAdminServlet extends HttpServlet {
 				String p = Powers.getPowerType(adm.getPowerId());
 				map.put(adm.getName(),p);
 			}
-			
+//			System.out.println(adminList.get(0).getName());
 			session.setAttribute("admin_map", map);
 			session.setAttribute("admin_total", total_page);
+			session.setAttribute("adminStartPage", startPage);
 			response.sendRedirect("../jsp_admin/manage_admin.jsp");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

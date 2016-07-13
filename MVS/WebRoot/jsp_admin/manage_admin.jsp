@@ -44,7 +44,8 @@
 				</thead>
 				<tbody>
 					<tr>
-						<c:forEach items="${admin_map}" var="admin" varStatus="status">
+						<c:forEach items="${admin_map}" begin="1" var="admin"
+							varStatus="status">
 							<tr>
 								<td><input type="checkbox" /></td>
 								<td class="row_index">${status.index}</td>
@@ -60,7 +61,27 @@
 			</table>
 		</div>
 	</c:if>
-
+	<!-- 异步分页 -->
+	<nav>
+	<ul class="pagination">
+		<li><a id="page_pre" href="javascript:;" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+		</a></li>
+		<c:forEach begin="1" end="${admin_total}" varStatus="status">
+			<c:choose>
+				<c:when test="'${adminStartPage}'=='${status.index}'">
+					<li class="active admin-page"><a href="javascript:;">${status.index}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="admin-page"><a href="javascript:;">${status.index}</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<li><a id="page_next" href="javascript:;" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+		</a></li>
+	</ul>
+	</nav>
 	<!-- 详情的模态框 -->
 	<div class="modal fade" id="model_detail" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -258,7 +279,7 @@
 						$(this).attr("data-toggle", "modal");
 						$(this).attr("data-target", "#model_modify");
 
-					});
+			});
 
 			//控制页面的切换
 			$("#btn_next1").click(function() {
@@ -427,7 +448,7 @@
 						$(this).attr("data-toggle", "modal");
 						$(this).attr("data-target", "#modal_delete");
 						var thisDelete = this;
-						
+
 						$("#btn_delete").click(
 								function() {
 									$(this).attr("disabled", true);
@@ -445,7 +466,8 @@
 														"删除成功，共删除了此角色下的" + re
 																+ "个用户");
 												//在页面上移出表格的这一行
-												$(thisDelete).parent().parent().remove();
+												$(thisDelete).parent().parent()
+														.remove();
 											} else {
 												$("#delete_info").text(
 														"未知原因删除失败");
@@ -454,9 +476,37 @@
 										error : function() {
 											$(this).attr("disabled", false);
 										}
-									});
 								});
-					});
+						});
+			});
+			//分页控制
+			$(".admin-page a").click(function(){
+				var pageNow = $(this).text();
+				$("#content").load("<%=path%>/servlet/ManageAdminServlet?adminStartPage="
+										+ pageNow);
+			});
+			$("#page_pre").click(function(){
+				var pageNow = parseInt(${adminStartPage});
+				var pagePre = pageNow;
+				if(pageNow>1){
+					pagePre = pageNow-1;
+				}else{
+					return ;
+				}
+				$("#content").load("<%=path%>/servlet/ManageAdminServlet?adminStartPage="
+										+ pagePre);
+			});
+			
+			$("#page_next").click(function(){
+				var pageNow = parseInt(${adminStartPage});
+				var pageNext = pageNow;
+				if(pageNow<parseInt(${admin_total})){
+					pageNext = pageNow+1;
+				}else{
+					return ;
+				}
+				$("#content").load("<%=path%>/servlet/ManageAdminServlet?adminStartPage="
+										+ pageNext);});
 		});
 	</script>
 </body>
