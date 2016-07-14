@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql-jdbc"/>
+	<classpathentry kind="con" path="com.genuitec.runtime.library/com.genuitec.generic_5.0"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/jsonJar/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/jsonJar/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/jsonJar/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/jsonJar/commons-lang-2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/jsonJar/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/jsonJar/ezmorph-1.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/jsonJar/json-lib-2.2.3-jdk15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/commons-fileupload-1.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dell/Desktop/commons-io-2.4.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/catalina.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/catalina-storeconfig.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/commons-fileupload-1.3.2.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/commons-io-2.4.0.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/ecj-4.5.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/jasper-el.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/mysql-connector-java-5.1.38-bin.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-api.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-i18n-es.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-i18n-fr.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-i18n-ja.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-jni.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-util.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-util-scan.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/tomcat-websocket.jar"/>
+	<classpathentry kind="lib" path="D:/SoftwareDevelopment/Tomcat/apache-tomcat-8.0.33/lib/websocket-api.jar"/>
+	<classpathentry kind="con" path="com.genuitec.runtime.library/com.genuitec.jstl_1.2">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
