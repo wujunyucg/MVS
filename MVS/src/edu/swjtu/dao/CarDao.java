@@ -143,4 +143,24 @@ public interface CarDao {
 	 * @return
 	 */
 	public int getCarNumberByCarId( int carId , Connection con );
+	
+		/**
+	 * 
+	 * 2016年7月12日下午4:44:40
+	 * @author mischief7
+	 * @param con
+	 * @return
+	 */
+	public ArrayList<Car> getAllCar(Connection con );
+
+	public ArrayList<Car> getPageCar(Connection con,int startPage,int pageNum) throws SQLException;
+	/**
+	 * 取得总数据量
+	 * 2016年7月13日下午1:31:08
+	 * @author jimolonely
+	 * @param con
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getTotal(Connection con) throws SQLException;
 }
