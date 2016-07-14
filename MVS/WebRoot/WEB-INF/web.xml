@@ -116,6 +116,11 @@
     <servlet-name>FileUploadServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.FileUploadServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ManageArrangeServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ManageArrangeServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -134,6 +139,10 @@
   <servlet-mapping>
     <servlet-name>FileUploadServlet</servlet-name>
     <url-pattern>/servlet/FileUploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ManageArrangeServlet</servlet-name>
+    <url-pattern>/servlet/ManageArrangeServlet</url-pattern>
   </servlet-mapping>
   
   
