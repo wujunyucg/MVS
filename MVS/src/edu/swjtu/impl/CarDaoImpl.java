@@ -116,7 +116,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public int updateCar(Car car, Connection con) {
 		// TODO Auto-generated method stub
-		String sql = "upString car  set car_id = ?,car_licensePlate = ?,car_brand = ?,car_registrationDate= ?,car_insuranceDate= ?,car_drivingLicense = ?,car_license = ?,car_arrangeId = ?,car_driver = ?,car_number = ? where car_id = ?";
+		String sql = "update car  set car_id = ?,car_licensePlate = ?,car_brand = ?,car_registrationDate= ?,car_insuranceDate= ?,car_drivingLicense = ?,car_license = ?,car_arrangeId = ?,car_driver = ?,car_number = ? where car_id = ?";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
