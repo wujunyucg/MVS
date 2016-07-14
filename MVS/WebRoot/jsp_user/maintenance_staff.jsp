@@ -16,12 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/j-css/j-theme.css">
-	<link rel="stylesheet" type="text/css"
-	href="css/bootstrap/bootstrap.min.css">
-	<script src='scripts/jquery.js'></script>
-	<script src='scripts/bootstrap.min.js'></script>
-	<script type="text/javascript" src="scripts/j-scripts/j-theme.js"></script>
+	
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -32,9 +27,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <h1>员工维护</h1>
+  <div style="text-align: center;margin-right: auto;margin-left: auto;">
+   
+  <form class="form-inline">
+  
+  <div class="form-group">
+    <div class="input-group">
+  <div class="input-group-addon">搜索类型</div>
+    <select class="form-control">
+  <option>员工工号</option>
+   <option>员工姓名</option>
+  <option>员工部门</option>
+  <option>员工组别</option>
+  <option>所属班次</option>
+  <option>所属线路</option>
+  <option>所属站点</option>
+</select>
+    
+    </div>
+  </div>
+   <div class="form-group">
+    <div class="input-group">
+   <div class="input-group-addon">关键词</div>
+      <input type="text" class="form-control" name ="content" >
+    
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">搜索</button>
+</form>
+<br>
+  </div>
      <c:if test="${staff_list != null }">
+     
     <div style="text-align: center;margin-right: auto;margin-left: auto;"> 
-    <table id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:81%;margin-right: auto;margin-left: auto;color:#000,float:right">
+    <table id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:98%;margin-right: auto;margin-left: auto;color:#000,float:right">
 	  <thead>
 	    <tr>
 	   	  <th><input name="" type="checkbox" id ="checkall" value="" onclick="javascript:checkall();"/>全选\不选</th>
@@ -51,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <tbody>
 	       <c:forEach items="${staff_list}" var="staff" varStatus="status" >
           <tr id="tr${(staff_page-1)*staff_page_num+status.index+1}">
-            <td><input name="deletecheck" type="checkbox" id="${user.getUserId()}" value="${status.index}" /></td>
+            <td><input name="deletecheck" type="checkbox" value="${staff.getStaffId()}" /></td>
             <td >${(staff_page-1)*staff_page_num+status.index+1}</td>
             <td >${staff.getNumber()}</td>            
            <td>${staff.getName()}</td>
@@ -181,7 +207,7 @@ function update(){
 		if(request == 1){
 			document.getElementById("w-modal-p2"). innerHTML = '修改成功';
 			$("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page}+")");
-           	
+           	$("#w-modal-close2").attr("onclick","javascript:pagination("+${staff_page}+")");
 		}
         else{
         	document.getElementById("w-modal-p2"). innerHTML = '修改失败，请重新修改';
@@ -202,16 +228,21 @@ function deleteonesure(staffid)
          },
 		success: function(request){
 		if(request == 1){
-		$("#modalBut").attr("disabled",true);
-		$("#p2").html("删除成功");
+		$("#w-modal-but").attr("disabled",true);
+		$("#w-modal-p2").html("删除成功");
       		$("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page}+")");
+      		$("#w-modal-close2").attr("onclick","javascript:pagination("+${staff_page}+")");
 		}	
 		else{
+		$("#w-modal-but").attr("disabled",true);
+		$("#w-modal-p2").html("删除成功");
 			$("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page-1}+")");
+			$("#w-modal-close2").attr("onclick","javascript:pagination("+${staff_page-1}+")");
 		}    
       }});
 }
 function deleteone(staffid){
+			$("#w-modal-p2").html("");
 			$("#w-modal-but").attr("disabled",false);
 			$("#w-modal-p1").html("删除确认");
 			$("#w-modal-but").html("确认删除");
@@ -219,6 +250,62 @@ function deleteone(staffid){
 			$("#w-modal-but").attr("onclick","javascript:deleteonesure("+staffid+")");
 	
 }
+
+function deleteallsure(){
+	var arr_id=[];
+	$("input[name='deletecheck']").each(function(){
+		if($(this).is(':checked')){
+        	arr_id.push($(this).val());
+		}
+	});
+	$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/DeleteStaffServlet", 
+		data:{
+						onlyOne : "0",
+						ids : arr_id.toString()
+			},
+		traditional:true,
+		error: function(request) {
+          alert('修改失败，请重新修改');
+         },
+		success: function(request){
+		if(request == 1){
+		$("#w-modal-but").attr("disabled",true);
+		$("#w-modal-p2").html("删除成功");
+			$("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page}+")");
+      		$("#w-modal-close2").attr("onclick","javascript:pagination("+${staff_page}+")");
+		}
+        else{
+        	$("#w-modal-but").attr("disabled",true);
+		$("#w-modal-p2").html("删除成功");
+        	 $("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page-1}+")");
+			$("#w-modal-close2").attr("onclick","javascript:pagination("+${staff_page-1}+")");
+        }
+	    
+      }});
+}
+
+function deleteall(){
+		var flag=0;
+		$("#w-modal-but").attr("disabled",false);
+		$("#w-modal-p2").html("");
+		$("input[name='deletecheck']").each(function(){
+		if($(this).is(':checked')){
+        	flag=1;
+		}
+	});
+		if(flag == 0){
+			$("#w-modal-but").attr("disabled",true);
+			$("#w-modal-p2").html("没有选择管理员");
+		}
+			$("#w-modal-p1").html("删除确认");
+			$("#w-modal-but").html("确认删除");
+			$("#w-modal-div").html("确认删除选择的所有管理员吗？");
+			$("#w-modal-but").attr("onclick","javascript:deleteallsure()");
+	
+}
+
 function checkall(){
 	$("input[name='deletecheck']").prop("checked",$("#checkall").prop("checked"));
 }
