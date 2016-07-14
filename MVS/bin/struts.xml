@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="" type=""/>
+	</form-beans>
+
+	<global-forwards>
+		<forward name="" path="" />
+	</global-forwards>
+
+	<action-mappings>
+		<action path=""
+				type=""
+				name=""
+				parameter="methode"
+				scope="request"
+				validate="false">
+			<forward name="success" path="" />
+			<forward name="failure" path="" />
+		</action>
+
+		<action path=""
+				type=""
+				name=""
+				parameter="methode"
+				scope="request"
+				validate="true"
+				input="">
+			<forward name="success" path="" />
+			<forward name="failure" path="" />
+		</action>
+	</action-mappings>
+
+	<message-resources parameter="" />
+	<message-resources key="" parameter="" />
+
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+	</plug-in>
+</struts-config>
