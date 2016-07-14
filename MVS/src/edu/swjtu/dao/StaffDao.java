@@ -146,4 +146,24 @@ public interface StaffDao {
 	 * @return
 	 */
 	public ArrayList<Staff> getStaffBySiteId(int siteId,Connection con);
+	/**
+	 * 
+	 * 2016年7月14日上午9:47:33
+	 * @author wujunyu
+	 * TODO 得到staff的总条数
+	 * @param con
+	 * @return
+	 */
+	public int getStaffNum(Connection con);
+	/**
+	 * 
+	 * 2016年7月14日上午9:48:34
+	 * @author wujunyu
+	 * TODO 根据页数其取得satff
+	 * @param satrtPage
+	 * @param PageNum
+	 * @param con
+	 * @return
+	 */
+	public ArrayList<Staff> getStaffByPage(int satrtPage,int pageNum,Connection con);
 }

@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </thead>
 	  <tbody>
 	    <tr>
-	       <c:forEach items="${user_list}" var="user" varStatus="status" begin="${(user_page-1)*user_page_num}" end="${user_page*user_page_num-1}">
+	       <c:forEach items="${staff_list}" var="staff" varStatus="status" begin="${(satff_page-1)*satff_page_num}" end="${satff_page*user_page_num-1}">
           <tr id="tr${status.index}">
             <td><input name="deletecheck" type="checkbox" id="${user.getUserId()}" value="${status.index}" /></td>
             <td >${status.index+1}</td>

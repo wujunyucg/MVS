@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import edu.swjtu.dao.StaffDao;
 import edu.swjtu.model.Staff;
 
@@ -266,6 +267,44 @@ public class StaffDaoImpl implements StaffDao {
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, siteId);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				staffList.add(getStaffOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staffList;
+	}
+
+	@Override
+	public int getStaffNum(Connection con) {
+		String sql = "select count(*) from staff";
+		PreparedStatement pstm;
+		try {
+			pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			rs.next();//移到第一条数据
+			int sum = rs.getInt(1);
+			return sum;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
+
+	@Override
+	public ArrayList<Staff> getStaffByPage(int startPage, int pageNum,
+			Connection con) {
+		ArrayList<Staff> staffList = new ArrayList<Staff>();
+		String sql = "select * from staff  limit ? ,?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, (startPage-1)*pageNum);
+			pstm.setInt(2, pageNum);
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()){
 				staffList.add(getStaffOne(rs)) ;

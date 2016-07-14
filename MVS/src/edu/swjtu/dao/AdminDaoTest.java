@@ -10,7 +10,9 @@ import net.sf.json.JSONObject;
 import org.junit.Test;
 
 import edu.swjtu.impl.AdminDaoImpl;
+import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
+import edu.swjtu.model.Staff;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
 
@@ -21,18 +23,17 @@ public class AdminDaoTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test() throws ClassNotFoundException, SQLException {
-		
-	
-		ArrayList<User> userList = new ArrayList<User>();
-		UserDaoImpl udi = new UserDaoImpl();
-		userList =	udi.getAllUser(new DBUtil().getCon());
-		//System.out.println(userList.get(0).getNumber());
-		JSONObject jsonObject = new JSONObject();  
-	       jsonObject.put("user", userList);  
-	      System.out.println(jsonObject); 
-	      /* JSONArray jsonArray = new JSONArray();  
-	        jsonArray.add(jsonObject);  
-	        System.out.println(jsonObject); */
+		ArrayList<Staff> list = new ArrayList<Staff>();
+		StaffDaoImpl sdi = new StaffDaoImpl();
+		list = sdi.getStaffByPage(1,2,new DBUtil().getCon());
+		System.out.println(list.get(0).getStaffId());
+		System.out.println(list.get(1).getStaffId());
+		list = sdi.getStaffByPage(2,2,new DBUtil().getCon());
+		System.out.println(list.get(0).getStaffId());
+		System.out.println(list.get(1).getStaffId());
+		list = sdi.getStaffByPage(3,2,new DBUtil().getCon());
+		System.out.println(list.get(0).getStaffId());
+		System.out.println(list.get(1).getStaffId());
 		}
 	/**
 	 * 测试
