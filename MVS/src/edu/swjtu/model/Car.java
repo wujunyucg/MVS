@@ -20,8 +20,8 @@ public class Car {
 	private String license;
 	private String arrangeId;
 	private String driver;
-	private Date registrationDate;
-	private Date insuranceDate;
+	private String registrationDate;
+	private String insuranceDate;
 	public int getCarId() {
 		return carId;
 	}
@@ -70,16 +70,16 @@ public class Car {
 	public void setDriver(String driver) {
 		this.driver = driver;
 	}
-	public Date getRegistrationDate() {
+	public String getRegistrationDate() {
 		return registrationDate;
 	}
-	public void setRegistrationDate(Date registrationDate) {
+	public void setRegistrationDate(String registrationDate) {
 		this.registrationDate = registrationDate;
 	}
-	public Date getInsuranceDate() {
+	public String getInsuranceDate() {
 		return insuranceDate;
 	}
-	public void setInsuranceDate(Date insuranceDate) {
+	public void setInsuranceDate(String insuranceDate) {
 		this.insuranceDate = insuranceDate;
 	}
 }

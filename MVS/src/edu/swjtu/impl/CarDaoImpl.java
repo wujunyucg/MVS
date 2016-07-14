@@ -17,11 +17,11 @@ public class CarDaoImpl implements CarDao {
 		car.setCarId(rs.getInt("car_id"));
 		car.setDriver(rs.getString("car_driver"));
 		car.setDrivingLicense(rs.getString("car_drivingLicense"));
-		car.setInsuranceDate( rs.getDate("car_insuranceDate"));
+		car.setInsuranceDate( rs.getString("car_insuranceDate"));
 		car.setLicense(rs.getString("car_license"));
 		car.setLicensePlate(rs.getString("car_licensePlate"));
 		car.setNumber(rs.getInt("car_number"));
-		car.setRegistrationDate( rs.getDate("car_registrationDate"));
+		car.setRegistrationDate( rs.getString("car_registrationDate"));
 		return car;
 	}
 	
@@ -30,8 +30,8 @@ public class CarDaoImpl implements CarDao {
 		ps.setInt(1,car.getCarId());
 		ps.setString(2,car.getLicensePlate());
 		ps.setString(3,car.getBrand());
-		ps.setDate(4, car.getRegistrationDate());
-		ps.setDate(5,car.getInsuranceDate());
+		ps.setString(4, car.getRegistrationDate());
+		ps.setString(5,car.getInsuranceDate());
 		ps.setString(6,car.getDrivingLicense());
 		ps.setString(7,car.getLicense());
 		ps.setString(8,car.getArrangeId());
