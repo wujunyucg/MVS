@@ -9,8 +9,8 @@ package edu.swjtu.model;
 public class Line {
 	private int lineId;
 	private int num;
-	private String siteId;
-	private String carId;
+	private int siteId;
+	private int carId;
 	private String name;
 	public int getLineId() {
 		return lineId;
@@ -24,16 +24,16 @@ public class Line {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getSiteId() {
+	public int getSiteId() {
 		return siteId;
 	}
-	public void setSiteId(String siteId) {
+	public void setSiteId(int siteId) {
 		this.siteId = siteId;
 	}
-	public String getCarId() {
+	public int getCarId() {
 		return carId;
 	}
-	public void setCarId(String carId) {
+	public void setCarId(int carId) {
 		this.carId = carId;
 	}
 	public String getName() {

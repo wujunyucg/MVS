@@ -13,6 +13,13 @@ public class Arrange {
 	private int carId;
 	private String name;
 	private String time;
+	private String date;
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getArrangeId() {
 		return arrangeId;
 	}
