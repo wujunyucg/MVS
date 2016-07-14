@@ -18,15 +18,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
-	 <script src="layer/layer.js"></script>
 	 <style>
 	 .td1{width:100px;}
 	 </style>
 
 <script type="text/javascript" language="javascript">
-$.ajaxSetup ({ 
-    cache: false //关闭AJAX相应的缓存 
-}); 
+
 
 /*var tr;
  $(function(){
@@ -198,7 +195,6 @@ function deleteall(){
 
 
 function pagination(page1){
-	
 	var st = (page1-1)*2;
 	var ed= page1*2 -1;
 	

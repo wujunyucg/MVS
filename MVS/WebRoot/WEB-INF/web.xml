@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>MVS</display-name>
-  
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
@@ -120,10 +119,6 @@
     <servlet-name>ManageArrangeServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageArrangeServlet</servlet-class>
   </servlet>
-
-
-
-
   <servlet-mapping>
     <servlet-name>PageUserServlet</servlet-name>
     <url-pattern>/servlet/PageUserServlet</url-pattern>
@@ -144,6 +139,34 @@
     <servlet-name>ManageArrangeServlet</servlet-name>
     <url-pattern>/servlet/ManageArrangeServlet</url-pattern>
   </servlet-mapping>
-  
-  
+  <servlet>
+    <description></description>
+    <display-name>ManageStaffServlet</display-name>
+    <servlet-name>ManageStaffServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ManageStaffServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManageStaffServlet</servlet-name>
+    <url-pattern>/servlet/ManageStaffServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateStaffServlet</display-name>
+    <servlet-name>UpdateStaffServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.UpdateStaffServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateStaffServlet</servlet-name>
+    <url-pattern>/servlet/UpdateStaffServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteStaffServlet</display-name>
+    <servlet-name>DeleteStaffServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.DeleteStaffServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteStaffServlet</servlet-name>
+    <url-pattern>/servlet/DeleteStaffServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
