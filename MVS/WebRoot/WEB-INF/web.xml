@@ -169,4 +169,14 @@
     <servlet-name>DeleteStaffServlet</servlet-name>
     <url-pattern>/servlet/DeleteStaffServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchStaffServlet</display-name>
+    <servlet-name>SearchStaffServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.SearchStaffServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchStaffServlet</servlet-name>
+    <url-pattern>/servlet/SearchStaffServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
