@@ -27,7 +27,7 @@
 }
 #content{
 	min-width:400px;
-	width:80%;
+	margin-left: 260px ;
 }
 .btn-menu{
 	background-color: #ececec !important;
