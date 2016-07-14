@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import edu.swjtu.dao.CarDao;
+import edu.swjtu.model.Admin;
 import edu.swjtu.model.Car;
+import edu.swjtu.model.User;
 
 public class CarDaoImpl implements CarDao {
 
@@ -113,7 +116,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public int updateCar(Car car, Connection con) {
 		// TODO Auto-generated method stub
-		String sql = "update car  set car_id = ?,car_licensePlate = ?,car_brand = ?,car_registrationDate = ?,car_insuranceDate = ?,car_drivingLicense = ?,car_license = ?,car_arrangeId = ?,car_driver = ?,car_number = ? where car_id = ?";
+		String sql = "upString car  set car_id = ?,car_licensePlate = ?,car_brand = ?,car_registrationDate= ?,car_insuranceDate= ?,car_drivingLicense = ?,car_license = ?,car_arrangeId = ?,car_driver = ?,car_number = ? where car_id = ?";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -300,4 +303,44 @@ public class CarDaoImpl implements CarDao {
 		return car.getNumber();
 	}
 
+	@Override
+	public ArrayList<Car> getAllCar(Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql = "select * from car";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public ArrayList<Car> getPageCar(Connection con, int startPage,
+			int pageNum) throws SQLException {
+		String sql = "select *from car limit "+((startPage-1)*pageNum)+","+pageNum;
+		ArrayList<Car> re = new ArrayList<Car>();
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while(rs.next()){
+			re.add(getCarOne(rs));
+		}
+		return re;
+	}
+
+	@Override
+	public int getTotal(Connection con) throws SQLException {
+		String sql = "select count(*) from car";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();//移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+	
 }
