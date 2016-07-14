@@ -1,6 +1,7 @@
 package edu.swjtu.dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import edu.swjtu.model.Car;
