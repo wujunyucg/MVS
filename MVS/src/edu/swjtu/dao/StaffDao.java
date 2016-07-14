@@ -166,4 +166,13 @@ public interface StaffDao {
 	 * @return
 	 */
 	public ArrayList<Staff> getStaffByPage(int satrtPage,int pageNum,Connection con);
+	/**
+	 * 
+	 * 2016年7月14日下午4:10:57
+	 * @author wujunyu
+	 * TODO 得到最后一条记录
+	 * @param con
+	 * @return
+	 */
+	public Staff getLastStaff(Connection con);
 }

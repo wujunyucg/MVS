@@ -315,5 +315,21 @@ public class StaffDaoImpl implements StaffDao {
 		}
 		return staffList;
 	}
+	@Override
+	public Staff getLastStaff(Connection con) {
+		Staff staff = new Staff();
+		String sql = "select * from staff  order by staff_id desc limit 1";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				staff = getStaffOne(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staff;
+	}
 
 }

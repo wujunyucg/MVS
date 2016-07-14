@@ -44,4 +44,28 @@ public class ArrangeDaoTest {
 		System.out.println(new ArrangeDaoImpl().getTotal(new DBUtil()
 		.getCon()));
 	}
+	/**
+	 * 测试取得某月班次
+	 * 2016年7月14日下午5:39:03
+	 * @author jimolonely
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testGetArrByMonth() throws ClassNotFoundException, SQLException{
+		System.out.println((new ArrangeDaoImpl().getPageMonthArr(new DBUtil()
+		.getCon(),1,10,"2015-5")).size());
+	}
+	/**
+	 * 测试某月班次总数
+	 * 2016年7月14日下午5:47:43
+	 * @author jimolonely
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testGetTotalByMonth() throws ClassNotFoundException, SQLException{
+		System.out.println(new ArrangeDaoImpl().getTotalByMonth(new DBUtil()
+		.getCon(),"2015-5"));
+	}
 }

@@ -36,4 +36,26 @@ public interface ArrangeDao {
 	 * @throws SQLException 
 	 */
 	public int getTotal(Connection con) throws SQLException;
+	/**
+	 * 获取某月份的所有班次
+	 * 2016年7月14日下午5:21:53
+	 * @author jimolonely
+	 * @param con
+	 * @param startPage
+	 * @param pageNum
+	 * @param date
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<Arrange> getPageMonthArr(Connection con,int startPage,int pageNum,String date) throws SQLException;
+	/**
+	 * 取得某一月所有班次数量
+	 * 2016年7月14日下午5:31:15
+	 * @author jimolonely
+	 * @param con
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getTotalByMonth(Connection con,String date) throws SQLException;
 }
