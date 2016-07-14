@@ -20,7 +20,7 @@ public class StaffDaoImpl implements StaffDao {
 		staff.setLineId(rs.getInt("staff_lineId"));
 		staff.setName(rs.getString("staff_name"));
 		staff.setNumber(rs.getString("staff_number"));
-		staff.setSite_id(rs.getInt("staff_siteId"));
+		staff.setSiteId(rs.getInt("staff_siteId"));
 		staff.setStaffId(rs.getInt("staff_id"));
 		return staff;
 	}
@@ -35,7 +35,7 @@ public class StaffDaoImpl implements StaffDao {
 		ps.setInt(6,staff.getArrangeId());
 		ps.setString(7,staff.getAddress());
 		ps.setInt(8,staff.getLineId());
-		ps.setInt(9,staff.getSite_id());
+		ps.setInt(9,staff.getSiteId());
 	}
 	@Override
 	public int addOneStaff(Staff staff, Connection con) {

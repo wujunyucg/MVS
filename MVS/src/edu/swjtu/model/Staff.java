@@ -64,11 +64,11 @@ public class Staff {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getSite_id() {
-		return site_id;
+	public int getSiteId() {
+		return siteId;
 	}
-	public void setSite_id(int site_id) {
-		this.site_id = site_id;
+	public void setSiteId(int site_id) {
+		this.siteId = site_id;
 	}
-	private int site_id;
+	private int siteId;
 }

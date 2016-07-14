@@ -25,13 +25,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+ <style>
+	 .td1{width:100px;}
+	 </style>
   </head>
   
   <body>
-     <c:if test="${user_list != null }">
+  <h1>员工维护</h1>
+     <c:if test="${staff_list != null }">
     <div style="text-align: center;margin-right: auto;margin-left: auto;"> 
-    <table id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:98%;margin-right: auto;margin-left: auto;color:#000">
+    <table id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:81%;margin-right: auto;margin-left: auto;color:#000,float:right">
 	  <thead>
 	    <tr>
 	   	  <th><input name="" type="checkbox" id ="checkall" value="" onclick="javascript:checkall();"/>全选\不选</th>
@@ -46,43 +49,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr>
-	       <c:forEach items="${staff_list}" var="staff" varStatus="status" begin="${(satff_page-1)*satff_page_num}" end="${satff_page*user_page_num-1}">
-          <tr id="tr${status.index}">
+	       <c:forEach items="${staff_list}" var="staff" varStatus="status" >
+          <tr id="tr${(staff_page-1)*staff_page_num+status.index+1}">
             <td><input name="deletecheck" type="checkbox" id="${user.getUserId()}" value="${status.index}" /></td>
-            <td >${status.index+1}</td>
-            <td id="tr${status.index}0">${user.getNumber()}</td>
-             <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
-           <c:if test="${user.getAdminId() == admin.getAdminId() }"> <td id="tr${status.index}1"> ${admin.getName()}</td>
-           <td></td>
-           <td></td>
-            <td id="tr${status.index}2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1('${user.getNumber()}','${user.getPassword()}', '${admin.getName()}','${user.getType()}')">查看详情</a></td>
-            <td id="tr${status.index}3"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index},$(this).parent().parent().attr('id'))">修改</a></td>
-           </c:if>
-            </c:forEach>
-            <td><a onclick="javascript:deleteone('${user.getUserId()}','${status.index}')"  data-toggle="modal"  data-target="#myModal">删除</a></td>
+            <td >${(staff_page-1)*staff_page_num+status.index+1}</td>
+            <td >${staff.getNumber()}</td>            
+           <td>${staff.getName()}</td>
+           <td>${staff.getDepartment()}</td>
+            <td>${staff.getGroup()}</td>
+            <td ><a data-toggle="modal"  data-target="#w-modal" onclick="javascript:layer1('${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">查看详情</a></td>
+            <td ><a data-toggle="modal"  data-target="#w-modal" onclick="javascript:layer2('${staff.getStaffId()}','${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">修改</a></td>
+            <td><a onclick="javascript:deleteone('${staff.getStaffId()}')"  data-toggle="modal"  data-target="#w-modal">删除</a></td>
           </tr>
-           </c:forEach>
-	    </tr>
+          </c:forEach>
 	  </tbody>
 	</table>
-	<button type="button" class="btn btn-danger" id="deleteall" onclick="javascript:deleteall();" data-toggle="modal"  data-target="#myModal" style="float:left">删除</button>
+	<button type="button" class="btn btn-danger" id="deleteall" onclick="javascript:deleteall();" data-toggle="modal"  data-target="#w-modal" style="float:left">删除</button>
+<span>共${staff_page_all}页</span>
 	<nav>
   <ul class="pagination">
+   <c:if test="${1==staff_page }">
     <li class="disabled" id= "pre_li">
       <a   aria-label="Previous" id= "pre_li_a" onclick="">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <c:forEach var="i" begin="${user_page}" end="${user_page+4<user_page_all?user_page+4:user_page_all }">
-    <c:if test="${i == user_page }">
+    </c:if>
+    <c:if test="${1 !=staff_page }">
+    <li  id= "pre_li">
+      <a   aria-label="Previous" id= "pre_li_a"  onclick="javascript:pagination(${staff_page-1})">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    </c:if>
+    <c:forEach var="i" begin="${staff_begin_page}" end="${staff_begin_page+4<staff_page_all?staff_begin_page+4:staff_page_all }">
+    <c:if test="${i == staff_page }">
     <li id="li${i}" class="active" ><a id="li_a${i}" onclick="">${i}</a></li>
     </c:if>
-     <c:if test="${i != user_page }">
+     <c:if test="${i != staff_page}">
     <li id="li${i}" class=""><a id="li_a${i}" onclick="javascript:pagination(${i})">${i}</a></li>
     </c:if>
     </c:forEach>
-     <c:if test="${user_page_all==1 }">
+     <c:if test="${staff_page_all==staff_page}">
     <li class="disabled" id= "next_li">
    
       <a  aria-label="Next" id= "next_li_a" onclock="">
@@ -91,10 +99,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      
     </li>
      </c:if>
-      <c:if test="${user_page_all !=1 }">
+      <c:if test="${staff_page_all !=staff_page}">
     <li id= "next_li">
    
-      <a  aria-label="Next" id= "next_li_a" onclock="javascript:pagination(2)">
+      <a  aria-label="Next" id= "next_li_a"  onclick="javascript:pagination(${staff_page+1})">
         <span aria-hidden="true">&raquo;</span>
       </a>
      
@@ -105,33 +113,115 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     </c:if>
     
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
-   aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close" 
-               data-dismiss="modal" aria-hidden="true">
-                  &times;
-            </button>
-            <h4 class="modal-title" id="myModalLabel">
-              <p id= "p1"></p>
-            </h4>
-         </div>
-         <div class="modal-body">
-           <div id = "modalDiv"></div>
-           <p id="p2"></p>
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default" 
-               data-dismiss="modal">关闭
-            </button>
-            <button type="button" class="btn btn-primary" id="modalBut" onclick="javascript:update()">
-               提交更改
-            </button>
-         </div>
-      </div><!-- /.modal-content -->
-</div><!-- /.modal -->
+
   </body>
+  
+  <script>
+  function  layer1(number,name,department,group,arrange,line,site ,address){
+  $("#w-modal-close").attr("onclick","");
+	  var tab='<table class="table table-hover table-bordered" style="width:100%;">'
+	  +'<tr><td class="td1">员工工号</td><td>'+number+'</td></tr>'
+	  +'<tr><td class="td1">员工姓名</td><td>'+name+'</td></tr>'
+	  +'<tr><td class="td1">员工部门</td><td>'+department+'</td></tr>'
+	  +'<tr><td class="td1">员工组别</td><td>'+group+'</td></tr>'
+	  +'<tr><td class="td1">所属班次</td><td>'+arrange+'</td></tr>'
+	  +'<tr><td class="td1">所属线路</td><td>'+line+'</td></tr>'
+	  +'<tr><td class="td1">所属站点</td><td>'+site+'</td></tr>'
+	  +'<tr><td class="td1">所属站点</td><td>'+address+'</td></tr>'
+	  +'<table>';
+	   document.getElementById("w-modal-p1"). innerHTML = '查看详情';
+	  document.getElementById("w-modal-div"). innerHTML = tab;
+	  document.getElementById("w-modal-but"). style.display="none"; 
+}
+
+function  layer2(staffid,number,name,department,group,arrange,line,site,address ){
+ document.getElementById("w-modal-p2"). innerHTML = '';
+  $("#w-modal-but").html("提交更改"); 
+
+ document.getElementById("w-modal-but"). style.display="inline "; 
+  var tab= '<form id="updateuser">'
+  	  +'<table class="table table-hover table-bordered" style="width:100%;">'
+  	  +'<input type="text" id= "staffid" name="staffid" value="'+staffid+'" style="display:none;"/>'
+	  +'<tr><td class="td1">员工工号</td><td ><input type="text"  name="number" value="'+number+'" /></td></tr>'
+	  +'<tr><td class="td1" >员工姓名</td><td><input type="text"  name="name" value="'+name+'"/></td></tr>'
+	  +'<tr><td class="td1">员工部门</td><td  ><input type="text"  name="department" value="'+department+'"/>'
+	/*  +' <select name="admin" id="useradmin" >';
+	  <c:forEach items="${user_admin_list}" var="admin1" varStatus="status" >
+	  	if(admin != '${admin1.getName()}')
+  		 tab=tab+'<option >${admin1.getName()}</option>';
+  		 else
+   			tab=tab+'<option selected="selected">${admin1.getName()}</option>';
+		</c:forEach>
+		tab=tab+'</select>'*/
+	  +'</td></tr>'
+	   +'<tr><td class="td1" >员工组别</td><td ><input type="text"  name="group" value="'+group+'"/></td></tr>'
+	    +'<tr><td class="td1" >所属班次</td><td ><input type="text"  name="arrange" value="'+arrange+'"/></td></tr>'
+	     +'<tr><td class="td1" >所属线路</td><td ><input type="text"  name="line" value="'+line+'"/></td></tr>'
+	      +'<tr><td class="td1" >所属站点</td><td ><input type="text"  name="site" value="'+site+'"/></td></tr>'
+	       +'<tr><td class="td1" >员工地址</td><td ><input type="text"  name="address" value="'+address+'"/></td></tr>'
+	  +'<table> </form>';
+	 
+	   document.getElementById("w-modal-p1"). innerHTML = '修改';
+      document.getElementById("w-modal-div"). innerHTML = tab;
+     // alert($("#useradmin").html())
+}
+function pagination(page){
+	$("#content").load("<%=basePath%>servlet/ManageStaffServlet?staff_page="+page);
+
+}
+function update(){
+	$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/UpdateStaffServlet", 
+		data:$('#updateuser').serialize(), 
+		error: function(request) {
+            document.getElementById("w-modal-p2"). innerHTML = '修改失败，请重新修改';
+         },
+		success: function(request){
+		if(request == 1){
+			document.getElementById("w-modal-p2"). innerHTML = '修改成功';
+			$("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page}+")");
+           	
+		}
+        else{
+        	document.getElementById("w-modal-p2"). innerHTML = '修改失败，请重新修改';
+        }
+	    
+      }});
+}
+function deleteonesure(staffid)
+{
+	$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/DeleteStaffServlet", 
+		data:{
+						onlyOne : "1",
+						staffId :staffid,
+			},
+		error: function(request) {
+         },
+		success: function(request){
+		if(request == 1){
+		$("#modalBut").attr("disabled",true);
+		$("#p2").html("删除成功");
+      		$("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page}+")");
+		}	
+		else{
+			$("#w-modal-close").attr("onclick","javascript:pagination("+${staff_page-1}+")");
+		}    
+      }});
+}
+function deleteone(staffid){
+			$("#w-modal-but").attr("disabled",false);
+			$("#w-modal-p1").html("删除确认");
+			$("#w-modal-but").html("确认删除");
+			$("#w-modal-div").html("确认删除此管理员吗？");
+			$("#w-modal-but").attr("onclick","javascript:deleteonesure("+staffid+")");
+	
+}
+function checkall(){
+	$("input[name='deletecheck']").prop("checked",$("#checkall").prop("checked"));
+}
+
+  </script>
 </html>
