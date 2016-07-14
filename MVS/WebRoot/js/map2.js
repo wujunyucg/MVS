@@ -69,17 +69,17 @@
 			参数为pos:位置，content:htmldom*/
 			//var pos=([116.303843,39.983412]);
 			//info(pos,document.getElementById('info'));
-		
+		var info2=new AMap.InfoWindow({offset:{x:0,y:-15}});	
 		function info(position,content){
-			var info=new AMap.InfoWindow();	
-			info.setContent(content);
+			//var info2=new AMap.InfoWindow({offset:{x:0,y:-15}});	
+			info2.setContent(content);
 			//alert(pos);
-			info.open(map,position);
-			if(info.getIsOpen()){
+			info2.open(map,position);
+			if(info2.getIsOpen()){
 				//alert('OK');
 			}
 			else {
-				info.open();	
+				info2.open();	
 			}
 		}
 		//测距
@@ -108,7 +108,12 @@
 		function markers(data){
 			
 			var markers = []; //province见Demo引用的JS文件
+			if(!data.length){
+				markers[0]=setmarker(data,markers);
+				markers.push(marker);
+			}
 			for (var i = 0; i < data.length; i += 1) {
+				//console.log("testmar"+data[i]+"  "+i+data[i].lng);
 				markers[i]=setmarker(data[i],markers);
 				markers.push(marker);
 			}
@@ -127,8 +132,7 @@
 			
 				marker = new AMap.Marker({
 				  position: data.lng,
-				  title: data.name,
-				  
+				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map
 				});
@@ -148,6 +152,8 @@
 					
 				});	 
 				AMap.event.addListener(marker, 'rightclick',function(e){
+					//info();
+					info2.close( ) ;
 					var contextMenu = new AMap.ContextMenu();  //创建右键菜单
 		//右键放大
 					contextMenu.addItem("移动", function() {
@@ -172,7 +178,7 @@
 		
 	//地图热点
 	var placeSearch = new AMap.PlaceSearch();  //构造地点查询类
-    var infoWindow2=new AMap.AdvancedInfoWindow({});
+    var infoWindow2=new AMap.AdvancedInfoWindow({closeWhenClickMap:true});
     map.on('hotspotclick', function(result) {
         placeSearch.getDetails(result.id, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {

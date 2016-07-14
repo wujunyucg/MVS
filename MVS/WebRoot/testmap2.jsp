@@ -22,6 +22,8 @@
 <link rel="stylesheet" type="text/css" href="css/j-css/j-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="css/map/layout.css">
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
 <script type="text/javascript" src="scripts/j-scripts/j-theme.js"></script>
@@ -85,6 +87,7 @@
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 					管理线路
 				</button>
+				
 				<button type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon create-user">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
@@ -94,6 +97,10 @@
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 					管理站点
 				</button>
+				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
+					<button type="button" class="list-group-item" onclick="addsatation()">增加</button>
+					<button type="button" class="list-group-item" onclick="map.clearMap();markers(hhj_satation)">显示</button>
+				</div>
 				<button id="manage-admin" type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon manage-admin">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -122,7 +129,7 @@
 			</div>
 		</div>
 		<div id="content">
-			<div id='container' style="margin-left:255px;margin-top:50px;"></div>
+			<div id='container' style="margin-left:255px;margin-top:50px;width:80%"></div>
 			<div id="info">
 				<h1>
 					<h1>
@@ -134,12 +141,61 @@
 			</div>
 			<div id="result"></div>
 			<div>
-				<ul id="routes" style="position: absolute;">
-					<li><button>çº¿è·¯1</button></li>
-					<li><button>çº¿è·¯2</button></li>
-					<li><button>çº¿è·¯3</button></li>
-				</ul>
-			</div>
+        <ul  id="routes" style="position: absolute;display:none;">
+            <li><button >线路1</button></li>
+            <li><button >线路2</button></li>
+            <li><button >线路3</button></li>
+        </ul>
+    </div>
+	<div style="position: absolute;margin-left:355px;margin-top:50px;">
+        <!--站点管理-->
+        <ul id="satation" style="display:none;">
+            <li>站点管理</li>
+            <ul >
+                <li><button onclick="addsatation()">添加站点</button></li>
+                <li>删除站点</li>
+                <li><button onclick="map.clearMap();markers(hhj_satation)">显示所有</button></li>
+                <li>查询站点</li>
+            </ul>
+        </ul>
+        <ul id="manage_route" style="display:none">
+            <li>路线管理</li>
+            <ul >
+                <li>添加路线</li>
+                <li>删除路线</li>
+                <li>详细信息</li>
+                <li>查询路线</li>
+            </ul>
+            <li><input id="lnglat" value=''/></li>
+        </ul>
+      </div>
+      <div id="satation-search" style="position:absolute;margin-left:355px;margin-top:80px;">
+      	<input type="text" value="输入关键字进行查询" />
+      </div>
+      <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
+         <ul id="info-satation" style="list-style-type:none;">
+              <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
+              <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;地址&nbsp;<input type="text" value="" id="satation-address"/></li>
+              <li>&nbsp;&nbsp;&nbsp;经纬度 &nbsp;<input type="text" id="satation-lng"/></li>
+              <li>乘坐人数&nbsp;<input type="text" id="satation-people"/></li>
+              <li>所属路线
+              	<select size="1" style="margin-bottom:10px;" id="satation-route">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                 </select></li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp编号
+                  <select size="1" style="margin-bottom:10px;" id="satation-number">
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+              </li>
+              <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
+              <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">修改</button></li>
+         </ul>                 
+      </div>
+      </div>
 		</div>
 	</div>
 	
@@ -151,10 +207,12 @@
 		var turn = false;
 		$("#j_nav_toggle").click(function() {
 			if (turn) {
-				$("#container").css("marginLeft", "255px");
+				$("#container").css("margin-left", "255px");
+				$("#container").css("width", "80%");
 				turn = false;
 			} else {
-				$("#container").css("marginLeft", "50px");
+				$("#container").css("margin-left", "50px");
+				$("#container").css("width", "95%");
 				turn = true;
 			}
 		});
