@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import edu.swjtu.dao.CarDao;
 import edu.swjtu.model.Admin;
+import edu.swjtu.model.Arrange;
 import edu.swjtu.model.Car;
 import edu.swjtu.model.User;
 
@@ -341,6 +342,309 @@ public class CarDaoImpl implements CarDao {
 		rs.next();//移到第一条数据
 		int sum = rs.getInt(1);
 		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getCarByLicensePlate_V(String licensePlate,
+			Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql="select * from car where car_licensePlate like '%"+licensePlate+"%'";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public ArrayList<Car> getCarByLicense_V(String license, Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql="select * from car where car_license like '%"+license+"%'";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public ArrayList<Car> getCarByDrivingLicense_V(String drivingLicense,
+			Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql="select * from car where car_drivingLicense like '%"+drivingLicense+"%'";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public ArrayList<Car> getCarByDriver_V(String driver, Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql="select * from car where car_driver like '%"+driver+"%'";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public ArrayList<Car> getCarByArrangeId_V(String arrangeId, Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql="select * from car where car_arrangeId like '%"+arrangeId+"%'";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public ArrayList<Car> getCarByBrand_V(String brand, Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql="select * from car where car_brand like '%"+brand+"%'";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public ArrayList<Car> getCarByNumber_V(String number, Connection con) {
+		ArrayList<Car> carList = new ArrayList<Car>(); 
+		String sql="select * from car where car_number like '%"+number+"%'";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				carList.add(getCarOne(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return carList;
+	}
+
+	@Override
+	public int getTotalByLicensePlate(Connection con, String licensePlate)
+			throws SQLException {
+		String sql = "select count(*) from car where car_licensePlate like '%"
+				+ licensePlate + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();// 移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getPageLicensePlateCar(Connection con, int startPage,
+			int pageNum, String licensePlate) throws SQLException {
+		ArrayList<Car> list = new ArrayList<Car>();
+		String sql = "select *from car where car_licensePlate like '%"
+				+ licensePlate + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getCarOne(rs));
+		}
+		return list;
+	}
+
+	@Override
+	public int getTotalByLicense(Connection con, String license)
+			throws SQLException {
+		String sql = "select count(*) from car where car_license like '%"
+				+ license + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();// 移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getPageLicenseCar(Connection con, int startPage,
+			int pageNum, String license) throws SQLException {
+		ArrayList<Car> list = new ArrayList<Car>();
+		String sql = "select *from car where car_license like '%"
+				+ license + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getCarOne(rs));
+		}
+		return list;
+	}
+
+	@Override
+	public int getTotalByDrivingLicense(Connection con, String drivingLicense)
+			throws SQLException {
+		String sql = "select count(*) from car where car_drivingLicense like '%"
+				+ drivingLicense + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();// 移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getPageDrivingLicenseCar(Connection con,
+			int startPage, int pageNum, String drivingLicense) throws SQLException {
+		ArrayList<Car> list = new ArrayList<Car>();
+		String sql = "select *from car where car_drivingLicense like '%"
+				+ drivingLicense + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getCarOne(rs));
+		}
+		return list;
+	}
+
+	@Override
+	public int getTotalByDriver(Connection con, String driver)
+			throws SQLException {
+		String sql = "select count(*) from car where car_driver like '%"
+				+ driver + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();// 移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getPageDriverCar(Connection con, int startPage,
+			int pageNum, String driver) throws SQLException {
+		ArrayList<Car> list = new ArrayList<Car>();
+		String sql = "select *from car where car_driver like '%"
+				+ driver + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getCarOne(rs));
+		}
+		return list;
+	}
+
+	@Override
+	public int getTotalByArrangeId(Connection con, String arrangeId)
+			throws SQLException {
+		String sql = "select count(*) from car where car_arrangeId like '%"
+				+ arrangeId + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();// 移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getPageArrangeIdCar(Connection con, int startPage,
+			int pageNum, String arrangeId) throws SQLException {
+		ArrayList<Car> list = new ArrayList<Car>();
+		String sql = "select *from car where car_arrangeId like '%"
+				+ arrangeId + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getCarOne(rs));
+		}
+		return list;
+	}
+
+	@Override
+	public int getTotalByBrand(Connection con, String brand)
+			throws SQLException {
+		String sql = "select count(*) from car where car_brand like '%"
+				+ brand + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();// 移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getPageBrandCar(Connection con, int startPage,
+			int pageNum, String brand) throws SQLException {
+		ArrayList<Car> list = new ArrayList<Car>();
+		String sql = "select *from car where car_brand like '%"
+				+ brand + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getCarOne(rs));
+		}
+		return list;
+	}
+
+	@Override
+	public int getTotalByNumber(Connection con, String number)
+			throws SQLException {
+		String sql = "select count(*) from car where car_number like '%"
+				+ number + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();// 移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
+	@Override
+	public ArrayList<Car> getPageNumberCar(Connection con, int startPage,
+			int pageNum, String number) throws SQLException {
+		ArrayList<Car> list = new ArrayList<Car>();
+		String sql = "select *from car where car_number like '%"
+				+ number + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getCarOne(rs));
+		}
+		return list;
 	}
 	
 }

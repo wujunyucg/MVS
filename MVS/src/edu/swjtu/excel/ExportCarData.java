@@ -57,8 +57,6 @@ public class ExportCarData extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("come");
-		
 		// 第一步，创建一个webbook，对应一个Excel文件
 		HSSFWorkbook wb = new HSSFWorkbook();
 		// 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
@@ -85,10 +83,10 @@ public class ExportCarData extends HttpServlet {
 		cell.setCellValue("保险日期");
 		cell.setCellStyle(style);
 		cell = row.createCell(5);
-		cell.setCellValue("驾驶执照");
+		cell.setCellValue("排班号");
 		cell.setCellStyle(style);
 		cell = row.createCell(6);
-		cell.setCellValue("执照");
+		cell.setCellValue("行驶证");
 		cell.setCellStyle(style);
 		cell = row.createCell(7);
 		cell.setCellValue("排班号");
@@ -97,7 +95,7 @@ public class ExportCarData extends HttpServlet {
 		cell.setCellValue("司机");
 		cell.setCellStyle(style);
 		cell = row.createCell(9);
-		cell.setCellValue("编号");
+		cell.setCellValue("座位数");
 		cell.setCellStyle(style);
 		
 		// 第五步，写入实体数据 实际应用中这些数据从数据库得到，
@@ -115,7 +113,7 @@ public class ExportCarData extends HttpServlet {
 			row = sheet.createRow((int) i + 1);
 			Car car = (Car) list.get(i);
 			// 第四步，创建单元格，并设置值
-			row.createCell(0).setCellValue(i);
+			row.createCell(0).setCellValue(i+1);
 			row.createCell(1).setCellValue(car.getLicensePlate());
 			row.createCell(2).setCellValue(car.getBrand());
 			row.createCell(3).setCellValue(car.getRegistrationDate());
@@ -132,7 +130,7 @@ public class ExportCarData extends HttpServlet {
 //		wb.write(fout);  
 //		fout.close();  
 	
-		String myexcel="all_car";
+		String myexcel="All_Car";
 	    //回去输出流
 	    OutputStream out=response.getOutputStream();
 	    //重置输出流

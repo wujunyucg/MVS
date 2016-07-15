@@ -52,6 +52,8 @@ public class ManageCarServlet extends HttpServlet {
 		}
 		
 		String type = request.getParameter("type");
+		String condition = request.getParameter("condition");
+		String sea_condition = request.getParameter("sea_condition");
 		PrintWriter pw = response.getWriter();
 		
 		int pageSize = 10;
@@ -63,21 +65,81 @@ public class ManageCarServlet extends HttpServlet {
 		if(type.equals("1")){
 			ArrayList<Car> list = null;
 			CarDaoImpl carr = new CarDaoImpl();
-			try {
-				list = carr.getPageCar(con, Integer.valueOf(page_index).intValue(), pageSize);
-			} catch (NumberFormatException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
-			try {
-				pageTotal = carr.getTotal(con);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(condition.equals("0")){
+				try {
+					list = carr.getPageCar(con, Integer.valueOf(page_index).intValue(), pageSize);
+					pageTotal = carr.getTotal(con);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
-			
-			System.out.println(pageTotal);
+			else if(condition.equals("1")){
+				try {
+					list = carr.getPageLicensePlateCar(con, Integer.valueOf(page_index).intValue(), pageSize, sea_condition);
+					pageTotal = carr.getTotalByLicensePlate(con, sea_condition);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			else if(condition.equals("2")){
+				try {
+					list = carr.getPageBrandCar(con, Integer.valueOf(page_index).intValue(), pageSize, sea_condition);
+					pageTotal = carr.getTotalByBrand(con, sea_condition);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(condition.equals("3")){
+				try {
+					list = carr.getPageDriverCar(con, Integer.valueOf(page_index).intValue(), pageSize, sea_condition);
+					pageTotal = carr.getTotalByDriver(con, sea_condition);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(condition.equals("4")){
+				try {
+					list = carr.getPageArrangeIdCar(con, Integer.valueOf(page_index).intValue(), pageSize, sea_condition);
+					pageTotal = carr.getTotalByArrangeId(con, sea_condition);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(condition.equals("5")){
+				try {
+					list = carr.getPageNumberCar(con, Integer.valueOf(page_index).intValue(), pageSize, sea_condition);
+					pageTotal = carr.getTotalByNumber(con, sea_condition);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(condition.equals("6")){
+				try {
+					list = carr.getPageDrivingLicenseCar(con, Integer.valueOf(page_index).intValue(), pageSize, sea_condition);
+					pageTotal = carr.getTotalByDrivingLicense(con, sea_condition);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if(condition.equals("7")){
+				try {
+					list = carr.getPageLicenseCar(con, Integer.valueOf(page_index).intValue(), pageSize, sea_condition);
+					pageTotal = carr.getTotalByLicense(con, sea_condition);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 			if( pageTotal%pageSize ==0){
 				request.getSession().setAttribute("allpage",(int) pageTotal/pageSize);
@@ -87,6 +149,8 @@ public class ManageCarServlet extends HttpServlet {
 			}
 			
 			request.getSession().setAttribute("pageSize",pageSize);
+			request.getSession().setAttribute("condition",condition);
+			request.getSession().setAttribute("sea_condition",sea_condition);
 			request.getSession().setAttribute("page_index", Integer.valueOf(page_index).intValue());
 			
 			request.getSession().setAttribute("list", list);
@@ -119,8 +183,7 @@ public class ManageCarServlet extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-			}
-			
+			}	
 		}
 		else if(type.equals("3")){
 			Car car = null;	
@@ -141,6 +204,9 @@ public class ManageCarServlet extends HttpServlet {
 					}
 				}
 			}
+		}
+		else if(type.equals("4")){
+			
 		}
 		else{
 			
