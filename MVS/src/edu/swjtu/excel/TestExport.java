@@ -23,6 +23,10 @@ public class TestExport {
 		ad.setName("jimo");
 		ad.setPowerId("1,2,3");
 		data.add(ad);
+		data.add(ad);
+		data.add(ad);
+		data.add(ad);
+		data.add(ad);
 		OutputStream out = new FileOutputStream("D://a.xls");
 		ex.export("exadmin", header, data, out);
 		out.flush();
@@ -51,5 +55,11 @@ public class TestExport {
 		ex.export("exadmin", header, data, out);
 		out.flush();
 		out.close();
+	}
+	@Test
+	public void testInport() throws InstantiationException, IllegalAccessException, IOException{
+		ExportArrExcel<Admin> ex = new ExportArrExcel<Admin>();
+		List<Admin> d = ex.inport(Admin.class, "D://a.xls");
+		System.out.println(d.size()+" name="+d.get(4).getName());
 	}
 }
