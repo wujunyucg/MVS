@@ -83,4 +83,19 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		return sum;
 	}
 
+	@Override
+	public int delArrById(Connection con, int id) throws SQLException {
+		String sql = "delete  from arrange where arrange_id = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, id);
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
+
 }

@@ -58,4 +58,14 @@ public interface ArrangeDao {
 	 * @throws SQLException
 	 */
 	public int getTotalByMonth(Connection con,String date) throws SQLException;
+	/**
+	 * 根据id删除班次
+	 * 2016年7月15日上午9:35:05
+	 * @author jimolonely
+	 * @param con
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public int delArrById(Connection con,int id) throws SQLException;
 }
