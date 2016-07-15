@@ -331,5 +331,42 @@ public class StaffDaoImpl implements StaffDao {
 		}
 		return staff;
 	}
-
+	
+	public ArrayList<Staff> getStaffByAnyStr(String str1,String str2,int startPage, int pageNum,Connection con) {
+		ArrayList<Staff> staffList = new ArrayList<Staff>();
+		String sql = "select * from staff  where "+str1+"= ? limit ?,?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, str2);
+			pstm.setInt(2, (startPage-1)*pageNum);
+			pstm.setInt(3, pageNum);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				staffList.add(getStaffOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staffList;
+	}
+	
+	public ArrayList<Staff> getStaffByAnyInt(String str1,int str2,int startPage, int pageNum,Connection con) {
+		ArrayList<Staff> staffList = new ArrayList<Staff>();
+		String sql = "select * from staff  where "+str1+" = ? limit ? , ?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, str2);
+			pstm.setInt(2, (startPage-1)*pageNum);
+			pstm.setInt(3, pageNum);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				staffList.add(getStaffOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staffList;
+	}
 }
