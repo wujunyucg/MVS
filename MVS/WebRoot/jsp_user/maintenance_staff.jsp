@@ -25,23 +25,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 </style>
   </head>
   
-  <body>
+  <body onload="searchcontent()">
   <h1>员工维护</h1>
   <div style="text-align: center;margin-right: auto;margin-left: auto;">
    
-  <form class="form-inline">
+  <div class="form-inline" >
   
   <div class="form-group">
     <div class="input-group">
   <div class="input-group-addon">搜索类型</div>
-    <select class="form-control">
-  <option>员工工号</option>
-   <option>员工姓名</option>
-  <option>员工部门</option>
-  <option>员工组别</option>
-  <option>所属班次</option>
-  <option>所属线路</option>
-  <option>所属站点</option>
+    <select class="form-control" id="type">
+  <option value="1" >员工工号</option>
+   <option value="2">员工姓名</option>
+  <option value="3">员工部门</option>
+  <option value="4">员工组别</option>
+  <option value="5">所属班次</option>
+  <option value="6">所属线路</option>
+  <option value="7">所属站点</option>
 </select>
     
     </div>
@@ -49,18 +49,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <div class="form-group">
     <div class="input-group">
    <div class="input-group-addon">关键词</div>
-      <input type="text" class="form-control" name ="content" >
+      <input type="text" class="form-control"  id="content1">
     
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">搜索</button>
-</form>
+  <button type="submit" class="btn btn-primary" onclick="javascript:search();">搜索</button>
+</div>
 <br>
   </div>
      <c:if test="${staff_list != null }">
      
     <div style="text-align: center;margin-right: auto;margin-left: auto;"> 
-    <table id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:98%;margin-right: auto;margin-left: auto;color:#000,float:right">
+    <table  id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:98%;margin-right: auto;margin-left: auto;color:#000,float:right">
 	  <thead>
 	    <tr>
 	   	  <th><input name="" type="checkbox" id ="checkall" value="" onclick="javascript:checkall();"/>全选\不选</th>
@@ -141,8 +141,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
 
   </body>
-  
+   
   <script>
+<c:choose>
+       <c:when test="${staff_type == null}">
+ 			 function searchcontent(){}
+               </c:when>
+               <c:otherwise>
+                  function searchcontent(){
+  				$("#type").val("${staff_type}"); 
+				$("#content1").val("${staff_search_content}"); 
+  	}
+               </c:otherwise>
+           </c:choose>
+$(window).load(searchcontent());
   function  layer1(number,name,department,group,arrange,line,site ,address){
   $("#w-modal-close").attr("onclick","");
 	  var tab='<table class="table table-hover table-bordered" style="width:100%;">'
@@ -192,8 +204,14 @@ function  layer2(staffid,number,name,department,group,arrange,line,site,address 
      // alert($("#useradmin").html())
 }
 function pagination(page){
-	$("#content").load("<%=basePath%>servlet/ManageStaffServlet?staff_page="+page);
-
+		<c:choose>
+               <c:when test="${staff_type == null}">
+                  $("#content").load("<%=basePath%>servlet/ManageStaffServlet?staff_page="+page);
+               </c:when>
+               <c:otherwise>
+                   $("#content").load("<%=basePath%>servlet/ManageStaffServlet?staff_page="+page+"&staff_type="+${staff_type});
+               </c:otherwise>
+           </c:choose>
 }
 function update(){
 	$.ajax({ 
@@ -308,6 +326,16 @@ function deleteall(){
 
 function checkall(){
 	$("input[name='deletecheck']").prop("checked",$("#checkall").prop("checked"));
+}
+
+
+function search(){
+	var type = $("#type").val();
+	var content = $("#content1").val();
+	if(content == "")
+		alert("未输入内容");
+	else
+		$("#content").load("<%=basePath%>servlet/SearchStaffServlet?content="+content+"&type="+type);
 }
 
   </script>

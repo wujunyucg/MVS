@@ -175,8 +175,17 @@
     <servlet-name>SearchStaffServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.SearchStaffServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ModifyArrServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ModifyArrServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>SearchStaffServlet</servlet-name>
     <url-pattern>/servlet/SearchStaffServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ModifyArrServlet</servlet-name>
+    <url-pattern>/servlet/ModifyArrServlet</url-pattern>
   </servlet-mapping>
 </web-app>

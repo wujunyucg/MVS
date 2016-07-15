@@ -66,6 +66,23 @@ public class ArrangeDaoTest {
 	@Test
 	public void testGetTotalByMonth() throws ClassNotFoundException, SQLException{
 		System.out.println(new ArrangeDaoImpl().getTotalByMonth(new DBUtil()
-		.getCon(),"2015-5"));
+		.getCon(),"2015-05"));
+	}
+	/**
+	 * 测试删除byId
+	 * 2016年7月15日上午9:37:31
+	 * @author jimolonely
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testDelById() throws ClassNotFoundException, SQLException{
+		System.out.println(new ArrangeDaoImpl().delArrById(new DBUtil().getCon(), 10));
+	}
+	
+	@Test
+	public void testGetAllByMonth() throws ClassNotFoundException, SQLException{
+		System.out.println((new ArrangeDaoImpl().getAllMonthArr(new DBUtil()
+		.getCon(),"2015-05")).size());
 	}
 }

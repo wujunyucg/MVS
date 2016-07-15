@@ -39,7 +39,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			int pageNum) throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
 		String sql = "select *from arrange limit "
-				+ ((startPage - 1) * pageNum+1) + "," + pageNum;
+				+ ((startPage - 1) * pageNum) + "," + pageNum;
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
@@ -63,7 +63,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			int pageNum, String date) throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
 		String sql = "select *from arrange where arrange_date like '%"
-				+ date + "%' limit " + ((startPage - 1) * pageNum+1) + "," + pageNum;
+				+ date + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
@@ -81,6 +81,35 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		rs.next();// 移到第一条数据
 		int sum = rs.getInt(1);
 		return sum;
+	}
+
+	@Override
+	public int delArrById(Connection con, int id) throws SQLException {
+		String sql = "delete  from arrange where arrange_id = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, id);
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
+
+	@Override
+	public ArrayList<Arrange> getAllMonthArr(Connection con, String date)
+			throws SQLException {
+		ArrayList<Arrange> list = new ArrayList<Arrange>();
+		String sql = "select *from arrange where arrange_date like '%"
+				+ date + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getOneArrange(rs));
+		}
+		return list;
 	}
 
 }
