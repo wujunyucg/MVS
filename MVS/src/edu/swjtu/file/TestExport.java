@@ -42,6 +42,11 @@ public class TestExport {
 		acl.setLineName("线路1");
 		acl.setTime("6:00");
 		data.add(acl);
+		data.add(acl);
+		data.add(acl);
+		data.add(acl);
+		data.add(acl);
+		data.add(acl);
 		OutputStream out = new FileOutputStream("D://b.xls");
 		ex.export("exadmin", header, data, out);
 		out.flush();
