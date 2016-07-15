@@ -98,4 +98,18 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		return rs;
 	}
 
+	@Override
+	public ArrayList<Arrange> getAllMonthArr(Connection con, String date)
+			throws SQLException {
+		ArrayList<Arrange> list = new ArrayList<Arrange>();
+		String sql = "select *from arrange where arrange_date like '%"
+				+ date + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			list.add(getOneArrange(rs));
+		}
+		return list;
+	}
+
 }
