@@ -151,6 +151,7 @@
 					info(marker.getPosition(),conten);	
 					
 				});	 
+				var ss=data;
 				AMap.event.addListener(marker, 'rightclick',function(e){
 					//info();
 					info2.close( ) ;
@@ -162,6 +163,8 @@
 					contextMenu.addItem("删除", function() {
 						marker.hide();
 					}, 1);
+					console.log("OK-----右键点击"+ss);
+					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2);
 					contextMenu.addItem("查看路线", function() {
 						var path = [];
 						for(var i=0;i<markers.length;i++){
@@ -169,7 +172,7 @@
 								path.push(markers[i].getPosition());
 							} 		
 						Dragroute(path);
-					}, 2);
+					}, 3);
 					contextMenu.open(map, marker.getPosition());
 					contextMenuPositon = marker.getPosition();
 				
@@ -179,7 +182,8 @@
 	//地图热点
 	var placeSearch = new AMap.PlaceSearch();  //构造地点查询类
     var infoWindow2=new AMap.AdvancedInfoWindow({closeWhenClickMap:true});
-    map.on('hotspotclick', function(result) {
+    // map.on('hotspotclick', function(result) {
+    map.on('', function(result) {
         placeSearch.getDetails(result.id, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
                 placeSearch_CallBack(result);

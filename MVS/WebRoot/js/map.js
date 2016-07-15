@@ -4,6 +4,69 @@
 	//var hhj_satation=data;
 	//markers(hhj_satation);
 var satations=hhj_satation;
+var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
+//站点查询
+function satation_search(){}
+//获取站点数据
+function getSatationinfo(){}
+//添加站点
+function AddSation(){}
+//删除站点
+function DeleteSatation(){}
+//修改站点
+function EditSatation(data){
+	document.getElementById('addsatation-info').innerHTML="";
+	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
+	var s=data.lng;
+	console.log("1");
+	var ctn=document.getElementById('info-satation');
+	console.log(document.getElementById('satation-lng'));
+	console.log("2");
+	document.getElementById('satation-lng').value=s;
+	document.getElementById('satation-name').value=data.name;
+	document.getElementById('satation-address').value=data.address;
+	var route=$('#satation-route option');
+	route[data.route-1].selected='selected';
+	var num=$('#satation-number option');
+	console.log(data.number);
+	num[data.number-1].selected='selected';
+	$('#satation-people').val(data.people);
+	console.log("3");
+	info(s,ctn);
+	console.log(ctn);
+	//var sbm=document.getElementById('sbm');
+	var sbm=ctn.getElementsByTagName('button');	
+	console.log(sbm);
+	sbm[0].onclick=function(){
+		//alert("OK");
+		var newsatation={"name":"",
+				 "address":"",
+				 "lng":[0,0],
+				 "number":0,
+				 "route":0,
+				 "people":0};
+		newsatation.name=document.getElementById('satation-name').value;
+		newsatation.address=document.getElementById('satation-address').value;
+		newsatation.lng=data.lng;
+		newsatation.route=$("#satation-route").val();
+		newsatation.number=$("#satation-number").val();
+		newsatation.people=$("#satation-people").val();
+		console.log("elnglat"+data.lng);
+		console.log("hhj_satation"+hhj_satation);
+		console.log("newsatation"+newsatation+newsatation.number);
+		//satations.push(newsatation);
+		hhj_satation[newsatation.number-1]=newsatation;
+		map.clearMap();
+		markers(hhj_satation);
+		//hhj_satation[hhj_satation.length-1]=null;
+		console.log("hhj_satation"+hhj_satation.length);
+		//marker.hide();
+		info2.close();
+	};
+
+	console.log("4");
+}
+ 
 var path =new Array();
 for(var i=0;i<25;i++){
 	path[i]=new Array();
@@ -30,13 +93,15 @@ for(var i=0;i<routes_clk_show.length;i++){
 			alert("OK"+this.index+1);
 		}
 }
-var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
+map.on('click', function(e) {$("#satation-search input").attr("value","输入关键字进行查询");});
+
 function addsatation(){
 	var hhj_flag=0;
 	console.log("add  "+hhj_flag);
 	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
 	var clickEventListener = map.on('click', function(e) {
 		console.log("start"+hhj_flag);
+		$("#satation-search input").attr("value","输入关键字进行查询");
         //document.getElementById("infos").value = e.lnglat.getLng() + ',' + e.lnglat.getLat();
 		document.getElementById('lnglat').value=e.lnglat.getLng() + ',' + e.lnglat.getLat();
 		console.log(e);
@@ -55,7 +120,9 @@ function addsatation(){
 			//lis[1].value=s; 
 			console.log(document.getElementById('satation-lng'));
 			document.getElementById('satation-lng').value=s;
-			//alert(lis[0].value);
+			var num=$('#satation-number option');
+			//console.log(data.number);
+			num[hhj_satation.length].selected='selected';
 			console.log(s);
 			console.log(ctn);
 			info(e.lnglat,ctn);
@@ -70,21 +137,27 @@ function addsatation(){
 				}
 			});*/
 			var sbm=ctn.getElementsByTagName('button');		
-			var newsatation=hhj_satation[0];
+			var newsatation={"name":"",
+					 "address":"",
+					 "lng":[0,0],
+					 "number":0,
+					 "route":0,
+					 "people":0};
 			sbm[0].onclick=function(){ 
 				hhj_flag=1;
 				newsatation.name=document.getElementById('satation-name').value;
 				newsatation.address=document.getElementById('satation-address').value;
 				newsatation.lng=e.lnglat;
 				newsatation.route=$("#satation-route").val();
-				newsatation.number=$("#satation-number").val();
+				newsatation.number=hhj_satation.length+1;
 				newsatation.people=$("#satation-people").val();
 				console.log("elnglat"+e.lnglat);
 				console.log("hhj_satation"+hhj_satation);
 				console.log("newsatation"+newsatation+newsatation.number);
 				//satations.push(newsatation);
 				hhj_satation[hhj_satation.length]=newsatation;
-				markers(newsatation);
+				map.clearMap();
+				markers(hhj_satation);
 				console.log("hhj_satation"+hhj_satation.length);
 				marker.hide();
 				info2.close();
@@ -114,5 +187,13 @@ function sataion_infoctn(){
 				 ' <li><button type="reset" id="set">修改</button></li>'+
 			 '</ul> </div>';
 		return s;
-			
 	}
+$("#satation-search input").bind("click",function(){
+	$("#satation-search input").attr("value","");	
+});
+
+//线路管理
+function addroute(){
+	alert("enter route set");
+}
+

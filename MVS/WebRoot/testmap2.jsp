@@ -87,7 +87,10 @@
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 					管理线路
 				</button>
-				
+				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
+					<button type="button" class="list-group-item" onclick="addroute()">增加</button>
+					<button type="button" class="list-group-item" onclick="map.clearMap();markers(hhj_satation)">显示</button>
+				</div>
 				<button type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon create-user">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
@@ -169,7 +172,7 @@
             <li><input id="lnglat" value=''/></li>
         </ul>
       </div>
-      <div id="satation-search" style="position:absolute;margin-left:355px;margin-top:80px;">
+      <div id="satation-search" style="position:absolute;margin-left:65px;margin-top:80px;">
       	<input type="text" value="输入关键字进行查询" />
       </div>
       <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
@@ -183,12 +186,34 @@
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
                  </select></li>
               <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp编号
                   <select size="1" style="margin-bottom:10px;" id="satation-number">
                      <option value="1">1</option>
                      <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                     <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                     <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                     <option value="11">11</option>
+                    <option value="12">12</option>
                   </select>
               </li>
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
