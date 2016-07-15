@@ -3,8 +3,10 @@
 
 	//var hhj_satation=data;
 	//markers(hhj_satation);
+//Dragroute(hhj_satation);
 var satations=hhj_satation;
 var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
+var satation_routes=document.getElementById("satation-route").innerHTML;
 //站点查询
 function satation_search(){}
 //获取站点数据
@@ -41,7 +43,7 @@ function EditSatation(data){
 		//alert("OK");
 		var newsatation={"name":"",
 				 "address":"",
-				 "lng":[0,0],
+				 "lng":[104.040329,30.681873],
 				 "number":0,
 				 "route":0,
 				 "people":0};
@@ -67,32 +69,7 @@ function EditSatation(data){
 	console.log("4");
 }
  
-var path =new Array();
-for(var i=0;i<25;i++){
-	path[i]=new Array();
-	}
-for(var i=0;i<hhj_satation.length;i++){
-	console.log(hhj_satation[i]);
-	console.log(hhj_satation[i].route+hhj_satation[i].number);
-    	path[hhj_satation[i].route].push(hhj_satation[i].lng);
-	}
-function showroute(i){
-	Dragroute(path[i]);
-}
 
-function hideroute(){
-	route2.destroy();
-}
-var routes_clk_show=document.getElementById('routes').getElementsByTagName('li');
-for(var i=0;i<routes_clk_show.length;i++){
-		routes_clk_show[i].index=i;
-		console.log(i);
-		routes_clk_show[i].onclick=function(){
-			console.log(this.index+1);
-			showroute((this.index+1));
-			alert("OK"+this.index+1);
-		}
-}
 map.on('click', function(e) {$("#satation-search input").attr("value","输入关键字进行查询");});
 
 function addsatation(){
@@ -126,16 +103,6 @@ function addsatation(){
 			console.log(s);
 			console.log(ctn);
 			info(e.lnglat,ctn);
-			/*var placeSearch = new AMap.PlaceSearch({location:e.lnglat});  //构造地点查询类
-		//详情查询
-			placeSearch.getDetails("B000A83U0P", function(status, e) {
-				if (status === 'complete' && e.info === 'OK') {
-					 var poiArr = e.poiList.pois;
-					 var location = poiArr[0].location;
-					 console.log(poiArr[0]);
-					///s alert("OK");
-				}
-			});*/
 			var sbm=ctn.getElementsByTagName('button');		
 			var newsatation={"name":"",
 					 "address":"",
@@ -183,7 +150,7 @@ function sataion_infoctn(){
 						'<option>3</option>'+
 					  '</select>'+
 				  '</li>'+
-				 ' <li><button type="submit" id="sbm">确认</button></li>'+
+	  			 ' <li><button type="submit" id="sbm">确认</button></li>'+
 				 ' <li><button type="reset" id="set">修改</button></li>'+
 			 '</ul> </div>';
 		return s;
@@ -193,17 +160,53 @@ $("#satation-search input").bind("click",function(){
 });
 
 //线路管理
+
 function addroute(){
 	alert("enter route set");
 }
 function showAllRoute(all_satations){
+	console.log("start show routes");
+	markers(all_satations);
 	var obj={
-		 "name":"金鱼街",
-		 "address":"金鱼街10号",
-		 "lng":[104.040329,30.681873],
-		 "number":1,
-		 "route":3,
-		 "people":10};
-	var route=new Array();
+		 "name":"",
+		 "address":"",
+		 "lng":[0,0],
+		 "number":0,
+		 "route":0,
+		 "people":0};
+	var routes=new Array();
+	//var path =new Array();
+	for(var i=0;i<25;i++){
+		routes[i]=new Array();
+		//routes[i][0]=obj;
+		}
+	for(var i=0;i<hhj_satation.length;i++){
+		console.log(hhj_satation[i]);
+		//console.log(hhj_satation[i].route+hhj_satation[i].number);
+		routes[hhj_satation[i].route].push(hhj_satation[i].lng);
+		}
+	//showroute(1);
+	function showroute(i){
+		console.log(routes[i]);
+		Dragroute(routes[i]);
+	}
+
+	function hideroute(){
+		route2.destroy();
+	}
+	var flag=1;
+	//$('#satation-route').show();
+	$('#satation-search input').bind('input oninput',function(){
+		console.log("ok show route");
+		console.log($(this).val());
+		if($(this).val()<20&&$(this).val()>0){
+			if(flag!=1)
+				hideroute()
+			console.log($(this).val());
+			var index=$(this).val()
+			showroute(index);
+			flag=2;
+		}
+	});
 }
 

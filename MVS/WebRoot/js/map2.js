@@ -46,6 +46,7 @@
 		var route2;
 		//拖曳导航路径
 		function Dragroute(path){
+			console.log("enter route-----");
 			map.plugin("AMap.DragRoute",function(){
 				route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
 						midMarkerOptions:{
@@ -65,19 +66,21 @@
 				//构造拖拽导航类，传入参数分别为：地图对象，初始路径，驾车策略
 				route.search(); //查询导航路径并开启拖拽导航
 				//当路径完成时的事件
-				
+				console.log("enter serach-----");
 				AMap.event.addListener(route,'complete',function(e){
 					//alert("OK");
 					//alert(e.data.routes[0].steps[0].action);
+					console.log("enter complete-----");
 				    var r=e.data.routes[0].steps;
 					for(i=0;i<r.length;i++){
 					     //各路段描述
 						console.log(e.data.routes[0].steps[i].instruction );
 						//目标路程
-						console.log(e.data.routes[0].distance  );
+						console.log(e.data.routes[0].distance);
 						//预计时间
-						console.log(e.data.routes[0].time  );
-						
+						console.log(e.data.routes[0].time);
+						console.log("enter complete-----");
+
 					}
 					//参考这个格式
 					route2=route;

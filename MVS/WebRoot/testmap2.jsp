@@ -172,7 +172,7 @@
             <li><input id="lnglat" value=''/></li>
         </ul>
       </div>
-      <div id="satation-search" style="position:absolute;margin-left:65px;margin-top:80px;">
+      <div id="satation-search" style="position:absolute;margin-left:65px;margin-top:80px;" autoComplete='off'>
       	<input type="text" value="输入关键字进行查询" />
       </div>
       <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
