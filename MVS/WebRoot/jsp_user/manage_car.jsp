@@ -32,7 +32,7 @@
 <br/>
 		<h4 style="float:left;">查询条件: </h4>
 		<div style="float:left;">&nbsp;</div>
-	<div style="float:left;">
+	<div style="float:left;"  class="dropdown">
 		<button class="btn btn-default dropdown-toggle" type="button"
 			id="dropdownMenu_ca" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="true" title="1">按车牌查询 <span class="caret"></span></button>
@@ -44,9 +44,9 @@
 			<li><a href="javascript:;" onclick="javascript:sercon('5')">按座位数查询</a></li>
 			<li><a href="javascript:;" onclick="javascript:sercon('6')">按驾驶证查询</a></li>
 			<li><a href="javascript:;" onclick="javascript:sercon('7')">按行驶证查询</a></li>
-
 		</ul>
 	</div>
+	
 	&nbsp;<div style="float:left;">&nbsp;</div>
 	 <input id="searchcon" class="form-control" style="width: 30%;float:left;" type="text" placeholder="请输入查询关键字">
 	<div style="float:left;">&nbsp;</div>
@@ -304,15 +304,46 @@
 		</ul>
 		</nav>
 	</div>
-	
-	
-	
+
+	<!-- Not Find Data -->
+	<div class="modal fade" id="notFindData" tabindex="-1" role="dialog"aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">数据错误</h4>
+				</div>
+				<div class="modal-body">当前查询为未找到任何满足条件的车辆数据！</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning"  id="dataNotExit" data-dismiss="modal">返回</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<b id="allpageb">${allpage}</b>
+	<b id="allpagebb">${sea_condition}</b>
 	<script type="text/javascript">
 		
 		var carId="";
-		var licPla;
+		var licPla="";
 		var condition=${condition};
-		var sea_condition=${sea_condition};
+ 		var pagenum= $("#allpageb").text();
+ 		var pagenumb= $("#allpagebb").text();
+ 		
+ 		$("#allpageb").hide();
+ 		$("#allpagebb").hide();
+ 		
+ 		if(pagenum == "0"||pagenum == null){
+ 			$("#notFindData").modal('show');
+ 		}
+ 		
+ 		$("#dataNotExit").click(function() {
+ 			$(".modal-backdrop").hide();
+				$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition=0&sea_condition=0");
+		});
  		
  		function hidehunt(){
  			$("#judgeNull").hide();
