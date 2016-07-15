@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import edu.swjtu.model.Arrange;
 import edu.swjtu.model.Car;
 
 /**
@@ -164,4 +165,33 @@ public interface CarDao {
 	 * @throws SQLException 
 	 */
 	public int getTotal(Connection con) throws SQLException;
+	
+	public ArrayList<Car> getCarByLicensePlate_V( String licensePlate , Connection con );
+	public int getTotalByLicensePlate(Connection con,String licensePlate) throws SQLException;
+	public ArrayList<Car> getPageLicensePlateCar(Connection con,int startPage,int pageNum,String licensePlate) throws SQLException;
+	
+	public ArrayList<Car> getCarByLicense_V( String license , Connection con );
+	public int getTotalByLicense(Connection con,String license) throws SQLException;
+	public ArrayList<Car> getPageLicenseCar(Connection con,int startPage,int pageNum,String license) throws SQLException;
+
+	public ArrayList<Car> getCarByDrivingLicense_V( String drivingLicense , Connection con );
+	public int getTotalByDrivingLicense(Connection con,String drivingLicense) throws SQLException;
+	public ArrayList<Car> getPageDrivingLicenseCar(Connection con,int startPage,int pageNum,String drivingLicense) throws SQLException;
+
+	public ArrayList<Car> getCarByDriver_V( String driver , Connection con );
+	public int getTotalByDriver(Connection con,String driver) throws SQLException;
+	public ArrayList<Car> getPageDriverCar(Connection con,int startPage,int pageNum,String driver) throws SQLException;
+	
+	public ArrayList<Car> getCarByArrangeId_V( String arrangeId , Connection con );
+	public int getTotalByArrangeId(Connection con,String arrangeId) throws SQLException;
+	public ArrayList<Car> getPageArrangeIdCar(Connection con,int startPage,int pageNum,String arrangeId) throws SQLException;
+
+	public ArrayList<Car> getCarByBrand_V( String brand , Connection con );
+	public int getTotalByBrand(Connection con,String brand) throws SQLException;
+	public ArrayList<Car> getPageBrandCar(Connection con,int startPage,int pageNum,String brand) throws SQLException;
+	
+	public ArrayList<Car> getCarByNumber_V( String number , Connection con );
+	public int getTotalByNumber(Connection con,String number) throws SQLException;
+	public ArrayList<Car> getPageNumberCar(Connection con,int startPage,int pageNum,String number) throws SQLException;
+
 }

@@ -40,7 +40,10 @@
 	</button>
 	<button id="arr_show_all"type="button" class="btn btn-success">全部班次
 	</button>
-	<button type="button" class="btn btn-success">导出</button>
+	<form id="export_form"style="float:right;margin-right:20px;"
+	action="servlet/ModifyArrServlet?deltype=3" method="POST">
+		<button id="arr_export"type="button" class="btn btn-success">导出</button>
+	</form>
 	<button type="button" class="btn btn-success">导入</button>
 	<button type="button" class="btn btn-default">删除</button>
 	</div>
@@ -146,7 +149,7 @@
 
 	<script type="text/javascript">
 		//分页控制
-			$(".arr-page a").click(function(){
+			$(".arr-page>a").click(function(){
 				var date = $("#arr_date").val();
 				$("#load_modal").modal('show');//显示加载框
 				var pageNow = $(this).text();
@@ -261,7 +264,7 @@
 			$.ajax({
 				url:"servlet/ModifyArrServlet",
 				type:"POST",
-				data:{type:"1",arrId:arr_id},
+				data:{deltype:"1",arrId:arr_id},
 				success:function(re){
 					$("#msg_modal").modal('hide');
 					$("#modal_delete").modal('show');
@@ -287,6 +290,10 @@
 			}
 		});
 		
+		//导出提交表单
+		$("#arr_export").click(function(){
+			$("#export_form").submit();
+		});
 		$("#load_modal").modal('hide');//隐藏加载框
 	</script>
 </body>

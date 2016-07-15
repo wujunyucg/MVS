@@ -19,18 +19,55 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
-	<link rel="stylesheet" type="text/css" href="css/create_user.css">
+		<link rel="stylesheet" type="text/css" href="css/create_user.css">
 	<link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
 	<script src='scripts/jquery.js'></script>
 	<script src='scripts/bootstrap.min.js'></script>
 
+
 </head>
 
 <body>
-
 <br/>
+		<h4 style="float:left;">查询条件: </h4>
+		<div style="float:left;">&nbsp;</div>
+	<div style="float:left;">
+		<button class="btn btn-default dropdown-toggle" type="button"
+			id="dropdownMenu_ca" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="true" title="1">按车牌查询 <span class="caret"></span></button>
+		<ul class="dropdown-menu" aria-labelledby="dropdownMenu_ca">
+			<li><a href="javascript:;"  onclick="javascript:sercon('1')">按车牌查询</a></li>
+			<li><a href="javascript:;" onclick="javascript:sercon('2')">按品牌查询</a></li>
+			<li><a href="javascript:;" onclick="javascript:sercon('3')">按司机查询</a></li>
+			<li><a href="javascript:;" onclick="javascript:sercon('4')">按班次查询</a></li>
+			<li><a href="javascript:;" onclick="javascript:sercon('5')">按座位数查询</a></li>
+			<li><a href="javascript:;" onclick="javascript:sercon('6')">按驾驶证查询</a></li>
+			<li><a href="javascript:;" onclick="javascript:sercon('7')">按行驶证查询</a></li>
+
+		</ul>
+	</div>
+	&nbsp;<div style="float:left;">&nbsp;</div>
+	 <input id="searchcon" class="form-control" style="width: 30%;float:left;" type="text" placeholder="请输入查询关键字">
+	<div style="float:left;">&nbsp;</div>
+	<button type="button" class="btn btn-primary" onclick="search_car()">执行查询</button>
+	&nbsp;
+	<button type="button" class="btn btn-primary" onclick="serall()">查询全部车辆</button>
+	&nbsp;
+
+	<div style="float:right;">
+		<form action="servlet/ExportCarData" method="post">
+			<button type="submit" class="btn btn-primary">导出全部数据</button>
+		</form>
+	</div>
+	&nbsp;<div style="float:right;">&nbsp;</div>
+	<div style="float:right;">
+		<form action="servlet/ExportConCarData?condition=${condition}&sea_condition=${sea_condition}" method="post">
+			<button type="submit" class="btn btn-primary">导出当前查询数据</button>
+		</form>
+	</div>	
+	
+	<br/><br/>
 	<!--  -->
 	<div class="mypage2">
 		<table class="table table-hover table-bordered " style="width:98%;">
@@ -55,18 +92,18 @@
 							<td>${car.getBrand()}</td>
 							<td>${car.getDriver()}</td>
 							<td>${car.getArrangeId()}</td>
-							<td style="width:100px;"><a class="car_detail" id="${car.getCarId()}" href="javascript:;" 
+							<td style="width:100px;"><a class="car_detail" id="${car.getCarId()}" href="" 
 							data-toggle="modal" data-target="#myModal" onclick="javascript:cardetail('${pageSize*(page_index-1)+status.index+1}',
 							'${car.getLicensePlate()}', '${car.getBrand()}', '${car.getRegistrationDate()}', '${car.getInsuranceDate()}', 
 							'${car.getDrivingLicense()}', '${car.getLicense()}', '${car.getArrangeId()}', '${car.getDriver()}', 
-							'${car.getNumber()}')">
+							'${car.getNumber()}');">
 							查看详情</a></td>
-							<td style="width:100px;"><a class="car_modify" id="${car.getCarId()}" href="javascript:;" 
+							<td style="width:100px;"><a class="car_modify" id="${car.getCarId()}" href="" 
 							data-toggle="modal" data-target="#myModal_C" onclick="javascript:carmodify('${pageSize*(page_index-1)+status.index+1}',${car.getCarId()}, 
 							'${car.getLicensePlate()}', '${car.getBrand()}', '${car.getRegistrationDate()}', '${car.getInsuranceDate()}', 
 							'${car.getDrivingLicense()}', '${car.getLicense()}', '${car.getArrangeId()}', '${car.getDriver()}', 
 							'${car.getNumber()}')">修改</a></td>    
-							<td style="width:100px;"><a class="car_delete" href="javascript:;"  data-toggle="modal" data-target="#myModal_D"
+							<td style="width:100px;"><a class="car_delete" href=""  data-toggle="modal" data-target="#myModal_D"
 							 onclick="javascript:car_delete('${car.getLicensePlate()}')">删除</a></td>
 						</tr>
 					</c:forEach>
@@ -81,26 +118,49 @@
 			<button type="button" class="close" data-dismiss="modal"aria-label="Close">
 				<span aria-hidden="true">&times;</span></button><h4 class="modal-title">车辆信息详情</h4></div>
 					<div class="modal-body">
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">序号</span>
-						<div class="form-control" id="carId" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">车牌</span>
-						<div class="form-control" id="licensePlate" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">品牌</span>
-						<div class="form-control" id="brand" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">注册日期</span>
-						<div class="form-control" id="registrationDate" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">保险日期</span>
-						<div class="form-control" id="insuranceDate" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">驾驶证</span>
-						<div class="form-control" id="drivingLicense" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">行驶证</span>
-						<div class="form-control" id="license" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">班次</span>
-						<div class="form-control" id="arrangeId" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">司机</span>
-						<div class="form-control" id="driver" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">座位数</span>
-						<div class="form-control" id="number" aria-describedby="sizing-addon2"></div></div><br/>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">序号</span>
+							<div class="form-control" id="carId" aria-describedby="sizing-addon2"></div></div><br/>
+						</div><div class="col-md-6">
+							<div></div></div>
+					</div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">车牌</span>
+							<div class="form-control" id="licensePlate" aria-describedby="sizing-addon2"></div></div><br/>
+						</div><div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">品牌</span>
+							<div class="form-control" id="brand" aria-describedby="sizing-addon2"></div></div><br/>
+						</div>
+					</div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">司机</span>
+							<div class="form-control" id="driver" aria-describedby="sizing-addon2"></div></div><br/>
+						</div><div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">班次</span>
+							<div class="form-control" id="arrangeId" aria-describedby="sizing-addon2"></div></div><br/>
+						</div>
+					</div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">座位数</span>
+							<div class="form-control" id="number" aria-describedby="sizing-addon2"></div></div><br/>
+						</div></div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">驾驶证</span>
+							<div class="form-control" id="drivingLicense" aria-describedby="sizing-addon2"></div></div><br/>
+						</div><div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">行驶证</span>
+							<div class="form-control" id="license" aria-describedby="sizing-addon2"></div></div><br/>
+						</div>	</div><div class="row">
+						<div class="col-md-12">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">注册日期</span>
+							<div class="form-control" id="registrationDate" aria-describedby="sizing-addon2"></div></div><br/>
+						</div><div class="col-md-12">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">保险日期</span>
+							<div class="form-control" id="insuranceDate" aria-describedby="sizing-addon2"></div></div><br/>
+						</div>
+					</div><br/>
+					<p class="text-muted">（上述行驶证指证芯编号；驾驶证指驾驶证的证号，即持证人身份证号）</p>
 					</div>
 				<div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			</div></div>
@@ -115,32 +175,59 @@
 				<div id="page_m" class="page_m">
 					<div class="modal-body">
 						<div id="judgeNull"  class="alert alert-danger" role="alert" style="display:none;">数据信息不可为空</div>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">序号</span>
-						<div class="form-control" id="carId1" aria-describedby="sizing-addon2"></div></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">车牌</span>
-						<input type="text" class="form-control" id="licensePlate1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">品牌</span>
-						<input type="text" class="form-control" id="brand1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">注册日期</span>
-						<input type="text" class="form-control" id="registrationDate1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">保险日期</span>
-						<input type="text" class="form-control" id="insuranceDate1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">驾驶证</span>
-						<input type="text" class="form-control" id="drivingLicense1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">行驶证</span>
-						<input type="text" class="form-control" id="license1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">班次</span>
-						<input type="text" class="form-control" id="arrangeId1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">司机</span>
-						<input type="text" class="form-control" id="driver1" aria-describedby="sizing-addon2"></div><br/>
-						<div class="input-group"><span class="input-group-addon" id="sizing-addon2">座位数</span>
-						<input type="text" class="form-control" id="number1" aria-describedby="sizing-addon2"></div><br/>
-					</div>
-				<div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<div class="row">
+						<div class="col-md-4">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">序号</span>
+							<input class="form-control" type="text" id="carId1" readonly></div><br/>
+						</div><div class="col-md-6">
+							<div></div></div>
+					</div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">车牌</span>
+							<input type="text" class="form-control" id="licensePlate1" aria-describedby="sizing-addon2"></div><br/>
+						</div><div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">品牌</span>
+							<input type="text" class="form-control" id="brand1" aria-describedby="sizing-addon2"></div><br/>
+						</div>
+					</div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">司机</span>
+							<input type="text" class="form-control" id="driver1" aria-describedby="sizing-addon2"></div><br/>
+						</div><div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">班次</span>
+							<input type="text" class="form-control" id="arrangeId1" aria-describedby="sizing-addon2"></div><br/>
+						</div>
+					</div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">座位数</span>
+							<input type="text" class="form-control" id="number1" aria-describedby="sizing-addon2"></div><br/>
+						</div></div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">驾驶证</span>
+							<input type="text" class="form-control" id="drivingLicense1" aria-describedby="sizing-addon2"></div><br/>
+						</div><div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">行驶证</span>
+							<input type="text" class="form-control" id="license1" aria-describedby="sizing-addon2"></div><br/>
+						</div>	</div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">注册日期</span>
+							<input type="text" class="form-control" id="registrationDate1" aria-describedby="sizing-addon2"></div><br/>
+						</div><div class="col-md-6">
+							<h4 class="text-muted">（格式：2000年01月01日）</h4>
+						</div></div><div class="row">
+						<div class="col-md-6">
+							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">保险日期</span>
+							<input type="text" class="form-control" id="insuranceDate1" aria-describedby="sizing-addon2"></div><br/>
+						</div><div class="col-md-6">
+							<h4 class="text-muted">（格式：2000年01月01日）</h4>
+						</div></div>
+					</div><br/>
+					<p class="text-muted">（上述行驶证指证芯编号；驾驶证指驾驶证的证号，即持证人身份证号）</p>
+					<div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal"  onclick="javascript:hidehunt();">取消</button>
 				<button id="s_modify" type="button" class="btn btn-primary">确认修改</button>
-			</div></div>
-			
-				<div id="page_ms" class="page_m"">	
+			</div>
+					</div>
+				<div id="page_ms" class="page_ms"">	
 					<div class="modal-body">已成功修改该车辆数据信息</div>
 					<div class="modal-footer"><button type="button" class="btn btn-primary"  data-dismiss="modal" id="succmod"
 					onclick="javascript:;" >确认并刷新</button></div>
@@ -182,7 +269,9 @@
 	</div>
 </div>
 
-	<div  class="pagenumber"  style="margin:0 auto;">
+ 
+  
+	<div  class="pagenumber"">
 		<nav>
 		<ul class="pagination">
 			<c:if test="${page_index == 1 }">
@@ -216,10 +305,64 @@
 		</nav>
 	</div>
 	
+	
+	
 	<script type="text/javascript">
 		
 		var carId="";
 		var licPla;
+		var condition=${condition};
+		var sea_condition=${sea_condition};
+ 		
+ 		function hidehunt(){
+ 			$("#judgeNull").hide();
+ 		}
+ 		
+		function sercon(choice){
+			if(choice == "1"){
+				$("#dropdownMenu_ca").attr("title", "1");
+				$("#dropdownMenu_ca").html("按车牌查询 <span class='caret'></span>");
+			}
+			else if(choice == "2"){
+				$("#dropdownMenu_ca").attr("title", "2");
+				$("#dropdownMenu_ca").html("按品牌查询 <span class='caret'></span>");
+			}
+			else if(choice == "3"){
+				$("#dropdownMenu_ca").attr("title", "3");
+				$("#dropdownMenu_ca").html("按司机查询 <span class='caret'></span>");
+			}
+			else if(choice == "4"){
+				$("#dropdownMenu_ca").attr("title", "4");
+				$("#dropdownMenu_ca").html("按班次查询 <span class='caret'></span>");
+			}
+			else if(choice == "5"){
+				$("#dropdownMenu_ca").attr("title", "5");
+				$("#dropdownMenu_ca").html("按座位查询 <span class='caret'></span>");
+			}
+			else if(choice == "6"){
+				$("#dropdownMenu_ca").attr("title", "6");
+				$("#dropdownMenu_ca").html("按驾驶证查询 <span class='caret'></span>");
+			}
+			else if(choice == "7"){
+				$("#dropdownMenu_ca").attr("title", "7");
+				$("#dropdownMenu_ca").html("按行驶证查询 <span class='caret'></span>");
+			}
+		}
+		
+		function search_car(){
+			sea_condition=$("#searchcon").val();
+			condition=$("#dropdownMenu_ca").attr("title");
+			if(sea_condition == ""){
+				sea_condition = 0;
+				condition = 0;
+			}
+			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition="+condition+"&sea_condition="+sea_condition);
+			
+		}
+		
+		function serall(){
+			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition=0&sea_condition=0");
+		}
 		
 		function  cardetail(carid,licp,bra,reg,ins,dril,lic,arr,dri,num){
 			$("#carId").html(carid);
@@ -235,10 +378,11 @@
 		}
 		
 		function carmodify(index, carid,licp,bra,reg,ins,dril,lic,arr,dri,num){
+			$("#judgeNull").hide();
 			$("#page_ms").hide();
 			$("#page_m").show();
 			carId = carid;
-			$("#carId1").html(index);
+			$("#carId1").val(index);
 			$("#licensePlate1").val(licp);
 			$("#brand1").val(bra);
 			$("#registrationDate1").val(reg);
@@ -252,15 +396,14 @@
 		
 		$("#succmod").click(function() {
 				$(".modal-backdrop").hide();
-				$("#s_modify").attr("data-dismiss", "modal");
-				$("#succmod").attr("data-dismiss", "modal");
-				$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=" + ${page_index});
+				$("#myModal_C").modal('hide');
+				$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=" + ${page_index}+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 		
 		$("#succdel").click(function() {
 				$(".modal-backdrop").hide();
 				$("#myModal_D").modal('hide');
-				$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=" + ${page_index});
+				$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=" + ${page_index}+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 
 		$("#s_modify").click(function() {
@@ -298,9 +441,8 @@
 						number : number1 ,
 					},
 					success : function(re) {
+						$("#judgeNull").hide();
 					if ("yes" == re) {
-						$("#s_modify").attr("data-dismiss", "modal");
-						
 						$("#page_m").hide("1000");
 						$("#page_ms").show();
 					} else {
@@ -339,17 +481,18 @@
 		
 		$(".pagechoice").click(function() {
 			var page1 = $(this).attr("title");
-			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1);
+			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 		$(".pagepre").click(function() {
 			var page1 = $(this).attr('id');
-			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1);
+			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 		$(".pagenex").click(function() {
 			var page1 = $(this).attr('id');
-			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1);
+			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 		
+		$('.dropdown-toggle').dropdown()
 	</script>
 	
 </body>

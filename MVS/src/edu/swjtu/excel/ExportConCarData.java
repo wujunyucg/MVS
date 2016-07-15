@@ -1,14 +1,11 @@
 package edu.swjtu.excel;
 
-import java.awt.List;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -22,22 +19,18 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import edu.swjtu.impl.AdminDaoImpl;
 import edu.swjtu.impl.CarDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
-import edu.swjtu.model.Admin;
 import edu.swjtu.model.Car;
 import edu.swjtu.util.DBUtil;
 
-public class ExportCarData extends HttpServlet {
-	
+public class ExportConCarData extends HttpServlet {
 	DBUtil db = new DBUtil();
 	UserDaoImpl udi = new UserDaoImpl();
-	
 	/**
 	 * Constructor of the object.
 	 */
-	public ExportCarData() {
+	public ExportConCarData() {
 		super();
 	}
 
@@ -49,14 +42,25 @@ public class ExportCarData extends HttpServlet {
 		// Put your code here
 	}
 
+	/**
+	 * The doGet method of the servlet. <br>
+	 *
+	 * This method is called when a form has its tag value method equals to get.
+	 * 
+	 * @param request the request send by the client to the server
+	 * @param response the response send by the server to the client
+	 * @throws ServletException if an error occurred
+	 * @throws IOException if an error occurred
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		this.doPost(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		// 第一步，创建一个webbook，对应一个Excel文件
 		HSSFWorkbook wb = new HSSFWorkbook();
 		// 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
@@ -83,7 +87,7 @@ public class ExportCarData extends HttpServlet {
 		cell.setCellValue("保险日期");
 		cell.setCellStyle(style);
 		cell = row.createCell(5);
-		cell.setCellValue("排班号");
+		cell.setCellValue("驾驶证");
 		cell.setCellStyle(style);
 		cell = row.createCell(6);
 		cell.setCellValue("行驶证");
@@ -106,9 +110,47 @@ public class ExportCarData extends HttpServlet {
 			e1.printStackTrace();
 		}
 		
+		String condition = request.getParameter("condition");
+		String sea_condition = request.getParameter("sea_condition");
+		String search_cho=null;
+		
 		ArrayList<Car> list = null;
-		list = new CarDaoImpl().getAllCar(con);
+		CarDaoImpl carr = new CarDaoImpl();
 
+		if(condition.equals("0")){
+				list = carr.getAllCar(con);
+				search_cho = "All";
+		}
+		else if(condition.equals("1")){
+			list = carr.getCarByLicensePlate_V(sea_condition, con);
+			search_cho = "LicensePlate";
+		}
+		else if(condition.equals("2")){
+			list = carr.getCarByBrand_V(sea_condition, con);
+			search_cho = "Brand";
+		}
+		else if(condition.equals("3")){
+			list = carr.getCarByDriver_V(sea_condition, con);
+			search_cho = "Driver";
+		}
+		else if(condition.equals("4")){
+			list = carr.getCarByArrangeId_V(sea_condition, con);
+			search_cho = "ArrangeId";
+		}
+		else if(condition.equals("5")){
+			list = carr.getCarByNumber_V(sea_condition, con);
+			search_cho = "Number";
+		}
+		else if(condition.equals("6")){
+			list = carr.getCarByDrivingLicense_V(sea_condition, con);
+			search_cho = "DrivingLicenseber";
+		}
+		else if(condition.equals("7")){
+			list = carr.getCarByLicense_V(sea_condition, con);
+			search_cho = "License";
+		}else{}
+		
+		
 		for (int i = 0; i < list.size(); i++) {
 			row = sheet.createRow((int) i + 1);
 			Car car = (Car) list.get(i);
@@ -125,12 +167,8 @@ public class ExportCarData extends HttpServlet {
 			row.createCell(9).setCellValue(car.getNumber());
 		}
 
-		//根据路径下载
-//		FileOutputStream fout = new FileOutputStream("E:/car_data.xls");  
-//		wb.write(fout);  
-//		fout.close();  
-	
-		String myexcel="All_Car";
+		String myexcel=search_cho+"_Car";				
+		
 	    //回去输出流
 	    OutputStream out=response.getOutputStream();
 	    //重置输出流
@@ -157,6 +195,7 @@ public class ExportCarData extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		
 	}
 

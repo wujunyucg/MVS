@@ -93,7 +93,7 @@ public class ManageArrangeServlet extends HttpServlet {
 			session.setAttribute("arr_data", arrData);
 			session.setAttribute("arr_total", total_page);
 			session.setAttribute("arrStartPage", startPage);
-			response.sendRedirect("../jsp_user/manage_arrange.jsp");
+			request.getRequestDispatcher("../jsp_user/manage_arrange.jsp").forward(request, response);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -68,7 +68,7 @@ public class ManageAdminServlet extends HttpServlet {
 			session.setAttribute("admin_map", map);
 			session.setAttribute("admin_total", total_page);
 			session.setAttribute("adminStartPage", startPage);
-			response.sendRedirect("../jsp_admin/manage_admin.jsp");
+			request.getRequestDispatcher("../jsp_admin/manage_admin.jsp").forward(request, response);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}finally{

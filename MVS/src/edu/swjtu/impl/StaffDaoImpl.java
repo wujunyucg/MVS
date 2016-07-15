@@ -152,7 +152,7 @@ public class StaffDaoImpl implements StaffDao {
 		String sql = "select * from staff where staff_number=?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, number);
+			pstm.setString(1, "%"+number+"%");
 			ResultSet rs = pstm.executeQuery();
 			if(rs.next()){
 				staff = getStaffOne(rs);
@@ -171,7 +171,7 @@ public class StaffDaoImpl implements StaffDao {
 		String sql = "select * from staff where staff_name=?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, name);
+			pstm.setString(1, "%"+name+"%");
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()){
 				staffList.add(getStaffOne(rs)) ;
@@ -187,10 +187,10 @@ public class StaffDaoImpl implements StaffDao {
 	public ArrayList<Staff> getStaffByDepartment(String department, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_department=?";
+		String sql = "select * from staff where staff_department like ?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, department);
+			pstm.setString(1, "%"+department+"%");
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()){
 				staffList.add(getStaffOne(rs)) ;
@@ -206,10 +206,10 @@ public class StaffDaoImpl implements StaffDao {
 	public ArrayList<Staff> getStaffByGroup(String group, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_group=?";
+		String sql = "select * from staff where staff_group like ?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, group);
+			pstm.setString(1, "%"+group+"%");
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()){
 				staffList.add(getStaffOne(rs)) ;
@@ -225,7 +225,7 @@ public class StaffDaoImpl implements StaffDao {
 	public ArrayList<Staff> getStaffByArrangeId(int arrangeId, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_arrangeId=?";
+		String sql = "select * from staff where staff_arrangeId like %?%";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, arrangeId);
@@ -244,7 +244,7 @@ public class StaffDaoImpl implements StaffDao {
 	public ArrayList<Staff> getStaffByLineId(int lineId, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_lineId=?";
+		String sql = "select * from staff where staff_lineId like %?%";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, lineId);
@@ -263,7 +263,7 @@ public class StaffDaoImpl implements StaffDao {
 	public ArrayList<Staff> getStaffBySiteId(int siteId, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_siteId=?";
+		String sql = "select * from staff where staff_siteId  like %?%";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, siteId);
@@ -334,10 +334,10 @@ public class StaffDaoImpl implements StaffDao {
 	
 	public ArrayList<Staff> getStaffByAnyStr(String str1,String str2,int startPage, int pageNum,Connection con) {
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff  where "+str1+"= ? limit ?,?";
+		String sql = "select * from staff  where "+str1+" like ? limit ?,?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
-			pstm.setString(1, str2);
+			pstm.setString(1, "%"+str2+"%");
 			pstm.setInt(2, (startPage-1)*pageNum);
 			pstm.setInt(3, pageNum);
 			ResultSet rs = pstm.executeQuery();
@@ -353,7 +353,7 @@ public class StaffDaoImpl implements StaffDao {
 	
 	public ArrayList<Staff> getStaffByAnyInt(String str1,int str2,int startPage, int pageNum,Connection con) {
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff  where "+str1+" = ? limit ? , ?";
+		String sql = "select * from staff  where "+str1+" like %?% limit ? , ?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, str2);
