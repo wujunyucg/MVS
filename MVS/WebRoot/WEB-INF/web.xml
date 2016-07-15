@@ -179,7 +179,6 @@
     <servlet-name>ModifyArrServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ModifyArrServlet</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>SearchStaffServlet</servlet-name>
     <url-pattern>/servlet/SearchStaffServlet</url-pattern>
@@ -187,5 +186,15 @@
   <servlet-mapping>
     <servlet-name>ModifyArrServlet</servlet-name>
     <url-pattern>/servlet/ModifyArrServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SynchStaffServlet</display-name>
+    <servlet-name>SynchStaffServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.SynchStaffServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SynchStaffServlet</servlet-name>
+    <url-pattern>/servlet/SynchStaffServlet</url-pattern>
   </servlet-mapping>
 </web-app>
