@@ -39,7 +39,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			int pageNum) throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
 		String sql = "select *from arrange limit "
-				+ ((startPage - 1) * pageNum+1) + "," + pageNum;
+				+ ((startPage - 1) * pageNum) + "," + pageNum;
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
@@ -63,7 +63,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			int pageNum, String date) throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
 		String sql = "select *from arrange where arrange_date like '%"
-				+ date + "%' limit " + ((startPage - 1) * pageNum+1) + "," + pageNum;
+				+ date + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
