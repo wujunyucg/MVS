@@ -196,4 +196,14 @@ $("#satation-search input").bind("click",function(){
 function addroute(){
 	alert("enter route set");
 }
+function showAllRoute(all_satations){
+	var obj={
+		 "name":"金鱼街",
+		 "address":"金鱼街10号",
+		 "lng":[104.040329,30.681873],
+		 "number":1,
+		 "route":3,
+		 "people":10};
+	var route=new Array();
+}
 

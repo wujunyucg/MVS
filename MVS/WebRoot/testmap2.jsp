@@ -89,7 +89,7 @@
 				</button>
 				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
 					<button type="button" class="list-group-item" onclick="addroute()">增加</button>
-					<button type="button" class="list-group-item" onclick="map.clearMap();markers(hhj_satation)">显示</button>
+					<button type="button" class="list-group-item" onclick="map.clearMap();showAllRoute(hhj_satation)">显示</button>
 				</div>
 				<button type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon create-user">
