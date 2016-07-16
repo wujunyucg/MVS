@@ -207,6 +207,7 @@ function addroute(){
 						} 		
 					Dragroute(path);
 					//alert();
+					
 				}, 3);
 				//alert("sss");
 				map.on('rightclick',function(e){
@@ -215,8 +216,26 @@ function addroute(){
 					contextMenuPositon = e.lnglat;
 				});
 }
+function driving(){
+	var driving = new AMap.Driving({
+        map: map,
+        panel: "panel"
+    }); 
+    // 根据起终点经纬度规划驾车导航路线
+   console.log("OK");
+   var path=[];
+   path.push([104.099676,30.680896]);
+   path.push([104.085814,30.673275]);
+   path.push([104.088882,30.671152]);
+   path.push([104.062388,30.683423]);
+   console.log("OK");
+   driving.search({waypoints:path});
+   console.log("OK");
+}
+//driving();
 function showAllRoute(all_satations){
 	console.log("start show routes");
+	$('#satation-search').val("输入线路编号进行查询");
 	markers(all_satations);
 	var obj={
 		 "name":"",
@@ -226,20 +245,26 @@ function showAllRoute(all_satations){
 		 "route":0,
 		 "people":0};
 	var routes=new Array();
+	var route_satations=new Array();
 	//var path =new Array();
 	for(var i=0;i<25;i++){
 		routes[i]=new Array();
+		route_satations[i]=new Array();
 		//routes[i][0]=obj;
 		}
 	for(var i=0;i<hhj_satation.length;i++){
 		console.log(hhj_satation[i]);
 		//console.log(hhj_satation[i].route+hhj_satation[i].number);
 		routes[hhj_satation[i].route].push(hhj_satation[i].lng);
+		route_satations[hhj_satation[i].route].push(hhj_satation[i]);
 		}
 	//showroute(1);
 	function showroute(i){
 		console.log(routes[i]);
-		Dragroute(routes[i]);
+		Dragroute(routes[i],route_satations[i]);
+		
+		//driving(routes[i]);
+		//showroutesinfo(routes[i]);
 	}
 
 	function hideroute(){
@@ -252,7 +277,7 @@ function showAllRoute(all_satations){
 		console.log($(this).val());
 		if($(this).val()<20&&$(this).val()>0){
 			if(flag!=1)
-				hideroute()
+				hideroute();
 			console.log($(this).val());
 			var index=$(this).val()
 			showroute(index);

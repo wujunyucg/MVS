@@ -9,14 +9,7 @@ body{
 	font-family:Arial, Helvetica, sans-serif,宋体;
 	background-color:#222;
 	/*background:url(../images/img01.jpg) repeat-x left top;}*/
-#header{
-	width:80%;
-	height:180px;
-	color:white;
-	}
-#log{
-	padding-top:45px;
-	}
+
 ul a{
 	text-decoration:none;
 	color:#fff;
@@ -33,74 +26,15 @@ ul a:hover{
 ul{
 	list-style-type:none;
 	}
-#left ul li a{
-	width:250px;
-	}
-#main{
-	margin:0 auto;
-	height:1000px;}
-#left{
-	
-	margin:0px 0px 0px 0px;
-	width:250px;;
-	height:800px;
-	background-color:#B9CCD0;}
-.right{
-	margin:180px 0px 0px 256px;
-	height:900px;
-	background-color:#CFF;}
-#chajian{
-	position:absolute;
-	top:255px;
-	left:340px;
-	}
-#chajian ul li{
-	height:50px;}
-.nav_no2{
-	margin-left:120px;
-	color:#fff;
-	width:100px;}
-.nav_no2 li:hover{
-		color:red;
-	}
-#resource li ul{
-	margin-left:120px;
-	color:#fff;
-	width:100px;
-	display:none;
-}
-#resource li ul li:hover{
-	color:red;}
-#left ul{
-	display:none;}
-#Repositoty{
-	margin:180px 0px 0px 256px;
-	width:200px;
-	background-color:#CFF;
-	display:none;
-	}
-li img{
-	width:40px;
-	height:40px;}
-#call{
-	position:absolute;
-	width:200px;
-	display:none;
-	top:550px;
-	left:450px;
-	border:1px solid #000;}
 
-#call .put{
-	width:170px;
-	margin:5px auto;
-	height:50px;
-	margin-left:11px;}
-#keyboard{
-	margin:2px auto;
-	width:180px;
-	}
-#keyboard input{
-	width:55px;}
 #addsatation-info ul{
 	list-style-type:none;
+}
+#result{
+	background-color:#CFF;
+}
+#result table{
+	border:1px solid #000;
+	width:100%;
+	border-collapse:collapse;  /*边框重叠*/
 }

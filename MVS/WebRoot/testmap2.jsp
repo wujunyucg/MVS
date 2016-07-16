@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+ <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -18,12 +18,11 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
+<link rel="stylesheet" type="text/css" href="css/map/layout.css">
 <link rel="stylesheet" type="text/css" href="css/j-css/j-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="css/map/layout.css">
+
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
 <script type="text/javascript" src="scripts/j-scripts/j-theme.js"></script>
@@ -133,16 +132,30 @@
 		</div>
 		<div id="content">
 			<div id='container' style="margin-left:255px;margin-top:50px;width:80%"></div>
+			
 			<div id="info">
 				<h1>
 					<h1>
 			</div>
 			<div id="myPageTop"
 				style="position: absolute; top:175px; right:100px;">
-
 				<div id="panel"></div>
 			</div>
-			<div id="result"></div>
+			<div id="result" style="position:absolute;margin-left:65px;margin-top:105px;background-color:#fff;width:180px">		
+					<span id="routenumber",align="center" style="width:90%;margin:0px 10px;text-align:center">线路</span></br>	
+					<span id="start-end" style="width:90%;margin:0px 10px;">起点---终点</span>
+					<table style="width:90%;margin:0px 10px;">
+					<tr >
+						<td>时间</td>
+						<td>距离</td>
+					</tr>
+					<tr id="time-distance">
+						<td>155</td>
+						<td>155</td>
+					</tr>
+				</table>
+				
+			</div>
 			<div>
         <ul  id="routes" style="position: absolute;display:none;">
             <li><button >线路1</button></li>
@@ -172,7 +185,7 @@
             <li><input id="lnglat" value=''/></li>
         </ul>
       </div>
-      <div id="satation-search" style="position:absolute;margin-left:65px;margin-top:80px;" autoComplete='off'>
+      <div id="satation-search" style="position:absolute;margin-left:65px;margin-top:80px;width:180px" autoComplete='off'>
       	<input type="text" value="输入关键字进行查询" />
       </div>
       <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
@@ -219,6 +232,9 @@
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
               <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">修改</button></li>
          </ul>                 
+      </div>
+      <div id="route-info">
+      
       </div>
       </div>
 		</div>

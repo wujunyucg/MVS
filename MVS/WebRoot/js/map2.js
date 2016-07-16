@@ -45,7 +45,7 @@
 		});
 		var route2;
 		//拖曳导航路径
-		function Dragroute(path){
+		function Dragroute(path,satations){
 			console.log("enter route-----");
 			map.plugin("AMap.DragRoute",function(){
 				route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
@@ -71,6 +71,7 @@
 					//alert("OK");
 					//alert(e.data.routes[0].steps[0].action);
 					console.log("enter complete-----");
+					console.log(e.data.orgin+" end "+e.data.destination);
 				    var r=e.data.routes[0].steps;
 					for(i=0;i<r.length;i++){
 					     //各路段描述
@@ -80,13 +81,24 @@
 						//预计时间
 						console.log(e.data.routes[0].time);
 						console.log("enter complete-----");
-
 					}
+					AMap.event.addListener(route,'addway',function(e){
+						alert("dd");
+					});	
 					//参考这个格式
+					//var trs=$('#result table tr');
+					//trs[0].val("线路"+satations[0].route);
+					var trs=document.getElementById("routenumber");
+					trs.innerHTML="线路"+satations[0].route;
+					var tds=document.getElementById("time-distance").getElementsByTagName("td");
+					tds[0].innerHTML=e.data.routes[0].time/60+"分钟";
+					tds[1].innerHTML=e.data.routes[0].distance/1000+"千米";
+					var s_e=document.getElementById("start-end");
+					s_e.innerHTML=satations[0].name+"-----"+satations[satations.length-1].name;
+					//alert();
 					route2=route;
 					//route2.destroy();
 				});
-				
 			});
 		}	
 		/*信息框
