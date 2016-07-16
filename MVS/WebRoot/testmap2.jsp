@@ -267,6 +267,10 @@
                     <option value="10">10</option>
                      <option value="11">11</option>
                     <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                     <option value="15">15</option>
+                    <option value="16">16</option>
                   </select>
               </li>
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>

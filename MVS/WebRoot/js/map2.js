@@ -109,6 +109,24 @@
 						tt.innerHTML=e.data.routes[0].time/60+"分钟";
 						var dd=document.getElementById("addroute-distance");
 						dd.innerHTML=e.data.routes[0].distance/1000+"千米";
+						
+						$('#addroute-sbm').bind('click',function(){
+							var rrr=$("#addroute-number").val();
+							var rr=document.getElementById("addroute").getElementsByTagName('selected');
+							var rn=rr.value;
+							
+							for(var i=0;i<satations.length;i++){
+								satations[i].number=hhj_satation.length+1;
+								satations[i].route=rrr;
+								hhj_satation[hhj_satation.length]=(satations[i]);
+								console.log("----提交成功-------");
+							}
+						});
+						
+						$('#addroute-quit').bind('click',function(){
+							$('#addroute').css("display","none");
+							map.clearMap();
+						});
 					}
 					route2=route;
 					//route2.destroy();

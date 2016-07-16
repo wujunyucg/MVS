@@ -6,11 +6,11 @@
 //Dragroute(hhj_satation);
 document.getElementById("addroute-number").innerHTML=document.getElementById("satation-route").innerHTML;
 var obj={
-		 "name":"",
-		 "address":"",
+		 "name":"null",
+		 "address":"null",
 		 "lng":[0,0],
-		 "number":0,
-		 "route":0,
+		 "number":1,
+		 "route":1,
 		 "people":0};
 var satations=hhj_satation;
 var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
@@ -49,11 +49,11 @@ function EditSatation(data){
 	console.log(sbm);
 	sbm[0].onclick=function(){
 		//alert("OK");
-		var newsatation={"name":"",
-				 "address":"",
+		var newsatation={"name":"null",
+				 "address":"null",
 				 "lng":[104.040329,30.681873],
-				 "number":0,
-				 "route":0,
+				 "number":1,
+				 "route":1,
 				 "people":0};
 		newsatation.name=document.getElementById('satation-name').value;
 		newsatation.address=document.getElementById('satation-address').value;
@@ -112,11 +112,11 @@ function addsatation(){
 			console.log(ctn);
 			info(e.lnglat,ctn);
 			var sbm=ctn.getElementsByTagName('button');		
-			var newsatation={"name":"",
-					 "address":"",
+			var newsatation={"name":"null",
+					 "address":"null",
 					 "lng":[0,0],
-					 "number":0,
-					 "route":0,
+					 "number":1,
+					 "route":1,
 					 "people":0};
 			sbm[0].onclick=function(){ 
 				hhj_flag=1;
@@ -184,6 +184,7 @@ function addroute(){
 						raiseOnDrag:true,
 					});
 				 info2.close();
+				 
 				}, 0);
 				contextMenu.addItem("途径", function(e) {
 					//marker.hide();
@@ -214,7 +215,13 @@ function addroute(){
 					for(var i=0;i<markers.length;i++){
 					//	console.log(markers[i]);
 							path.push(markers[i].getPosition());
-							satation.push(obj);
+							satation[i]={
+									name:"",
+									address:"",
+									lng:[104.056036,30.680028],
+									number:0,
+									route:0,
+									people:0};
 							satation[i].lng=markers[i].getPosition();
 						} 
 					
