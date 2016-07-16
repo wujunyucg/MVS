@@ -139,6 +139,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    
       }});
   }
+  
+  function immed_excel(){
+  	//$("#w-modal-but").attr("disabled",true);
+  	$("#w-modal-but").html("同步");
+  	$("#w-modal-p3").html("");
+  	$("#w-modal-p2").html("");
+  	var content='<form id="immedadd" enctype="multipart/form-data"> <div class="form-group"> <label for="exampleInputFile">File input</label><input type="file" name="staff_excel"><p class="help-block">选择您想导入的EXCEL文件</p>  </div>'
+  				+'<input name = "type" value="2" style="display:none;"></form>';
+  	$("#w-modal-div").html(content);
+  	$("#w-modal-but").attr("onclick","javascript:addexcel();");
+  }
+  
+  function addexcel(){
+  	 $("#immedadd").ajaxSubmit({
+            type: 'post', // 提交方式 get/post
+            url: '<%=basePath%>servlet/SynchStaffServlet?type=2',
+            success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
+                // 此处可对 data 作相关处理
+                if(data==1)
+                alert('提交成功！');
+            }
+           // $(this).resetForm(); // 提交后重置表单
+        });
+       
+  }
   </script>
 </html>
   

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
@@ -18,6 +19,7 @@ public class FileUpload {
 	private static File tempPathFile = null;
 	private static int sizeThreshold = 1024;
 	private static int sizeMax = 4194304;
+	private static String allPath = null;
 	// 初始化
 	static {
 		sizeMax = Integer.parseInt(FileConst.getValue("sizeMax"));
@@ -35,24 +37,45 @@ public class FileUpload {
 		}
 		System.out.println(uploadPath + " " + tempPath);
 	}
-
+	/**
+	 * 
+	 * 2016年7月16日上午11:00:47
+	 * @author wujunyu
+	 * TODO 得到文件的后缀，如果没有返回null
+	 * @param file
+	 * @return
+	 */
+	public static String getFileType(File file){
+		String type = file.getName().substring(file.getName().lastIndexOf(".")+1);
+		if(type==null ||type == "")
+			return null;
+		else
+			return type;
+	}
 	/**
 	 * 上传文件
 	 * 
 	 * @param request
 	 * @return true 上传成功 false上传失败
 	 */
+	/**
+	 * 
+	 * 2016年7月16日上午11:01:15
+	 * @author wujunyu
+	 * TODO 成功上传文件，返回1，文件没有后缀返回2，失败返回3 
+	 * @param request
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
-	public static boolean upload(HttpServletRequest request) {
+	public static int upload(HttpServletRequest request) {
 		uploadPath = "d://upload";
 		uploadFile = new File(uploadPath);
-		System.out.println(uploadPath + " " + tempPath);
+		//System.out.println(uploadPath + " " + tempPath);
 		if (!uploadFile.exists()) {
 			uploadFile.mkdirs();
 			System.out.println("enter");
 		}
-
-		boolean flag = true;
+		int flag = 1;
 		// 检查输入请求是否为multipart表单数据。
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		// 若果是的话
@@ -68,35 +91,49 @@ public class FileUpload {
 				List<FileItem> items = upload.parseRequest(request);
 				// 检查是否符合上传的类型
 				if (!checkFileType(items))
-					return false;
+					return 0;
 				Iterator<FileItem> itr = items.iterator();// 所有的表单项
 				// 保存文件
 				while (itr.hasNext()) {
 					FileItem item = (FileItem) itr.next();// 循环获得每个表单项
 					if (!item.isFormField()) {// 如果是文件类型
 						String name = item.getName();// 获得文件名 包括路径啊
+						
 						if (name != null) {
+							
 							File fullFile = new File(item.getName());
+							if(getFileType(fullFile) == null)
+								return 2;
 							File savedFile = new File(uploadPath,
-									fullFile.getName());
+									String.valueOf(System.currentTimeMillis())+"."+ getFileType(fullFile));
+							allPath = uploadPath+"/"+String.valueOf(System.currentTimeMillis())+"."+ getFileType(fullFile);
 							item.write(savedFile);
 						}
 					}
 				}
 			} catch (FileUploadException e) {
-				flag = false;
+				flag = 0;
 				e.printStackTrace();
 			} catch (Exception e) {
-				flag = false;
+				flag = 0;
 				e.printStackTrace();
 			}
 		} else {
-			flag = false;
+			flag = 0;
 			System.out.println("the enctype must be multipart/form-data");
 		}
 		return flag;
 	}
-
+	/**
+	 * 
+	 * 2016年7月16日上午11:04:48
+	 * @author wujunyu
+	 * TODO 得到上传文件的全路径
+	 * @return
+	 */
+	public String getAllPath(){
+		return allPath;
+	}
 	/**
 	 * 删除一组文件
 	 * 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hamcrest.core.IsNull;
 
+import edu.swjtu.file.FileUpload;
 import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
@@ -39,6 +40,7 @@ public class SynchStaffServlet extends HttpServlet {
 	}
 
 	
+	@SuppressWarnings("static-access")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBUtil db = new DBUtil();
 		PrintWriter out = response.getWriter();
@@ -93,7 +95,19 @@ public class SynchStaffServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-	}
+		}
+		else if(request.getParameter("type").equals("2")){
+			
+				FileUpload fu = new FileUpload();
+				int ok = fu.upload(request);
+				if(2 == ok)
+					out.print(2);
+				else if(0 == ok)
+					out.print(3);
+				
+				out.close();
+			
+		}
 		
 	}
 
