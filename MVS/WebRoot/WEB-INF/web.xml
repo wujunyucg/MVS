@@ -197,4 +197,22 @@
     <servlet-name>BackupDataServlet</servlet-name>
     <url-pattern>/servlet/BackupDataServlet</url-pattern>
   </servlet-mapping>
+  
+  <servlet>    
+        <servlet-name>    
+             QuartzInitializer     
+        </servlet-name>        
+        <servlet-class>    
+             org.quartz.ee.servlet.QuartzInitializerServlet     
+        </servlet-class>    
+        <init-param>
+     <param-name>shutdown-on-unload</param-name>
+     <param-value>true</param-value>
+   </init-param>
+   <init-param>
+    <param-name>config-file</param-name>
+    <param-value>/quartz.properties</param-value> 
+   </init-param>
+   <load-on-startup>2</load-on-startup>  
+    </servlet>  
 </web-app>
