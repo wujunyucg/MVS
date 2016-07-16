@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.mail.internet.NewsAddress;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hamcrest.core.IsNull;
 
+import com.sun.accessibility.internal.resources.accessibility;
+
+import edu.swjtu.excel.StaffExcel;
 import edu.swjtu.file.FileUpload;
 import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.model.Staff;
@@ -100,13 +104,64 @@ public class SynchStaffServlet extends HttpServlet {
 			
 				FileUpload fu = new FileUpload();
 				int ok = fu.upload(request);
-				if(2 == ok)
-					out.print(2);
+				System.out.println(fu.getSignalPath());
+				if(2 == ok && ((fu.getAllPath().substring(fu.getAllPath().lastIndexOf(".")+1).equals("xls")) || (fu.getAllPath().substring(fu.getAllPath().lastIndexOf(".")+1).equals("xlsx")))){
+					out.print(1);
+				}
 				else if(0 == ok)
-					out.print(3);
-				
+				{
+					out.print(2);
+				}
+					
+				else if(1 == ok){
+					StaffExcel se = new StaffExcel();
+					ArrayList<Staff> staffList = new ArrayList<Staff>();
+					try {
+						Connection con = db.getCon();
+						staffList = se.inport(fu.getAllPath());
+						if(staffList == null){
+							out.print(6);
+						}			
+						else if(staffList.size() == 0){
+							out.print(3);
+						}
+							
+						else{
+							int flag = 0;
+							StaffDaoImpl sdi = new StaffDaoImpl();
+							for(Staff staff : staffList){
+								if(sdi.getStaffByNumber(staff.getNumber(), con) !=null){
+									flag = 1;
+									break;
+								}	
+							}
+							if(flag == 1){
+								out.print(4);
+							}
+								
+							else{
+								sdi.addListStaff(staffList, con);
+								out.print(5);
+							}
+							db.closeCon(con);
+						}
+							
+					} catch (InstantiationException e) {
+						
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						
+						e.printStackTrace();
+					} catch (SQLException e) {
+						
+						e.printStackTrace();
+					}
+				}
 				out.close();
-			
+				fu.deleteFile("/"+fu.getSignalPath());
 		}
 		
 	}

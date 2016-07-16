@@ -145,20 +145,65 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	$("#w-modal-but").html("同步");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
-  	var content='<form id="immedadd" enctype="multipart/form-data"> <div class="form-group"> <label for="exampleInputFile">File input</label><input type="file" name="staff_excel"><p class="help-block">选择您想导入的EXCEL文件</p>  </div>'
+  	$("#w-modal-but").attr("onclick","");	
+  	var content='<form id="immedadd" enctype="multipart/form-data"> <div class="form-group"> <label for="exampleInputFile">File input</label><input id="upload" type="file" name="staff_excel"><p class="help-block">选择您想导入的EXCEL文件</p>  </div>'
   				+'<input name = "type" value="2" style="display:none;"></form>';
   	$("#w-modal-div").html(content);
-  	$("#w-modal-but").attr("onclick","javascript:addexcel();");
+  	$("#w-modal-but").attr("onclick","javascript:addexcel();");	
+  	 
   }
-  
+  $("#w-modal-but").click(function(){
+  	 	if($("#upload").val()==""){
+  	 	$("#w-modal-p2").html("请输入文件");
+  		$("#w-modal-p2").css("color","red");
+  		$("#w-modal-p2").css("font-size","20px");
+  		return false;
+  	 	}
+  	 	else{
+  	 		$("#w-modal-p2").html("");
+  	 	}
+  	 		
+  	 });
+  	 
   function addexcel(){
   	 $("#immedadd").ajaxSubmit({
-            type: 'post', // 提交方式 get/post
+            type: 'post', 
             url: '<%=basePath%>servlet/SynchStaffServlet?type=2',
-            success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
-                // 此处可对 data 作相关处理
-                if(data==1)
-                alert('提交成功！');
+            success: function(data) { 
+                if(data==1){
+  					$("#w-modal-p2").html("文件有错，请审核后提交");
+  					$("#w-modal-p2").css("color","red");
+  					$("#w-modal-p2").css("font-size","20px");
+                }
+                else if(data == 2){
+                	$("#w-modal-p2").html("文件上传失败");
+                	$("#w-modal-p2").css("color","red");
+  					$("#w-modal-p2").css("font-size","20px");
+                }
+                else if(data == 3){
+                	$("#w-modal-p2").html("表格中没有数据，请审核后提交");
+                	$("#w-modal-p2").css("color","red");
+  					$("#w-modal-p2").css("font-size","20px");
+                }
+                else if(data == 4){
+                	$("#w-modal-p2").html("有员工工号已经重复，请查核后提交");
+                	$("#w-modal-p2").css("color","red");
+  					$("#w-modal-p2").css("font-size","20px");
+                }
+                else if(data == 5){
+                	$("#w-modal-p2").html("同步成功");
+                	$("#w-modal-p2").css("color","blue");
+                	$("#w-modal-p2").css("font-size","20px");
+                	$("#w-modal-but").attr("disabled",true);
+                }
+                else if(data == 6){
+                	$("#w-modal-p2").html("文件中有未填项，请审核后提交");
+                	$("#w-modal-p2").css("color","red");
+                	$("#w-modal-p2").css("font-size","20px");
+                	$("#w-modal-but").attr("disabled",true);
+                }
+                
+                
             }
            // $(this).resetForm(); // 提交后重置表单
         });

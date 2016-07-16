@@ -20,6 +20,7 @@ public class FileUpload {
 	private static int sizeThreshold = 1024;
 	private static int sizeMax = 4194304;
 	private static String allPath = null;
+	private static String signalPath = null;
 	// 初始化
 	static {
 		sizeMax = Integer.parseInt(FileConst.getValue("sizeMax"));
@@ -47,7 +48,7 @@ public class FileUpload {
 	 */
 	public static String getFileType(File file){
 		String type = file.getName().substring(file.getName().lastIndexOf(".")+1);
-		if(type==null ||type == "")
+		if(type==null || "".equals(type))
 			return null;
 		else
 			return type;
@@ -107,6 +108,7 @@ public class FileUpload {
 							File savedFile = new File(uploadPath,
 									String.valueOf(System.currentTimeMillis())+"."+ getFileType(fullFile));
 							allPath = uploadPath+"/"+String.valueOf(System.currentTimeMillis())+"."+ getFileType(fullFile);
+							signalPath = String.valueOf(System.currentTimeMillis())+"."+ getFileType(fullFile);
 							item.write(savedFile);
 						}
 					}
@@ -133,6 +135,10 @@ public class FileUpload {
 	 */
 	public String getAllPath(){
 		return allPath;
+	}
+	
+	public String getSignalPath(){
+		return signalPath;
 	}
 	/**
 	 * 删除一组文件
