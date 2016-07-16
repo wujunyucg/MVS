@@ -68,7 +68,7 @@ public class FileUpload {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static int upload(HttpServletRequest request) {
+	public int upload(HttpServletRequest request) {
 		uploadPath = "d://upload";
 		uploadFile = new File(uploadPath);
 		//System.out.println(uploadPath + " " + tempPath);
