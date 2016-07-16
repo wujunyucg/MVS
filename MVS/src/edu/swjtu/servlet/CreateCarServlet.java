@@ -2,14 +2,23 @@ package edu.swjtu.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CreateCarServlet extends HttpServlet {
+import edu.swjtu.impl.CarDaoImpl;
+import edu.swjtu.impl.UserDaoImpl;
+import edu.swjtu.model.Car;
+import edu.swjtu.model.User;
+import edu.swjtu.util.DBUtil;
 
+public class CreateCarServlet extends HttpServlet {
+	DBUtil db = new DBUtil();
+	UserDaoImpl udi = new UserDaoImpl();
 	/**
 	 * Constructor of the object.
 	 */
@@ -25,67 +34,95 @@ public class CreateCarServlet extends HttpServlet {
 		// Put your code here
 	}
 
-	/**
-	 * The doGet method of the servlet. <br>
-	 *
-	 * This method is called when a form has its tag value method equals to get.
-	 * 
-	 * @param request the request send by the client to the server
-	 * @param response the response send by the server to the client
-	 * @throws ServletException if an error occurred
-	 * @throws IOException if an error occurred
-	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the GET method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		this.doPost(request, response);
 	}
 
-	/**
-	 * The doPost method of the servlet. <br>
-	 *
-	 * This method is called when a form has its tag value method equals to post.
-	 * 
-	 * @param request the request send by the client to the server
-	 * @param response the response send by the server to the client
-	 * @throws ServletException if an error occurred
-	 * @throws IOException if an error occurred
-	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		response.setContentType("text/html;charset=UTF-8");  
+		Connection con = null;
+
+		try {
+			con = db.getCon();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		String type = request.getParameter("type");
+		PrintWriter pw = response.getWriter();
+		
+		
+		if(type.equals("1")){
+			Car car = new Car();
+			String lic_plat = request.getParameter("lic_plat"); 
+			String bran = request.getParameter("bran");
+			String res_date = request.getParameter("res_date");
+			String ins_date = request.getParameter("ins_date");
+			String dri_lice = request.getParameter("dri_lice");
+			String lice = request.getParameter("lice"); 
+			String numb = request.getParameter("numb");
+			String driv = request.getParameter("driv"); 
+			if(!lic_plat.equals("") && !bran.equals("")&& !res_date.equals("")&& !ins_date.equals("")&& !dri_lice.equals("")
+					&& !lice.equals("") && !numb.equals("")&& !driv.equals("")){
+				car.setArrangeId("-1");
+				car.setBrand(bran);
+				car.setDriver(driv);
+				car.setDrivingLicense(dri_lice);
+				car.setInsuranceDate(ins_date);
+				car.setLicense(lice);
+				car.setLicensePlate(lic_plat);
+				car.setNumber(Integer.parseInt(numb));
+				car.setRegistrationDate(res_date);
+				
+				int rs = new CarDaoImpl().addOneCar(car, con);
+				if(rs>0){
+					pw.write("yes");
+				}else{
+					pw.write("no");
+				}
+			}
+		}
+		else if(type.equals("2")){
+			Car car= null;
+			String type_s = request.getParameter("type_s");
+			try {
+				if(type_s.equals("1")){
+					car =  new CarDaoImpl().getCarByLicensePlate(request.getParameter("lic_plat"), con);
+				}else if(type_s.equals("2")){
+					car =  new CarDaoImpl().getCarByLicense(request.getParameter("lice"), con);
+				}else{}
+				if(null==car){
+					pw.write("yes");
+				}else{
+					pw.write("no");
+				}
+			}finally{
+				if(null!=con){
+					try {
+						db.closeCon(con);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		
+		try {
+			db.closeCon(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 	}
 
-	/**
-	 * Initialization of the servlet. <br>
-	 *
-	 * @throws ServletException if an error occurs
-	 */
 	public void init() throws ServletException {
 		// Put your code here
 	}
