@@ -324,20 +324,52 @@
 		</div>
 	</div>
 	<b id="allpageb">${allpage}</b>
-	<b id="allpagebb">${sea_condition}</b>
+	<b id="sea_condition">${sea_condition}</b>
 	<script type="text/javascript">
 		
 		var carId="";
 		var licPla="";
 		var condition=${condition};
  		var pagenum= $("#allpageb").text();
- 		var pagenumb= $("#allpagebb").text();
+ 		var sea_condition= $("#sea_condition").text();
  		
  		$("#allpageb").hide();
- 		$("#allpagebb").hide();
+ 		$("#sea_condition").hide();
  		
  		if(pagenum == "0"||pagenum == null){
  			$("#notFindData").modal('show');
+ 		}
+ 		else if(condition != "0" && sea_condition != "0"){
+ 		
+ 			$("#searchcon").val(sea_condition);
+ 			if(condition == "1"){
+				$("#dropdownMenu_ca").attr("title", "1");
+				$("#dropdownMenu_ca").html("按车牌查询 <span class='caret'></span>");
+			}
+			else if(condition == "2"){
+				$("#dropdownMenu_ca").attr("title", "2");
+				$("#dropdownMenu_ca").html("按品牌查询 <span class='caret'></span>");
+			}
+			else if(condition == "3"){
+				$("#dropdownMenu_ca").attr("title", "3");
+				$("#dropdownMenu_ca").html("按司机查询 <span class='caret'></span>");
+			}
+			else if(condition == "4"){
+				$("#dropdownMenu_ca").attr("title", "4");
+				$("#dropdownMenu_ca").html("按班次查询 <span class='caret'></span>");
+			}
+			else if(condition == "5"){
+				$("#dropdownMenu_ca").attr("title", "5");
+				$("#dropdownMenu_ca").html("按座位查询 <span class='caret'></span>");
+			}
+			else if(condition == "6"){
+				$("#dropdownMenu_ca").attr("title", "6");
+				$("#dropdownMenu_ca").html("按驾驶证查询 <span class='caret'></span>");
+			}
+			else if(condition == "7"){
+				$("#dropdownMenu_ca").attr("title", "7");
+				$("#dropdownMenu_ca").html("按行驶证查询 <span class='caret'></span>");
+			}
  		}
  		
  		$("#dataNotExit").click(function() {

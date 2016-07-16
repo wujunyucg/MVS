@@ -7,10 +7,10 @@
 %>
 <%
 	//不能直接通过链接访问
-	if (null == session.getAttribute("user")) {
-		response.sendRedirect(path+"/login.jsp");
-		return;
-	}
+	//if (null == session.getAttribute("user")) {
+	//	response.sendRedirect(path+"/login.jsp");
+	//	return;
+	//}
 %>
 <!DOCTYPE html>
 <html>
@@ -29,7 +29,6 @@
 	href="css/bootstrap/bootstrap.min.css">
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
-<script src="layer/layer.js"></script>
 <script type="text/javascript" language="javascript">
 $.ajaxSetup ({ 
     cache: false //关闭AJAX相应的缓存 
@@ -98,6 +97,14 @@ $.ajaxSetup ({
 					class="list-group-item  btn-menu btn_icon manage-user">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 					</button>
+				<button type="button"
+					class="list-group-item  btn-menu btn_text data-export">
+					<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+					数据备份</button>
+					<button type="button"style="display:none;"
+					class="list-group-item  btn-menu btn_icon data-export">
+					<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+					</button>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
@@ -127,6 +134,11 @@ $.ajaxSetup ({
 			$(".manage-user").click(function(){
 				cnt=3;
 				$("#content").load("<%=basePath%>/servlet/ManageUserServlet?random" + Math.random());
+			});
+			
+			$(".data-export").click(function(){
+				cnt=4;
+				$("#content").load("<%=path%>/servlet/BackupDataServlet");
 			});
 			
 			var turn = true;
