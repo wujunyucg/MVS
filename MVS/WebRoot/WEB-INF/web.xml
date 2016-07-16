@@ -2,20 +2,14 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>MVS</display-name>
   <servlet>
-    <description>This is the description of my J2EE component</description>
-    <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.LoginServlet</servlet-class>
   </servlet>
   <servlet>
-    <description>This is the description of my J2EE component</description>
-    <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>CreateUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.CreateUserServlet</servlet-class>
   </servlet>
   <servlet>
-    <description>This is the description of my J2EE component</description>
-    <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>CreUserNSServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.CreUserNSServlet</servlet-class>
   </servlet>
@@ -48,8 +42,6 @@
     <url-pattern>/servlet/CreateAdminServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>ManageUserServlet</display-name>
     <servlet-name>ManageUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageUserServlet</servlet-class>
   </servlet>
@@ -58,8 +50,6 @@
     <url-pattern>/servlet/ManageUserServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>UpdateUserServlet</display-name>
     <servlet-name>UpdateUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.UpdateUserServlet</servlet-class>
   </servlet>
@@ -84,8 +74,6 @@
     <url-pattern>/servlet/ManageAdminServlet2</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>DeleteUserServlet</display-name>
     <servlet-name>DeleteUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.DeleteUserServlet</servlet-class>
   </servlet>
@@ -94,26 +82,16 @@
     <url-pattern>/servlet/DeleteUserServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>PageUserServlet</display-name>
     <servlet-name>PageUserServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.PageUserServlet</servlet-class>
   </servlet>
   <servlet>
-    <description>This is the description of my J2EE component</description>
-    <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>ExportCarData</servlet-name>
     <servlet-class>edu.swjtu.excel.ExportCarData</servlet-class>
   </servlet>
   <servlet>
-    <description>This is the description of my J2EE component</description>
-    <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>ManageCarServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageCarServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>FileUploadServlet</servlet-name>
-    <servlet-class>edu.swjtu.servlet.FileUploadServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>ManageArrangeServlet</servlet-name>
@@ -132,16 +110,10 @@
     <url-pattern>/servlet/ManageCarServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>FileUploadServlet</servlet-name>
-    <url-pattern>/servlet/FileUploadServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
     <servlet-name>ManageArrangeServlet</servlet-name>
     <url-pattern>/servlet/ManageArrangeServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>ManageStaffServlet</display-name>
     <servlet-name>ManageStaffServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageStaffServlet</servlet-class>
   </servlet>
@@ -150,8 +122,6 @@
     <url-pattern>/servlet/ManageStaffServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>UpdateStaffServlet</display-name>
     <servlet-name>UpdateStaffServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.UpdateStaffServlet</servlet-class>
   </servlet>
@@ -160,8 +130,6 @@
     <url-pattern>/servlet/UpdateStaffServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>DeleteStaffServlet</display-name>
     <servlet-name>DeleteStaffServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.DeleteStaffServlet</servlet-class>
   </servlet>
@@ -170,8 +138,6 @@
     <url-pattern>/servlet/DeleteStaffServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>SearchStaffServlet</display-name>
     <servlet-name>SearchStaffServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.SearchStaffServlet</servlet-class>
   </servlet>
@@ -188,14 +154,10 @@
     <url-pattern>/servlet/ModifyArrServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description></description>
-    <display-name>SynchStaffServlet</display-name>
     <servlet-name>SynchStaffServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.SynchStaffServlet</servlet-class>
   </servlet>
   <servlet>
-    <description>This is the description of my J2EE component</description>
-    <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>ExportConCarData</servlet-name>
     <servlet-class>edu.swjtu.excel.ExportConCarData</servlet-class>
   </servlet>
@@ -204,8 +166,6 @@
     <servlet-class>edu.swjtu.servlet.ManageDataServlet</servlet-class>
   </servlet>
   <servlet>
-    <description>This is the description of my J2EE component</description>
-    <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>CreateCarServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.CreateCarServlet</servlet-class>
   </servlet>
