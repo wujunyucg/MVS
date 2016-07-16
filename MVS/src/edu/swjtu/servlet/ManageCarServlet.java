@@ -147,7 +147,7 @@ public class ManageCarServlet extends HttpServlet {
 			else {
 				request.getSession().setAttribute("allpage",(int) pageTotal/pageSize+1);
 			}
-			
+			System.out.println("allpage="+(int) pageTotal/pageSize);
 			request.getSession().setAttribute("pageSize",pageSize);
 			request.getSession().setAttribute("condition",condition);
 			request.getSession().setAttribute("sea_condition",sea_condition);

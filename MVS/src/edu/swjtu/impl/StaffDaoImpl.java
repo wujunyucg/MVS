@@ -149,7 +149,7 @@ public class StaffDaoImpl implements StaffDao {
 	public Staff getStaffByNumber(String number, Connection con) {
 		// TODO Auto-generated method stub
 		Staff staff = null;
-		String sql = "select * from staff where staff_number=?";
+		String sql = "select * from staff where staff_number like ?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setString(1, "%"+number+"%");
@@ -168,7 +168,7 @@ public class StaffDaoImpl implements StaffDao {
 	public ArrayList<Staff> getStaffByName(String name, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_name=?";
+		String sql = "select * from staff where staff_name like ?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setString(1, "%"+name+"%");
