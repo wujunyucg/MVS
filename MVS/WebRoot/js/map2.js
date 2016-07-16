@@ -45,7 +45,7 @@
 		});
 		var route2;
 		//拖曳导航路径
-		function Dragroute(path,satations){
+		function Dragroute(path,satations,isadd){
 			console.log("enter route-----");
 			map.plugin("AMap.DragRoute",function(){
 				route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
@@ -71,7 +71,6 @@
 					//alert("OK");
 					//alert(e.data.routes[0].steps[0].action);
 					console.log("enter complete-----");
-					console.log(e.data.orgin+" end "+e.data.destination);
 				    var r=e.data.routes[0].steps;
 					for(i=0;i<r.length;i++){
 					     //各路段描述
@@ -88,6 +87,9 @@
 					//参考这个格式
 					//var trs=$('#result table tr');
 					//trs[0].val("线路"+satations[0].route);
+					if(isadd!=1){
+					$('#result').css("display","inline");
+					$('#addroute').css("display","none");
 					var trs=document.getElementById("routenumber");
 					trs.innerHTML="线路"+satations[0].route;
 					var tds=document.getElementById("time-distance").getElementsByTagName("td");
@@ -96,6 +98,18 @@
 					var s_e=document.getElementById("start-end");
 					s_e.innerHTML=satations[0].name+"-----"+satations[satations.length-1].name;
 					//alert();
+					}
+					else{
+						$('#result').css("display","none");
+						$('#addroute').css("display","inline");
+						$("#addroute-start input").val(e.data.origin);
+						//$("#addroute-start input").val(e.data.orgin);
+						$("#addroute-end input").val(e.data.destination);
+						var tt=document.getElementById("addroute-time");
+						tt.innerHTML=e.data.routes[0].time/60+"分钟";
+						var dd=document.getElementById("addroute-distance");
+						dd.innerHTML=e.data.routes[0].distance/1000+"千米";
+					}
 					route2=route;
 					//route2.destroy();
 				});

@@ -4,6 +4,14 @@
 	//var hhj_satation=data;
 	//markers(hhj_satation);
 //Dragroute(hhj_satation);
+document.getElementById("addroute-number").innerHTML=document.getElementById("satation-route").innerHTML;
+var obj={
+		 "name":"",
+		 "address":"",
+		 "lng":[0,0],
+		 "number":0,
+		 "route":0,
+		 "people":0};
 var satations=hhj_satation;
 var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
 var satation_routes=document.getElementById("satation-route").innerHTML;
@@ -201,11 +209,21 @@ function addroute(){
 				//console.log("OK-----右键点击"+ss);
 				contextMenu.addItem("查看路线", function() {
 					var path = [];
+					var satation=[];
+					
 					for(var i=0;i<markers.length;i++){
 					//	console.log(markers[i]);
 							path.push(markers[i].getPosition());
-						} 		
-					Dragroute(path);
+							satation.push(obj);
+							satation[i].lng=markers[i].getPosition();
+						} 
+					
+					for(var i=0;i<index;i++){
+						
+					}
+					Dragroute(path,satation,1);
+					//$('#result').css("display","inline");
+					
 					//alert();
 					
 				}, 3);
@@ -216,34 +234,12 @@ function addroute(){
 					contextMenuPositon = e.lnglat;
 				});
 }
-function driving(){
-	var driving = new AMap.Driving({
-        map: map,
-        panel: "panel"
-    }); 
-    // 根据起终点经纬度规划驾车导航路线
-   console.log("OK");
-   var path=[];
-   path.push([104.099676,30.680896]);
-   path.push([104.085814,30.673275]);
-   path.push([104.088882,30.671152]);
-   path.push([104.062388,30.683423]);
-   console.log("OK");
-   driving.search({waypoints:path});
-   console.log("OK");
-}
-//driving();
+
 function showAllRoute(all_satations){
 	console.log("start show routes");
 	$('#satation-search').val("输入线路编号进行查询");
 	markers(all_satations);
-	var obj={
-		 "name":"",
-		 "address":"",
-		 "lng":[0,0],
-		 "number":0,
-		 "route":0,
-		 "people":0};
+	
 	var routes=new Array();
 	var route_satations=new Array();
 	//var path =new Array();
@@ -261,7 +257,8 @@ function showAllRoute(all_satations){
 	//showroute(1);
 	function showroute(i){
 		console.log(routes[i]);
-		Dragroute(routes[i],route_satations[i]);
+		
+		Dragroute(routes[i],route_satations[i],0);
 		
 		//driving(routes[i]);
 		//showroutesinfo(routes[i]);

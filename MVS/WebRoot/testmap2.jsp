@@ -35,6 +35,36 @@
 	src="http://webapi.amap.com/maps?v=1.3&key=12f941dddbe64260f57468811bb77c77&plugin=AMap.DistrictSearch,AMap.PlaceSearch,AMap.AdvancedInfoWindow,AMap.Driving,AMap.MapType"></script>
 <script type="text/javascript"
 	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+<style type="text/css">
+	ul{
+		list-style-type:none;
+		width:90%;
+		margin:0px auto;
+	}
+	#addroute li{
+		margin-top:10px;
+	}
+	#addroute li input{
+		width:80%;
+		float:right;
+	}
+	#addroute li span{
+		width:80%;
+		float:right;
+	}
+	#addroute-number{
+		width:80%;
+		float:right;
+	}
+	.button-left{
+		float:left;
+		width:30%;
+	}
+	.button-right{
+		float:right;
+		width:30%;
+	}
+</style>
 </head>
 
 <body>
@@ -141,7 +171,18 @@
 				style="position: absolute; top:175px; right:100px;">
 				<div id="panel"></div>
 			</div>
-			<div id="result" style="position:absolute;margin-left:65px;margin-top:105px;background-color:#fff;width:180px">		
+			<div id="addroute" style="position:absolute;margin-left:55px;margin-top:105px;background-color:#fff;width:180px;display:none">
+				<ul>
+					<li>路线<select size="1" id="addroute-number"></select></li>
+					<li id="addroute-start">起点<input type="text" value=""/></li>
+					<li id="addroute-end">终点<input type="text" value=""/></li>
+					<li >用时<span id="addroute-time">111</span></li>
+					<li >距离<span id="addroute-distance">111</span></li>
+					<li id="addroute-sbm"><button class="button-left">确认</button></li>
+					<li id="addroute-quit"><button class="button-right">取消</button></li>
+				</ul>
+			</div>
+			<div id="result" style="position:absolute;margin-left:55px;margin-top:105px;background-color:#fff;width:180px;display:none">		
 					<span id="routenumber",align="center" style="width:90%;margin:0px 10px;text-align:center">线路</span></br>	
 					<span id="start-end" style="width:90%;margin:0px 10px;">起点---终点</span>
 					<table style="width:90%;margin:0px 10px;">
@@ -154,7 +195,6 @@
 						<td>155</td>
 					</tr>
 				</table>
-				
 			</div>
 			<div>
         <ul  id="routes" style="position: absolute;display:none;">
