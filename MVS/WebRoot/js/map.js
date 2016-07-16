@@ -243,8 +243,11 @@ function addroute(){
 }
 
 function showAllRoute(all_satations){
+	map.clearMap();
+	var flag=1;
 	console.log("start show routes");
 	$('#satation-search').val("输入线路编号进行查询");
+	$('#satation-search input').unbind('input oninput');
 	markers(all_satations);
 	
 	var routes=new Array();
@@ -264,7 +267,7 @@ function showAllRoute(all_satations){
 	//showroute(1);
 	function showroute(i){
 		console.log(routes[i]);
-		
+		//route2.destroy();
 		Dragroute(routes[i],route_satations[i],0);
 		
 		//driving(routes[i]);
@@ -274,7 +277,7 @@ function showAllRoute(all_satations){
 	function hideroute(){
 		route2.destroy();
 	}
-	var flag=1;
+	
 	//$('#satation-route').show();
 	$('#satation-search input').bind('input oninput',function(){
 		console.log("ok show route");

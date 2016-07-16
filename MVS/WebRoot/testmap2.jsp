@@ -36,7 +36,7 @@
 <script type="text/javascript"
 	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 <style type="text/css">
-	ul{
+	#content ul{
 		list-style-type:none;
 		width:90%;
 		margin:0px auto;
