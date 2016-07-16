@@ -162,7 +162,58 @@ $("#satation-search input").bind("click",function(){
 //线路管理
 
 function addroute(){
-	alert("enter route set");
+	console.log("enter addroute"); 
+	//var marker=new AMap.Marker();
+	var markers=[];
+	var index=1;
+	var contextMenu = new AMap.ContextMenu();  //创建右键菜单
+	//右键放大
+				contextMenu.addItem("起点", function() {
+					markers[0]= new AMap.Marker({
+						map: map,
+						position: contextMenuPositon, //基点位置
+						draggable:true,
+						raiseOnDrag:true,
+					});
+				 info2.close();
+				}, 0);
+				contextMenu.addItem("途径", function(e) {
+					//marker.hide();
+					markers[index]=new AMap.Marker({
+						map: map,
+						position: contextMenuPositon, //基点位置
+						draggable:true,
+						raiseOnDrag:true,
+					});
+					index++;
+					info2.close();
+				}, 1);
+				contextMenu.addItem("终点", function() {
+					markers[index]=new AMap.Marker({
+						map: map,
+						position: contextMenuPositon, //基点位置
+						draggable:true,
+						raiseOnDrag:true,
+					});
+					index++;
+					info2.close();
+				}, 2);
+				//console.log("OK-----右键点击"+ss);
+				contextMenu.addItem("查看路线", function() {
+					var path = [];
+					for(var i=0;i<markers.length;i++){
+					//	console.log(markers[i]);
+							path.push(markers[i].getPosition());
+						} 		
+					Dragroute(path);
+					//alert();
+				}, 3);
+				//alert("sss");
+				map.on('rightclick',function(e){
+				//	alert("sss");
+					contextMenu.open(map,e.lnglat);
+					contextMenuPositon = e.lnglat;
+				});
 }
 function showAllRoute(all_satations){
 	console.log("start show routes");
