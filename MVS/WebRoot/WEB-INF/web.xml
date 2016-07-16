@@ -209,6 +209,11 @@
     <servlet-name>CreateCarServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.CreateCarServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>BackupDataServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.BackupDataServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -227,5 +232,9 @@
   <servlet-mapping>
     <servlet-name>CreateCarServlet</servlet-name>
     <url-pattern>/servlet/CreateCarServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BackupDataServlet</servlet-name>
+    <url-pattern>/servlet/BackupDataServlet</url-pattern>
   </servlet-mapping>
 </web-app>
