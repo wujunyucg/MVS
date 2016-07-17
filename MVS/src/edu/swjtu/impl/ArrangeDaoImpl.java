@@ -131,5 +131,25 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		}
 		return arr.getName();
 	}
-
+	
+	@Override
+	public int addArr(Arrange arr, Connection con) throws SQLException {
+		String sql = "insert into arrange (arrange_name,arrange_lineId,"
+				+ "arrange_carId,arrange_time,arrange_date) values (?,?,?,?, ?)";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			//pstm.setInt(1, arr.getArrangeId());
+			pstm.setString(1, arr.getName());
+			pstm.setInt(2, arr.getLineId());
+			pstm.setInt(3, arr.getCarId());
+			pstm.setString(4, arr.getTime());
+			pstm.setString(5, arr.getDate());
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
 }
