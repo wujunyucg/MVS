@@ -60,7 +60,8 @@
 				<button type="button"
 					class="j-btn-active list-group-item btn-menu btn_text">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-					人员管理 <span style="float:right;"class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+					人员管理 <span style="float:right;"
+						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 				</button>
 				<div class="list-group j-child-menu" style="display:none;">
 					<button type="button" class="list-group-item">数据维护</button>
@@ -70,8 +71,7 @@
 					class="list-group-item btn-menu btn_icon">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text">
+				<button type="button" class="list-group-item  btn-menu btn_text">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 					线路管理
 				</button>
@@ -79,8 +79,7 @@
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text">
+				<button type="button" class="list-group-item  btn-menu btn_text">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 					站点管理
 				</button>
@@ -88,24 +87,39 @@
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 				</button>
+
+
 				<button type="button"
-					class="list-group-item  btn-menu btn_text">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					车辆管理
-				</button>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					班次管理
-				</button>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				</button>
+					class="j-btn-active list-group-item btn-menu btn_text">
+					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+					车辆管理 <span style="float:right;"
+						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+					</button>
+					<div class="list-group j-child-menu" style="display:none;">
+						<button type="button" class="list-group-item" id="cre_car">
+							新建车辆数据
+							</button>
+							<button type="button" class="list-group-item" id="man_car">
+								数据维护与查询
+								</button>
+					</div>
+					<button type="button" style="display:none;"
+						class="list-group-item btn-menu btn_icon">
+						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+						</button>
+
+						<button type="button" class="list-group-item  btn-menu btn_text">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+							班次管理 <span style="float:right;"
+								class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						</button>
+						<div class="list-group j-child-menu" style="display:none;">
+							<button type="button" class="list-group-item manage-arrange">数据维护</button>
+						</div>
+						<button type="button" style="display:none;"
+							class="list-group-item  btn-menu btn_icon">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
 			</div>
 			<div class="panel panel-default j-no-radous">
 				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
@@ -115,9 +129,36 @@
 			<h1>欢迎您登录咸鱼的梦想厂车管理后台</h1>
 		</div>
 	</div>
-	
+
+	<!-- jimo -->
+	<div id="load_modal" class="modal fade" id="myModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<b>正在加载，请稍后...</b>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script type="text/javascript">
 		//异步加载代码
+		
+		$(".manage-arrange").click(function(){
+			$("#load_modal").modal('show');//显示加载框
+			$("#content").load("<%=path%>/servlet/ManageArrangeServlet");
+		});
+		
+		$("#cre_car").click(function() {
+			$("#content").load("<%=request.getContextPath()%>/jsp_user/create_car.jsp");
+		});
+		
+		$("#man_car").click(function() {
+			$("#load_modal").modal('show');//显示加载框
+			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition=0&sea_condition=0");
+		});
+
 	</script>
 </body>
 </html>

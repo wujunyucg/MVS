@@ -19,11 +19,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-		<link rel="stylesheet" type="text/css" href="css/create_user.css">
-	<link rel="stylesheet" type="text/css"
-	href="css/bootstrap/bootstrap.min.css">
-	<script src='scripts/jquery.js'></script>
-	<script src='scripts/bootstrap.min.js'></script>
 
 <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
@@ -375,6 +370,7 @@
 	<b id="allpageb">${allpage}</b>
 	<b id="sea_condition">${sea_condition}</b>
 	<script type="text/javascript">
+		$("#load_modal").modal('hide');//隐藏加载框
 		$('.form_date').datetimepicker({
 			language : 'zh-CN',
 			weekStart : 1,
@@ -486,11 +482,13 @@
 				sea_condition = 0;
 				condition = 0;
 			}
+			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition="+condition+"&sea_condition="+sea_condition);
 			
 		}
 		
 		function serall(){
+			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition=0&sea_condition=0");
 		}
 		
@@ -674,14 +672,17 @@
 		
 		$(".pagechoice").click(function() {
 			var page1 = $(this).attr("title");
+			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 		$(".pagepre").click(function() {
 			var page1 = $(this).attr('id');
+			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 		$(".pagenex").click(function() {
 			var page1 = $(this).attr('id');
+			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index="+page1+"&condition="+condition+"&sea_condition="+sea_condition);
 		});
 		

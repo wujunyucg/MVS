@@ -389,6 +389,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		$("#sea_fin").click(function(){
 			$(".modal-backdrop").hide();
+			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition=1&sea_condition="+lic_plat);
 		});
 		
