@@ -67,6 +67,8 @@ public class ManageArrangeServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			con = db.getCon();
 			ArrangeDaoImpl adi = new ArrangeDaoImpl();
+			CarDaoImpl cdi = new CarDaoImpl();
+			LineDaoImpl ldi = new LineDaoImpl();
 			ArrayList<Arrange> arrList = null;
 			if(type.equals("3")){
 				FileUpload fl = new FileUpload();
@@ -75,10 +77,33 @@ public class ManageArrangeServlet extends HttpServlet {
 				System.out.println("path:"+path);
 				ArrayList<ArrCarLine> al = new InportArrExcel().inport(path);
 				System.out.println(al.size()+"=size");
-				response.getWriter().write("yes");
 				
 				///解析并存到数据库
 				//////////////////////////////
+				
+				for(ArrCarLine acl : al){
+					
+					Arrange arr = new Arrange();
+					arr.setDate(acl.getDate());
+					arr.setTime(acl.getTime());
+					arr.setName(acl.getArrName());
+					Car car = cdi.getCarByLicensePlate(acl.getLicensePlate(), con);
+					if(null==car){
+						arr.setCarId(1);
+					}else{
+						arr.setCarId(car.getCarId());
+					}
+					Line line = ldi.getLineByName(con, acl.getLineName());
+					if(null==line){
+						arr.setLineId(1);
+					}else{
+						arr.setLineId(line.getLineId());
+					}
+					adi.addArr(arr, con);
+				}
+				//解析完删除文件
+				fl.delOneFile(path);
+				response.getWriter().write("yes");
 			}else{
 				
 				if (type.equals("1")) {
@@ -92,25 +117,11 @@ public class ManageArrangeServlet extends HttpServlet {
 					total = adi.getTotalByMonth(con, date);
 					System.out.println("date=" + date + " arr size:"
 							+ arrList.size() + " total=" + total);
-				} else if (type.equals("3")) {
-					FileUpload fl = new FileUpload();
-					int re = fl.upload(request);
-					String path = fl.getAllPath();
-					System.out.println("path:" + path);
-					ArrayList<ArrCarLine> al = new InportArrExcel()
-							.inport(path);
-					System.out.println(al.size() + "=size");
-					response.getWriter().write("yes");
-
-					// /解析并存到数据库
-					// ////////////////////////////
 				}
 				if (0 < total) {
 					total_page = (total - 1) / pageNum + 1;// 总共的页数
 				}
 				ArrayList<ArrCarLine> arrData = new ArrayList<ArrCarLine>();
-				CarDaoImpl cdi = new CarDaoImpl();
-				LineDaoImpl ldi = new LineDaoImpl();
 				for (Arrange arr : arrList) {
 					arrData.add(new ArrCarLine(arr, cdi.getCarById(
 							arr.getCarId(), con), ldi.getLineById(con,
