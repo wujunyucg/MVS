@@ -281,7 +281,7 @@ function showAllRoute(all_satations){
 	//$('#satation-route').show();
 	$('#satation-search input').bind('input oninput',function(){
 		console.log("ok show route");
-		console.log($(this).val());
+		console.log($(this).val()); 
 		if($(this).val()<20&&$(this).val()>0){
 			if(flag!=1)
 				hideroute();
