@@ -26,26 +26,29 @@
 	src="scripts/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript"
 	src="scripts/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="scripts/ajaxfileupload.js"></script>
 </head>
 <body>
 	<h2>排班数据维护</h2>
 	<div style="">
-	<div style="float:left;"class="input-group date form_date col-md-2" data-date="年月"
-		data-date-format="yyyy-mm">
-		<input id="arr_date"class="form-control" size="16" type="text" value="${arr_date}" readonly>
-		<span class="input-group-addon"><span
-			class="glyphicon glyphicon-calendar"></span></span>
-	</div>
-	<button id="arr_show_by_month"type="button" class="btn btn-success">按月查看
-	</button>
-	<button id="arr_show_all"type="button" class="btn btn-success">全部班次
-	</button>
-	<form id="export_form"style="float:right;margin-right:20px;"
-	action="servlet/ModifyArrServlet?deltype=3" method="POST">
-		<button id="arr_export"type="button" class="btn btn-success">导出</button>
-	</form>
-	<button type="button" class="btn btn-success">导入</button>
-	<button type="button" class="btn btn-default">删除</button>
+		<div style="float:left;" class="input-group date form_date col-md-2"
+			data-date="" data-date-format="yyyy-mm">
+			<input id="arr_date" class="form-control" size="16" type="text"
+				value="${arr_date}" readonly> <span
+				class="input-group-addon"><span
+				class="glyphicon glyphicon-calendar"></span></span>
+		</div>
+		<button id="arr_show_by_month" type="button" class="btn btn-success">按月查看
+		</button>
+		<button id="arr_show_all" type="button" class="btn btn-success">全部班次
+		</button>
+		<form id="export_form" style="float:right;margin-right:20px;"
+			action="servlet/ModifyArrServlet?deltype=3" method="POST">
+			<button id="arr_export" type="button" class="btn btn-success">导出</button>
+		</form>
+		<button id="arr_inport"type="button" style="float:right;margin-right:20px;"
+			class="btn btn-success">导入</button>
+		<button type="button" class="btn btn-default">删除</button>
 	</div>
 	<c:if test="${arr_data != null }">
 		<div>
@@ -69,7 +72,7 @@
 						<c:forEach items="${arr_data}" begin="0" var="arr"
 							varStatus="status">
 							<tr>
-								<td class="arr_id"style="display:none;">${arr.getArrangeId()}</td>
+								<td class="arr_id" style="display:none;">${arr.getArrangeId()}</td>
 								<td><input type="checkbox" />${status.index}</td>
 								<td class="can_change">${arr.getArrName()}</td>
 								<td class="can_change">${arr.getDate()}</td>
@@ -109,16 +112,17 @@
 	</nav>
 	<div id="display_month"></div>
 	<!-- 提示信息模态框 -->
-	<div id="msg_modal"class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        	<b id="modal_content">正在加载，请稍后...</b>
-      </div>
-    </div>
-  </div>
+	<div id="msg_modal" class="modal fade" id="myModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<b id="modal_content">正在加载，请稍后...</b>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
 	<!-- 删除的提示模态框 -->
 	<div class="modal fade" id="modal_delete" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -132,9 +136,7 @@
 					<h3 class="modal-title">删除班次</h3>
 				</div>
 				<div class="modal-body">
-					<h4 id="delete_info" style="color:red;">
-						您将删除此班次，仍继续吗？
-					</h4>
+					<h4 id="delete_info" style="color:red;">您将删除此班次，仍继续吗？</h4>
 				</div>
 				<div class="modal-footer">
 					<button id="arr_btn_delete" type="button" class="btn btn-danger">确定</button>
@@ -147,6 +149,36 @@
 	</div>
 	<!-- /.modal -->
 
+	<!-- 导入文件的模态框 -->
+	<div class="modal fade" id="modal_upload" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">导入文件</h3>
+				</div>
+				<div class="modal-body">
+					<!-- <form id="upload_form"
+						action="servlet/ManageArrangeServlet?type=3" method="post" enctype="multipart/form-data">
+						<input type="file" name="myfile"><br>
+					</form>-->
+					<input id="fileToUpload" type="file" size="45" name="fileToUpload"
+					class="input">
+				</div>
+				<div class="modal-footer">
+					<button id="arr_btn_upload" type="button" class="btn btn-primary">导入</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 	<script type="text/javascript">
 		//分页控制
 			$(".arr-page>a").click(function(){
@@ -186,12 +218,20 @@
 		//日期只选择年月
 		$('.form_date').datetimepicker({
 			language : 'zh-CN',
-			format : 'yyyy-mm',
+			/*format : 'yyyy-mm',
 			autoclose : true,
-			todayBtn : true,
+			todayBtn : 1,
+			todayHighlight : 1,
 			startView : 'year',
 			minView : 'year',
-			maxView : 'decade'
+			maxView : 'decade'*/
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 3,
+			minView : 3,
+			forceParse : 0
 		});
 		
 		//按月查看提交
@@ -285,14 +325,37 @@
 				//$("#delete_info").text("删除成功，点击确定刷新");
 				var date = $("#arr_date").val();
 				$("#load_modal").modal('show');//显示加载框
-				$("#content").load("<%=path%>/servlet/ManageArrangeServlet?arrStartPage=${arrStartPage}"+
-				"&type="+${arr_type}+"&date="+date);
-			}
-		});
-		
+				$("#content").load("<%=path%>/servlet/ManageArrangeServlet?arrStartPage=${arrStartPage}"
+										+ "&type=" + ${arr_type} + "&date="
+										+ date);
+					}
+				});
+
 		//导出提交表单
-		$("#arr_export").click(function(){
+		$("#arr_export").click(function() {
 			$("#export_form").submit();
+		});
+		//导入模态框
+		$("#arr_inport").click(function(){
+			$("#modal_upload").modal('show');
+		});
+		$("#arr_btn_upload").click(function(){
+			//$("#upload_form").submit();
+			$.ajaxFileUpload({
+			url : 'servlet/ManageArrangeServlet?type=3',
+			secureuri : false,
+			fileElementId : 'fileToUpload',
+			dataType : 'json',
+			data : {type:"3"},
+			success : function(data) {
+				alert(data)
+			},
+			error : function(data, status, e) {
+				$("#modal_upload").modal('hide');
+				$("#modal_content").text("解析成功");
+				$("#msg_modal").modal('show');
+			}
+			});
 		});
 		$("#load_modal").modal('hide');//隐藏加载框
 	</script>
