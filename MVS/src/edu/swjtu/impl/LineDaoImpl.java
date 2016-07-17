@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import edu.swjtu.dao.LineDao;
+import edu.swjtu.model.Car;
 import edu.swjtu.model.Line;
 
 public class LineDaoImpl implements LineDao{
@@ -28,6 +29,23 @@ public class LineDaoImpl implements LineDao{
 		Line line = null;
 		if(rs.next()){
 			line = getOneLine(rs);
+		}
+		return line;
+	}
+	@Override
+	public Line getLineByName(Connection con, String name) throws SQLException {
+		Line line = null;
+		String sql = "select * from line where line_name=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, name);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				line = getOneLine(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 		return line;
 	}
