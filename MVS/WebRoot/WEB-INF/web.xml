@@ -173,10 +173,6 @@
     <servlet-name>BackupDataServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.BackupDataServlet</servlet-class>
   </servlet>
-
-
-
-
   <servlet-mapping>
     <servlet-name>SynchStaffServlet</servlet-name>
     <url-pattern>/servlet/SynchStaffServlet</url-pattern>
@@ -197,22 +193,29 @@
     <servlet-name>BackupDataServlet</servlet-name>
     <url-pattern>/servlet/BackupDataServlet</url-pattern>
   </servlet-mapping>
-  
-  <servlet>    
-        <servlet-name>    
-             QuartzInitializer     
-        </servlet-name>        
-        <servlet-class>    
+  <servlet>
+    <servlet-name>QuartzInitializer</servlet-name>
+    <servlet-class>    
              org.quartz.ee.servlet.QuartzInitializerServlet     
-        </servlet-class>    
-        <init-param>
-     <param-name>shutdown-on-unload</param-name>
-     <param-value>true</param-value>
-   </init-param>
-   <init-param>
-    <param-name>config-file</param-name>
-    <param-value>/quartz.properties</param-value> 
-   </init-param>
-   <load-on-startup>2</load-on-startup>  
-    </servlet>  
+        </servlet-class>
+    <init-param>
+      <param-name>shutdown-on-unload</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>config-file</param-name>
+      <param-value>/quartz.properties</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>ManageSynchServlet</display-name>
+    <servlet-name>ManageSynchServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ManageSynchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManageSynchServlet</servlet-name>
+    <url-pattern>servlet/ManageSynchServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
