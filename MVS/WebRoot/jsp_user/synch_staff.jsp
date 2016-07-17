@@ -106,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </li>
      </c:if>
       <c:if test="${synch_page_all !=synch_page}">
-    <li id= "next_li">synch_page
+    <li id= "next_li">
    
       <a  aria-label="Next" id= "next_li_a"  onclick="javascript:pagination(${synch_page+1})">
         <span aria-hidden="true">&raquo;</span>
@@ -120,9 +120,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </c:if>
     
   </div>
+  	${quartz_type}
   </body>
   <script>
+  function changetime(){
+  	$("#w-modal-but").attr("disabled",false);
+  	$("#w-modal-but").html("修改周期");
+  	$("#w-modal-p3").html("");
+  	$("#w-modal-p2").html("");
+  	var content='<form id="immedadd"><div class="form-group form-inline"><select id="quartz_type" name ="time" class="form-control">'
+  			+'<option value = "day">天</option>'
+  			+'<option value = "week">周</option>'
+  	 		+'<option value = "month">月</option>'
+  	 		+'</select>'
+  	+'<input name = "type" value="5" style="display:none;"></form>';
   
+  $("#w-modal-div").html(content);
+  $("#quartz_type").val("${quartz_type}");
+  $("#w-modal-but").attr("onclick","javascript:change();");	
+  }
   function immed_manual(){
   	$("#w-modal-but").attr("disabled",true);
   	$("#w-modal-but").html("同步");
@@ -163,7 +179,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   					$("#w-modal-p3").css("font-size","20px");
   					
 				}
-		        else if(request == 2){
+				 else if(request == 2){
+		        	$("#w-modal-p3").html("员工工号已在定时同步计划中，请详细审核信息");
+  					$("#w-modal-p3").css("color","red");
+  					$("#w-modal-p3").css("font-size","20px");
+  					
+		        }
+		        else if(request == 3){
 		        	 $("#w-modal-p3").html("员工工号可用");
   					$("#w-modal-p3").css("color","blue");
   					$("#w-modal-p3").css("font-size","20px");
@@ -267,6 +289,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 }
                 else if(data == 6){
                 	$("#w-modal-p2").html("文件中有未填项，请审核后提交");
+                	$("#w-modal-p2").css("color","red");
+                	$("#w-modal-p2").css("font-size","20px");
+                	$("#w-modal-but").attr("disabled",true);
+                }
+                else if(data == 7){
+                	$("#w-modal-p2").html("有员工工号和定时同步计划相同，请审核后提交");
                 	$("#w-modal-p2").css("color","red");
                 	$("#w-modal-p2").css("font-size","20px");
                 	$("#w-modal-but").attr("disabled",true);
@@ -426,7 +454,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	$("#w-modal-p2").css("font-size","20px");
                 	$("#w-modal-but").attr("disabled",true);
                 }
-                
+                else if(data == 7){
+                	$("#w-modal-p2").html("有员工工号和定时同步计划相同，请审核后提交");
+                	$("#w-modal-p2").css("color","red");
+                	$("#w-modal-p2").css("font-size","20px");
+                	$("#w-modal-but").attr("disabled",true);
+                }
                 
             }
            // $(this).resetForm(); // 提交后重置表单
@@ -434,16 +467,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        
   }
   
-  function changetime(){
-  	$("#w-modal-but").attr("disabled",false);
-  	$("#w-modal-but").html("修改周期");
-  	$("#w-modal-p3").html("");
-  	$("#w-modal-p2").html("");
-  	var content='<form id="immedadd"><div class="form-group form-inline"><select name ="time" class="form-control"><option value = "day">天</option><option value = "week">周</option> <option value = "month">月</option></select>'
-  				+'<input name = "type" value="5" style="display:none;"></form>';
-  $("#w-modal-div").html(content);
-  $("#w-modal-but").attr("onclick","javascript:change();");	
-  }
+  
   function change(){
   	$.ajax({ 
 		type:"post",
@@ -466,7 +490,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   }
   
   function pagination(page){
-          $("#content").load("<%=basePath%>servlet/ManageStaffServlet?staff_page="+page);
+          $("#content").load("<%=basePath%>servlet/ManageSynchServlet?synch_page="+page);
              
 }
   </script>

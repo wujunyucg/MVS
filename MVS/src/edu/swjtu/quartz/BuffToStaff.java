@@ -2,7 +2,9 @@ package edu.swjtu.quartz;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -10,8 +12,10 @@ import org.quartz.JobExecutionException;
 
 import edu.swjtu.impl.BuffStaffDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
+import edu.swjtu.impl.SynchDaoImpl;
 import edu.swjtu.model.BuffStaff;
 import edu.swjtu.model.Staff;
+import edu.swjtu.model.Synch;
 import edu.swjtu.util.DBUtil;
 
 
@@ -38,9 +42,17 @@ public class BuffToStaff implements Job {
 					staff.setNumber(bstaff.getNumber());
 					staffList.add(staff);
 					bsdi.updateBuffStaff(bstaff, con);
-					System.out.println(bstaff.getId());
+					
 				}	
 				sdi.addListStaff(staffList, con);
+				SynchDaoImpl sydi = new SynchDaoImpl();
+				Synch synch = new Synch();
+				synch.setName("定时同步");
+				Date date1 = new Date();     
+				 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+				 String str1 = sdf1.format(date1); 
+				synch.setTime(str1);
+				sydi.addSynch(synch, con);
 				
 			}
 		} catch (ClassNotFoundException e) {

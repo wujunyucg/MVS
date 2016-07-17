@@ -100,5 +100,22 @@ public class BuffStaffDaoImpl implements BuffStaffDao {
 		}
 		return rs;
 	}
+	
+	public BuffStaff getBuffStaffbyNumber(String number,Connection con){
+		BuffStaff bstaff = null;
+		String sql = "select * from buff_staff where staff_buffflag = 0 and staff_number = ?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, number);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				bstaff=getStaffOne(rs) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bstaff;
+	}
 
 }

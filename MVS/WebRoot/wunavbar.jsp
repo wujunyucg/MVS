@@ -151,7 +151,7 @@
 				$("#content").load("<%=basePath%>servlet/ManageStaffServlet");
 			});
 		$("#synch_staff").click(function(){
-				$("#content").load("<%=basePath%>jsp_user/synch_staff.jsp");
+				$("#content").load("<%=basePath%>servlet/ManageSynchServlet");
 		});
 	</script>
 </body>

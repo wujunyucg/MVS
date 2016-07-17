@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import edu.swjtu.dao.SynchDao;
 import edu.swjtu.model.BuffStaff;
+import edu.swjtu.model.Staff;
 import edu.swjtu.model.Synch;
 
 public class SynchDaoImpl implements SynchDao {
@@ -40,7 +41,7 @@ public class SynchDaoImpl implements SynchDao {
 	@Override
 	public ArrayList<Synch> getSynch(int startPage,int pageNum,Connection con) {
 		ArrayList<Synch> synchList = new ArrayList<Synch>();
-		String sql = "select * from synch order by desc limt ?,?";
+		String sql = "select * from synch order by synch_id desc limit ?,?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, (startPage-1)*pageNum);
@@ -54,6 +55,41 @@ public class SynchDaoImpl implements SynchDao {
 			return null;
 		}
 		return synchList;
+	}
+	
+	@Override
+	public int getSynchNum(Connection con) {
+		String sql = "select count(*) from synch";
+		PreparedStatement pstm;
+		try {
+			pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			rs.next();//移到第一条数据
+			int sum = rs.getInt(1);
+			return sum;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
+	
+	@Override
+	public Synch getLastSynch(Connection con) {
+		Synch synch = new Synch();
+		String sql = "select * from staff  order by synch_id desc limit 1";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				synch = getSynchOne(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return synch;
 	}
 
 }

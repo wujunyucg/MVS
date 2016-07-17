@@ -210,4 +210,15 @@
     <servlet-name>ManageSynchServlet</servlet-name>
     <url-pattern>/servlet/ManageSynchServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>QuartzApplicServlet</display-name>
+    <servlet-name>QuartzApplicServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.QuartzApplicServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QuartzApplicServlet</servlet-name>
+    <url-pattern>/QuartzApplicServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

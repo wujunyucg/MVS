@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.mail.internet.NewsAddress;
 import javax.servlet.ServletException;
@@ -22,8 +24,10 @@ import edu.swjtu.excel.StaffExcel;
 import edu.swjtu.file.FileUpload;
 import edu.swjtu.impl.BuffStaffDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
+import edu.swjtu.impl.SynchDaoImpl;
 import edu.swjtu.model.BuffStaff;
 import edu.swjtu.model.Staff;
+import edu.swjtu.model.Synch;
 import edu.swjtu.quartz.ChangeTriger;
 import edu.swjtu.util.DBUtil;
 
@@ -59,10 +63,14 @@ public class SynchStaffServlet extends HttpServlet {
 					StaffDaoImpl sdi = new StaffDaoImpl();
 					String number = request.getParameter("number");
 					Staff staff = sdi.getStaffByNumber(number, con);
+					BuffStaffDaoImpl bsdi = new BuffStaffDaoImpl();
+					BuffStaff bstaff = bsdi.getBuffStaffbyNumber(number, con);
 					if(null != staff)
 						out.print(1);
-					else
+					else if(bstaff != null)
 						out.print(2);
+					else 
+						out.print(3);
 					//System.out.println(staff.getNumber());
 					db.closeCon(con);
 					out.close();
@@ -92,6 +100,14 @@ public class SynchStaffServlet extends HttpServlet {
 				staff1.setGroup(group);;
 				staff1.setAddress(address);
 				sdi.addOneStaff(staff1, con);
+				SynchDaoImpl sydi = new SynchDaoImpl();
+				Synch synch = new Synch();
+				synch.setName((String)request.getSession().getAttribute("userName")==null?"管理员":(String)request.getSession().getAttribute("userName"));
+				Date date1 = new Date();     
+				 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+				 String str1 = sdf1.format(date1); 
+				synch.setTime(str1);
+				sydi.addSynch(synch, con);
 				out.print(1);
 				//System.out.println(staff.getNumber());
 				db.closeCon(con);
@@ -132,20 +148,36 @@ public class SynchStaffServlet extends HttpServlet {
 						}
 							
 						else{
-							int flag = 0;
+							int flag1 = 0 , flag2=0;
+							BuffStaffDaoImpl bsdi = new BuffStaffDaoImpl();
 							StaffDaoImpl sdi = new StaffDaoImpl();
 							for(Staff staff : staffList){
 								if(sdi.getStaffByNumber(staff.getNumber(), con) !=null){
-									flag = 1;
+									flag1 = 1;
 									break;
 								}	
+								if(bsdi.getBuffStaffbyNumber(staff.getNumber(), con) !=null){
+									flag2 = 1;
+									break;
+								}
+							
 							}
-							if(flag == 1){
+							if(flag1 == 1){
 								out.print(4);
 							}
-								
+							else if(flag2 ==1){
+								out.print(7);
+							}	
 							else{
 								sdi.addListStaff(staffList, con);
+								SynchDaoImpl sydi = new SynchDaoImpl();
+								Synch synch = new Synch();
+								synch.setName((String)request.getSession().getAttribute("userName")==null?"管理员":(String)request.getSession().getAttribute("userName"));
+								Date date1 = new Date();     
+								 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+								 String str1 = sdf1.format(date1); 
+								synch.setTime(str1);
+								sydi.addSynch(synch, con);
 								out.print(5);
 							}
 							db.closeCon(con);
@@ -198,7 +230,6 @@ public class SynchStaffServlet extends HttpServlet {
 			}
 		}
 		else if(request.getParameter("type").equals("4")){
-			
 			FileUpload fu = new FileUpload();
 			int ok = fu.upload(request);
 			System.out.println(fu.getSignalPath());
@@ -223,20 +254,25 @@ public class SynchStaffServlet extends HttpServlet {
 					}
 						
 					else{
-						int flag = 0;
+						int flag1 = 0 , flag2 = 0;
 						StaffDaoImpl sdi = new StaffDaoImpl();
+						BuffStaffDaoImpl bsdi = new BuffStaffDaoImpl();
 						for(Staff staff : staffList){
 							if(sdi.getStaffByNumber(staff.getNumber(), con) !=null){
-								flag = 1;
+								flag1 = 1;
 								break;
 							}	
+							if(bsdi.getBuffStaffbyNumber(staff.getNumber(), con) !=null){
+								flag2 = 1;
+								break;
+							}
 						}
-						if(flag == 1){
+						if(flag1 == 1){
 							out.print(4);
 						}
-							
-						else{
-							BuffStaffDaoImpl bsdi = new BuffStaffDaoImpl();
+						else if(flag2 == 1)
+							out.print(7);
+						else{	
 							ArrayList<BuffStaff> bstaffList = new ArrayList<BuffStaff>();
 							for(Staff staff : staffList){
 								BuffStaff bstaff = new BuffStaff();
