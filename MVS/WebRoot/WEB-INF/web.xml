@@ -162,10 +162,6 @@
     <servlet-class>edu.swjtu.excel.ExportConCarData</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>ManageDataServlet</servlet-name>
-    <servlet-class>edu.swjtu.servlet.ManageDataServlet</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>CreateCarServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.CreateCarServlet</servlet-class>
   </servlet>
@@ -180,10 +176,6 @@
   <servlet-mapping>
     <servlet-name>ExportConCarData</servlet-name>
     <url-pattern>/servlet/ExportConCarData</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ManageDataServlet</servlet-name>
-    <url-pattern>/servlet/ManageDataServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CreateCarServlet</servlet-name>
@@ -216,6 +208,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ManageSynchServlet</servlet-name>
-    <url-pattern>servlet/ManageSynchServlet</url-pattern>
+    <url-pattern>/servlet/ManageSynchServlet</url-pattern>
   </servlet-mapping>
 </web-app>
