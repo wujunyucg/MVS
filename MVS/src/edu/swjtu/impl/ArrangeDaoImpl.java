@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import edu.swjtu.dao.ArrangeDao;
 import edu.swjtu.model.Arrange;
+import edu.swjtu.model.Car;
 
 public class ArrangeDaoImpl implements ArrangeDao {
 
@@ -110,6 +111,25 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			list.add(getOneArrange(rs));
 		}
 		return list;
+	}
+
+	@Override
+	public String getArrNameById(int arrId, Connection con) throws SQLException {
+		Arrange arr  = null;
+		String sql = "select * from arrange where arrange_id=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, arrId);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				arr = getOneArrange(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			String temp = "-1";
+			return temp;
+		}
+		return arr.getName();
 	}
 
 }
