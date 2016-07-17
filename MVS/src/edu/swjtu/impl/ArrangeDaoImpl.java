@@ -126,10 +126,12 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			String temp = "-1";
-			return temp;
 		}
-		return arr.getName();
+		if(arr == null){
+			return "-1";
+		}else{
+			return arr.getName();
+		}
 	}
 	
 	@Override
