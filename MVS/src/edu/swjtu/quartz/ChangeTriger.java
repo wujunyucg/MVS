@@ -59,7 +59,50 @@ public class ChangeTriger {
         }
 		return 0;
 
-
-		
+	}
+	
+	public String getTime(){
+		String  xmlPath ="F:/MyEclipse 2015/apache-tomcat-8.0.33/webapps/MVS/WEB-INF/classes/quartz_job.xml";
+  		DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+          dbf.setIgnoringElementContentWhitespace(true);
+          try {
+              DocumentBuilder db = dbf.newDocumentBuilder();
+              Document doc = db.parse(xmlPath); // 使用dom解析xml文件
+              NodeList sonlist = doc.getElementsByTagName("cron"); 
+              int flag = 0;
+              Element son = null;
+              for (int i = 0; i < sonlist.getLength(); i++) // 循环处理对象
+              {
+                  son = (Element)sonlist.item(i);;
+                  
+                  for (Node node = son.getFirstChild(); node != null; node = node.getNextSibling()){  
+                      if (node.getNodeType() == Node.ELEMENT_NODE ){  
+                          String name = node.getNodeName();  
+                          String value = node.getFirstChild().getNodeValue();
+                          if(name.equals("name") && value.equals("triger1"))
+                          {
+                          	flag = 1;
+                          	break;
+                          }
+                      }  
+                  }  
+                 if(flag == 1)
+              	   break;
+              }
+              if(flag==1){
+            	  String type = null;
+            	  String typeCode=son.getElementsByTagName("cron-expression").item(0).getTextContent();
+            	  switch(typeCode)
+            	  {
+            	  case "0 5 0 * * ?":type = "day";break;
+            	  case "0 5 0 ? * MON":type="week";break;
+            	  case "0 5 0 1 * ?":type="month";break;
+            	  }
+            	  return type;
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+		return null;
 	}
 }

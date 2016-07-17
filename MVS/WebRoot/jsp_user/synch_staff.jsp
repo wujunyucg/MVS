@@ -120,7 +120,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </c:if>
     
   </div>
-  	${quartz_type}
   </body>
   <script>
   function changetime(){
@@ -228,6 +227,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
 	    
       }});
+       pagination(${synch_page});
   }
   
   function immed_excel(){
@@ -304,7 +304,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
            // $(this).resetForm(); // 提交后重置表单
         });
-       
+        pagination(${synch_page});
   }
   
   function time_manual(){
@@ -389,6 +389,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
 	    
       }});
+
   }
   
   function time_excel(){
@@ -401,7 +402,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				+'<a href="/MVS/download/2014112155.xlsx">模板下载</a></div>'
   				+'<input name = "type" value="2" style="display:none;"></form>';
   	$("#w-modal-div").html(content);
-  	$("#w-modal-but").attr("onclick","javascript:addexcel();");	
+  	$("#w-modal-but").attr("onclick","javascript:addexcel_time();");	
   	 
   }
   $("#w-modal-but").click(function(){
@@ -416,8 +417,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	 	}
   	 		
   	 });
-  	 
-  function addexcel(){
+
+  function addexcel_time(){
   	 $("#immedadd").ajaxSubmit({
             type: 'post', 
             url: '<%=basePath%>servlet/SynchStaffServlet?type=4',
@@ -464,7 +465,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
            // $(this).resetForm(); // 提交后重置表单
         });
-       
   }
   
   
@@ -487,6 +487,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
 	    
       }});
+      pagination(${synch_page});
   }
   
   function pagination(page){

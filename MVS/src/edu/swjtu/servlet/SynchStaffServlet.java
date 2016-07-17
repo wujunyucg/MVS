@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.mail.internet.NewsAddress;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -311,6 +313,9 @@ public class SynchStaffServlet extends HttpServlet {
 				String time = request.getParameter("time");
 				ChangeTriger ct = new ChangeTriger();
 				ct.changeTime(time,  request.getRealPath("/"));
+		    	String type = ct.getTime();
+		    	 ServletContext application = this.getServletContext();
+		       application.setAttribute("quartz_type", type); 
 				out.print(1);
 				//System.out.println( request.getSession().getServletContext().getRealPath("/"));
 				out.close();
