@@ -79,6 +79,9 @@ function EditSatation(data){
  
 
 map.on('click', function(e) {$("#satation-search input").attr("value","输入关键字进行查询");});
+$("#satation-search input").bind("click",function(){
+	$("#satation-search input").attr("value","");	
+});
 
 function addsatation(){
 	var hhj_flag=0;
@@ -111,6 +114,9 @@ function addsatation(){
 			console.log(s);
 			console.log(ctn);
 			info(e.lnglat,ctn);
+			
+			
+			
 			var sbm=ctn.getElementsByTagName('button');		
 			var newsatation={"name":"null",
 					 "address":"null",
@@ -118,6 +124,7 @@ function addsatation(){
 					 "number":1,
 					 "route":1,
 					 "people":0};
+			
 			sbm[0].onclick=function(){ 
 				hhj_flag=1;
 				newsatation.name=document.getElementById('satation-name').value;
@@ -139,6 +146,21 @@ function addsatation(){
 				};
 			}
 		});	
+}
+function Showallsatation(){
+	map.clearMap();
+	markers(hhj_satation);
+	$('#satation-search input').unbind('input oninput');
+	$('#satation-search input').bind('input oninput',function(){
+		console.log("search---------");
+		var wei=$('#satation-search input').val();
+		if(findlng(wei)>=0){
+			map.setCenter(hhj_satation[findlng(wei)].lng);
+			var conten=SatationContent(hhj_satation[findlng(wei)]);
+			info(hhj_satation[findlng(wei)].lng,conten);
+		}
+		
+	});
 }
 function sataion_infoctn(){
 	  var s=document.getElementById('addsatation-info').innerHTML='<div>'+
@@ -163,10 +185,15 @@ function sataion_infoctn(){
 			 '</ul> </div>';
 		return s;
 	}
-$("#satation-search input").bind("click",function(){
-	$("#satation-search input").attr("value","");	
-});
 
+function findlng(value){
+	for(var i=0;i<hhj_satation.length;i++){
+		if((hhj_satation[i].name==value)||(hhj_satation[i].number==value)){
+			return i;
+		}
+	}
+	return -1;
+}
 //线路管理
 
 function addroute(){
@@ -246,7 +273,7 @@ function showAllRoute(all_satations){
 	map.clearMap();
 	var flag=1;
 	console.log("start show routes");
-	$('#satation-search').val("输入线路编号进行查询");
+	//$('#satation-search input').val("输入线路编号进行查询");
 	$('#satation-search input').unbind('input oninput');
 	markers(all_satations);
 	
@@ -288,8 +315,17 @@ function showAllRoute(all_satations){
 			console.log($(this).val());
 			var index=$(this).val()
 			showroute(index);
-			flag=2;
+			flag=2; 
 		}
 	});
 }
+$('#manager-satation-btn').bind('click',function (){
+	//alert("OK");
+	$('#result').css('display','none');
+	$('#addroute').css('display','none');
+	//$('#satation-search input').val("输入站点编号或名称进行查询");
+	//$('#satation-search input').unbind('input oninput');
+	map.clearMap();
+});
+
 

@@ -124,14 +124,14 @@
 					class="list-group-item  btn-menu btn_icon create-user">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 				</button>
-				<button type="button"
+				<button type="button" id="manager-satation-btn"
 					class="list-group-item  btn-menu btn_text manage-admin">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-					管理站点
+					<span >管理站点</span>
 				</button>
 				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
 					<button type="button" class="list-group-item" onclick="addsatation()">增加</button>
-					<button type="button" class="list-group-item" onclick="map.clearMap();markers(hhj_satation)">显示</button>
+					<button type="button" class="list-group-item" onclick="Showallsatation()">显示</button>
 				</div>
 				<button id="manage-admin" type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon manage-admin">
