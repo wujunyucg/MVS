@@ -151,7 +151,10 @@
 					<div class="row">
 						<div class="col-md-8">
 							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">司机</span>
-							<div class="form-control" id="driver" aria-describedby="sizing-addon2" readonly></div></div><br/>
+							
+								<span class="input-group-addon" id="j_driver" >司机</span>
+	
+								<div class="form-control" id="driver" aria-describedby="sizing-addon2" readonly></div></div><br/>
 						</div><div class="col-md-6"></div>
 					</div>
 					<div class="row">
@@ -501,8 +504,11 @@
 			
 			if(dril!="0"){
 				$("#drivingLicense").html(dril);
+				$("#j_driver").html("已安排司机");
+				
 			}else{
 				$("#drivingLicense").html("未安排司机，无驾驶证");
+				$("#j_driver").html("未安排司机");
 			}
 			
 			$("#license").html(lic);
