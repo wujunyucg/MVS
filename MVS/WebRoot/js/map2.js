@@ -251,7 +251,7 @@
 	var placeSearch = new AMap.PlaceSearch();  //构造地点查询类
     var infoWindow2=new AMap.AdvancedInfoWindow({closeWhenClickMap:true});
     // map.on('hotspotclick', function(result) {
-    map.on('', function(result) {
+    map.on('hotspotclick', function(result) {
         placeSearch.getDetails(result.id, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
                 placeSearch_CallBack(result);
@@ -261,7 +261,7 @@
 	//回调函数
     function placeSearch_CallBack(data) { //infoWindow.open(map, result.lnglat);
         var poiArr = data.poiList.pois;
-        var location = poiArr[0].location;
+        var location = poiArr[0].location; 
         infoWindow2.setContent(createContent(poiArr[0]));
         infoWindow2.open(map,location);
     }
@@ -306,3 +306,26 @@
 		// 根据起终点经纬度规划驾车导航路线
 		driving.search(lngLat1,lngLat2);
 	}
+	//关键字搜索,name:关键字
+	//placeSearch('医院');
+	function ps(name){
+		var satation_search=new AMap.PlaceSearch({
+			keywords :name, //搜索关键字为“超市”的poi
+			city:'成都',
+			citylimit:true,
+			pageSize:40,
+			//panel:'panel'
+		});
+		satation_search.search(name,function(status,result){
+			//console.log(status);
+			//console.log(result);
+			for(var i=0;i<result.poiList.pois.length;i++){
+				console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
+			}
+			//$('#panel').css('margin-left','200px');
+		});
+	}
+	
+	
+	//ps('学校');
+	//placeSearch('医院');

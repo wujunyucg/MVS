@@ -226,8 +226,10 @@
         </ul>
       </div>
       <div id="satation-search" style="position:absolute;margin-left:65px;margin-top:80px;width:180px" autoComplete='off'>
-      	<input type="text" value="输入关键字进行查询" />
+      	<input type="text" id="tipinput" value="输入关键字进行查询" />
+      	
       </div>
+      
       <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
          <ul id="info-satation" style="list-style-type:none;">
               <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
@@ -280,6 +282,7 @@
       <div id="route-info">
       
       </div>
+      <div id='panel'></div>
       </div>
 		</div>
 	</div>

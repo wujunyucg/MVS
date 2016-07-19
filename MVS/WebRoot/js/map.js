@@ -5,6 +5,13 @@
 	//markers(hhj_satation);
 //Dragroute(hhj_satation);
 document.getElementById("addroute-number").innerHTML=document.getElementById("satation-route").innerHTML;
+//搜索提醒
+function autosearch(){
+	var auto = new AMap.Autocomplete({
+	    input: "tipinput"
+	});
+}
+
 var obj={
 		 "name":"null",
 		 "address":"null",
@@ -327,5 +334,5 @@ $('#manager-satation-btn').bind('click',function (){
 	//$('#satation-search input').unbind('input oninput');
 	map.clearMap();
 });
-
+ps('中同仁路5号');
 
