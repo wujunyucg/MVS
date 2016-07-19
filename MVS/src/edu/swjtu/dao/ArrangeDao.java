@@ -78,4 +78,25 @@ public interface ArrangeDao {
 	 * @throws SQLException
 	 */
 	public ArrayList<Arrange> getAllMonthArr(Connection con,String date) throws SQLException;
+
+	/**
+	 * 由id获取名称
+	 * 2016年7月17日上午10:16:53
+	 * @author mischief7
+	 * @param con
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	public String getArrNameById(int arrId, Connection con) throws SQLException;
+	/**
+	 * 添加一个班次
+	 * 2016年7月17日上午9:57:24
+	 * @author jimolonely
+	 * @param admin
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public int addArr(Arrange arr,Connection con) throws SQLException;
 }

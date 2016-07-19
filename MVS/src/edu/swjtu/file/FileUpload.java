@@ -171,7 +171,20 @@ public class FileUpload {
 			deleteFile(path);
 		}
 	}
-
+	/**
+	 * 根据绝对路径删除文件
+	 * 2016年7月17日上午9:51:29
+	 * @author jimolonely
+	 * @param absPath
+	 */
+	public void delOneFile(String absPath){
+		if(null!=absPath&&!"".equals(absPath)){
+			File delfile = new File(absPath);
+			if (delfile.exists()) {
+				delfile.delete();
+			}
+		}
+	}
 	/**
 	 * 判断上传文件类型
 	 * 

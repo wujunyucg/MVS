@@ -35,7 +35,7 @@ public class ModifyArrServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// type==1:delete,==2:modify,==3:export
+		// type==1:delete,==2:modify,==3:export,4:multi-del
 		String type = request.getParameter("deltype");
 
 		DBUtil db = new DBUtil();
@@ -88,6 +88,15 @@ public class ModifyArrServlet extends HttpServlet {
 				ex.export("班次表", headers, data, out);
 				out.flush();
 				out.close();
+			}else if(type.equals("4")){
+				PrintWriter pw = response.getWriter();
+				String[]ids = request.getParameter("multiDelIds").split(",");
+				System.out.println(ids.length);
+				int cnt = 0;
+				for(int i=0;i<ids.length;i++){
+					cnt+=adi.delArrById(con, Integer.parseInt(ids[i]));
+				}
+				pw.write(cnt+"");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.swjtu.impl.AdminDaoImpl;
+import edu.swjtu.impl.ArrangeDaoImpl;
 import edu.swjtu.impl.CarDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
 import edu.swjtu.model.Admin;
@@ -141,6 +142,28 @@ public class ManageCarServlet extends HttpServlet {
 				}
 			}
 			
+			int t1 = -1;
+			String t2 = null;
+			ArrayList<String> arrangeName = new ArrayList<String> (); 
+			for(int i=0;i<list.size();i++){
+				if(list.get(i).getArrangeId() == "-1"){
+					arrangeName.add(i, "未安排");
+				}else{
+					t1 = Integer.valueOf(list.get(i).getArrangeId()).intValue();
+					try {
+						t2 = new ArrangeDaoImpl().getArrNameById(t1, con);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if(t2 == "-1" || t2 == null){
+						arrangeName.add(i, "未安排");
+					}else{
+						arrangeName.add(i, t2);
+					}
+				}
+			}
+			
 			if( pageTotal%pageSize ==0){
 				request.getSession().setAttribute("allpage",(int) pageTotal/pageSize);
 			}
@@ -153,6 +176,7 @@ public class ManageCarServlet extends HttpServlet {
 			request.getSession().setAttribute("sea_condition",sea_condition);
 			request.getSession().setAttribute("page_index", Integer.valueOf(page_index).intValue());
 			
+			request.getSession().setAttribute("arrangeName",arrangeName);
 			request.getSession().setAttribute("list", list);
 	        request.getRequestDispatcher("../jsp_user/manage_car.jsp").forward(request, response);		
 		}
@@ -167,11 +191,36 @@ public class ManageCarServlet extends HttpServlet {
 			car.setLicense(request.getParameter("license"));
 			car.setArrangeId(request.getParameter("arrangeId"));
 			car.setDriver(request.getParameter("driver"));
-			car.setNumber(Integer.valueOf(request.getParameter("number")).intValue());
-			int u = new CarDaoImpl().updateCar(car, con);
+			Car v =  new CarDaoImpl().getCarByLicensePlate(request.getParameter("licensePlate"), con);
+			Car w = new CarDaoImpl().getCarByLicense(request.getParameter("license"), con);
+			String seat_num = null;
+			seat_num = request.getParameter("number");
+			int jud = 1;
+			try {  		
+	            Integer.parseInt(seat_num);  	            
+	        } catch (NumberFormatException e) {  
+	        	jud = 0;
+			}
 			try {
-				if(u!=0){
-					pw.write("yes");
+				if(jud==1&&v==null&&w==null
+						||v==null&&w!=null&&w.getCarId()==Integer.valueOf(request.getParameter("carId")).intValue()
+						||v!=null&&w==null&&v.getCarId()==Integer.valueOf(request.getParameter("carId")).intValue()
+						||v!=null&&w!=null&&w.getCarId()==Integer.valueOf(request.getParameter("carId")).intValue()
+						&&v.getCarId()==Integer.valueOf(request.getParameter("carId")).intValue()){
+					
+					try {  		
+						car.setNumber(Integer.valueOf(request.getParameter("number")).intValue());
+			        } catch (NumberFormatException e) {  
+			        	pw.write("no");
+			        	return;
+					}
+					
+					int u = new CarDaoImpl().updateCar(car, con);
+					if(u!=0){
+						pw.write("yes");
+					}else{
+						pw.write("no");
+					}
 				}else{
 					pw.write("no");
 				}

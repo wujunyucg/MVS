@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import edu.swjtu.dao.ArrangeDao;
 import edu.swjtu.model.Arrange;
+import edu.swjtu.model.Car;
 
 public class ArrangeDaoImpl implements ArrangeDao {
 
@@ -112,4 +113,45 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		return list;
 	}
 
+	@Override
+	public String getArrNameById(int arrId, Connection con) throws SQLException {
+		Arrange arr  = null;
+		String sql = "select * from arrange where arrange_id=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, arrId);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				arr = getOneArrange(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(arr == null){
+			return "-1";
+		}else{
+			return arr.getName();
+		}
+	}
+	
+	@Override
+	public int addArr(Arrange arr, Connection con) throws SQLException {
+		String sql = "insert into arrange (arrange_name,arrange_lineId,"
+				+ "arrange_carId,arrange_time,arrange_date) values (?,?,?,?, ?)";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			//pstm.setInt(1, arr.getArrangeId());
+			pstm.setString(1, arr.getName());
+			pstm.setInt(2, arr.getLineId());
+			pstm.setInt(3, arr.getCarId());
+			pstm.setString(4, arr.getTime());
+			pstm.setString(5, arr.getDate());
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
 }

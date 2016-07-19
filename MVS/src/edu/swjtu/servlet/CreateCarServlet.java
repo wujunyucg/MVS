@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -110,8 +111,23 @@ public class CreateCarServlet extends HttpServlet {
 					}
 				}
 			}
+		}else if(type.equals("3")){	//判断座位数是整型数据
+			String seat_num = null;
+			seat_num = request.getParameter("numb");
+			int jud = 1;
+			try {  		
+	            Integer.parseInt(seat_num);  	            
+	        } catch (NumberFormatException e) {  
+	        	jud = 0;
+			}
+			if(jud == 1){
+				pw.write("yes");		
+			}else{
+				pw.write("no");
+			}
+			System.out.println(seat_num + "|" + jud);
 		}
-
+		
 		
 		try {
 			db.closeCon(con);

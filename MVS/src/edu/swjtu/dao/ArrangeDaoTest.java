@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import edu.swjtu.impl.ArrangeDaoImpl;
+import edu.swjtu.model.Arrange;
 import edu.swjtu.util.DBUtil;
 
 public class ArrangeDaoTest {
@@ -84,5 +85,23 @@ public class ArrangeDaoTest {
 	public void testGetAllByMonth() throws ClassNotFoundException, SQLException{
 		System.out.println((new ArrangeDaoImpl().getAllMonthArr(new DBUtil()
 		.getCon(),"2015-05")).size());
+	}
+	/**
+	 * 测试增加
+	 * 2016年7月17日上午10:04:12
+	 * @author jimolonely
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void textAdd() throws ClassNotFoundException, SQLException{
+		Arrange arr = new Arrange();
+		arr.setArrangeId(100);
+		arr.setName("班次来了");
+		arr.setLineId(1);
+		arr.setCarId(2);
+		arr.setTime("2:00");
+		arr.setDate("2014-02-19");
+		System.out.println(new ArrangeDaoImpl().addArr(arr, new DBUtil().getCon()));
 	}
 }

@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="inf_hint" class="alert alert-info" role="alert">请填写下列车辆信息（以下可输入文本框皆为必填信息且包含日期信息，
 	其中行驶证指证芯编号；驾驶证指驾驶证的证号，即持证人身份证号）
 	</div>
-	<div id="inf_error" class="alert alert-danger" role="alert">您尚有未填写的数据信息   或   相应的车牌、行驶证车辆已存在</div>
+	<div id="inf_error" class="alert alert-danger" role="alert">您尚有未填写的数据信息   或   相应的车牌、行驶证车辆已存在  或  座位数不为整数</div>
 	
 	<!-- 第一个页面新建车辆数据 -->
 	<div id="create_car1"  style="float:left !important;width: 90%;">
@@ -60,11 +60,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<br/>
 		<div class="row">
-			<div class="col-lg-3"><div class="input-group">
+			<div class="col-lg-4"><div class="input-group">
 					<span class="input-group-addon" id="sizing-addon2">座位数</span>
 					<input type="text" id="numb" class="form-control" placeholder="请输入座位数" aria-describedby="sizing-addon2">
 					<span class="input-group-addon">个</span>
-			</div></div><div class="col-lg-6"></div>
+			</div></div>
+			<div class="col-lg-6">
+				<h6>
+					<div id="judgeNum"  class="label label-danger" role="alert" style="display:none;">请输入整数</div>
+				</h6>
+			</div>
 		</div><!-- row -->
 		<br/>
 		<div class="row">
@@ -143,14 +148,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div id="cre_page1" class="mypage">
 					<div class="modal-body">
 						<div class="alert alert-info" role="alert">下面是您创建的车辆信息，若核实无误，请点击-确认创建</div>
-						<div id="show_lic" class="alert alert-success" role="alert"></div>
-						<div id="show_bra" class="alert alert-success" role="alert"></div>
-						<div id="show_num" class="alert alert-success" role="alert"></div>
-						<div id="show_dri" class="alert alert-success" role="alert"></div>
-						<div id="show_lice" class="alert alert-success" role="alert"></div>
-						<div id="show_res" class="alert alert-success" role="alert"></div>
-						<div id="show_ins" class="alert alert-success" role="alert"></div>
-						<div id="show_driv" class="alert alert-success" role="alert"></div>
+						<ul class="list-group">
+								<li id="show_lic" class="list-group-item list-group-item-success"></li>
+								<li id="show_bra" class="list-group-item list-group-item-success"></li>
+								<li id="show_num" class="list-group-item list-group-item-success" role="alert"></li>
+ 						 		<li id="show_lice" class="list-group-item list-group-item-success" role="alert"></li>
+								<li id="show_driv" class="list-group-item list-group-item-success" role="alert"></li>
+								<li id="show_dri" class="list-group-item list-group-item-success" role="alert"></li>
+								<li id="show_res" class="list-group-item list-group-item-success" role="alert"></li>
+								<li id="show_ins" class="list-group-item list-group-item-success" role="alert"></li>
+						</ul>		
 					</div>
 					<div class="modal-footer">
 						<button id="btn_pre" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -191,6 +198,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		var judgepla = 1;
 		var judgelic = 1;
+		var judgenum = 1;
 
 		$('.dropdown-toggle').dropdown()
 		$('.form_date').datetimepicker({
@@ -233,19 +241,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				bran = $("#bran").val();
 				res_date = $("#res_date").val();
 				ins_date = $("#ins_date").val();
-				dri_lice = $("#dri_lice").val();
+				
 				lice = $("#lice").val();
 				numb = $("#numb").val();
 				
 				if(jud_driv == "1"){
 					driv = "未安排司机";
+					dri_lice = "0";
 				}else{
 					driv = $("#driv").val();
+					dri_lice = $("#dri_lice").val();
 				}
 				
-				if(judgepla==0||judgepla==0||lic_plat==""||bran==""||res_date==""||ins_date==""||dri_lice==""||lice==""||numb==""||driv==""){
+				if(judgenum==0||judgelic==0||judgepla==0||lic_plat==""||bran==""||res_date==""||ins_date==""||dri_lice==""||lice==""||numb==""||driv==""){
 					$("#createcar").attr("data-target","");
-					$("#inf_hint").hide();
 					$("#inf_error").show();
 				}else{
 					$("#inf_hint").show();
@@ -258,7 +267,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#show_bra").text("品牌：" + bran);
 					$("#show_res").text("注册日期：" + res_date);
 					$("#show_ins").text("保险日期：" + ins_date);
-					$("#show_dri").text("驾驶证：" + dri_lice);			
+					if(jud_driv == 1){
+						$("#show_dri").text("驾驶证：未安排司机，无驾驶证");			
+					}else{
+						$("#show_dri").text("驾驶证：" + dri_lice);			
+					}
+					
 					$("#show_lice").text("行驶证：" + lice);
 					$("#show_num").text("座位数：" + numb + " 个");
 					$("#show_driv").text("司机：" + driv);
@@ -266,7 +280,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 			
 			$("#sure_fin").click(function() {
-				if(judgepla==0||judgelic==0||lic_plat==""||bran==""||res_date==""||ins_date==""||dri_lice==""||lice==""||numb==""||driv==""){
+				if(judgenum==0||judgepla==0||judgelic==0||lic_plat==""||bran==""||res_date==""||ins_date==""||dri_lice==""||lice==""||numb==""||driv==""){
 				}else{
 				$.ajax({
 						url : "servlet/CreateCarServlet",
@@ -319,6 +333,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			});
 			
+			$("#numb").keyup(function() {
+				numb = $("#numb").val();
+				
+				if(numb != ""){
+					$.ajax({
+						url : "servlet/CreateCarServlet",
+						type : "POST",
+						data : {
+							type : "3",
+							numb : numb,
+						},
+						success : function(re) {
+							if (re == "yes") {
+								$("#judgeNum").hide();
+								judgenum = 1;
+							} else {
+								$("#judgeNum").show();
+								judgenum = 0;
+							}
+						}
+					});
+				}
+			});
+			
 			$("#lice").keyup(function() {
 				lice = $("#lice").val();
 				
@@ -351,7 +389,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		$("#sea_fin").click(function(){
 			$(".modal-backdrop").hide();
-			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition=0&sea_condition=0");
+			$("#load_modal").modal('show');//显示加载框
+			$("#content").load("<%=request.getContextPath()%>/servlet/ManageCarServlet?type=1&page_index=1&condition=1&sea_condition="+lic_plat);
 		});
 		
 	</script>      

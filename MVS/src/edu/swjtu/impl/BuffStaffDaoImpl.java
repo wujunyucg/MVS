@@ -20,6 +20,7 @@ public class BuffStaffDaoImpl implements BuffStaffDao {
 		bstaff.setName(rs.getString("staff_name"));
 		bstaff.setNumber(rs.getString("staff_number"));
 		bstaff.setBuffFlag(rs.getInt("staff_buffflag"));
+		bstaff.setId(rs.getInt("staff_id"));
 		return bstaff;
 	}
 	
@@ -68,6 +69,53 @@ public class BuffStaffDaoImpl implements BuffStaffDao {
 			e.printStackTrace();
 		}
 		return rs[0];
+	}
+	public ArrayList<BuffStaff> getBuffStaff(Connection con){
+		ArrayList<BuffStaff> staffList = new ArrayList<BuffStaff>();
+		String sql = "select * from buff_staff where staff_buffflag = 0";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				staffList.add(getStaffOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staffList;
+	}
+	
+	public int updateBuffStaff(BuffStaff bstaff, Connection con) {
+		// TODO Auto-generated method stub
+		String sql = "update  buff_staff set staff_buffflag = 1 where staff_id = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1,bstaff.getId());
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
+	
+	public BuffStaff getBuffStaffbyNumber(String number,Connection con){
+		BuffStaff bstaff = null;
+		String sql = "select * from buff_staff where staff_buffflag = 0 and staff_number = ?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, number);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				bstaff=getStaffOne(rs) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bstaff;
 	}
 
 }

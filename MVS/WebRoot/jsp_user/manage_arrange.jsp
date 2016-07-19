@@ -27,10 +27,17 @@
 <script type="text/javascript"
 	src="scripts/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="scripts/ajaxfileupload.js"></script>
+<style type="text/css">
+	.multi_bg{
+		background-color: #337ab7;
+	}
+</style>
 </head>
 <body>
 	<h2>排班数据维护</h2>
 	<div style="">
+		<button id="arr_btn_multi_del"disabled="disabled"
+		style="float:left;margin-right:10px;"type="button" class="btn btn-default">删除</button>
 		<div style="float:left;" class="input-group date form_date col-md-2"
 			data-date="" data-date-format="yyyy-mm">
 			<input id="arr_date" class="form-control" size="16" type="text"
@@ -38,22 +45,21 @@
 				class="input-group-addon"><span
 				class="glyphicon glyphicon-calendar"></span></span>
 		</div>
-		<button id="arr_show_by_month" type="button" class="btn btn-success">按月查看
+		<button id="arr_show_by_month" type="button" class="btn btn-primary">按月查看
 		</button>
-		<button id="arr_show_all" type="button" class="btn btn-success">全部班次
+		<button id="arr_show_all" type="button" class="btn btn-primary">全部班次
 		</button>
 		<form id="export_form" style="float:right;margin-right:20px;"
 			action="servlet/ModifyArrServlet?deltype=3" method="POST">
-			<button id="arr_export" type="button" class="btn btn-success">导出</button>
+			<button id="arr_export" type="button" class="btn btn-primary">导出</button>
 		</form>
 		<button id="arr_inport"type="button" style="float:right;margin-right:20px;"
-			class="btn btn-success">导入</button>
-		<button type="button" class="btn btn-default">删除</button>
+			class="btn btn-primary">导入</button>
 	</div>
 	<c:if test="${arr_data != null }">
 		<div>
 			<table class="table table-hover table-bordered"
-				style="width:98%;color:#000">
+				style="width:98%;color:#000;margin-top:10px;">
 				<thead>
 					<tr>
 						<th>#</th>
@@ -73,7 +79,7 @@
 							varStatus="status">
 							<tr>
 								<td class="arr_id" style="display:none;">${arr.getArrangeId()}</td>
-								<td><input type="checkbox" />${status.index}</td>
+								<td class="arr_multi_choose"></td>
 								<td class="can_change">${arr.getArrName()}</td>
 								<td class="can_change">${arr.getDate()}</td>
 								<td class="can_change">${arr.getTime()}</td>
@@ -148,7 +154,31 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-
+	<!-- 删除的提示模态框 -->
+	<div class="modal fade" id="modal_multi_del" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">删除班次</h3>
+				</div>
+				<div class="modal-body">
+					<h4 id="multi_del_info" style="color:red;">您将删除多条班次，仍继续吗？</h4>
+				</div>
+				<div class="modal-footer">
+					<button id="modal_multi_del_btn" type="button" class="btn btn-danger">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 	<!-- 导入文件的模态框 -->
 	<div class="modal fade" id="modal_upload" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -168,6 +198,7 @@
 					</form>-->
 					<input id="fileToUpload" type="file" size="45" name="fileToUpload"
 					class="input">
+					<b style="display:none;"id="upload_state">正在上传，请稍后...</b>
 				</div>
 				<div class="modal-footer">
 					<button id="arr_btn_upload" type="button" class="btn btn-primary">导入</button>
@@ -337,25 +368,103 @@
 		});
 		//导入模态框
 		$("#arr_inport").click(function(){
+			$("#fileToUpload").show();
+			$("#upload_state").hide();
 			$("#modal_upload").modal('show');
 		});
 		$("#arr_btn_upload").click(function(){
+			var filename = $("#fileToUpload").val();
+			var xls = filename.substr(filename.lastIndexOf('.')+1);
+			//alert(xls)
+			if(xls=="xls"||xls=="xlsx"){
+			$("#fileToUpload").hide();
+			$("#upload_state").text("正在上传，请稍后...");
+			$("#upload_state").show();
 			//$("#upload_form").submit();
 			$.ajaxFileUpload({
 			url : 'servlet/ManageArrangeServlet?type=3',
 			secureuri : false,
 			fileElementId : 'fileToUpload',
-			dataType : 'json',
+			dataType : 'text',
 			data : {type:"3"},
 			success : function(data) {
-				alert(data)
+				$("#modal_upload").modal('hide');
+				$("#modal_content").text("上传成功");
+				$("#msg_modal").modal('show');
 			},
 			error : function(data, status, e) {
 				$("#modal_upload").modal('hide');
-				$("#modal_content").text("解析成功");
+				$("#modal_content").text("上传失败");
 				$("#msg_modal").modal('show');
 			}
 			});
+			}else{
+				$("#upload_state").text("(请上传excel文件)");
+				$("#upload_state").show();
+			}
+		});
+		
+		//多选删除
+		$(".arr_multi_choose").click(function(){
+			$(this).toggleClass("multi_bg");
+			$("#arr_btn_multi_del").attr("disabled",true);
+			//遍历是否有选中的，没有则禁用删除
+			$(".arr_multi_choose").each(function(){
+				if($(this).hasClass("multi_bg")){
+					$("#arr_btn_multi_del").attr("disabled",false);
+				}
+			});
+		});
+		
+		var ids = "";
+		var cnt = 0;
+		$("#arr_btn_multi_del").click(function(){
+			ids = "";
+			cnt = 0;
+			$(".arr_multi_choose").each(function(){
+				var it = $(this);
+				if(it.hasClass("multi_bg")){
+					ids+=it.prev().text()+",";
+					cnt++;
+				}
+			});
+			ids = ids.substr(0, ids.length-1);
+			$("#multi_del_info").text("您将删除这"+cnt+"条班次，仍继续吗？");
+			$(this).attr("disabled",false);
+			$("#modal_multi_del").modal('show');
+		});
+		//确定删除
+		var multi_turn = true;
+		$("#modal_multi_del_btn").click(function(){
+		if(multi_turn){
+			$("#multi_del_info").text("正在删除，请稍后...");
+			$(this).attr("disabled",true);
+			//下面是异步删除
+			$.ajax({
+				url:"servlet/ModifyArrServlet",
+				type:"POST",
+				data:{deltype:"4",multiDelIds:ids},
+				success:function(re){
+					$("#multi_del_info").text("预计删除"+cnt+"条信息,共删除了"+re+"条信息");
+					$("#modal_multi_del_btn").text("确定并刷新");
+					$("#modal_multi_del_btn").attr("disabled",false);
+					multi_turn = false;
+				},
+				error:function(){
+					$("#multi_del_info").text("内部错误，删除失败");
+					
+				}
+			});
+		}else{
+			$("#modal_multi_del").modal('hide');
+			$(".modal-backdrop").hide();
+			var date = $("#arr_date").val();
+				$("#load_modal").modal('show');//显示加载框
+				$("#content").load("<%=path%>/servlet/ManageArrangeServlet?arrStartPage=${arrStartPage}"
+										+ "&type=" + ${arr_type} + "&date="
+										+ date);
+			multi_turn = true;
+		}
 		});
 		$("#load_modal").modal('hide');//隐藏加载框
 	</script>

@@ -12,4 +12,15 @@ public class LineDaoTest {
 	public void testGetById() throws ClassNotFoundException, SQLException{
 		System.out.println(new LineDaoImpl().getLineById(new DBUtil().getCon(), 1).getName());
 	}
+	/**
+	 * 测试根据名称查找
+	 * 2016年7月17日上午10:19:48
+	 * @author jimolonely
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void testGetByName() throws ClassNotFoundException, SQLException{
+		System.out.println(new LineDaoImpl().getLineByName(new DBUtil().getCon(), "+").getLineId());
+	}
 }
