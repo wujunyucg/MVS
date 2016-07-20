@@ -22,6 +22,8 @@ public class StaffDaoImpl implements StaffDao {
 		staff.setNumber(rs.getString("staff_number"));
 		staff.setSiteId(rs.getInt("staff_siteId"));
 		staff.setStaffId(rs.getInt("staff_id"));
+		staff.setLati(rs.getDouble("staff_lati"));
+		staff.setLongti(rs.getDouble("staff_longti"));
 		return staff;
 	}
 	
@@ -36,11 +38,13 @@ public class StaffDaoImpl implements StaffDao {
 		ps.setString(7,staff.getAddress());
 		ps.setInt(8,staff.getLineId());
 		ps.setInt(9,staff.getSiteId());
+		ps.setDouble(10,staff.getLati());
+		ps.setDouble(11,staff.getLongti());
 	}
 	@Override
 	public int addOneStaff(Staff staff, Connection con) {
 		// TODO Auto-generated method stub
-		String sql = "insert into staff (staff_id,staff_name,staff_number,staff_department,staff_group,staff_arrangeId,staff_address,staff_lineId,staff_siteId) values (? , ?,?,?,?,?,?,?,?)";
+		String sql = "insert into staff (staff_id,staff_name,staff_number,staff_department,staff_group,staff_arrangeId,staff_address,staff_lineId,staff_siteId,staff_lati,staff_longti) values (? , ?,?,?,?,?,?,?,?,?,?)";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -57,7 +61,7 @@ public class StaffDaoImpl implements StaffDao {
 	public int addListStaff(ArrayList<Staff> staffList, Connection con) {
 		// TODO Auto-generated method stub
 		Staff staff = new Staff();
-		String sql = "insert into staff (staff_id,staff_name,staff_number,staff_department,staff_group,staff_arrangeId,staff_address,staff_lineId,staff_siteId) values (? , ?,?,?,?,?,?,?,?)";
+		String sql = "insert into staff (staff_id,staff_name,staff_number,staff_department,staff_group,staff_arrangeId,staff_address,staff_lineId,staff_siteId,staff_lati,staff_longti) values (? , ?,?,?,?,?,?,?,?,?,?)";
 		int [] rs = null;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -112,12 +116,12 @@ public class StaffDaoImpl implements StaffDao {
 	@Override
 	public int updateStaff(Staff staff, Connection con) {
 		// TODO Auto-generated method stub
-		String sql = "update  staff set staff_id = ?,staff_name = ?,staff_number = ?,staff_department = ?,staff_group = ?,staff_arrangeId = ?,staff_address = ?,staff_lineId = ?,staff_siteId = ? where staff_id = ?";
+		String sql = "update  staff set staff_id = ?,staff_name = ?,staff_number = ?,staff_department = ?,staff_group = ?,staff_arrangeId = ?,staff_address = ?,staff_lineId = ?,staff_siteId = ?,staff_lati=?,staff_longti=? where staff_id = ?";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			getPreSta(pstm, staff);
-			pstm.setInt(10, staff.getStaffId());
+			pstm.setInt(12, staff.getStaffId());
 			rs = pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -126,6 +130,27 @@ public class StaffDaoImpl implements StaffDao {
 		return rs;
 	}
 
+	@Override
+	public int updateListStaff(ArrayList<Staff> staffList, Connection con) {
+		// TODO Auto-generated method stub
+		String sql = "update  staff set staff_id = ?,staff_name = ?,staff_number = ?,staff_department = ?,staff_group = ?,staff_arrangeId = ?,staff_address = ?,staff_lineId = ?,staff_siteId = ?,staff_lati=?,staff_longti=? where staff_id = ?";
+		int[] rs;
+		Staff staff;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			for(int i = 0; i<staffList.size(); i++){
+				staff = staffList.get(i);
+				getPreSta(pstm,staff);
+				pstm.setInt(12, staff.getStaffId());
+				pstm.addBatch();
+			}
+			rs = pstm.executeBatch();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs[0];
+	}
 	@Override
 	public Staff getStaffByStaffId(int staffId, Connection con) {
 		// TODO Auto-generated method stub
@@ -269,7 +294,7 @@ public class StaffDaoImpl implements StaffDao {
 			pstm.setInt(1, siteId);
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()){
-				staffList.add(getStaffOne(rs)) ;
+				staffList.add(getStaffOne(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -359,6 +384,22 @@ public class StaffDaoImpl implements StaffDao {
 			pstm.setInt(1, str2);
 			pstm.setInt(2, (startPage-1)*pageNum);
 			pstm.setInt(3, pageNum);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				staffList.add(getStaffOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staffList;
+	}
+	
+	public ArrayList<Staff> getAllStaff(Connection con) {
+		ArrayList<Staff> staffList = new ArrayList<Staff>();
+		String sql = "select * from staff  ";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()){
 				staffList.add(getStaffOne(rs)) ;

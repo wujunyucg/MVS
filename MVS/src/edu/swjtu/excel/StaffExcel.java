@@ -65,7 +65,7 @@ public class StaffExcel {
 				continue;// 第一行是标题
 			}
 			Staff staff = new Staff();
-			for(int i=0;i<5;i++){
+			for(int i=0;i<7;i++){
 				if(r.getCell(i) == null)
 					return null;
 				r.getCell(i).setCellType(Cell.CELL_TYPE_STRING);
@@ -77,6 +77,8 @@ public class StaffExcel {
 				case 2: staff.setDepartment(cellValue);break;
 				case 3: staff.setGroup(cellValue);break;
 				case 4: staff.setAddress(cellValue);break;
+				case 5: staff.setLati(Double.parseDouble(cellValue));break;
+				case 6: staff.setLongti(Double.parseDouble(cellValue));break;
 				}
 			}
 			data.add(staff);

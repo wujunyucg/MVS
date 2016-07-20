@@ -50,7 +50,7 @@ public class ManageStaffServlet extends HttpServlet {
 					Connection con = db.getCon();
 					StaffDaoImpl sdi = new StaffDaoImpl();
 					int allNum = sdi.getStaffNum(con);
-					int staffNum = 2;
+					int staffNum = 10;
 					ArrayList<Staff> staffList = sdi.getStaffByPage(staffPage, staffNum, con);
 					int pageAll = (int) Math.ceil((double)allNum/(double)staffNum);
 					request.getSession().setAttribute("staff_begin_page",( Math.ceil((double)staffPage/5.0)-1)*5+1);
@@ -62,7 +62,8 @@ public class ManageStaffServlet extends HttpServlet {
 					request.getSession().removeAttribute("staff_search_contnet");
 					//System.out.println(staffList.get(0).getAddress());
 					db.closeCon(con);
-					response.sendRedirect("../jsp_user/maintenance_staff.jsp");
+					request.getRequestDispatcher("../jsp_user/maintenance_staff.jsp").forward(request,response);
+				
 				} catch (ClassNotFoundException e) {
 					
 					e.printStackTrace();
@@ -107,7 +108,7 @@ public class ManageStaffServlet extends HttpServlet {
 				request.getSession().setAttribute("staff_list", staffList);
 				//System.out.println(staffList.get(0).getAddress());
 				db.closeCon(con);
-				response.sendRedirect("../jsp_user/maintenance_staff.jsp");
+				request.getRequestDispatcher("../jsp_user/maintenance_staff.jsp").forward(request,response);
 			} catch (ClassNotFoundException e) {
 				
 				e.printStackTrace();

@@ -13,10 +13,17 @@ public class Site {
 	private int lineId;
 	private int order;
 	private int delay;
-	private String latitude;
-	private String longitude;
+	private double latitude;
+	private double longitude;
 	private String address;
 	private String name;
+	private int bufftag;
+	public int getBufftag() {
+		return bufftag;
+	}
+	public void setBufftag(int bufftag) {
+		this.bufftag = bufftag;
+	}
 	public int getSiteId() {
 		return siteId;
 	}
@@ -47,16 +54,16 @@ public class Site {
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
+	public void setLatitude(double d) {
+		this.latitude = d;
 	}
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getAddress() {

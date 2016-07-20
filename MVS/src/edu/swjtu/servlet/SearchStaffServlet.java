@@ -70,7 +70,8 @@ public class SearchStaffServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		}
-		response.sendRedirect("../jsp_user/maintenance_staff.jsp");
+		request.getRequestDispatcher("../jsp_user/maintenance_staff.jsp").forward(request,response);
+		
 	}
 
 }
