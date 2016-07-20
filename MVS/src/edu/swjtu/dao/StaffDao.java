@@ -175,4 +175,5 @@ public interface StaffDao {
 	 * @return
 	 */
 	public Staff getLastStaff(Connection con);
+	int updateListStaff(ArrayList<Staff> staffList, Connection con);
 }

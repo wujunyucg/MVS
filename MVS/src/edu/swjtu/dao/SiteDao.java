@@ -93,4 +93,5 @@ public interface SiteDao {
 	 * @return
 	 */
 	public ArrayList<Site> getSiteByLineId(int lineId,Connection con);
+	ArrayList<Site> getAllSite(Connection con);
 }

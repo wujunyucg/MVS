@@ -61,7 +61,8 @@ public class ManageUserServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		}
-		response.sendRedirect("../jsp_admin/manage_user.jsp");
+		request.getRequestDispatcher("../jsp_admin/manage_user.jsp").forward(request,response);
+		
 	}
 
 }

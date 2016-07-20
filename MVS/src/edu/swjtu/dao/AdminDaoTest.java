@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.mail.internet.NewsAddress;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,11 +30,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import edu.swjtu.impl.AdminDaoImpl;
+import edu.swjtu.impl.SiteDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
+import edu.swjtu.model.Site;
 import edu.swjtu.model.Staff;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
+import edu.swjtu.util.KMeans;
 
 
 
@@ -42,43 +46,63 @@ public class AdminDaoTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test() throws ClassNotFoundException, SQLException, SAXException, IOException, ParserConfigurationException {
-		DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-        dbf.setIgnoringElementContentWhitespace(true);
-        try {
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(xmlPath); // 使用dom解析xml文件
-            NodeList sonlist = doc.getElementsByTagName("cron"); 
-            int flag = 0;
-            Element son = null;
-            for (int i = 0; i < sonlist.getLength(); i++) // 循环处理对象
-            {
-                son = (Element)sonlist.item(i);;
-                
-                for (Node node = son.getFirstChild(); node != null; node = node.getNextSibling()){  
-                    if (node.getNodeType() == Node.ELEMENT_NODE ){  
-                        String name = node.getNodeName();  
-                        String value = node.getFirstChild().getNodeValue();
-                        if(name.equals("name") && value.equals("triger1"))
-                        {
-                        	flag = 1;
-                        	break;
-                        }
-                    }  
-                }  
-               if(flag == 1)
-            	   break;
-            }
-            if(flag==1){
-            	son.getElementsByTagName("cron-expression").item(0).setTextContent("0 52 20 * * ?");
-            	TransformerFactory factory = TransformerFactory.newInstance();
-                Transformer former = factory.newTransformer();
-                former.transform(new DOMSource(doc), new StreamResult(new File(xmlPath)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
+		DBUtil db = new DBUtil();
+		Connection con = db.getCon();
+		ArrayList<Staff> staffList = new ArrayList<Staff>();
+		StaffDaoImpl sdi = new StaffDaoImpl();
+		staffList = sdi.getAllStaff(new DBUtil().getCon());
+		KMeans km = new KMeans(0);
+		for(int i=70;;i++){
+			km.setK(i);
+			km.setDataSet(staffList);
+			km.execute();
+			ArrayList<ArrayList<Staff>> cluster = km.getCluster();
+			ArrayList<double[]> center = km.getCenter();
+			int f=0;
+			for(int j =0;j<cluster.size();j++){
+				for(int k=0;k<cluster.get(j).size();k++){
+					if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>3.0)
+						f=1;
+				}
+			}
+			if(f==1 )
+				continue;
+			for(int j =0;j<cluster.size();j++){
+				if(cluster.get(j).size()==0){
+					cluster.remove(j);
+					center.remove(j);
+				}
+			}
+			ArrayList<Site> siteList = new ArrayList<Site>();
+			for(int j =0;j<center.size();j++){
+				Site site = new Site();
+				site.setLatitude(center.get(j)[0]);
+				site.setLongitude(center.get(j)[1]);
+				site.setBufftag(j);
+				site.setAddress("chen");
+				site.setName("123");
+				siteList.add(site);
+			}
+			SiteDaoImpl sdi1 = new SiteDaoImpl();
+			sdi1.addListSite(siteList, con);
+			siteList = sdi1.getAllSite(con);
+			for(Site site:siteList){
+				staffList.clear();
+				for(int j=0;j<cluster.get(site.getBufftag()).size();j++){					
+					Staff staff =new Staff();
+					staff = cluster.get(site.getBufftag()).get(j);
+					staff.setSiteId(site.getSiteId());
+					staffList.add(staff);
+				}
+				sdi.updateListStaff(staffList, con);
+			}
+		//	for(int j=0;j<cluster.size();j++)
+		//	{
+				//km.printDataArray(cluster.get(i), "cluster["+i+"]");
+		//	}
+			System.out.print(cluster.size());
+			break;
+		}
 	}
 	
 	/**
