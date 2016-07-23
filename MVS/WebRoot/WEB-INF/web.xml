@@ -217,8 +217,17 @@
     <servlet-class>edu.swjtu.servlet.QuartzApplicServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+    <servlet-name>CreateArrServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.CreateArrServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>QuartzApplicServlet</servlet-name>
     <url-pattern>/QuartzApplicServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CreateArrServlet</servlet-name>
+    <url-pattern>/servlet/CreateArrServlet</url-pattern>
   </servlet-mapping>
 </web-app>
