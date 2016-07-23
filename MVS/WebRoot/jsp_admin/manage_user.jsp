@@ -20,6 +20,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
 	 <style>
 	 .td1{width:100px;}
+	 table td{ text-align:center}
+	 table th{ align:center}
 	 </style>
 
 <script type="text/javascript" language="javascript">
@@ -283,17 +285,18 @@ function checkall(){
 
     <h1>管理用户</h1>
      <c:if test="${user_list != null }">
-    <div style="text-align: center;margin-right: auto;margin-left: auto;"> 
-    <table id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:98%;margin-right: auto;margin-left: auto;color:#000">
+     <button type="button" class="btn btn-danger" id="deleteall" onclick="javascript:deleteall();" data-toggle="modal"  data-target="#myModal" style="float:left">删除</button>
+    <div > 
+    <table id ="usertab" class="table table-hover table-bordered" style=" width:98%;color:#000">
 	  <thead>
-	    <tr>
-	   	  <th><input name="" type="checkbox" id ="checkall" value="" onclick="javascript:checkall();"/>全选\不选</th>
-	      <th>#</th>
-	      <th>管理员账号</th>
-	      <th>管理员角色</th>
-	      <th>查看详情</th>
-	      <th>修改</th>
-	      <th>删除</th>
+	    <tr >
+	   	  <th style="width:10%"><input name="" type="checkbox" id ="checkall" value="" onclick="javascript:checkall();"/>全选\不选</th>
+	      <th style="width:8%">#</th>
+	      <th style="width:25%">管理员账号</th>
+	      <th style="width:25%">管理员角色</th>
+	      <th style="width:10%">查看详情</th>
+	      <th style="width:10%">修改</th>
+	      <th style="width:10%">删除</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -315,8 +318,8 @@ function checkall(){
 	    </tr>
 	  </tbody>
 	</table>
-	<button type="button" class="btn btn-danger" id="deleteall" onclick="javascript:deleteall();" data-toggle="modal"  data-target="#myModal" style="float:left">删除</button>
-	<nav>
+	<div >
+	<nav style="float:left">
   <ul class="pagination">
     <li class="disabled" id= "pre_li">
       <a   aria-label="Previous" id= "pre_li_a" onclick="">
@@ -351,6 +354,7 @@ function checkall(){
      </c:if>
   </ul>
 </nav>
+</div>
     </div>
     </c:if>
     

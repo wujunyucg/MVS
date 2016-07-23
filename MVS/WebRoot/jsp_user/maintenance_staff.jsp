@@ -26,9 +26,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body onload="searchcontent()">
-  <div style="height: 60px;font-size:25px">
+  <div style="font-size:25px">
   <!-- Nav tabs -->
-  <ul class="nav  nav-pills" role="tablist" style="height: 60px;font-size:25px">  
+  <ul class="nav  nav-pills" role="tablist" style="height: 40px;font-size:25px">  
   
     <li role="presentation" class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <hr style="height:3px;border:none;border-top:3px double blue;" />
   <h1>员工维护</h1>
   <div style="text-align: center;margin-right: auto;margin-left: auto;">
-   
+   	<button type="button" class="btn btn-danger" id="deleteall" onclick="javascript:deleteall();" data-toggle="modal"  data-target="#w-modal" style="float:left">删除</button>
   <div class="form-inline" >
   
   <div class="form-group">
@@ -117,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </c:forEach>
 	  </tbody>
 	</table>
-	<button type="button" class="btn btn-danger" id="deleteall" onclick="javascript:deleteall();" data-toggle="modal"  data-target="#w-modal" style="float:left">删除</button>
+
 <span>共${staff_page_all}页</span>
 	<nav>
   <ul class="pagination">
