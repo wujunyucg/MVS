@@ -67,6 +67,8 @@
 </style>
 </head>
 
+
+
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header">
