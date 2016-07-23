@@ -17,7 +17,7 @@ public class LineDaoImpl implements LineDao{
 		line.setCarId(rs.getInt("line_carId"));
 		line.setName(rs.getString("line_name"));
 		line.setNum(rs.getInt("line_num"));
-		line.setSiteId(rs.getInt("line_siteId"));
+		line.setSiteId(rs.getString("line_siteId"));
 		return line;
 	}
 	@Override
