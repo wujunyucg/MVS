@@ -9,7 +9,7 @@ package edu.swjtu.model;
 public class Line {
 	private int lineId;
 	private int num;
-	private int siteId;
+	private String siteId;
 	private int carId;
 	private String name;
 	public int getLineId() {
@@ -24,10 +24,10 @@ public class Line {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public int getSiteId() {
+	public String getSiteId() {
 		return siteId;
 	}
-	public void setSiteId(int siteId) {
+	public void setSiteId(String siteId) {
 		this.siteId = siteId;
 	}
 	public int getCarId() {
