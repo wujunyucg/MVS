@@ -10,7 +10,7 @@ public class DBUtil {
 	private String password = "mysqlroot";
 	private String jdbcName = "com.mysql.jdbc.Driver";*/
 	private String url = "jdbc:mysql://localhost:3306/car_factory?useSSL=false";
-	//private String url = "jdbc:mysql://192.168.1.136:3306/car_factory?useSSL=false";
+	//private String url = "jdbc:mysql://192.168.1.111:3306/car_factory?useSSL=false";
 	private String username = "root";
 	private String password = "root";
 	private String jdbcName = "com.mysql.jdbc.Driver";
@@ -30,7 +30,7 @@ public class DBUtil {
 	
 	/**
 	 * 关闭连接
-	 * 2016��6��5������2:06:39
+	 * 2016 6 5 2:06:39
 	 * @author jimolonely
 	 * @param con
 	 * @throws SQLException

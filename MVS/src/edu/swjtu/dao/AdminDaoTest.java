@@ -52,7 +52,7 @@ public class AdminDaoTest {
 		StaffDaoImpl sdi = new StaffDaoImpl();
 		staffList = sdi.getAllStaff(new DBUtil().getCon());
 		KMeans km = new KMeans(0);
-		for(int i=70;;i++){
+		for(int i=1;;i++){
 			km.setK(i);
 			km.setDataSet(staffList);
 			km.execute();
@@ -61,7 +61,7 @@ public class AdminDaoTest {
 			int f=0;
 			for(int j =0;j<cluster.size();j++){
 				for(int k=0;k<cluster.get(j).size();k++){
-					if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>3.0)
+					if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>1.0)
 						f=1;
 				}
 			}
@@ -81,6 +81,7 @@ public class AdminDaoTest {
 				site.setBufftag(j);
 				site.setAddress("chen");
 				site.setName("123");
+				site.setPeoNum(cluster.get(j).size());
 				siteList.add(site);
 			}
 			SiteDaoImpl sdi1 = new SiteDaoImpl();

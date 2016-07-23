@@ -4,17 +4,19 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import edu.swjtu.util.DBUtil;
+
 /**
- * ¶Ôutil°üÏÂµÄ·½·¨½øĞĞJUnit²âÊÔ
- * 2016Äê6ÔÂ3ÈÕÏÂÎç12:50:54
+ * æ•°æ®åº“
+ * 2016.6.3 12:50:54
  * @author jimolonely
  * TODO
  */
 public class UtilTest {
      
 	/**
-	 * ²âÊÔÊı¾İ¿âÁ¬½Ó
-	 * 2016Äê6ÔÂ5ÈÕÏÂÎç2:13:26
+	 * è¿æ¥
+	 * 2016 6 5 2:13:26
 	 * @author jimolonely
 	 */
 	@Test

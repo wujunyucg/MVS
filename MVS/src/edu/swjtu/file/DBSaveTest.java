@@ -15,9 +15,4 @@ public class DBSaveTest {
 		db.setProValue("lastIxTime", "first");
 		System.out.println(db.getProValue("lastIxTime"));
 	}
-	
-	@Test
-	public void testCheck() throws Exception{
-		System.out.println(CheckSoftwore.check());
-	}
 }
