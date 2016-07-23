@@ -6,7 +6,7 @@
 			keyboardEnable:true,
 			resizeEnable: true
 		});
-		 map.plugin('AMap.Geolocation', function() {
+		/* map.plugin('AMap.Geolocation', function() {
 		        geolocation = new AMap.Geolocation({
 		            enableHighAccuracy: true,//是否使用高精度定位，默认:true
 		            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
@@ -26,9 +26,10 @@
 		    //解析定位错误信息
 		    function onError(data) {
 		        //alert("error");
-		    }
+		    }*/
 		//map.setCity('成都市');
 		//map.setZoom(18);
+		
 		map.plugin(["AMap.MapType"],function(){
 			//地图类型切换
 			var type= new AMap.MapType({
@@ -233,14 +234,14 @@
 					}, 1);
 					console.log("OK-----右键点击"+ss);
 					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2);
-					contextMenu.addItem("查看路线", function() {
+					/*@contextMenu.addItem("查看路线", function() {
 						var path = [];
 						for(var i=0;i<markers.length;i++){
 							console.log(markers[i]);
 								path.push(markers[i].getPosition());
 							} 		
 						Dragroute(path);
-					}, 3);
+					}, 3);*/
 					contextMenu.open(map, marker.getPosition());
 					contextMenuPositon = marker.getPosition();
 				
@@ -307,13 +308,23 @@
 		driving.search(lngLat1,lngLat2);
 	}
 	//关键字搜索,name:关键字
-	//placeSearch('医院');
-	function ps(name){
+	//place_search('医院');
+	/*
+	var testps=[{name:'西北桥边街1号',
+				 lng:[0,0]},
+				 {name:'一环路北三段92号',
+				  lng:[0,0]}];
+	for(var i=0;i<testps.length;i++){
+		//place_search(testps);
+	}
+	//var ps_index=0;*/
+	function place_search(name){
+		//var name=place.name;
 		var satation_search=new AMap.PlaceSearch({
 			keywords :name, //搜索关键字为“超市”的poi
 			city:'成都',
 			citylimit:true,
-			pageSize:40,
+			pageSize:1,
 			//panel:'panel'
 		});
 		satation_search.search(name,function(status,result){
@@ -322,10 +333,10 @@
 			for(var i=0;i<result.poiList.pois.length;i++){
 				console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
 			}
-			//$('#panel').css('margin-left','200px');
+			//rr=
+			//testps[ps_index].lng=result.poiList.pois[0].location;
+			//ps_index++;
 		});
+		//console.log(place_lng);
 	}
-	
-	
-	//ps('学校');
-	//placeSearch('医院');
+	//console.log(place_lng);

@@ -26,7 +26,7 @@
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
 <script type="text/javascript" src="scripts/j-scripts/j-theme.js"></script>
-
+<!-- map- -->
 <link rel="stylesheet"
 	href="http://cache.amap.com/lbs/static/main1119.css" />
 <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
@@ -163,6 +163,7 @@
 		<div id="content">
 			<div id='container' style="margin-left:255px;margin-top:50px;width:80%"></div>
 			
+			--------
 			<div id="info">
 				<h1>
 					<h1>
@@ -290,6 +291,7 @@
 	<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
+	<script type="text/javascript" src="js/testroute.js"></script>
 	<script type="text/javascript">
 		//调节地图大小
 		var turn = false;

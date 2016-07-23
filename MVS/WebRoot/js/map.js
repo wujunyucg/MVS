@@ -85,9 +85,13 @@ function EditSatation(data){
 }
  
 
-map.on('click', function(e) {$("#satation-search input").attr("value","输入关键字进行查询");});
-$("#satation-search input").bind("click",function(){
-	$("#satation-search input").attr("value","");	
+map.on('click', function(e) {
+	console.log(e);
+	//console.log(testps[0].lng+testps[1].lng);
+	$("#satation-search input").attr("value","输入关键字进行查询");});
+	$("#satation-search input").bind("click",function(){
+	$("#satation-search input").attr("value","");
+	
 });
 
 function addsatation(){
@@ -334,5 +338,6 @@ $('#manager-satation-btn').bind('click',function (){
 	//$('#satation-search input').unbind('input oninput');
 	map.clearMap();
 });
-ps('中同仁路5号');
+place_search('一环路北三段92号');
+place_search('西北桥边街1号');
 
