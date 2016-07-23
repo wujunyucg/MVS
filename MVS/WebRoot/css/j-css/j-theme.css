@@ -18,8 +18,9 @@
 	min-width: 800px;
 }
 #j-left-menu{
+	position:fixed;
 	width: 250px;
-	min-height: 600px;
+	min-height: 900px;
 	min-width:50px;
 	background-color: #ececec;
 	float:left;

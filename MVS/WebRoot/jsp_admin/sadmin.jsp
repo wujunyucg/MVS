@@ -62,7 +62,7 @@ $.ajaxSetup ({
 		</div>
 	</nav>
 
-	<div id="main">
+	
 		<div id="left-menu">
 			<div class="list-group">
 				<button type="button"
@@ -110,6 +110,7 @@ $.ajaxSetup ({
 				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
 			</div>
 		</div>
+	<div id="main">
 		<div id="content">content</div>
 	</div>
 
