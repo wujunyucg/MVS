@@ -16,6 +16,7 @@ import edu.swjtu.impl.ArrangeDaoImpl;
 import edu.swjtu.impl.CarDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
 import edu.swjtu.model.Admin;
+import edu.swjtu.model.Arranges;
 import edu.swjtu.model.Car;
 import edu.swjtu.model.Powers;
 import edu.swjtu.model.User;
@@ -142,25 +143,19 @@ public class ManageCarServlet extends HttpServlet {
 				}
 			}
 			
-			int t1 = -1;
 			String t2 = null;
 			ArrayList<String> arrangeName = new ArrayList<String> (); 
 			for(int i=0;i<list.size();i++){
 				if(list.get(i).getArrangeId() == "-1"){
-					arrangeName.add(i, "未安排");
+					arrangeName.add(i, "未安排排班");
 				}else{
-					t1 = Integer.valueOf(list.get(i).getArrangeId()).intValue();
 					try {
-						t2 = new ArrangeDaoImpl().getArrNameById(t1, con);
+						t2 = new Arranges().getAllArrangeName(list.get(i).getArrangeId(), con);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if(t2 == "-1" || t2 == null){
-						arrangeName.add(i, "未安排");
-					}else{
-						arrangeName.add(i, t2);
-					}
+					arrangeName.add(i, t2);
 				}
 			}
 			
