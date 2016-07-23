@@ -2,6 +2,7 @@ package edu.swjtu.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import edu.swjtu.model.Line;
 
@@ -25,4 +26,13 @@ public interface LineDao {
 	 * @throws SQLException
 	 */
 	public Line getLineByName(Connection con,String name) throws SQLException;
+	/**
+	 * 得到所有线路
+	 * 2016年7月23日下午8:45:48
+	 * @author jimolonely
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Line> getAllLine(Connection con) throws SQLException;
 }

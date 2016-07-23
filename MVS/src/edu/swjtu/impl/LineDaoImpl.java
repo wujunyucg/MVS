@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import edu.swjtu.dao.LineDao;
 import edu.swjtu.model.Car;
@@ -48,6 +49,22 @@ public class LineDaoImpl implements LineDao{
 			return null;
 		}
 		return line;
+	}
+	@Override
+	public ArrayList<Line> getAllLine(Connection con) throws SQLException {
+		ArrayList<Line> list = new ArrayList<Line>();
+		String sql = "select * from line";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				list.add(getOneLine(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
 	}
 
 }
