@@ -146,7 +146,7 @@ public class ManageCarServlet extends HttpServlet {
 			String t2 = null;
 			ArrayList<String> arrangeName = new ArrayList<String> (); 
 			for(int i=0;i<list.size();i++){
-				if(list.get(i).getArrangeId() == "-1"){
+				if(list.get(i).getArrangeId() == "-1"||list.get(i).getArrangeId().equals("-1")){
 					arrangeName.add(i, "未安排排班");
 				}else{
 					try {

@@ -30,7 +30,7 @@ public class Arranges {
 		
 		String names = "";
 		if(arr_ids.equals("-1")){
-			return arr_ids;
+			return "未安排排班";
 		}else{
 			String[]ss = arr_ids.split(",");
 			for(int i=0;i<ss.length;i++){

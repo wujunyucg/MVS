@@ -31,7 +31,7 @@ public class ArrangesTest {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println(new Arranges().getAllArrangeName("1,3",con));
+		System.out.println(new Arranges().getAllArrangeName("-1",con));
 		
 		try {
 			db.closeCon(con);
