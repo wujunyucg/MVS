@@ -220,6 +220,7 @@
 				//地图绑定鼠标右击事件——弹出右键菜单
 				
 		}
+		 
 		function setListener(marker,data){
 				var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
