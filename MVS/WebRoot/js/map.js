@@ -338,6 +338,4 @@ $('#manager-satation-btn').bind('click',function (){
 	//$('#satation-search input').unbind('input oninput');
 	map.clearMap();
 });
-place_search('一环路北三段92号');
-place_search('西北桥边街1号');
 

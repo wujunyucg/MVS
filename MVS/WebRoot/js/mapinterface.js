@@ -102,7 +102,7 @@ function setAsatation(name){
 	place_search(name);
 	
 }
-/*显示路线
+/*显示路线*/
 var pp=[{
 	siteId:0,
 	peoNum:0,
@@ -149,18 +149,22 @@ var pp=[{
 ];
 
 //显示所有线路
-showroute(pp);*/
+showroute(pp);
 function showroute(paths){
 	console.log("enter route-----");
 	var path=[];
+//	showAllsatationinfo(paths);
 	for(var i=0;i<paths.length;i++){
 		path.push([paths[i].longitude,paths[i].latitude]);
+		if(i>0&&i<paths.length-1){
+			satationsmarker(paths[i]);
+		}
 		console.log(path[0]+paths[i].longitude+paths[i].latitude);
 	}
 	map.plugin("AMap.DragRoute",function(){
 		route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
 				midMarkerOptions:{
-					//visible :false,	
+					visible :false,	
 				},
 				startMarkerOptions:{
 					//visible :false,	
