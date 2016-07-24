@@ -99,4 +99,14 @@ public interface ArrangeDao {
 	 * @throws SQLException
 	 */
 	public int addArr(Arrange arr,Connection con) throws SQLException;
+	/**
+	 * 取得某日的所有班次
+	 * 2016年7月24日上午11:03:00
+	 * @author jimolonely
+	 * @param con
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Arrange> getAllArrByDate(Connection con,String date) throws SQLException;
 }

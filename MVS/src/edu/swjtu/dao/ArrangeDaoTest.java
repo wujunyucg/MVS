@@ -104,4 +104,16 @@ public class ArrangeDaoTest {
 		arr.setDate("2014-02-19");
 		System.out.println(new ArrangeDaoImpl().addArr(arr, new DBUtil().getCon()));
 	}
+	/**
+	 * 测试取得某日的所有
+	 * 2016年7月24日上午11:05:41
+	 * @author jimolonely
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testGetAllByDate() throws ClassNotFoundException, SQLException{
+		System.out.println((new ArrangeDaoImpl().getAllArrByDate(new DBUtil()
+		.getCon(),"2014-02-19")).size());
+	}
 }
