@@ -179,7 +179,8 @@
 				  position: data.lng,
 				  title: data.name,	  
 				  raiseOnDrag:true,
-				  map: map
+				  map: map,
+				  icon:"icons/staff.png"
 			});
 			setListener(marker,data)
 		}

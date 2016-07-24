@@ -351,6 +351,7 @@
 	<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
+	<script type="text/javascript" src="js/mapinterface.js"></script>
 	<!-- <script type="text/javascript" src="js/testroute.js"></script> -->
 	<script type="text/javascript">
 		//调节地图大小
