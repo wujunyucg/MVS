@@ -496,12 +496,15 @@ function search(){
   		return false;
   	 	}
   	 	else{
-  	 		$("#w-modal-p2").html("");
+  	 		 $("#w-modal-p2").html("");
   	 	}
   	 		
   	 });
   	 
   function addexcel(){
+ $("#w-modal-p2").html("正在处理数据中，请稍候");
+  		$("#w-modal-p2").css("color","red");
+  		$("#w-modal-p2").css("font-size","20px");
   	 $("#immedadd").ajaxSubmit({
             type: 'post', 
             url: '<%=basePath%>servlet/SynchStaffServlet?type=2',

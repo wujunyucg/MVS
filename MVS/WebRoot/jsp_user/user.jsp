@@ -25,6 +25,7 @@
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
 <script type="text/javascript" src="scripts/j-scripts/j-theme.js"></script>
+<script type="text/javascript" src="js/jquery-form.js"></script>
 </head>
 
 <body>

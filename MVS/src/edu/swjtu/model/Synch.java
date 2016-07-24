@@ -5,6 +5,13 @@ public class Synch {
 	private int id;
 	private String name;
 	private String time;
+	private int flag;
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
 	public int getId() {
 		return id;
 	}

@@ -23,13 +23,14 @@ public class SynchDaoImpl implements SynchDao {
 	
 	@Override
 	public int addSynch(Synch synch, Connection con) {
-		String sql = "insert into synch (synch_id,synch_name,synch_time) values (? , ?,?)";
+		String sql = "insert into synch (synch_id,synch_name,synch_time,synch_flag) values (? , ?,?)";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1,synch.getId());
 			pstm.setString(2,synch.getName());
 			pstm.setString(3,synch.getTime());
+			pstm.setInt(4,synch.getFlag());
 			rs = pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

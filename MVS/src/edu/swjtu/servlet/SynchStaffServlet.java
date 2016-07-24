@@ -124,7 +124,7 @@ public class SynchStaffServlet extends HttpServlet {
 			
 		}
 		else if(request.getParameter("type").equals("2")){
-			
+				System.out.print(1);
 				FileUpload fu = new FileUpload();
 				int ok = fu.upload(request);
 				System.out.println(fu.getSignalPath());
