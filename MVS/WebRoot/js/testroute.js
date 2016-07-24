@@ -256,7 +256,7 @@ function Dragroutetest(path){
 			rr=route;
 }	
 for(var i=0;i<paths.length;i++){
-	Dragroutetest(paths[i].lng);
+	//Dragroutetest(paths[i].lng);
 	//console.log(paths[i].loc);
 }
 

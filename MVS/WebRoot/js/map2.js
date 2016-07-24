@@ -174,6 +174,15 @@
 		path[3]={pos:[116.368904, 39.923423],
 				 name:"1"};
 		//markers(path);	*/
+		function staffmarker(data){
+			var marker=new AMap.Marker({
+				  position: data.lng,
+				  title: data.name,	  
+				  raiseOnDrag:true,
+				  map: map
+			});
+			setListener(marker,data)
+		}
 		function markers(data){
 			
 			var markers = []; //province见Demo引用的JS文件
@@ -205,13 +214,13 @@
 				  raiseOnDrag:true,
 				  map: map
 				});
-				setListener(marker,data,markers);
+				setListener(marker,data);
 			 	
 				return marker;
 				//地图绑定鼠标右击事件——弹出右键菜单
 				
 		}
-		function setListener(marker,data,markers){
+		function setListener(marker,data){
 				var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
 					//alert(data[i].name);	
