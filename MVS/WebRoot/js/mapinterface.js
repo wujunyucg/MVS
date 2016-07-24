@@ -53,6 +53,7 @@ function showAllstaffinfo(data,satationLoc){
 		}
 	}
 }
+
 function satationSearch(){
 	$('#satation-search input').bind('input oninput',function(){
 		var index=$('#satation-search input').val();
