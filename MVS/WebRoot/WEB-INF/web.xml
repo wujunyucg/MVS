@@ -255,8 +255,17 @@
     <servlet-name>ExportSiteServlet</servlet-name>
     <servlet-class>edu.swjtu.excel.ExportSiteServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UserInfoServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.UserInfoServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>ExportSiteServlet</servlet-name>
     <url-pattern>/servlet/ExportSiteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserInfoServlet</servlet-name>
+    <url-pattern>/servlet/UserInfoServlet</url-pattern>
   </servlet-mapping>
 </web-app>
