@@ -176,7 +176,7 @@
 		//markers(path);	*/
 		function staffmarker(data){
 			var marker=new AMap.Marker({
-				  position: data.lng,
+				  position: [data.longitude,data.latitude],
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,
@@ -187,7 +187,7 @@
 		}
 		function satationsmarker(data){
 			var marker=new AMap.Marker({
-				  position: data.lng,
+				  position:[data.longitude,data.latitude],
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,
@@ -213,16 +213,16 @@
 		function SatationContent(data) {  //信息窗体内容
 			var s = [];
 			s.push('<div class="info-title">'+data.name+'</div><div class="info-content">'+"地址：" + data.address);
-			s.push("路线："+data.route);
-			s.push("编号："+data.number);
-			s.push("人数："+data.people);
+			s.push("路线："+data.lineId);
+			s.push("编号："+data.siteId);
+			s.push("人数："+data.peoNum);
 			s.push('<div>');
 			return s.join("<br>");
    		 }
 		 function setmarker(data,markers){
 			
 				marker = new AMap.Marker({
-				  position: data.lng,
+				  position: [data.longitude,data.latitude],
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map

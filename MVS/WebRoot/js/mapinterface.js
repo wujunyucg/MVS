@@ -65,17 +65,17 @@ function showAllsatationinfo(satations){
 getStaffnum(hhj_satations,ll);*/
 function getStaffnum(staffs,satation){
 	satationsmarker(satation);
-	var loc=new AMap.LngLat(satation.lng[0],satation.lng[1]);
+	var loc=new AMap.LngLat(satation.longitude,satation.latitude);
 	var circle=new AMap.Circle({
 		map:map,
-		center:satation.lng,
+		center:[satation.longitude,satation.latitude],
 		radius:1000,
 		fillColor:'#ccc',
 		strokeColor:'#ccc',
 		zIndex:35
 	});
 	for(var i=0;i<staffs.length;i++){
-		if(staffs[i].route<0&&(loc.distance(staffs[i].lng)<1000)){
+		if(staffs[i].lineId<0&&(loc.distance([satation.longitude,satation.latitude])<1000)){
 			staffmarker(staffs[i]);
 		}
 }
@@ -83,20 +83,23 @@ function getStaffnum(staffs,satation){
 //显示没设置的员工
 function staffIdle(staffs){
 	for(var i=0;i<staffs.length;i++){
-		if(staffs[i].route<0){
+		if(staffs[i].lineId<0){
 			staffmarker(staffs[i]);
 		}
 	}
 }
 //显示未设置线路的站点
 function sataionIdle(satations){
-	for(var i=0;i<staffs.length;i++){
-		if(satations[i].route<0){
-			staffmarker(staffs[i]);
+	for(var i=0;i<satations.length;i++){
+		if(satations[i].lineId<0){
+			satationsmarker(satations[i]);
 		}
 	}
 }
-
+//设置一个站点
+function setAsatation(){
+	
+}
 function satationSearch(){
 	$('#satation-search input').bind('input oninput',function(){
 		var index=$('#satation-search input').val();
