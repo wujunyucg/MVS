@@ -116,4 +116,16 @@ public class ArrangeDaoTest {
 		System.out.println((new ArrangeDaoImpl().getAllArrByDate(new DBUtil()
 		.getCon(),"2014-02-19")).size());
 	}
+	/**
+	 * 测试取得某天的一个班次
+	 * 2016年7月24日下午12:45:07
+	 * @author jimolonely
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testGetByDateAndTime() throws ClassNotFoundException, SQLException{
+		System.out.println((new ArrangeDaoImpl().getArrByDateAndTime(new DBUtil()
+		.getCon(),"2017-01-01","09:00")).getArrangeId());
+	}
 }

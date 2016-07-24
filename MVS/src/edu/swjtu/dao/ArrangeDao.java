@@ -109,4 +109,15 @@ public interface ArrangeDao {
 	 * @throws SQLException
 	 */
 	public ArrayList<Arrange> getAllArrByDate(Connection con,String date) throws SQLException;
+	/**
+	 * 取得某一天的一个班次
+	 * 2016年7月24日下午12:42:22
+	 * @author jimolonely
+	 * @param con
+	 * @param date
+	 * @param time
+	 * @return
+	 * @throws SQLException
+	 */
+	public Arrange getArrByDateAndTime(Connection con,String date,String time) throws SQLException;
 }

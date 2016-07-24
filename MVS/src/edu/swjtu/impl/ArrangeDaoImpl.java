@@ -168,4 +168,19 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		}
 		return list;
 	}
+
+	@Override
+	public Arrange getArrByDateAndTime(Connection con, String date, String time)
+			throws SQLException {
+		String sql = "select *from arrange where arrange_date = ?and arrange_time=?";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		pstm.setString(1, date);
+		pstm.setString(2, time);
+		ResultSet rs = pstm.executeQuery();
+		Arrange arr = null;
+		if(rs.next()){
+			arr = getOneArrange(rs);
+		}
+		return arr;
+	}
 }
