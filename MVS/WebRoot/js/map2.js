@@ -180,7 +180,19 @@
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,
-				  icon:"icons/staff.png"
+				  icon:"icons/staff.png",
+				  zIndex:100
+			});
+			setListener(marker,data)
+		}
+		function satationsmarker(data){
+			var marker=new AMap.Marker({
+				  position: data.lng,
+				  title: data.name,	  
+				  raiseOnDrag:true,
+				  map: map,
+				  icon:"icons/satations.svg",
+				  zIndex:100
 			});
 			setListener(marker,data)
 		}
