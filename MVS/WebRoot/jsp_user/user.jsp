@@ -114,6 +114,7 @@
 								class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 						</button>
 						<div class="list-group j-child-menu" style="display:none;">
+							<button type="button" class="list-group-item add-arrange">新增班次</button>
 							<button type="button" class="list-group-item manage-arrange">数据维护</button>
 						</div>
 						<button type="button" style="display:none;"
@@ -177,6 +178,11 @@
 		$(".manage-arrange").click(function(){
 			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=path%>/servlet/ManageArrangeServlet");
+		});
+		
+		$(".add-arrange").click(function(){
+			$("#load_modal").modal('show');//显示加载框
+			$("#content").load("<%=path%>/servlet/CreateArrServlet");
 		});
 		
 		$("#cre_car").click(function() {
