@@ -34,7 +34,7 @@ function DeleteSatation(){}
 function EditSatation(data){
 	document.getElementById('addsatation-info').innerHTML="";
 	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
-	var s=data.lng;
+	var s=[data.longitude,data.latitude];
 	console.log("1");
 	var ctn=document.getElementById('info-satation');
 	console.log(document.getElementById('satation-lng'));
@@ -45,9 +45,9 @@ function EditSatation(data){
 	var route=$('#satation-route option');
 	route[data.route-1].selected='selected';
 	var num=$('#satation-number option');
-	console.log(data.number);
-	num[data.number-1].selected='selected';
-	$('#satation-people').val(data.people);
+	//console.log(data.number);
+	num[data.order].selected='selected';
+	$('#satation-people').val(data.peoNum);
 	console.log("3");
 	info(s,ctn);
 	console.log(ctn);
@@ -105,7 +105,8 @@ function addsatation(){
 		document.getElementById('lnglat').value=e.lnglat.getLng() + ',' + e.lnglat.getLat();
 		console.log(e);
 		if(hhj_flag!=1){
-			console.log("setamarker"+hhj_flag);
+			
+			//console.log("setamarker"+hhj_flag);
 			var marker= new AMap.Marker({
 					map: map,
 					position: e.lnglat, //基点位置
@@ -125,9 +126,6 @@ function addsatation(){
 			console.log(s);
 			console.log(ctn);
 			info(e.lnglat,ctn);
-			
-			
-			
 			var sbm=ctn.getElementsByTagName('button');		
 			var newsatation={"name":"null",
 					 "address":"null",
@@ -155,6 +153,7 @@ function addsatation(){
 				marker.hide();
 				info2.close();
 				};
+				map.on('click', function(e){});
 			}
 		});	
 }

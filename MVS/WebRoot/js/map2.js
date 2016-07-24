@@ -6,30 +6,6 @@
 			keyboardEnable:true,
 			resizeEnable: true
 		});
-		/* map.plugin('AMap.Geolocation', function() {
-		        geolocation = new AMap.Geolocation({
-		            enableHighAccuracy: true,//是否使用高精度定位，默认:true
-		            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-		            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-		            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-		            buttonPosition:'RB'
-		        });
-		        map.addControl(geolocation);
-		        geolocation.getCurrentPosition();
-		        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-		        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
-		    });
-		    //解析定位结果
-		    function onComplete(data) {
-		        //alert("定位成功");
-		    }
-		    //解析定位错误信息
-		    function onError(data) {
-		        //alert("error");
-		    }*/
-		//map.setCity('成都市');
-		//map.setZoom(18);
-		
 		map.plugin(["AMap.MapType"],function(){
 			//地图类型切换
 			var type= new AMap.MapType({
@@ -86,8 +62,6 @@
 						alert("dd");
 					});	
 					//参考这个格式
-					//var trs=$('#result table tr');
-					//trs[0].val("线路"+satations[0].route);
 					if(isadd!=1){
 					$('#result').css("display","inline");
 					$('#addroute').css("display","none");
@@ -123,7 +97,6 @@
 								console.log("----提交成功-------");
 							}
 						});
-						
 						$('#addroute-quit').bind('click',function(){
 							$('#addroute').css("display","none");
 							map.clearMap();
@@ -237,11 +210,8 @@
 		function setListener(marker,data){
 				var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
-					//alert(data[i].name);	
-					//console.log(data);
-					data=marker.getPosition();
+					data=marker.getPosition(); 
 					info(marker.getPosition(),conten);	
-					
 				});	 
 				var ss=data;
 				AMap.event.addListener(marker, 'rightclick',function(e){
@@ -321,7 +291,7 @@
 			contextMenuPositon = e.lnglat;
 		});
 	}
-	initright();
+	//initright();
 	function route2(lngLat1,lngLat2,type){	//传入路径经纬度,type表示类型0驾车，1步行，2公交
 		var driving = new AMap.Driving({
 			map: map,

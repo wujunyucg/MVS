@@ -102,7 +102,7 @@ function setAsatation(name){
 	place_search(name);
 	
 }
-/*显示路线*/
+/*显示路线
 var pp=[{
 	siteId:0,
 	peoNum:0,
@@ -149,7 +149,7 @@ var pp=[{
 ];
 
 //显示所有线路
-showroute(pp);
+showroute(pp); */
 function showroute(paths){
 	console.log("enter route-----");
 	var path=[];
@@ -213,6 +213,35 @@ function showroute(paths){
 			route2=route;
 			//route2.destroy();
 		});
+	});
+}
+
+//站点街道匹配
+function satationSuit(lng,lat){
+	//var name=place.name;
+	var satation_search=new AMap.PlaceSearch({
+		keywords :name, //搜索关键字为“超市”的poi
+		city:'成都',
+		citylimit:true,
+		pageSize:1,
+		//panel:'panel'
+	});
+	satation_search.search("街",[lng,lat],200,function(status,result){
+		//console.log(status);
+		//console.log(result);
+		for(var i=0;i<result.poiList.pois.length;i++){
+			//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
+			
+		}
+	});
+	
+	satation_search.search("路",[lng,lat],200,function(status,result){
+			//console.log(status);
+			//console.log(result);
+			for(var i=0;i<result.poiList.pois.length;i++){
+				//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
+				
+			}
 	});
 }
 function satationSearch(){
