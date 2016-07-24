@@ -23,4 +23,15 @@ public class LineDaoTest {
 	public void testGetByName() throws ClassNotFoundException, SQLException{
 		System.out.println(new LineDaoImpl().getLineByName(new DBUtil().getCon(), "+").getLineId());
 	}
+	/**
+	 * 测试取得所有线路
+	 * 2016年7月23日下午8:48:32
+	 * @author jimolonely
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testGetAll() throws ClassNotFoundException, SQLException{
+		System.out.println(new LineDaoImpl().getAllLine(new DBUtil().getCon()).size());
+	}
 }

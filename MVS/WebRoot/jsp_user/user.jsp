@@ -79,7 +79,7 @@
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 				</button>
-				<button type="button" class="list-group-item  btn-menu btn_text">
+				<button type="button" class="list-group-item  btn-menu btn_text" id="map_site" onclick="window.location.href='servlet/MapSiteServlet'">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 					站点管理
 				</button>
@@ -114,6 +114,7 @@
 								class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 						</button>
 						<div class="list-group j-child-menu" style="display:none;">
+							<button type="button" class="list-group-item add-arrange">新增班次</button>
 							<button type="button" class="list-group-item manage-arrange">数据维护</button>
 						</div>
 						<button type="button" style="display:none;"
@@ -179,6 +180,11 @@
 			$("#content").load("<%=path%>/servlet/ManageArrangeServlet");
 		});
 		
+		$(".add-arrange").click(function(){
+			$("#load_modal").modal('show');//显示加载框
+			$("#content").load("<%=path%>/servlet/CreateArrServlet");
+		});
+		
 		$("#cre_car").click(function() {
 			$("#content").load("<%=request.getContextPath()%>/jsp_user/create_car.jsp");
 		});
@@ -194,6 +200,7 @@
 		$("#synch_staff").click(function(){
 				$("#content").load("<%=basePath%>servlet/ManageSynchServlet");
 		});
+		
 	</script>
 </body>
 </html>

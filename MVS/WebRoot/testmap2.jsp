@@ -65,6 +65,39 @@
 		width:30%;
 	}
 </style>
+<style type="text/css">
+		.table{
+			width: 100%;
+			border-collapse:collapse; 
+			border-spacing:0; 
+		}
+		.fixedThead{
+			display: block;
+			width: 100%;
+		}
+		.scrollTbody{
+			display: block;
+			height: 150px;
+			overflow: auto;
+			width: 100%;
+		}
+		.table td,.table th {
+			width: 200px;
+			border-bottom: none;
+			border-left: none;
+			border-right: 1px solid #CCC;
+			border-top: 1px solid #DDD;
+			padding: 2px 3px 3px 4px
+		}
+		.table tr{
+			border-left: 1px solid #EB8;
+			border-bottom: 1px solid #B74;
+		}
+		thead.fixedThead tr th:last-child {
+			color:#FF0000;
+			width: 218px;
+		}
+	</style>
 </head>
 
 
@@ -163,7 +196,7 @@
 			</div>
 		</div>
 		<div id="content">
-			<div id='container' style="margin-left:255px;margin-top:50px;width:80%"></div>
+			<div id='container' style="margin-left:255px;margin-top:50px;width:86.5%;height: 95%"></div>
 			
 			--------
 			<div id="info">
@@ -287,26 +320,65 @@
       </div>
       <div id='panel'></div>
       </div>
-		</div>
-	</div>
+      
+     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 86.5%"> 
+  <div class="panel panel-default">
+    <a id="updown" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" >
+    <div class="panel-heading" role="tab" id="headingThree" style="background-color:#000000;">
+        <img id="updownimg" src="images/up.png">
+    </div>
+     </a>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body" style="height: 200px">
+     	<table class="table">
+		<thead class="fixedThead">
+			<tr><th>#</th><th>站点名称</th><th>站点名称</th>
+			<th>站点地址</th><th>站点人数</th><th>站点所属线路</th>
+			</tr>
+		</thead>
+		<tbody class="scrollTbody">
+			
+		</tbody>
+	</table>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+ </div> 
+	
 	
 	<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
-	<script type="text/javascript" src="js/testroute.js"></script>
-	<script type="text/javascript" src="js/mapinterface.js"></script>
+	<!-- <script type="text/javascript" src="js/testroute.js"></script> -->
 	<script type="text/javascript">
 		//调节地图大小
 		var turn = false;
 		$("#j_nav_toggle").click(function() {
 			if (turn) {
 				$("#container").css("margin-left", "255px");
-				$("#container").css("width", "80%");
+				$("#container").css("width", "86.5%");
+				$("#collasped").css("margin-left", "255px");
+				$("#collasped").css("width", "86.5%");
 				turn = false;
 			} else {
 				$("#container").css("margin-left", "50px");
-				$("#container").css("width", "95%");
+				$("#container").css("width", "97.5%");
+				$("#collasped").css("margin-left", "50px");
+				$("#collasped").css("width", "97.5%");
 				turn = true;
+			}
+		});
+		var up=true;
+		$("#updown").click(function() {
+			if(up){
+				$("#updownimg").attr("src","images/down.png");
+				up=false;
+			}
+			else{
+				$("#updownimg").attr("src","images/up.png");
+				up=true;
 			}
 		});
 	</script>

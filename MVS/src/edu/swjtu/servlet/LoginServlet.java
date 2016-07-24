@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import edu.swjtu.dao.UserDao;
 import edu.swjtu.impl.UserDaoImpl;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
+import edu.swjtu.util.DateUtil;
 
 public class LoginServlet extends HttpServlet {
 
@@ -63,8 +65,22 @@ public class LoginServlet extends HttpServlet {
 			if(null!=result){
 				session.setAttribute("user", result);
 				pw.write("yes");
-				
+				String lastLoginTime = "从未登录";
+				Cookie[]cookies = request.getCookies();
+				if(cookies==null){
+					response.addCookie(new Cookie("lastLoginTime", DateUtil.getDateTime()));
+				}else{
+					for (int i = 0; i < cookies.length; i++) {
+		                Cookie cookie = cookies[i];
+		                if (cookie.getName().equals("lastLoginTime")) {
+		                	lastLoginTime = cookie.getValue();
+		                	cookie.setValue(DateUtil.getDateTime());
+		                	break;
+		                }
+		            }
+				}
 				/**/
+				session.setAttribute("lastLoginTime", lastLoginTime);
 				session.setAttribute("power", "1,2,3,7");
 				
 				//System.out.println("yes");
