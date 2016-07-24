@@ -79,7 +79,7 @@
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 				</button>
-				<button type="button" class="list-group-item  btn-menu btn_text">
+				<button type="button" class="list-group-item  btn-menu btn_text" id="map_site" onclick="window.location.href='servlet/MapSiteServlet'">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 					站点管理
 				</button>
@@ -200,6 +200,7 @@
 		$("#synch_staff").click(function(){
 				$("#content").load("<%=basePath%>servlet/ManageSynchServlet");
 		});
+		
 	</script>
 </body>
 </html>

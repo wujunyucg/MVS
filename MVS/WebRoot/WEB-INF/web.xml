@@ -221,7 +221,6 @@
     <servlet-name>CreateArrServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.CreateArrServlet</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>QuartzApplicServlet</servlet-name>
     <url-pattern>/QuartzApplicServlet</url-pattern>
@@ -229,5 +228,15 @@
   <servlet-mapping>
     <servlet-name>CreateArrServlet</servlet-name>
     <url-pattern>/servlet/CreateArrServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MapSiteServlet</display-name>
+    <servlet-name>MapSiteServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.MapSiteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MapSiteServlet</servlet-name>
+    <url-pattern>/servlet/MapSiteServlet</url-pattern>
   </servlet-mapping>
 </web-app>
