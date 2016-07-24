@@ -354,7 +354,20 @@
 			//console.log(status);
 			//console.log(result);
 			for(var i=0;i<result.poiList.pois.length;i++){
-				console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
+				//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
+				map.setCenter([result.poiList.pois[i].location.lng,result.poiList.pois[i].location.lat]);
+				var satation={
+						siteId:-1,
+						peoNum:0,
+						lineId:-1,
+						order:-1,
+						delay:-1,
+						latitude:result.poiList.pois[i].location.lat,
+						longitude:result.poiList.pois[i].location.lng,
+						address:name,
+						name:name	
+				};
+				staffmarker(satation);
 			}
 			//rr=
 			//testps[ps_index].lng=result.poiList.pois[0].location;

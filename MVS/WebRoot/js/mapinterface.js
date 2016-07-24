@@ -40,6 +40,7 @@ var hhj_satations=[
               		number:4,
               		route:1,
               		people:15},];
+
 //showAllstaffinfo(hhj_satations)
 function showAllstaffinfo(data){
 	//var loc=new AMap.LngLat(satationLoc[0],satationLoc[1]);
@@ -97,8 +98,118 @@ function sataionIdle(satations){
 	}
 }
 //设置一个站点
-function setAsatation(){
+function setAsatation(name){
+	place_search(name);
 	
+}
+/*显示路线
+var pp=[{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.681873,
+	longitude:104.040329,
+	address:"金鱼街10号",
+	name:"金鱼街"	
+},{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.684504,
+	longitude:104.069072,
+	address:"白马寺北顺街99号",
+	name:"新园(白马寺北顺街)"	
+},
+{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.680028,
+	longitude:104.056036,
+	name:"天茵苑",
+  	address:"通锦路1号",
+},
+{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.683423,
+	longitude:104.062388,
+  	name:"五丁苑",
+	address:"西北桥边街1号",
+},
+];
+
+//显示所有线路
+showroute(pp);*/
+function showroute(paths){
+	console.log("enter route-----");
+	var path=[];
+	for(var i=0;i<paths.length;i++){
+		path.push([paths[i].longitude,paths[i].latitude]);
+		console.log(path[0]+paths[i].longitude+paths[i].latitude);
+	}
+	map.plugin("AMap.DragRoute",function(){
+		route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
+				midMarkerOptions:{
+					//visible :false,	
+				},
+				startMarkerOptions:{
+					//visible :false,	
+				},
+				endMarkerOptions:{
+					//visible :false,	
+				},
+				polyOptions :{
+					strokeColor:'#cc9',
+					strokeOpacity:0.5
+				}
+			}); 
+		//构造拖拽导航类，传入参数分别为：地图对象，初始路径，驾车策略
+		route.search(); //查询导航路径并开启拖拽导航
+		//当路径完成时的事件
+		console.log("enter serach-----");
+		AMap.event.addListener(route,'complete',function(e){
+			//alert("OK");
+			//alert(e.data.routes[0].steps[0].action);
+			console.log("enter complete-----");
+		    var r=e.data.routes[0].steps;
+			for(i=0;i<r.length;i++){
+			     //各路段描述
+				console.log(e.data.routes[0].steps[i].instruction );
+				//目标路程
+				console.log(e.data.routes[0].distance);
+				//预计时间
+				console.log(e.data.routes[0].time);
+				console.log("enter complete-----");
+			}
+			AMap.event.addListener(route,'addway',function(e){
+				alert("dd");
+			});	
+			//参考这个格式
+			//var trs=$('#result table tr');
+			//trs[0].val("线路"+satations[0].route);
+			$('#result').css("display","inline");
+			$('#addroute').css("display","none");
+			var trs=document.getElementById("routenumber");
+			trs.innerHTML="线路"+paths[0].lineId;
+			var tds=document.getElementById("time-distance").getElementsByTagName("td");
+			tds[0].innerHTML=e.data.routes[0].time/60+"分钟";
+			tds[1].innerHTML=e.data.routes[0].distance/1000+"千米";
+			var s_e=document.getElementById("start-end");
+			s_e.innerHTML=paths[0].name+"-----"+paths[paths.length-1].name;
+			route2=route;
+			//route2.destroy();
+		});
+	});
 }
 function satationSearch(){
 	$('#satation-search input').bind('input oninput',function(){
