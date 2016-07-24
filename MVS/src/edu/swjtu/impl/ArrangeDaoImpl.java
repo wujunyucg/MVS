@@ -154,4 +154,33 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		}
 		return rs;
 	}
+
+	@Override
+	public ArrayList<Arrange> getAllArrByDate(Connection con, String date)
+			throws SQLException {
+		ArrayList<Arrange> list = new ArrayList<Arrange>();
+		String sql = "select *from arrange where arrange_date = ?";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		pstm.setString(1, date);
+		ResultSet rs = pstm.executeQuery();
+		while(rs.next()){
+			list.add(getOneArrange(rs));
+		}
+		return list;
+	}
+
+	@Override
+	public Arrange getArrByDateAndTime(Connection con, String date, String time)
+			throws SQLException {
+		String sql = "select *from arrange where arrange_date = ?and arrange_time=?";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		pstm.setString(1, date);
+		pstm.setString(2, time);
+		ResultSet rs = pstm.executeQuery();
+		Arrange arr = null;
+		if(rs.next()){
+			arr = getOneArrange(rs);
+		}
+		return arr;
+	}
 }

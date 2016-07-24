@@ -35,4 +35,14 @@ public interface LineDao {
 	 * @throws SQLException
 	 */
 	public ArrayList<Line> getAllLine(Connection con) throws SQLException;
+	/**
+	 * 更新Line
+	 * 2016年7月24日下午12:50:40
+	 * @author jimolonely
+	 * @param con
+	 * @param line
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updateLine(Connection con,Line line) throws SQLException;
 }

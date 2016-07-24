@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import edu.swjtu.impl.LineDaoImpl;
+import edu.swjtu.model.Line;
 import edu.swjtu.util.DBUtil;
 
 public class LineDaoTest {
@@ -33,5 +34,16 @@ public class LineDaoTest {
 	@Test
 	public void testGetAll() throws ClassNotFoundException, SQLException{
 		System.out.println(new LineDaoImpl().getAllLine(new DBUtil().getCon()).size());
+	}
+	
+	@Test
+	public void testUpdate() throws ClassNotFoundException, SQLException{
+		Line line = new Line();
+		line.setCarId(1);
+		line.setLineId(1);
+		line.setName("线路1");
+		line.setNum(40);
+		line.setSiteId("1,2,3");
+		System.out.println(new LineDaoImpl().updateLine(new DBUtil().getCon(),line));
 	}
 }
