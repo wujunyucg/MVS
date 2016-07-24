@@ -78,7 +78,7 @@ function getStaffnum(staffs,satation){
 		if(staffs[i].lineId<0&&(loc.distance([satation.longitude,satation.latitude])<1000)){
 			staffmarker(staffs[i]);
 		}
-}
+	}
 }
 //显示没设置的员工
 function staffIdle(staffs){
