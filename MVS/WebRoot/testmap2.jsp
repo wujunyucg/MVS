@@ -19,7 +19,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/map/layout.css">
-<link rel="stylesheet" type="text/css" href="css/j-css/j-theme.css">
+<link rel="stylesheet" type="text/css" href="css/j-css/map-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
 
@@ -195,7 +195,7 @@
 			</div>
 		</div>
 		<div id="content">
-			<div id='container' style="margin-left:13.5%;margin-top:50px;width:86.5%;height: 95%"></div>
+			<div id='container' style="margin-left:15%;margin-top:50px;width:85%;height: 95%"></div>
 			
 			--------
 			<div id="info">
@@ -320,7 +320,7 @@
       <div id='panel'></div>
       </div>
       
-     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 86.5%"> 
+     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 85%"> 
   <div class="panel panel-default">
     <a id="updown" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" >
     <div class="panel-heading" role="tab" id="headingThree" style="background-color:#000000;">
