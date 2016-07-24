@@ -5,7 +5,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -19,13 +19,12 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/map/layout.css">
-<link rel="stylesheet" type="text/css" href="css/j-css/j-theme.css">
+<link rel="stylesheet" type="text/css" href="css/j-css/map-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
 
 <script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
-<script type="text/javascript" src="scripts/j-scripts/j-theme.js"></script>
 <!-- map- -->
 <link rel="stylesheet"
 	href="http://cache.amap.com/lbs/static/main1119.css" />
@@ -87,15 +86,14 @@
 			border-left: none;
 			border-right: 1px solid #CCC;
 			border-top: 1px solid #DDD;
-			padding: 2px 3px 3px 4px
+			padding: 2px 3px 3px 4px;
+			height: 10px;
+			font-size:10px
 		}
 		.table tr{
 			border-left: 1px solid #EB8;
 			border-bottom: 1px solid #B74;
-		}
-		thead.fixedThead tr th:last-child {
-			color:#FF0000;
-			width: 218px;
+			
 		}
 	</style>
 </head>
@@ -196,12 +194,8 @@
 			</div>
 		</div>
 		<div id="content">
-			<div id='container' style="margin-left:255px;margin-top:50px;width:86.5%;height: 95%"></div>
-			
-			--------
+			<div id='container' style="margin-left:15%;margin-top:50px;width:85%;height: 95%"></div>
 			<div id="info">
-				<h1>
-					<h1>
 			</div>
 			<div id="myPageTop"
 				style="position: absolute; top:175px; right:100px;">
@@ -321,7 +315,7 @@
       <div id='panel'></div>
       </div>
       
-     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 86.5%"> 
+     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 85%"> 
   <div class="panel panel-default">
     <a id="updown" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" >
     <div class="panel-heading" role="tab" id="headingThree" style="background-color:#000000;">
@@ -330,16 +324,26 @@
      </a>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body" style="height: 200px">
-     	<table class="table">
+      <c:if test="${site_list!=null }">
+     	<table class="table  table-hover table-bordered " id="site_table">
 		<thead class="fixedThead">
-			<tr><th>#</th><th>站点名称</th><th>站点名称</th>
+			<tr><th>#</th><th>站点名称</th>
 			<th>站点地址</th><th>站点人数</th><th>站点所属线路</th>
 			</tr>
 		</thead>
 		<tbody class="scrollTbody">
-			
+	 <c:forEach items="${site_list}" var="site" varStatus="status" >
+	<tr id="${status.index}">
+	<td>${status.index+1}</td>
+	<td>${site.getName()}</td>
+	<td>${site.getAddress()}</td>
+	<td>${site.getPeoNum()}</td>
+	<td>${site.getLineId()}</td>
+	</tr>
+	</c:forEach>
 		</tbody>
 	</table>
+	</c:if>
       </div>
     </div>
   </div>
@@ -354,20 +358,76 @@
 		<script type="text/javascript" src="js/mapinterface.js"></script>
 	<!-- <script type="text/javascript" src="js/testroute.js"></script> -->
 	<script type="text/javascript">
+	$(function(){
+	var turn = true;
+	var openMenus = new Array();//存放展开的子menu的div
+	$("#j_nav_toggle").click(function(){
+	
+		if(turn){
+			openMenus = [];//clear
+			$(".j-child-menu").each(function(){
+				if($(this).css("display")=="block"){
+					openMenus.push($(this));//若展开的，则加入
+				}
+			});
+			
+			$(".j-child-menu").hide();
+			$("#j-left-menu").css("width","4%");
+			$("#content").css("marginLeft","4%");
+			$(".btn_text").hide();
+			$(".btn_icon").show();
+			turn = false;
+		}else{
+			for(var i=0;i<openMenus.length;i++){
+				openMenus[i].show();//显示出来
+			}
+			$("#j-left-menu").css("width","15%");
+			$("#content").css("marginLeft","15%");
+			$(".btn_text").show();
+			$(".btn_icon").hide();
+			turn = true;
+		}
+	});
+	
+	$(".btn_text").click(function(){
+		
+		$(this).next("div").slideToggle("1000");
+	});
+});
 		//调节地图大小
+		var sitelist;
+ 			$("#site_table td").click(function() {
+ 				map.clearMap();
+             var  tr=$(this).parent().attr("id");
+               satationsmarker(sitelist[tr]);
+               moveTocenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+           
+            });
+		$(window).load(function(){
+			
+		var site='${json_site_list}';
+		var list = eval('(' + site + ')');
+		 sitelist = list.sitelist;
+			for(var i=0;i<sitelist.length;i++){
+		if(sitelist[i].lineId>=0){
+			satationsmarker(sitelist[i]);
+		}
+	}
+		});
+		
 		var turn = false;
 		$("#j_nav_toggle").click(function() {
 			if (turn) {
-				$("#container").css("margin-left", "255px");
-				$("#container").css("width", "86.5%");
-				$("#collasped").css("margin-left", "255px");
-				$("#collasped").css("width", "86.5%");
+				$("#container").css("margin-left", "15%");
+				$("#container").css("width", "85%");
+				$("#collasped").css("margin-left", "15%");
+				$("#collasped").css("width", "85%");
 				turn = false;
 			} else {
-				$("#container").css("margin-left", "50px");
-				$("#container").css("width", "97.5%");
-				$("#collasped").css("margin-left", "50px");
-				$("#collasped").css("width", "97.5%");
+				$("#container").css("margin-left", "4%");
+				$("#container").css("width", "96%");
+				$("#collasped").css("margin-left", "4%");
+				$("#collasped").css("width", "96%");
 				turn = true;
 			}
 		});
@@ -382,6 +442,7 @@
 				up=true;
 			}
 		});
+		
 	</script>
 </body>
 </html>

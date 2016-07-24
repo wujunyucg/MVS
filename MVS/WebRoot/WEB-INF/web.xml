@@ -241,7 +241,6 @@
     <servlet-name>ManageLineServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ManageLineServlet</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>MapSiteServlet</servlet-name>
     <url-pattern>/servlet/MapSiteServlet</url-pattern>
@@ -249,5 +248,15 @@
   <servlet-mapping>
     <servlet-name>ManageLineServlet</servlet-name>
     <url-pattern>/servlet/ManageLineServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ExportSiteServlet</display-name>
+    <servlet-name>ExportSiteServlet</servlet-name>
+    <servlet-class>edu.swjtu.excel.ExportSiteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExportSiteServlet</servlet-name>
+    <url-pattern>/servlet/ExportSiteServlet</url-pattern>
   </servlet-mapping>
 </web-app>

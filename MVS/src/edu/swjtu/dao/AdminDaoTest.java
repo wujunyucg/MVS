@@ -61,7 +61,7 @@ public class AdminDaoTest {
 			int f=0;
 			for(int j =0;j<cluster.size();j++){
 				for(int k=0;k<cluster.get(j).size();k++){
-					if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>1.0)
+					if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>0.5)
 						f=1;
 				}
 			}
