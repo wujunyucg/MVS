@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.swjtu.dao.UserDao;
+import edu.swjtu.impl.AdminDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
+import edu.swjtu.model.Admin;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
 import edu.swjtu.util.DateUtil;
@@ -43,7 +45,10 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 		HttpSession session = request.getSession();
 		
-		System.out.println(session.getAttribute("validationCode"));
+		/*清除session*/
+		session.invalidate();
+		
+		//System.out.println(session.getAttribute("validationCode"));
 		/*首先判断验证码*/
 		if(!session.getAttribute("validationCode").equals(validCode)){
 			pw.write("valid");
@@ -58,10 +63,8 @@ public class LoginServlet extends HttpServlet {
 			user.setType(type);
 
 			User result = udi.login(user, con);
-			System.out.println("id:" + result.getUserId());
 			if (null != result) {
 				session.setAttribute("user", result);
-				pw.write("yes");
 				String lastLoginTime = "从未登录";
 				Cookie[] cookies = request.getCookies();
 				if (cookies == null) {
@@ -79,8 +82,23 @@ public class LoginServlet extends HttpServlet {
 				}
 				/**/
 				session.setAttribute("lastLoginTime", lastLoginTime);
-				session.setAttribute("power", "1,2,3,7");
-
+				
+				if(1==type){
+					pw.write("admin");
+				}else if (2==type){
+					AdminDaoImpl adi = new AdminDaoImpl();
+					Admin admin = adi.getAdminById(result.getAdminId(), con);
+					
+					if(null!=admin){
+						//String powers = admin.getPowerId();
+						session.setAttribute("admin", admin);
+						pw.write("user");
+					}else{
+						pw.write("noadmin");
+					}
+				}else if(3==type){
+					
+				}
 				// System.out.println("yes");
 			} else {
 				pw.write("no");

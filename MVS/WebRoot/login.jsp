@@ -33,9 +33,9 @@
 		$("#submit_btn").click(function() {
 			var name = $("#name").val();
 			var pass = $("#pass").val();
-			var type = "";
+			var type = $("input:radio[name='admin']:checked").val();
 			var validCode = $("#valid").val();
-
+			//alert(name+" "+pass+" "+type+" "+validCode)
 			if (name != "" && pass != "" && validCode != "" && type != "") {
 				$("#load_modal").modal('show');
 				$.ajax({
@@ -49,9 +49,15 @@
 					},
 					success : function(re) {
 						$("#load_modal").modal('hide');
-						if (re == "yes") {
-							window.location.href = "index.jsp";
-						} else {
+						if (re == "valid") {
+							alert("验证码错误")
+						}else if("admin"==re){
+							window.location.href = "<%=path%>/jsp_admin/sadmin.jsp";
+						}else if("user"==re){
+							window.location.href = "<%=path%>/jsp_user/user.jsp";
+						}else if("noadmin"==re){
+							alert("没有角色")
+						}else{
 							$("#modal_error").modal('show');
 						}
 					},
@@ -59,7 +65,6 @@
 						alert("服务器故障");
 					}
 				});
-
 				return false;//记得添加
 			}
 		});
@@ -76,15 +81,15 @@
 			<div>
 				<img id="validationCode" alt="验证码图片" title="验证码图片"
 					src="<%=path%>/validationCodeServlet.png"
-					onclick="refreshCode(this)" /> <label class="radio-inline">
-					<input type="radio" name="inlineRadioOptions" id="inlineRadio1"
-					value="1"> 超级管理员
-				</label> <label class="radio-inline"> <input type="radio"
-					name="inlineRadioOptions" id="inlineRadio2" value="1">
-					普通管理员
-				</label> <label class="radio-inline"> <input type="radio"
-					name="inlineRadioOptions" id="inlineRadio3" value="3"> 员工
-				</label>
+					onclick="refreshCode(this)" /> <label>
+					<input type="radio" name="admin" id="inlineRadio1"
+					value="1"> 超级管理员</label> 
+					&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="radio"
+					name="admin" id="inlineRadio2" value="2" checked="checked">
+					普通管理员</label> &nbsp;&nbsp;&nbsp;&nbsp;
+					<label><input type="radio"
+					name="admin" id="inlineRadio3" value="3"> 员工</label>
+				
 			</div>
 			<input id="submit_btn" type="submit" value="登    录"
 				style="margin-top:10px;" />
