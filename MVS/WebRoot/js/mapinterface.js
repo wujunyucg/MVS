@@ -165,7 +165,7 @@ var pp=[{
 //显示所有线路
 showroute(pp); */
 var route2=[];
-function showroute(paths,id){
+function showroute(paths,id,name){
 	console.log("enter route-----");
 	var path=[];
 //	showAllsatationinfo(paths);
@@ -211,7 +211,7 @@ function showroute(paths,id){
 			$('#addroute').css("display","none");
 			var trs=document.getElementById("routenumber");
 			console.log(paths[0].lineId);
-			trs.innerHTML="线路"+id;
+			trs.innerHTML=name;
 			var tds=document.getElementById("time-distance").getElementsByTagName("td");
 			tds[0].innerHTML=e.data.routes[0].time/60+"分钟";
 			tds[1].innerHTML=e.data.routes[0].distance/1000+"千米";
