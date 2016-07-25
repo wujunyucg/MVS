@@ -49,6 +49,7 @@
 					//alert(e.data.routes[0].steps[0].action);
 					console.log("enter complete-----");
 				    var r=e.data.routes[0].steps;
+				    
 					for(i=0;i<r.length;i++){
 					     //各路段描述
 						console.log(e.data.routes[0].steps[i].instruction );
@@ -83,13 +84,11 @@
 						var tt=document.getElementById("addroute-time");
 						tt.innerHTML=e.data.routes[0].time/60+"分钟";
 						var dd=document.getElementById("addroute-distance");
-						dd.innerHTML=e.data.routes[0].distance/1000+"千米";
-						
+						dd.innerHTML=e.data.routes[0].distance/1000+"千米";	
 						$('#addroute-sbm').bind('click',function(){
 							var rrr=$("#addroute-number").val();
 							var rr=document.getElementById("addroute").getElementsByTagName('selected');
 							var rn=rr.value;
-							
 							for(var i=0;i<satations.length;i++){
 								satations[i].number=hhj_satation.length+1;
 								satations[i].route=rrr;
@@ -216,9 +215,7 @@
 				var ss=data;
 				AMap.event.addListener(marker, 'rightclick',function(e){
 					//info();
-					info2.close( ) ;
-					var contextMenu = new AMap.ContextMenu();  //创建右键菜单
-		//右键放大
+					info2.close( )  
 					contextMenu.addItem("移动", function() {
 						marker.setDraggable(true);
 					}, 0);
@@ -226,7 +223,7 @@
 						marker.hide();
 					}, 1);
 					console.log("OK-----右键点击"+ss);
-					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2);
+					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2); 
 					/*@contextMenu.addItem("查看路线", function() {
 						var path = [];
 						for(var i=0;i<markers.length;i++){
@@ -245,11 +242,11 @@
 	var placeSearch = new AMap.PlaceSearch();  //构造地点查询类
     var infoWindow2=new AMap.AdvancedInfoWindow({closeWhenClickMap:true});
     // map.on('hotspotclick', function(result) {
-    map.on('hotspotclick', function(result) {
+    map.on(' ', function(result) {
         placeSearch.getDetails(result.id, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
                 placeSearch_CallBack(result);
-            }
+            } 
         });
     });
 	//回调函数
@@ -269,29 +266,7 @@
         return s.join("<br>");
     }	
 	//地图绑定鼠标右击事件——弹出右键菜单
-	function initright(){
-		var contextMenu = new AMap.ContextMenu();  //创建右键菜单
-		//右键放大
-		contextMenu.addItem("隐藏路径", function() {
-			//map.zoomIn();
-			route2.destroy();
-		}, 0);
-		//右键缩小	
-		//右键添加Marker标记
-		contextMenu.addItem("添加标记", function(e) {
-			var marker = new AMap.Marker({
-				map: map,
-				position: contextMenuPositon //基点位置
-			});
-		}, 2);
 	
-		//地图绑定鼠标右击事件——弹出右键菜单
-		map.on('rightclick', function(e) {
-			contextMenu.open(map, e.lnglat);
-			contextMenuPositon = e.lnglat;
-		});
-	}
-	//initright();
 	function route2(lngLat1,lngLat2,type){	//传入路径经纬度,type表示类型0驾车，1步行，2公交
 		var driving = new AMap.Driving({
 			map: map,

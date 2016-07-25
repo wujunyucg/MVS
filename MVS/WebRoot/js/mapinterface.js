@@ -180,20 +180,21 @@ function showroute(paths){
 		//构造拖拽导航类，传入参数分别为：地图对象，初始路径，驾车策略
 		route.search(); //查询导航路径并开启拖拽导航
 		//当路径完成时的事件
-		console.log("enter serach-----");
+	//	console.log("enter serach-----");
 		AMap.event.addListener(route,'complete',function(e){
 			//alert("OK");
 			//alert(e.data.routes[0].steps[0].action);
-			console.log("enter complete-----");
+			console.log("-------------------------enter complete-----");
 		    var r=e.data.routes[0].steps;
+		    
 			for(i=0;i<r.length;i++){
 			     //各路段描述
-				console.log(e.data.routes[0].steps[i].instruction );
+				//console.log(e.data.routes[0].steps[i].instruction );
 				//目标路程
-				console.log(e.data.routes[0].distance);
+				//console.log(e.data.routes[0].distance);
 				//预计时间
-				console.log(e.data.routes[0].time);
-				console.log("enter complete-----");
+				//console.log(e.data.routes[0].time);
+			//console.log("enter complete-----");
 			}
 			AMap.event.addListener(route,'addway',function(e){
 				alert("dd");
@@ -217,31 +218,38 @@ function showroute(paths){
 }
 
 //站点街道匹配
+satationSuit(104.097315,30.680841);
 function satationSuit(lng,lat){
 	//var name=place.name;
+	document.getElementById('return_satationinfo').innerHTML='';
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
 		city:'成都',
 		citylimit:true,
-		pageSize:1,
+		pageSize:10,
 		//panel:'panel'
 	});
-	satation_search.search("街",[lng,lat],200,function(status,result){
+	console.log("ddddddddddd");
+	
+	satation_search.searchNearBy("街",[lng,lat],200,function(status,result){
 		//console.log(status);
 		//console.log(result);
 		for(var i=0;i<result.poiList.pois.length;i++){
-			//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
-			
+			//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);	
 		}
+		console.log("jjjjjjjjjjjjjjjjjj");
+		document.getElementById('return_satationinfo').innerHTML=result.poiList.pois[0].name+","+result.poiList.pois[0].location+'';//+result.poiList.pois[0].address;
+		var dd=document.getElementById('return_satationinfo').innerHTML;
+		console.log(dd);
 	});
 	
-	satation_search.search("路",[lng,lat],200,function(status,result){
+	satation_search.searchNearBy("路",[lng,lat],200,function(status,result){
 			//console.log(status);
 			//console.log(result);
 			for(var i=0;i<result.poiList.pois.length;i++){
 				//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
-				
 			}
+			console.log("zzzzzzzzzzzzzzzzzzz");
 	});
 }
 function satationSearch(){

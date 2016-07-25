@@ -318,6 +318,7 @@
       
       </div>
       <div id='panel'></div>
+      <span id="return_satationinfo"></span>
       </div>
       
      <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 85%"> 
