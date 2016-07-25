@@ -164,7 +164,8 @@ var pp=[{
 
 //显示所有线路
 showroute(pp); */
-function showroute(paths){
+var route2=[];
+function showroute(paths,id){
 	console.log("enter route-----");
 	var path=[];
 //	showAllsatationinfo(paths);
@@ -225,15 +226,18 @@ function showroute(paths){
 			tds[1].innerHTML=e.data.routes[0].distance/1000+"千米";
 			var s_e=document.getElementById("start-end");
 			s_e.innerHTML=paths[0].name+"-----"+paths[paths.length-1].name;
-			route2=route;
+			route2[id]=route;
 			//route2.destroy();
 		});
 	});
 }
 var rr;
+function DelRoute(id){
+	route2[id].destroy();
+}
 //站点街道匹配
 satationSuit(104.097315,30.680841);
-function satationSuit(lng,lat){
+function satationSuit(lng,lat,data){
 	//var name=place.name;
 	document.getElementById('return_satationinfo').innerHTML='';
 	var satation_search=new AMap.PlaceSearch({
@@ -244,8 +248,13 @@ function satationSuit(lng,lat){
 		//panel:'panel'
 	});
 	console.log("ddddddddddd");
-	
-	satation_search.searchNearBy("街",[lng,lat],200,function(status,result){});
+	satation_search.searchNearBy("街", [lng,lat],200,function(status,result){
+		data.longitude=lng;
+		data.latitude=lat;
+		data.address=result.poiList.pois[0].name;
+		satationsmarker(data);
+		Editdata(data);
+	});
 }
  
 function read(data){

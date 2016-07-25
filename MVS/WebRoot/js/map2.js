@@ -224,10 +224,18 @@
 				AMap.event.addListener(marker, 'click',function (e){
 					//data=marker.getPosition(); 
 					marker.setDraggable(false);
-					
+					if(flag==1){
+						console.log("移动成功");
+						satationSuit(marker.getPosition().getLng(),marker.getPosition().getLat(),data);
+						console.log("匹配成功");
+						marker.hide();
+						flag=0;
+					}
+					else{
 					var conten=SatationContent(data);
 					info(marker.getPosition(),conten);	
-				});	 
+					}
+				});
 				var ss=data;
 				AMap.event.addListener(marker, 'rightclick',function(e){
 					//info();
@@ -236,6 +244,8 @@
 					var contextMenu=new AMap.ContextMenu();
 					contextMenu.addItem("移动", function() {
 						marker.setDraggable(true);
+						flag=1;
+						
 					},0);
 					contextMenu.addItem("删除", function() {
 					if(mymessage==true)
@@ -302,4 +312,19 @@
 		}); 
 		// 根据起终点经纬度规划驾车导航路线
 		driving.search(lngLat1,lngLat2);
+	}
+	function Editdata(Data){
+		$.ajax({ 
+			type:"post",
+			url: "servlet/ManageSiteServlet",
+			data:{
+					type:2,
+			}, 
+			error: function(request) {
+	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+	         },
+			success: function(request){
+				 //window.location.href="./jsp_user/site_get_address.jsp";
+		    
+	      }});
 	}
