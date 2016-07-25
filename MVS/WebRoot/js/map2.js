@@ -211,10 +211,10 @@
 			    var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
 					//data=marker.getPosition(); 
-				//	satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
-				//	while(document.getElementById('return_satationinfo').innerHTML=='');
-				//	var re=document.getElementById('return_satationinfo').innerHTML;
-					
+					satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
+					while(document.getElementById('return_satationinfo').innerHTML=='');
+					var re=document.getElementById('return_satationinfo').innerHTML;
+					console.log(re); 
 					var conten=SatationContent(data);
 					info(marker.getPosition(),conten);	
 				});	 
@@ -224,12 +224,20 @@
 					info2.close(); 
 					contextMenu.addItem("移动", function() {
 						marker.setDraggable(true);
-						
 					}, 0);
 					contextMenu.addItem("删除", function() {
-						marker.hide();
-						document.getElementById('delsatationnum').innerHTML=data.siteId;
-						console.log(document.getElementById('delsatationnum').innerHTML);
+						var mymessage=confirm("确认删除?")         ;
+					    if(mymessage==true)
+					    {
+					    	marker.hide();
+							document.getElementById('delsatationnum').innerHTML=data.siteId;
+							console.log(document.getElementById('delsatationnum').innerHTML);
+					    }
+					    else
+					    {
+					    	
+					    }
+						
 					}, 1);
 					console.log("OK-----右键点击"+ss);
 					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2); 
