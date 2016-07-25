@@ -194,9 +194,9 @@
 		/***缩小**/
 		function SatationContent(data) {  //信息窗体内容
 			var s = [];
-			s.push('<div class="info-title">'+data.name+'</div><div class="info-content">'+"地址：" + data.address);
+			s.push('<div class="info-content">'+"地址：" + data.address);
 			s.push("路线："+data.lineId);
-			s.push("编号："+data.siteId);
+			s.push("编号："+data.name);
 			s.push("人数："+data.peoNum);
 			s.push('<div>');
 			return s.join("<br>");
@@ -248,6 +248,7 @@
 						
 					},0);
 					contextMenu.addItem("删除", function() {
+					var mymessage=confirm('确认删除？');
 					if(mymessage==true)
 					    {
 					    	marker.hide();

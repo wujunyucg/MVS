@@ -172,7 +172,7 @@ function showroute(paths,id){
 	for(var i=0;i<paths.length;i++){
 		path.push([paths[i].longitude,paths[i].latitude]);
 		if(i>0&&i<paths.length-1){
-			satationsmarker(paths[i]);
+			//satationsmarker(paths[i]);
 		}
 		console.log(path[0]+paths[i].longitude+paths[i].latitude);
 	}
@@ -236,7 +236,7 @@ function DelRoute(id){
 	route2[id].destroy();
 }
 //站点街道匹配
-satationSuit(104.097315,30.680841);
+//satationSuit(104.097315,30.680841);
 function satationSuit(lng,lat,data){
 	//var name=place.name;
 	document.getElementById('return_satationinfo').innerHTML='';
@@ -249,6 +249,8 @@ function satationSuit(lng,lat,data){
 	});
 	console.log("ddddddddddd");
 	satation_search.searchNearBy("街", [lng,lat],200,function(status,result){
+		//data.longitude=lng;
+		console.log(data);
 		data.longitude=lng;
 		data.latitude=lat;
 		data.address=result.poiList.pois[0].name;
