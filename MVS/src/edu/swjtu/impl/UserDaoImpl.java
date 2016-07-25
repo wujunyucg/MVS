@@ -38,9 +38,7 @@ public class UserDaoImpl implements UserDao{
 			pstm.setString(2, user.getPassword());
 			ResultSet rs = pstm.executeQuery();
 			if(rs.next()){
-				ru = new User();
-				ru.setNumber(rs.getString("user_number"));
-				ru.setPassword(rs.getString("user_password"));
+				ru = getUserOne(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

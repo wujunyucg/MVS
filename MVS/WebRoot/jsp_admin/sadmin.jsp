@@ -47,7 +47,7 @@ $.ajaxSetup ({
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">设置</a></li>
+				<li><a href="javascript:;" id="a_person_info">设置</a></li>
 				<li><a href="#">Help</a></li>
 				<li class="dropdown dropdown-toggle "><a href="#"
 					class="dropdown-toggle" id="dropdownMenu_user"
@@ -55,7 +55,7 @@ $.ajaxSetup ({
 						咸鱼的梦想<span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu_user">
-						<li><a href="#">个人信息</a></li>
+						<li><a >个人信息</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="#">退出</a></li>
 					</ul></li>
@@ -156,6 +156,11 @@ $.ajaxSetup ({
 				cnt=4;
 				$("#content").load("<%=path%>/servlet/BackupDataServlet");
 			});
+			
+			/*点击个人信息*/
+		$("#a_person_info").click(function(){
+			$("#content").load("<%=path%>/person_info.jsp");
+		});
 
 			var turn = true;
 			$("#nav_toggle")

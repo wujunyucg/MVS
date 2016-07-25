@@ -60,6 +60,7 @@ public class LoginServlet extends HttpServlet {
 			user.setPassword(password);
 			
 			User result = udi.login(user, con);
+			System.out.println("id:"+result.getUserId());
 			PrintWriter pw = response.getWriter();
 			HttpSession session = request.getSession();
 			if(null!=result){

@@ -21,13 +21,13 @@ public class UserDaoTest {
 	public void testLogin() throws ClassNotFoundException, SQLException{
 		User user = new User();
 		user.setAdminId(1);
-		user.setNumber("1");
-		user.setPassword("1");
+		user.setNumber("45");
+		user.setPassword("4545");
 		user.setType(2);
 		
 		User u = new UserDaoImpl().login(user, new DBUtil().getCon());
 		if(u!=null){
-			System.out.println("yes");
+			System.out.println("yes:"+u.getUserId());
 		}
 	}
 	
