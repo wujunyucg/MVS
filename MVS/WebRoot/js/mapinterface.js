@@ -234,16 +234,16 @@ function satationSuit(lng,lat){
 	satation_search.searchNearBy("街",[lng,lat],200,function(status,result){
 		//console.log(status);
 		//console.log(result);
-		for(var i=0;i<result.poiList.pois.length;i++){
+	//	for(var i=0;i<result.poiList.pois.length;i++){
 			//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);	
-		}
+	//	}
 		console.log("jjjjjjjjjjjjjjjjjj");
 		document.getElementById('return_satationinfo').innerHTML=result.poiList.pois[0].name+","+result.poiList.pois[0].location+'';//+result.poiList.pois[0].address;
 		var dd=document.getElementById('return_satationinfo').innerHTML;
 		console.log(dd);
 	});
 	
-	satation_search.searchNearBy("路",[lng,lat],200,function(status,result){
+	/*satation_search.searchNearBy("路",[lng,lat],200,function(status,result){
 			//console.log(status);
 			//console.log(result);
 			for(var i=0;i<result.poiList.pois.length;i++){
@@ -251,7 +251,7 @@ function satationSuit(lng,lat){
 			}
 			console.log("zzzzzzzzzzzzzzzzzzz");
 			
-	});
+	});*/
 }
 function satationSearch(){
 	$('#satation-search input').bind('input oninput',function(){

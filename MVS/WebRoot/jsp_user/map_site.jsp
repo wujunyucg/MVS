@@ -422,7 +422,9 @@
 		$.ajax({ 
 		type:"post",
 		url: "<%=basePath%>servlet/ManageSiteServlet", 
-		data:$('#updateuser').serialize(), 
+		data:{
+				type:0
+		}, 
 		error: function(request) {
             document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
          },
