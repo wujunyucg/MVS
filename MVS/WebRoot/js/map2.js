@@ -224,19 +224,7 @@
 				AMap.event.addListener(marker, 'click',function (e){
 					//data=marker.getPosition(); 
 					marker.setDraggable(false);
-					if(flag==1){
-						satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
-						while(document.getElementById('return_satationinfo').innerHTML=='');
-						var re=document.getElementById('return_satationinfo').innerHTML;
-						console.log(re); 
-						str=re.split(",");
-						data.name=str[0];
-					//	data.peoNum=str[];
-					//	data.lineId=str[];
-						//data.siteId=str[];
-						data.latitude=str[2];
-						data.longitude=str[1];
-					}
+					
 					var conten=SatationContent(data);
 					info(marker.getPosition(),conten);	
 				});	 
