@@ -207,17 +207,24 @@
 		}
 		 
 		function setListener(marker,data){
-				var conten=SatationContent(data);
+				
+			    var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
-					data=marker.getPosition(); 
+					//data=marker.getPosition(); 
+				//	satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
+				//	while(document.getElementById('return_satationinfo').innerHTML=='');
+				//	var re=document.getElementById('return_satationinfo').innerHTML;
+					
+					var conten=SatationContent(data);
 					info(marker.getPosition(),conten);	
 				});	 
 				var ss=data;
 				AMap.event.addListener(marker, 'rightclick',function(e){
 					//info();
-					info2.close( )  
+					info2.close(); 
 					contextMenu.addItem("移动", function() {
 						marker.setDraggable(true);
+						
 					}, 0);
 					contextMenu.addItem("删除", function() {
 						marker.hide();
