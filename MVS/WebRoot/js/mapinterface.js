@@ -250,6 +250,7 @@ function satationSuit(lng,lat){
 				//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
 			}
 			console.log("zzzzzzzzzzzzzzzzzzz");
+			
 	});
 }
 function satationSearch(){
