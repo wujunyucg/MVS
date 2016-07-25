@@ -55,29 +55,8 @@ function EditSatation(data){
 	var sbm=ctn.getElementsByTagName('button');	
 	console.log(sbm);
 	sbm[0].onclick=function(){
-		//alert("OK");
-		var newsatation={"name":"null",
-				 "address":"null",
-				 "lng":[104.040329,30.681873],
-				 "number":1,
-				 "route":1,
-				 "people":0};
-		newsatation.name=document.getElementById('satation-name').value;
-		newsatation.address=document.getElementById('satation-address').value;
-		newsatation.lng=data.lng;
-		newsatation.route=$("#satation-route").val();
-		newsatation.number=$("#satation-number").val();
-		newsatation.people=$("#satation-people").val();
-		console.log("elnglat"+data.lng);
-		console.log("hhj_satation"+hhj_satation);
-		console.log("newsatation"+newsatation+newsatation.number);
-		//satations.push(newsatation);
-		hhj_satation[newsatation.number-1]=newsatation;
-		map.clearMap();
-		markers(hhj_satation);
-		//hhj_satation[hhj_satation.length-1]=null;
-		console.log("hhj_satation"+hhj_satation.length);
-		//marker.hide();
+		document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
+		alert("修改成功");
 		info2.close();
 	};
 

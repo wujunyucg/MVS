@@ -221,6 +221,8 @@
 					}, 0);
 					contextMenu.addItem("删除", function() {
 						marker.hide();
+						document.getElementById('delsatationnum').innerHTML=data.siteId;
+						console.log(document.getElementById('delsatationnum').innerHTML);
 					}, 1);
 					console.log("OK-----右键点击"+ss);
 					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2); 
