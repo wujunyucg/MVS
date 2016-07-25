@@ -221,7 +221,7 @@ function showroute(paths){
 satationSuit(104.097315,30.680841);
 function satationSuit(lng,lat){
 	//var name=place.name;
-	document.getElementById('return_satationinfo').innerHTML='';
+	document.getElementById('return_satationinfo').innerHTML="-1";
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
 		city:'成都',

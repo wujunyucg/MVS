@@ -2,6 +2,7 @@
 		var map = new AMap.Map('container', {
 			resizeEnable: true,
 			zoom:18,
+			city:'成都',
 			isHotspot: true,
 			keyboardEnable:true,
 			resizeEnable: true
@@ -192,7 +193,6 @@
 			return s.join("<br>");
    		 }
 		 function setmarker(data,markers){
-			
 				marker = new AMap.Marker({
 				  position: [data.longitude,data.latitude],
 				  title: data.name,	  
@@ -211,51 +211,33 @@
 			    var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
 					//data=marker.getPosition(); 
-					satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
-					while(document.getElementById('return_satationinfo').innerHTML=='');
-					var re=document.getElementById('return_satationinfo').innerHTML;
-					console.log(re); 
-					str=re.split(",");
-					//data.name=str[0];
-				//	data.peoNum=str[];
-				//	data.lineId=str[];
-					//data.siteId=str[];
-					data.latitude=str[2];
-					data.longitude=str[1];
+					//satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
+//					while(document.getElementById('return_satationinfo').innerHTML=='');
+//					var re=document.getElementById('return_satationinfo').innerHTML;
+//					console.log(re); 
+//					str=re.split(",");
+//					//data.name=str[0];
+//				//	data.peoNum=str[];
+//				//	data.lineId=str[];
+//					//data.siteId=str[];
+//					data.latitude=str[2];
+//					data.longitude=str[1];
 					var conten=SatationContent(data);
 					info(marker.getPosition(),conten);	
 				});	 
 				var ss=data;
 				AMap.event.addListener(marker, 'rightclick',function(e){
 					//info();
-					info2.close(); 
+					//info2.close(); 
+				
+					var contextMenu=new AMap.ContextMenu();
 					contextMenu.addItem("移动", function() {
 						marker.setDraggable(true);
 					}, 0);
-					contextMenu.addItem("删除", function() {
-						var mymessage=confirm("确认删除?")         ;
-					    if(mymessage==true)
-					    {
-					    	marker.hide();
-							document.getElementById('delsatationnum').innerHTML=data.siteId;
-							console.log(document.getElementById('delsatationnum').innerHTML);
-					    }
-					    else
-					    {
-					    	
-					    }
-						
-					}, 1);
-					console.log("OK-----右键点击"+ss);
+					contextMenu.addItem("删除", function() {}, 1);
+					//console.log("OK-----右键点击"+ss);
 					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2); 
-					/*@contextMenu.addItem("查看路线", function() {
-						var path = [];
-						for(var i=0;i<markers.length;i++){
-							console.log(markers[i]);
-								path.push(markers[i].getPosition());
-							} 		
-						Dragroute(path);
-					}, 3);*/
+					
 					contextMenu.open(map, marker.getPosition());
 					contextMenuPositon = marker.getPosition();
 				

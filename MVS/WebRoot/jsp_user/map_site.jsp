@@ -383,7 +383,8 @@
 		var site='${json_site_list}';
 		var list = eval('(' + site + ')');
 		 sitelist = list.sitelist;
-			for(var i=0;i<sitelist.length;i++){
+		//map.setCity('成都');
+	for(var i=0;i<sitelist.length;i++){
 		if(sitelist[i].lineId>=0){
 			satationsmarker(sitelist[i]);
 		}
@@ -418,26 +419,21 @@
 			}
 		});
 		function kmeans(){
-			$("#load_modal").modal('show');
+		$("#load_modal").modal('show');
 		$.ajax({ 
 		type:"post",
-		url: "<%=basePath%>servlet/ManageSiteServlet", 
+		url: "servlet/ManageSiteServlet",
 		data:{
-				type:0
+				type:0,
 		}, 
 		error: function(request) {
             document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
          },
 		success: function(request){
-		if(request == 1){
-			
-           	
-		}
-        else{
-        	document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
-        }
+			 window.location.href="./jsp_user/site_get_address.jsp";
 	    
       }});
+     
 		}
 	</script>
 </body>
