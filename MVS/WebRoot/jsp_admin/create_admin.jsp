@@ -66,37 +66,37 @@
 		<button id="btn_select_all" type="button" class="btn btn-default">全选</button>
 
 		<p class="bg-success text-primary">人员管理</p>
-		<button type="button" class="btn btn-default btn-lg">增加人员</button>
-		<button type="button" class="btn btn-default btn-lg">删除人员</button>
-		<button type="button" class="btn btn-default btn-lg">修改人员</button>
-		<button type="button" class="btn btn-default btn-lg">查询人员</button>
+		<button type="button" class="btn btn-default btn-single-power">增加人员</button>
+		<button type="button" class="btn btn-default btn-single-power">删除人员</button>
+		<button type="button" class="btn btn-default btn-single-power">修改人员</button>
+		<button type="button" class="btn btn-default btn-single-power">查询人员</button>
 
 		<p class="bg-info text-primary">线路管理</p>
-		<button type="button" class="btn btn-default btn-lg">增加线路</button>
-		<button type="button" class="btn btn-default btn-lg">删除线路</button>
-		<button type="button" class="btn btn-default btn-lg">修改线路</button>
-		<button type="button" class="btn btn-default btn-lg">查询线路</button>
+		<button type="button" class="btn btn-default btn-single-power">增加线路</button>
+		<button type="button" class="btn btn-default btn-single-power">删除线路</button>
+		<button type="button" class="btn btn-default btn-single-power">修改线路</button>
+		<button type="button" class="btn btn-default btn-single-power">查询线路</button>
 
 		<p class="bg-success text-primary">排班管理</p>
-		<button type="button" class="btn btn-default btn-lg">增加班次</button>
-		<button type="button" class="btn btn-default btn-lg">删除班次</button>
-		<button type="button" class="btn btn-default btn-lg">修改班次</button>
-		<button type="button" class="btn btn-default btn-lg">查询班次</button>
-		<button type="button" class="btn btn-default btn-lg">班次数据导出</button>
+		<button type="button" class="btn btn-default btn-single-power">增加班次</button>
+		<button type="button" class="btn btn-default btn-single-power">删除班次</button>
+		<button type="button" class="btn btn-default btn-single-power">修改班次</button>
+		<button type="button" class="btn btn-default btn-single-power">查询班次</button>
+		<button type="button" class="btn btn-default btn-single-power">班次数据导出</button>
 
 		<p class="bg-info text-primary">站点管理</p>
-		<button type="button" class="btn btn-default btn-lg">增加站点</button>
-		<button type="button" class="btn btn-default btn-lg">删除站点</button>
-		<button type="button" class="btn btn-default btn-lg">修改站点</button>
-		<button type="button" class="btn btn-default btn-lg">查询站点</button>
-		<button type="button" class="btn btn-default btn-lg">站点数据导出</button>
+		<button type="button" class="btn btn-default btn-single-power">增加站点</button>
+		<button type="button" class="btn btn-default btn-single-power">删除站点</button>
+		<button type="button" class="btn btn-default btn-single-power">修改站点</button>
+		<button type="button" class="btn btn-default btn-single-power">查询站点</button>
+		<button type="button" class="btn btn-default btn-single-power">站点数据导出</button>
 
 		<p class="bg-success text-primary">车辆管理</p>
-		<button type="button" class="btn btn-default btn-lg">新车入厂</button>
-		<button type="button" class="btn btn-default btn-lg">删除车辆</button>
-		<button type="button" class="btn btn-default btn-lg">更新车辆信息</button>
-		<button type="button" class="btn btn-default btn-lg">查询车辆信息</button>
-		<button type="button" class="btn btn-default btn-lg">车辆数据导出</button>
+		<button type="button" class="btn btn-default btn-single-power">新车入厂</button>
+		<button type="button" class="btn btn-default btn-single-power">删除车辆</button>
+		<button type="button" class="btn btn-default btn-single-power">更新车辆信息</button>
+		<button type="button" class="btn btn-default btn-single-power">查询车辆信息</button>
+		<button type="button" class="btn btn-default btn-single-power">车辆数据导出</button>
 
 		<p class="text-primary">
 			<button type="button" class="btn btn-default" id="btn_pre2">上一步</button>
@@ -134,7 +134,7 @@
 
 				var powers = "<h2>拥有的权限：</h2><br/>";
 				var cnt = 0;
-				$(".btn-lg").each(function(index) {
+				$(".btn-single-power").each(function(index) {
 					if ($(this).hasClass("btn-success")) {
 						powerIds += index + ",";
 						powers += ($(this).text() + "  &nbsp;&nbsp");
@@ -197,7 +197,7 @@
 			});
 
 			//若选中此权限按钮，按钮变为绿色
-			$(".btn-lg").click(function() {
+			$(".btn-single-power").click(function() {
 				$(this).toggleClass("btn-success");
 			});
 
@@ -205,13 +205,13 @@
 			var t = true;
 			$("#btn_select_all").click(function() {
 				if (t) {
-					$(".btn-lg").each(function() {
+					$(".btn-single-power").each(function() {
 						$(this).addClass("btn-success");
 					})
 					$("#btn_select_all").text("取消全选");
 					t = false;
 				} else {
-					$(".btn-lg").each(function() {
+					$(".btn-single-power").each(function() {
 						$(this).removeClass("btn-success");
 					})
 					$("#btn_select_all").text("全选");
