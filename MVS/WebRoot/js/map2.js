@@ -253,6 +253,7 @@
 					    	marker.hide();
 							document.getElementById('delsatationnum').innerHTML=data.siteId;
 							console.log(document.getElementById('delsatationnum').innerHTML);
+							Editdata(data);
 					    }
 					    else
 					    {
