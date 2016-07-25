@@ -22,22 +22,7 @@ public class LoginServlet extends HttpServlet {
 
 	DBUtil db = new DBUtil();
 	UserDaoImpl udi = new UserDaoImpl();
-	
-	/**
-	 * Constructor of the object.
-	 */
-	public LoginServlet() {
-		super();
-	}
 
-	/**
-	 * Destruction of the servlet. <br>
-	 */
-	public void destroy() {
-		super.destroy(); // Just puts "destroy" string in log
-	}
-
-	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		this.doPost(request, response);
@@ -45,49 +30,60 @@ public class LoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		response.setContentType("text/html;charset=UTF-8");  
-		
+
+		response.setContentType("text/html;charset=UTF-8");
+
 		String name = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.out.println("in");
-		Connection con = null;
+		/*type=1:超级管理员2：普通管理员3：员工*/
+		int type = Integer.parseInt(request.getParameter("type"));
+		String validCode = request.getParameter("valid");
 		
+		Connection con = null;
+		PrintWriter pw = response.getWriter();
+		HttpSession session = request.getSession();
+		
+		System.out.println(session.getAttribute("validationCode"));
+		/*首先判断验证码*/
+		if(!session.getAttribute("validationCode").equals(validCode)){
+			pw.write("valid");
+			return ;
+		}
+
 		try {
 			con = db.getCon();
 			User user = new User();
 			user.setNumber(name);
 			user.setPassword(password);
-			
+			user.setType(type);
+
 			User result = udi.login(user, con);
-			System.out.println("id:"+result.getUserId());
-			PrintWriter pw = response.getWriter();
-			HttpSession session = request.getSession();
-			if(null!=result){
+			System.out.println("id:" + result.getUserId());
+			if (null != result) {
 				session.setAttribute("user", result);
 				pw.write("yes");
 				String lastLoginTime = "从未登录";
-				Cookie[]cookies = request.getCookies();
-				if(cookies==null){
-					response.addCookie(new Cookie("lastLoginTime", DateUtil.getDateTime()));
-				}else{
+				Cookie[] cookies = request.getCookies();
+				if (cookies == null) {
+					response.addCookie(new Cookie("lastLoginTime", DateUtil
+							.getDateTime()));
+				} else {
 					for (int i = 0; i < cookies.length; i++) {
-		                Cookie cookie = cookies[i];
-		                if (cookie.getName().equals("lastLoginTime")) {
-		                	lastLoginTime = cookie.getValue();
-		                	cookie.setValue(DateUtil.getDateTime());
-		                	break;
-		                }
-		            }
+						Cookie cookie = cookies[i];
+						if (cookie.getName().equals("lastLoginTime")) {
+							lastLoginTime = cookie.getValue();
+							cookie.setValue(DateUtil.getDateTime());
+							break;
+						}
+					}
 				}
 				/**/
 				session.setAttribute("lastLoginTime", lastLoginTime);
 				session.setAttribute("power", "1,2,3,7");
-				
-				//System.out.println("yes");
-			}else{
+
+				// System.out.println("yes");
+			} else {
 				pw.write("no");
-				//System.out.println("no");				
 			}
 			pw.flush();
 			pw.close();
@@ -95,8 +91,8 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			if(null!=con){
+		} finally {
+			if (null != con) {
 				try {
 					db.closeCon(con);
 				} catch (SQLException e) {
@@ -104,8 +100,5 @@ public class LoginServlet extends HttpServlet {
 				}
 			}
 		}
-	}
-
-	public void init() throws ServletException {
 	}
 }

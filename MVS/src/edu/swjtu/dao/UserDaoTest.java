@@ -20,10 +20,9 @@ public class UserDaoTest {
 	@Test
 	public void testLogin() throws ClassNotFoundException, SQLException{
 		User user = new User();
-		user.setAdminId(1);
-		user.setNumber("45");
-		user.setPassword("4545");
-		user.setType(2);
+		user.setNumber("jimo");
+		user.setPassword("22");
+		user.setType(1);
 		
 		User u = new UserDaoImpl().login(user, new DBUtil().getCon());
 		if(u!=null){

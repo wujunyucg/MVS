@@ -31,11 +31,13 @@ public class UserDaoImpl implements UserDao{
 	public User login(User user, Connection con) {
 		
 		User ru = null;
-		String sql = "select * from user where user_number=? and user_password=?";
+		String sql = "select * from user where user_number=? and "
+				+ "user_password=? and user_type=?";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setString(1, user.getNumber());
 			pstm.setString(2, user.getPassword());
+			pstm.setInt(3, user.getType());
 			ResultSet rs = pstm.executeQuery();
 			if(rs.next()){
 				ru = getUserOne(rs);
