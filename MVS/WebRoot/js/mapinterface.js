@@ -10,36 +10,50 @@ function moveTocenter(loction){
 
 //展示所有员工数据
 
-var hhj_satations=[
-              	{name:"金鱼街",
-              	 address:"金鱼街10号",
-              	 lng:[104.040329,30.681873],
-              	 number:1,
-              	 route:3,
-              	 people:10
-              	},
-              	{
-              		name:"天茵苑",
-              		address:"通锦路1号",
-              		lng:[104.056036,30.680028],
-              		number:2,
-              		route:2,
-              		people:16
-              		},
-              	 {
-              		name:"五丁苑",
-              		address:"西北桥边街1号",
-              		lng:[104.062388,30.683423],
-              		number:3,
-              		route:1,
-              		people:6},
-              	 {
-              		name:"新园(白马寺北顺街)",
-              		address:"白马寺北顺街99号",
-              		lng:[104.069072,30.684504],
-              		number:4,
-              		route:1,
-              		people:15},];
+var hhj_satations=[{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.681873,
+	longitude:104.040329,
+	address:"金鱼街10号",
+	name:"金鱼街"	
+},{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.684504,
+	longitude:104.069072,
+	address:"白马寺北顺街99号",
+	name:"新园(白马寺北顺街)"	
+},
+{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.680028,
+	longitude:104.056036,
+	name:"天茵苑",
+  	address:"通锦路1号",
+},
+{
+	siteId:0,
+	peoNum:0,
+	lineId:0,
+	order:0,
+	delay:0,
+	latitude:30.683423,
+	longitude:104.062388,
+  	name:"五丁苑",
+	address:"西北桥边街1号",
+},
+];
 
 //showAllstaffinfo(hhj_satations)
 function showAllstaffinfo(data){
@@ -216,12 +230,12 @@ function showroute(paths){
 		});
 	});
 }
-
+var rr;
 //站点街道匹配
 satationSuit(104.097315,30.680841);
 function satationSuit(lng,lat){
 	//var name=place.name;
-	document.getElementById('return_satationinfo').innerHTML="-1";
+	document.getElementById('return_satationinfo').innerHTML='';
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
 		city:'成都',
@@ -231,28 +245,15 @@ function satationSuit(lng,lat){
 	});
 	console.log("ddddddddddd");
 	
-	satation_search.searchNearBy("街",[lng,lat],200,function(status,result){
-		//console.log(status);
-		//console.log(result);
-	//	for(var i=0;i<result.poiList.pois.length;i++){
-			//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);	
-	//	}
-		console.log("jjjjjjjjjjjjjjjjjj");
-		document.getElementById('return_satationinfo').innerHTML=result.poiList.pois[0].name+","+result.poiList.pois[0].location+'';//+result.poiList.pois[0].address;
-		var dd=document.getElementById('return_satationinfo').innerHTML;
-		console.log(dd);
-	});
-	
-	/*satation_search.searchNearBy("路",[lng,lat],200,function(status,result){
-			//console.log(status);
-			//console.log(result);
-			for(var i=0;i<result.poiList.pois.length;i++){
-				//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
-			}
-			console.log("zzzzzzzzzzzzzzzzzzz");
-			
-	});*/
+	satation_search.searchNearBy("街",[lng,lat],200,function(status,result){});
 }
+ 
+function read(data){
+	rr=data;
+	console.log(rr+';;;;;'+data);
+	return rr;
+}
+
 function satationSearch(){
 	$('#satation-search input').bind('input oninput',function(){
 		var index=$('#satation-search input').val();
@@ -262,5 +263,34 @@ function satationSearch(){
 			Dragroutetest(paths[index].lng);
 			flag=2;
 		}
+	});
+}
+place_search('金鱼街');
+function place_search(name){
+	//var name=place.name;
+	var satation_search=new AMap.PlaceSearch({
+		keywords :name, //搜索关键字为“超市”的poi
+		city:'成都',
+		citylimit:true,
+		pageSize:1,
+		//panel:'panel'
+	});
+	satation_search.search(name,function(status,result){
+		//for(var i=0;i<result.poiList.pois.length;i++){
+			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
+			var satation={
+					siteId:-1,
+					peoNum:0,
+					lineId:-1,
+					order:-1,
+					delay:-1,
+					latitude:result.poiList.pois[0].location.lat,
+					longitude:result.poiList.pois[0].location.lng,
+					address:name,
+					name:name	
+			};
+			satationsmarker(satation);
+			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
+		//}
 	});
 }

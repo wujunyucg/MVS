@@ -5,8 +5,7 @@
 			city:'成都',
 			isHotspot: true,
 			keyboardEnable:true,
-			resizeEnable: true
-		});
+ 		});
 		map.plugin(["AMap.MapType"],function(){
 			//地图类型切换
 			var type= new AMap.MapType({
@@ -158,6 +157,16 @@
 			});
 			setListener(marker,data)
 		}
+		function testmarker(data){
+			var marker=new AMap.Marker({
+				  position: data,
+				  raiseOnDrag:true,
+				  map: map,
+				  icon:"icons/staff.png",
+				  zIndex:100
+			});
+			//setListener(marker,data)
+		}
 		function satationsmarker(data){
 			var marker=new AMap.Marker({
 				  position:[data.longitude,data.latitude],
@@ -193,6 +202,7 @@
 			return s.join("<br>");
    		 }
 		 function setmarker(data,markers){
+			
 				marker = new AMap.Marker({
 				  position: [data.longitude,data.latitude],
 				  title: data.name,	  
@@ -205,39 +215,60 @@
 				//地图绑定鼠标右击事件——弹出右键菜单
 				
 		}
-		 
 		function setListener(marker,data){
-				
+				var flag=0;
 			    var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
 					//data=marker.getPosition(); 
-					//satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
-//					while(document.getElementById('return_satationinfo').innerHTML=='');
-//					var re=document.getElementById('return_satationinfo').innerHTML;
-//					console.log(re); 
-//					str=re.split(",");
-//					//data.name=str[0];
-//				//	data.peoNum=str[];
-//				//	data.lineId=str[];
-//					//data.siteId=str[];
-//					data.latitude=str[2];
-//					data.longitude=str[1];
+					marker.setDraggable(false);
+					if(flag==1){
+						satationSuit(marker.getPosition().getLng( ) ,marker.getPosition().getLat( ) );
+						while(document.getElementById('return_satationinfo').innerHTML=='');
+						var re=document.getElementById('return_satationinfo').innerHTML;
+						console.log(re); 
+						str=re.split(",");
+						data.name=str[0];
+					//	data.peoNum=str[];
+					//	data.lineId=str[];
+						//data.siteId=str[];
+						data.latitude=str[2];
+						data.longitude=str[1]; v
+					}
 					var conten=SatationContent(data);
 					info(marker.getPosition(),conten);	
 				});	 
 				var ss=data;
 				AMap.event.addListener(marker, 'rightclick',function(e){
 					//info();
-					//info2.close(); 
-				
+					info2.close(); 
+					marker.setDraggable(false);
 					var contextMenu=new AMap.ContextMenu();
 					contextMenu.addItem("移动", function() {
 						marker.setDraggable(true);
-					}, 0);
-					contextMenu.addItem("删除", function() {}, 1);
-					//console.log("OK-----右键点击"+ss);
+					},0);
+					contextMenu.addItem("删除", function() {
+					if(mymessage==true)
+					    {
+					    	marker.hide();
+							document.getElementById('delsatationnum').innerHTML=data.siteId;
+							console.log(document.getElementById('delsatationnum').innerHTML);
+					    }
+					    else
+					    {
+					    	
+					    }
+						
+					}, 1);
+					console.log("OK-----右键点击"+ss);
 					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2); 
-					
+					/*@contextMenu.addItem("查看路线", function() {
+						var path = [];
+						for(var i=0;i<markers.length;i++){
+							console.log(markers[i]);
+								path.push(markers[i].getPosition());
+							} 		
+						Dragroute(path);
+					}, 3);*/
 					contextMenu.open(map, marker.getPosition());
 					contextMenuPositon = marker.getPosition();
 				
@@ -281,49 +312,3 @@
 		// 根据起终点经纬度规划驾车导航路线
 		driving.search(lngLat1,lngLat2);
 	}
-	//关键字搜索,name:关键字
-	//place_search('医院');
-	/*
-	var testps=[{name:'西北桥边街1号',
-				 lng:[0,0]},
-				 {name:'一环路北三段92号',
-				  lng:[0,0]}];
-	for(var i=0;i<testps.length;i++){
-		//place_search(testps);
-	}
-	//var ps_index=0;*/
-	function place_search(name){
-		//var name=place.name;
-		var satation_search=new AMap.PlaceSearch({
-			keywords :name, //搜索关键字为“超市”的poi
-			city:'成都',
-			citylimit:true,
-			pageSize:1,
-			//panel:'panel'
-		});
-		satation_search.search(name,function(status,result){
-			//console.log(status);
-			//console.log(result);
-			for(var i=0;i<result.poiList.pois.length;i++){
-				//console.log(result.poiList.pois[i].name+"	"+result.poiList.pois[i].location.lat+"	"+result.poiList.pois[i].location.lng);
-				map.setCenter([result.poiList.pois[i].location.lng,result.poiList.pois[i].location.lat]);
-				var satation={
-						siteId:-1,
-						peoNum:0,
-						lineId:-1,
-						order:-1,
-						delay:-1,
-						latitude:result.poiList.pois[i].location.lat,
-						longitude:result.poiList.pois[i].location.lng,
-						address:name,
-						name:name	
-				};
-				staffmarker(satation);
-			}
-			//rr=
-			//testps[ps_index].lng=result.poiList.pois[0].location;
-			//ps_index++;
-		});
-		//console.log(place_lng);
-	}
-	//console.log(place_lng);
