@@ -214,6 +214,7 @@
   <ul class="dropdown-menu" aria-labelledby="dLabel">
   <li><a>点击选点</a></li>
      <li> <a> 搜索选点</a></li>
+      <li> <a onclick="javascript:kmeans()"> 自动生成</a></li>
   </ul>
   
 </div>
@@ -310,7 +311,16 @@
 </div>
  
  </div> 
-	
+	<div id="load_modal" class="modal fade" id="myModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<b>正在加载，请稍后...</b>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
@@ -407,7 +417,26 @@
 				up=true;
 			}
 		});
-		
+		function kmeans(){
+			$("#load_modal").modal('show');
+		$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/ManageSiteServlet", 
+		data:$('#updateuser').serialize(), 
+		error: function(request) {
+            document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+         },
+		success: function(request){
+		if(request == 1){
+			
+           	
+		}
+        else{
+        	document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+        }
+	    
+      }});
+		}
 	</script>
 </body>
 </html>

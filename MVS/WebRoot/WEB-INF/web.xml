@@ -263,8 +263,6 @@
     <servlet-name>ValidationCodeServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ValidationCodeServlet</servlet-class>
   </servlet>
-
-
   <servlet-mapping>
     <servlet-name>ExportSiteServlet</servlet-name>
     <url-pattern>/servlet/ExportSiteServlet</url-pattern>
@@ -276,5 +274,15 @@
   <servlet-mapping>
     <servlet-name>ValidationCodeServlet</servlet-name>
     <url-pattern>/validationCodeServlet.png</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ManageSiteServlet</display-name>
+    <servlet-name>ManageSiteServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ManageSiteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManageSiteServlet</servlet-name>
+    <url-pattern>/servlet/ManageSiteServlet</url-pattern>
   </servlet-mapping>
 </web-app>
