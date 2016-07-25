@@ -196,7 +196,7 @@ function showroute(paths,id){
 		route.search(); //查询导航路径并开启拖拽导航
 		//当路径完成时的事件
 	//	console.log("enter serach-----");
-		console.log(paths[0].lineId);
+		console.log(id);
 		AMap.event.addListener(route,'complete',function(e){
 			//alert("OK");
 			//alert(e.data.routes[0].steps[0].action);
@@ -211,7 +211,7 @@ function showroute(paths,id){
 			$('#addroute').css("display","none");
 			var trs=document.getElementById("routenumber");
 			console.log(paths[0].lineId);
-			trs.innerHTML="线路"+paths[0].lineId;
+			trs.innerHTML="线路"+id;
 			var tds=document.getElementById("time-distance").getElementsByTagName("td");
 			tds[0].innerHTML=e.data.routes[0].time/60+"分钟";
 			tds[1].innerHTML=e.data.routes[0].distance/1000+"千米";
