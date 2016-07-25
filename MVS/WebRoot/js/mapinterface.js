@@ -224,6 +224,7 @@ function showroute(paths,id,name){
 }
 var rr;
 function DelRoute(id){
+	$('#result').css("display","none");
 	route2[id].destroy();
 }
 //站点街道匹配
