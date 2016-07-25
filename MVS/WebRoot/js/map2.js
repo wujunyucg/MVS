@@ -217,6 +217,9 @@
 		}
 		function setListener(marker,data){
 				var flag=0;
+				map.on('click',function(){
+					info2.close();
+				});
 			    var conten=SatationContent(data);
 				AMap.event.addListener(marker, 'click',function (e){
 					//data=marker.getPosition(); 
@@ -232,7 +235,7 @@
 					//	data.lineId=str[];
 						//data.siteId=str[];
 						data.latitude=str[2];
-						data.longitude=str[1]; v
+						data.longitude=str[1];
 					}
 					var conten=SatationContent(data);
 					info(marker.getPosition(),conten);	
