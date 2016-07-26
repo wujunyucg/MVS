@@ -106,7 +106,9 @@
 		</form>
 		<br/>
 	<button id="crearr_btn_fin" type="button" style="width:360px;"
-					class="btn btn-primary">确定</button>
+					class="btn btn-primary">确定</button><br/><br/>
+	<button id="crearr_btn_multi" type="button" style="width:360px;"
+					class="btn btn-primary">按月排班</button>
 	</div>
 	
 	<div style="margin-left:370px;display:none;" id="arr_line_div">
@@ -403,6 +405,12 @@
 			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=request.getContextPath()%>/servlet/ManageArrangeServlet?"+
 				 "type=2"+"&date="+date);
+		});
+		
+		/*按月排班*/
+		$("#crearr_btn_multi").click(function(){
+			$("#load_modal").modal('show');//显示加载框
+			$("#content").load("<%=path%>/servlet/CreateArrServlet?multi=yes");
 		});
 	</script>
 </body>

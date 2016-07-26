@@ -183,7 +183,7 @@
 		
 		$(".add-arrange").click(function(){
 			$("#load_modal").modal('show');//显示加载框
-			$("#content").load("<%=path%>/servlet/CreateArrServlet");
+			$("#content").load("<%=path%>/servlet/CreateArrServlet?multi=yes");
 		});
 		
 		$("#cre_car").click(function() {
