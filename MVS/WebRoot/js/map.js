@@ -57,11 +57,11 @@ function EditSatation(data,marker){
 		
 	
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
-		data.lineId=route.val();
-		data.order=num.val();
+		data.lineId=parseInt(route.val());
+		data.order=parseInt(num.val());
 		data.name=document.getElementById('satation-name').value;
 		data.address=document.getElementById('satation-address').value;
-		data.peoNum=$('#satation-people').val();
+		data.peoNum=parseInt($('#satation-people').val());
 		console.log(data);
 		alert("修改成功");
 		satationsmarker(data);
