@@ -414,6 +414,7 @@ function EditSatation2(data,marker,ctn){
 		var json=JSON.stringify(data);
 		Addsitedata(json.toString());
 		marker.hide();
+		map.on('click',function(e){});
 		info2.close();
 	};
 	sbm[1].onclick=function(){
@@ -422,7 +423,7 @@ function EditSatation2(data,marker,ctn){
 	console.log("4");
 }
 addclicksite();
-function addclicksite(){
+function addclicksite(ctn){
 	map.on('click',function(e){
 		var marker=new AMap.Marker({
 			map:map,
@@ -469,7 +470,7 @@ function addclicksite(){
 			//	console.log(json);
 			//	console.log(json.toString());
 			//	Editdata(json.toString());
-				EditSatation2(data,marker);
+				EditSatation2(data,marker,ctn);
 			});
 			
 		});
