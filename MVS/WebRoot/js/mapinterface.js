@@ -232,6 +232,7 @@ function DelRoute(id){
 function satationSuit(lng,lat,data){
 	//var name=place.name;
 	document.getElementById('return_satationinfo').innerHTML='';
+	console.log(data);
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
 		city:'成都',
@@ -242,12 +243,15 @@ function satationSuit(lng,lat,data){
 	console.log("ddddddddddd");
 	satation_search.searchNearBy("街", [lng,lat],200,function(status,result){
 		//data.longitude=lng;
-		console.log(data);
+	//	console.log(data);
 		data.longitude=lng;
 		data.latitude=lat;
 		data.address=result.poiList.pois[0].name;
 		satationsmarker(data);
-		Editdata(data);
+		var json=JSON.stringify(data);
+	//	console.log(json);
+	//	console.log(json.toString());
+		Editdata(json.toString());
 	});
 }
  
@@ -282,11 +286,11 @@ function place_search(name){
 		//for(var i=0;i<result.poiList.pois.length;i++){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 			var satation={
-					siteId:-1,
+					siteId:1,
 					peoNum:0,
-					lineId:-1,
-					order:-1,
-					delay:-1,
+					lineId:1,
+					order:1,
+					delay:1,
 					latitude:result.poiList.pois[0].location.lat,
 					longitude:result.poiList.pois[0].location.lng,
 					address:name,

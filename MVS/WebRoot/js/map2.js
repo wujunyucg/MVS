@@ -226,10 +226,11 @@
 					marker.setDraggable(false);
 					if(flag==1){
 						console.log("移动成功");
+						flag=0;
 						satationSuit(marker.getPosition().getLng(),marker.getPosition().getLat(),data);
 						console.log("匹配成功");
 						marker.hide();
-						flag=0;
+						
 					}
 					else{
 					var conten=SatationContent(data);
@@ -254,7 +255,7 @@
 					    	marker.hide();
 							document.getElementById('delsatationnum').innerHTML=data.siteId;
 							console.log(document.getElementById('delsatationnum').innerHTML);
-							Editdata(data);
+							DelsatationD(data.siteId);
 					    }
 					    else
 					    {
@@ -263,7 +264,7 @@
 						
 					}, 1);
 					console.log("OK-----右键点击"+ss);
-					contextMenu.addItem("修改", function(){EditSatation(ss);}, 2); 
+					contextMenu.addItem("修改", function(){EditSatation(ss);marker.hide();}, 2); 
 					/*@contextMenu.addItem("查看路线", function() {
 						var path = [];
 						for(var i=0;i<markers.length;i++){
@@ -322,6 +323,22 @@
 			data:{
 					type:2,
 					json:Data
+			}, 
+			error: function(request) {
+	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+	         },
+			success: function(request){
+				 //window.location.href="./jsp_user/site_get_address.jsp";
+		    
+	      }});
+	}
+	function DelsatationD(id){
+		$.ajax({ 
+			type:"post",
+			url: "servlet/ManageSiteServlet",
+			data:{
+					type:3,
+					sizeId:id
 			}, 
 			error: function(request) {
 	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';

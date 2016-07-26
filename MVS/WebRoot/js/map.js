@@ -43,7 +43,7 @@ function EditSatation(data){
 	document.getElementById('satation-name').value=data.name;
 	document.getElementById('satation-address').value=data.address;
 	var route=$('#satation-route option');
-	route[data.route-1].selected='selected';
+	route[data.lineId-1].selected='selected';
 	var num=$('#satation-number option');
 	//console.log(data.number);
 	num[data.order].selected='selected';
@@ -53,11 +53,20 @@ function EditSatation(data){
 	console.log(ctn);
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
-	console.log(sbm);
+	//console.log(sbm);
+	console.log(data);
 	sbm[0].onclick=function(){
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
+		data.lineId=route.val();
+		data.order=num.val();
+		data.name=document.getElementById('satation-name').value;
+		data.address=document.getElementById('satation-address').value;
+		data.peoNum=$('#satation-people').val();
+		console.log(data);
 		alert("修改成功");
-		Editdata(data);
+		satationsmarker(data);
+		var json=JSON.stringify(data);
+		Editdata(json.toString());
 		info2.close();
 	};
 	
