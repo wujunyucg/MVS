@@ -337,6 +337,22 @@
 		    
 	      }});
 	}
+	function Addsitedata(Data){
+		$.ajax({ 
+			type:"post",
+			url: "servlet/ManageSiteServlet",
+			data:{
+					type:4,
+					json:Data
+			}, 
+			error: function(request) {
+	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+	         },
+			success: function(request){
+				 //window.location.href="./jsp_user/site_get_address.jsp";
+		    
+	      }});
+	}
 	function DelsatationD(id){
 		$.ajax({ 
 			type:"post",

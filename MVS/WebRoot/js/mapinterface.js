@@ -411,7 +411,7 @@ function EditSatation2(data,marker){
 		alert("增加成功");
 		satationsmarker(data);
 		var json=JSON.stringify(data);
-		Editdata(json.toString());
+		Addsitedata(json.toString());
 		marker.hide();
 		info2.close();
 	};
