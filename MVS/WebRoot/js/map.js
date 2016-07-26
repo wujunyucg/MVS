@@ -43,7 +43,7 @@ function EditSatation(data){
 	$('#satation-name').val(data.name);
 	$('#satation-address').val(data.address);
 	var route=$('#satation-route option');
-	route[data.lineId-1].selected='selected';
+	route[data.lineId].selected='selected';
 	var num=$('#satation-number option');
 	//console.log(data.number);
 	num[data.order].selected='selected';
