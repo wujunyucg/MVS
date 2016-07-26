@@ -21,6 +21,8 @@ var obj={
 		 "people":0};
 var satations=hhj_satation;
 var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
+console.log(hhj_ctn);
+
 var satation_routes=document.getElementById("satation-route").innerHTML;
 //站点查询
 function satation_search(){}
@@ -31,9 +33,10 @@ function AddSation(){}
 //删除站点
 function DeleteSatation(){}
 //修改站点
-function EditSatation(data){
+function EditSatation(data,marker){
 	document.getElementById('addsatation-info').innerHTML="";
 	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
+	console.log(hhj_ctn);
 	var s=[data.longitude,data.latitude];
 	console.log("1");
 	var ctn=document.getElementById('info-satation');
@@ -53,7 +56,6 @@ function EditSatation(data){
 	console.log("3");
 	info(s,ctn);
 	console.log(ctn);
-	
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
 	//console.log(sbm);
@@ -72,9 +74,12 @@ function EditSatation(data){
 		satationsmarker(data);
 		var json=JSON.stringify(data);
 		Editdata(json.toString());
+		marker.hide();
 		info2.close();
 	};
-	
+	sbm[1].onclick=function(){
+		info2.close();
+	};
 	console.log("4");
 }
  
