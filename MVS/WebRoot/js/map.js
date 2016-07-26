@@ -56,6 +56,8 @@ function EditSatation(data){
 	//console.log(sbm);
 	console.log(data);
 	sbm[0].onclick=function(){
+		
+	
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
 		data.lineId=route.val();
 		data.order=num.val();
