@@ -51,8 +51,8 @@ public class PlanRoute {
 			num_site += sitelist.get(i).getPeoNum();
 		num_free = num_seat - num_site;
 
-		if (num_free < 0) // 厂车座位总数小于人数
-			return linelist;
+//		if (num_free < 0) // 厂车座位总数小于人数
+//			return linelist;
 
 //		if (min_rate == 0)
 //			min_rate = 1.0;

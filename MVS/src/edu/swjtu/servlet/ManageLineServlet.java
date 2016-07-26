@@ -112,6 +112,9 @@ public class ManageLineServlet extends HttpServlet {
 				String max_len = request.getParameter("max_len");
 				double minRec = Double.valueOf(min_rec).doubleValue();
 				minRec = minRec * 0.01;
+				if(minRec == 0.0){
+					minRec = 0.000000001;
+				}
 				double maxLen = Double.valueOf(max_len).doubleValue();
 				ArrayList<Site> sitelist = new ArrayList<Site>();
 				sitelist = new SiteDaoImpl().getAllSite(con);
@@ -143,7 +146,14 @@ public class ManageLineServlet extends HttpServlet {
 					if(new LineDaoImpl().deleteAllLine(con) >= 0){
 						ArrayList<Line> linelist = new ArrayList<Line>();
 						request.getSession().setAttribute("pr",pr);
-						linelist = pr.intelligentLine(minRec, maxLen, sitelist,carlist, fac_site, 0, 0);
+						
+						try{
+							linelist = pr.intelligentLine(minRec, maxLen, sitelist,carlist, fac_site, 0, 0);
+						}catch(Exception e){
+							pw.write("no");
+							return;
+						}
+						
 						pw.write("yes");
 						try {
 							new LineDaoImpl().addMoreLine(linelist, con);

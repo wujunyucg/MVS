@@ -1,6 +1,7 @@
 <%@page import="edu.swjtu.intelligent.PlanRoute"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -302,14 +303,16 @@
 												<td class="text-success">${siteNames.get(status.index)}</td>
 												<td style="width:100px;" class="text-success">${carNumbers.get(status.index)}</td>
 												<td style="width:100px;" class="text-success">${line.getNum()}</td>
-												<td style="width:100px;" class="text-success">${line.getRate() * (-100.0) }%</td>
+												<td style="width:100px;" class="text-success">
+												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
 											</c:when>
 											<c:otherwise>   
 												<td>${line.getName()}</td>
 												<td>${siteNames.get(status.index)}</td>
 												<td style="width:100px;">${carNumbers.get(status.index)}</td>
 												<td style="width:100px;">${line.getNum()}</td>
-	   											<td style="width:100px;">${line.getRate() * 100.0}%</td>
+	   											<td style="width:100px;">
+												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
 	 										 </c:otherwise> 
  										 </c:choose>
 										<td style="width:60px;">
@@ -400,7 +403,7 @@
 					<div id="cre_page2" class="mypage3">
 						<div class="modal-body">
 							<div class="alert alert-info" role="alert">请确认下列数据无误后点击-确认生成
-							（该智能生成路线会删除之前所有路线信息）：</div>
+							（点击确认生成会删除之前所有路线信息）：</div>
 							<br/>
 							<li id="smin_rec" class="list-group-item list-group-item-success" role="alert"></li>
 							<li id="smax_len" class="list-group-item list-group-item-success" role="alert"></li>
@@ -418,6 +421,14 @@
 						<div class="modal-footer">
 							<button id="sea_fin" type="button" class="btn btn-primary" 
 							onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">查看线路</button>
+						</div>
+					</div>
+					<div id="cre_page4" class="mypage4">
+						<div class="modal-body">
+							<div id="result" class="alert alert-danger" role="alert">受车辆数限制，所给最低乘坐率或最大路程数无法实现，规划线路失败！</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="goback_i">返回设置</button>
 						</div>
 					</div>
 	
@@ -471,7 +482,7 @@
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
  		<script type="text/javascript" src="js/mapinterface.js"></script> 
-	<!-- <script type="text/javascript" src="js/testroute.js"></script> -->
+	<script type="text/javascript" src="js/testroute.js"></script> 
 	<script type="text/javascript">
 
 		var max_length = "-1";
@@ -482,14 +493,15 @@
 		$("#kil").hide();
 		$(".json_line").hide();
 		$("#getallline_json").hide();
+		$("#cre_page4").hide();
 		
 		var allline = $("#getallline_json").text();
 		var allobj = eval("("+allline+")");
 		var size = $("#getallline").attr("title");
-/*		for(var i=0;i<size;i++){
+		for(var i=0;i<size;i++){
 			showroute(allobj[i].sitelist);
 		}
-*/		
+	
 		var turn = true;
 		var openMenus = new Array();//存放展开的子menu的div
 		$("#j_nav_toggle").click(function(){
@@ -550,7 +562,7 @@
 				up=true;
 			}
 		});
-/*	
+
 		$("#getallline").click(function (){
 			var allline = $("#getallline_json").text();
 			var allobj = eval("("+allline+")");
@@ -579,13 +591,12 @@
 				$(l_na).text("隐藏");
 			}
 			else if($(l_na).text() == "隐藏"){
-			console.log(number);
 				DelRoute(number);
 				$(l_na).text("查看");
 			}
 			
 		}
-*/
+
 		$("#icreline").click(function() {
 		
 			document.getElementById("max_len").value="";
@@ -612,6 +623,7 @@
 			$("#cre_page1").show();
 			$("#cre_page2").hide();
 			$("#cre_page3").hide();
+			$("#cre_page4").hide();
 			$("#icreline").attr("data-target","#in_creline");
 		});
 		
@@ -665,6 +677,7 @@
 			$("#cre_page1").show();
 			$("#cre_page2").hide("1000");
 			$("#cre_page3").hide();
+			$("#cre_page4").hide();
 		});
 		
 		$("#next_cre").click(function(){
@@ -672,6 +685,7 @@
 				$("#cre_page1").hide("1000");
 				$("#cre_page2").show();
 				$("#cre_page3").hide();
+				$("#cre_page4").hide();
 				var min_rec = $("#min_rec").val();
 				var max_len = $("#max_len").val();
 				$("#smin_rec").text("最低乘坐率：" + min_rec + "%");
@@ -721,7 +735,13 @@
 								$("#cre_page1").hide();
 								$("#cre_page2").hide("1000");
 								$("#cre_page3").show();
-							} else {
+								$("#cre_page4").hide();
+							} else   if("no" == re){
+								$("#cre_page4").show();
+								$("#cre_page1").hide();
+								$("#cre_page2").hide("1000");
+								$("#cre_page3").hide();
+							}else{
 							}
 						}
 				});
@@ -816,8 +836,11 @@
 			if(Rate < 0){
 				Rate = Rate * (-100.0);
 			}
+			else{
+				Rate = Rate * 100.0;
+			}
 			$("#de_Num").text("路线人数：" + Num);
-			$("#de_Rate").text("乘坐率：" + Rate + "%");
+			$("#de_Rate").text("乘坐率：" + Math.round(Rate * 1000) / 1000 + "%");
 			$("#page_d").show();
 			$("#page_ds").hide();
 			
@@ -835,12 +858,18 @@
 						if ("yes" == re) {
 							$("#page_d").hide("1000");
 							$("#page_ds").show();
-						} else {
+						} else{
 						}
 					}
 				});
 		});
 
+		$("#goback_i").click(function(){
+			$("#cre_page1").show();
+			$("#cre_page2").hide();
+			$("#cre_page3").hide();
+			$("#cre_page4").hide("1000");
+		});
 		
 	</script>
 <div>

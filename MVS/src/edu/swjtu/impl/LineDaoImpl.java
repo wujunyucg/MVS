@@ -121,7 +121,7 @@ public class LineDaoImpl implements LineDao {
 			pstm.setDouble(5, linelist.get(i).getRate());
 			u += pstm.executeUpdate();
 		}
-		return u / linelist.size();
+		return u;
 	}
 
 	@Override
