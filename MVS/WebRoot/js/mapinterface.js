@@ -348,3 +348,76 @@ function place_search(name){
 		//}
 	});
 }
+function EditSatation2(data,marker){
+	document.getElementById('addsatation-info').innerHTML="";
+	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
+	var s=[data.longitude,data.latitude];
+	var ctn=document.getElementById('info-satation');
+	console.log(document.getElementById('satation-lng'));
+	$('#satation-lng').val(s);
+	$('#satation-name').val(data.name);
+	$('#satation-address').val(data.address);
+	var route=$('#satation-route option');
+	console.log(data.lineId);
+	route[data.lineId].selected='selected';
+	console.log(data.order);
+	var num=$('#satation-number option');
+	//console.log(data.number);
+	num[data.order].selected='selected';
+	$('#satation-people').val(data.peoNum);
+	info(s,ctn);
+	//var sbm=document.getElementById('sbm');
+	var sbm=ctn.getElementsByTagName('button');	
+	//console.log(sbm);
+	console.log(data);
+	sbm[0].onclick=function(){
+		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
+		data.lineId=parseInt(route.val());
+		data.order=parseInt(num.val());
+		data.name=document.getElementById('satation-name').value;
+		data.address=document.getElementById('satation-address').value;
+		data.peoNum=parseInt($('#satation-people').val());
+		console.log(data);
+		alert("修改成功");
+		satationsmarker(data);
+		var json=JSON.stringify(data);
+		Editdata(json.toString());
+		marker.hide();
+		info2.close();
+	};
+	sbm[1].onclick=function(){
+		info2.close();
+	};
+	console.log("4");
+}
+addclicksite();
+function addclicksite(){
+	map.on('click',function(e){
+		var marker=new AMap.Marker({
+			map:map,
+			draggable:true,
+			icon:"icons/satation2.svg",
+			//location:e.lnglat
+		});
+		var ll=e;
+		marker.setPosition(e.lnglat);
+		
+		AMap.event.addListener(marker, 'click',function (e){
+			console.log(e.lnglat);
+			var satation={
+					siteId:1,
+					peoNum:0,
+					lineId:1,
+					order:1,
+					delay:1,
+					latitude:e.lnglat.lat,
+					longitude:e.lnglat.lng,
+					address:"",
+					name:""	
+			};
+			//var conten=SatationContent(satation);
+			//info(e.lnglat,conten);	
+			EditSatation2(satation,marker);
+		});
+	});
+}
