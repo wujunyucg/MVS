@@ -72,7 +72,7 @@
 					class="list-group-item btn-menu btn_icon">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 				</button>
-				<button type="button" class="list-group-item  btn-menu btn_text">
+				<button type="button" class="list-group-item  btn-menu btn_text" onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 					线路管理
 				</button>

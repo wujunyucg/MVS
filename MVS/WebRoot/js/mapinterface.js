@@ -214,7 +214,7 @@ function showroute(paths,id,name){
 	for(var i=0;i<paths.length;i++){
 		path.push([paths[i].longitude,paths[i].latitude]);
 		if(i>0&&i<paths.length-1){
-			sitemarkers[i-1]=siteOnroute(paths[i],id,i-1);
+			//sitemarkers[i-1]=siteOnroute(paths[i],id,i-1);
 		}
 		console.log(path[0]+paths[i].longitude+paths[i]. latitude);
 	}  
@@ -269,9 +269,9 @@ var rr;
 function DelRoute(id){
 	$('#result').css("display","none");
 	route2[id].destroy();
-	for(var i=0;i<markersOnRoute[id].length;i++){
-		markersOnRoute[id][i].hide();
-	}
+	//for(var i=0;i<markersOnRoute[id].length;i++){
+	//	markersOnRoute[id][i].hide();
+	//}
 }
 //站点街道匹配
 //satationSuit(104.097315,30.680841);

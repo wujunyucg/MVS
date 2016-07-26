@@ -21,8 +21,6 @@ var obj={
 		 "people":0};
 var satations=hhj_satation;
 var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
-console.log(hhj_ctn);
-
 var satation_routes=document.getElementById("satation-route").innerHTML;
 //站点查询
 function satation_search(){}
@@ -36,12 +34,9 @@ function DeleteSatation(){}
 function EditSatation(data,marker){
 	document.getElementById('addsatation-info').innerHTML="";
 	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
-	console.log(hhj_ctn);
 	var s=[data.longitude,data.latitude];
-	console.log("1");
 	var ctn=document.getElementById('info-satation');
 	console.log(document.getElementById('satation-lng'));
-	console.log("2");
 	$('#satation-lng').val(s);
 	$('#satation-name').val(data.name);
 	$('#satation-address').val(data.address);
@@ -53,9 +48,7 @@ function EditSatation(data,marker){
 	//console.log(data.number);
 	num[data.order].selected='selected';
 	$('#satation-people').val(data.peoNum);
-	console.log("3");
 	info(s,ctn);
-	console.log(ctn);
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
 	//console.log(sbm);

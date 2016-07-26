@@ -35,17 +35,14 @@
 <script type="text/javascript"
 	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 <style type="text/css">
-	#content ul{
-		list-style-type:none;
-		width:90%;
-		margin:0px auto;
-	}
+	
 	#addroute li{
 		margin-top:10px;
 	}
 	#addroute li input{
 		width:80%;
 		float:right;
+		margin-right:5px;
 	}
 	#addroute li span{
 		width:80%;
@@ -267,11 +264,11 @@
       
       <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
          <ul id="info-satation" style="list-style-type:none;">
-              <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
-              <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;地址&nbsp;<input type="text" value="" id="satation-address"/></li>
-              <li>&nbsp;&nbsp;&nbsp;经纬度 &nbsp;<input type="text" id="satation-lng"/></li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址&nbsp;<input type="text" value="" id="satation-address"/></li>
+              <li>经度纬度&nbsp;<input type="text" value="" id="satation-lng"/></li>
               <li>乘坐人数&nbsp;<input type="text" id="satation-people"/></li>
-              <li>所属路线
+              <li>所属路线  
               	<select size="1" style="margin-bottom:10px;" id="satation-route">
                     <option value="1">1</option>
                     <option value="2">2</option>
