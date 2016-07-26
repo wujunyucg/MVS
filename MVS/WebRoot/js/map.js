@@ -51,6 +51,7 @@ function EditSatation(data){
 	console.log("3");
 	info(s,ctn);
 	console.log(ctn);
+	
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
 	//console.log(sbm);

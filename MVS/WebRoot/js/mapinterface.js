@@ -166,8 +166,6 @@ var pp=[{
 //showroute(pp);
 var route2=[];
 
-
-
 function siteOnroute(data,id,i){
 	var marker=new AMap.Marker({
 		  position:[data.longitude,data.latitude],
