@@ -308,7 +308,7 @@
                   </select>
               </li>
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
-              <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">修改</button></li>
+              <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">取消</button></li>
          </ul>                 
       </div>
       <div id="route-info">
