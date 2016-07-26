@@ -77,7 +77,9 @@ function EditSatation(data,marker){
 		marker.hide();
 		info2.close();
 	};
-	
+	sbm[1].onclick=function(){
+		info2.close();
+	};
 	console.log("4");
 }
  
