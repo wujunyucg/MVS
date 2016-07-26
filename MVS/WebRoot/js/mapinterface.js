@@ -348,7 +348,7 @@ function place_search(name){
 		//}
 	});
 }
-//p_s('金鱼街');
+p_s('金鱼街');
 function p_s(name){
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
@@ -361,11 +361,11 @@ function p_s(name){
 		//for(var i=0;i<result.poiList.pois.length;i++){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 			var satation={
-					siteId:1,
+					siteId:0,
 					peoNum:0,
-					lineId:1,
-					order:1,
-					delay:1,
+					lineId:0,
+					order:0,
+					delay:0,
 					latitude:result.poiList.pois[0].location.lat,
 					longitude:result.poiList.pois[0].location.lng,
 					address:name,
@@ -420,7 +420,7 @@ function EditSatation2(data,marker){
 	};
 	console.log("4");
 }
-//addclicksite();
+addclicksite();
 function addclicksite(){
 	map.on('click',function(e){
 		var marker=new AMap.Marker({
@@ -449,7 +449,7 @@ function addclicksite(){
 			var satation_search=new AMap.PlaceSearch({
 				keywords :name, //搜索关键字为“超市”的poi
 				city:'成都',
-				citylimit:true,
+				citylimit:true, 
 				pageSize:10,
 				//panel:'panel'
 			});
@@ -457,10 +457,13 @@ function addclicksite(){
 			satation_search.searchNearBy("街", e.lnglat,200,function(status,result){
 				//data.longitude=lng;
 			//	console.log(data);
-				data.longitude=e.lnglat.lng;
-				data.latitude=e.lnglat.lat;
+				console.log(marker.getPosition());
+				data.longitude=marker.getPosition().lng;
+				data.latitude=marker.getPosition().lat;
 				data.address=result.poiList.pois[0].name;
+				marker.hide();
 				satationsmarker(data);
+				
 				//var json=JSON.stringify(data);
 			//	console.log(json);
 			//	console.log(json.toString());
