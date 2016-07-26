@@ -279,6 +279,8 @@
 				});	
 		}
 		
+		
+		
 	//地图热点
 	var placeSearch = new AMap.PlaceSearch();  //构造地点查询类
     var infoWindow2=new AMap.AdvancedInfoWindow({closeWhenClickMap:true});
