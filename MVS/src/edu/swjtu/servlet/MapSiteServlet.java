@@ -47,7 +47,7 @@ public class MapSiteServlet extends HttpServlet {
 			request.getSession().setAttribute("site_list", siteList);
 			JSONObject jsonObject = new JSONObject();  
 	        jsonObject.put("sitelist", siteList);  
-	        System.out.print(jsonObject.toString());
+	       // System.out.print(jsonObject.toString());
 	        request.getSession().setAttribute("json_site_list", jsonObject.toString());
 			request.getRequestDispatcher("../jsp_user/map_site.jsp").forward(request,response);
 			

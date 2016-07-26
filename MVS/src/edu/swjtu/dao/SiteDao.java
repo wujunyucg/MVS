@@ -96,4 +96,5 @@ public interface SiteDao {
 	 */
 	public ArrayList<Site> getSiteByLineId(int lineId,Connection con);
 	ArrayList<Site> getAllSite(Connection con);
+	int updateListSite(ArrayList<Site> siteList, Connection con);
 }

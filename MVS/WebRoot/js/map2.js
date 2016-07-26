@@ -348,7 +348,29 @@
 	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
 	         },
 			success: function(request){
-				 //window.location.href="./jsp_user/site_get_address.jsp";
+				var list = eval('(' + request + ')');
+			 	sitelist = list.sitelist;
+				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+				for(var i=0;i<sitelist.length;i++){
+					if(sitelist[i].lineId>=0){
+					satationsmarker(sitelist[i]);
+					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+					}
+				}
+				tab=tab+'</tbody>';
+				$("#site_table").html(tab);
+				$("#site_table td").click(function() {
+	 			$("tr").each(function() {
+	 				$(this).css('background-color','white');
+	 			})
+	 				map.clearMap();
+	             var  tr=$(this).parent().attr("id");
+	               satationsmarker(sitelist[tr]);
+	               moveTocenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+	               $("#"+tr).css('background-color','red');
+	        
+	           
+	            });
 		    
 	      }});
 	}

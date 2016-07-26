@@ -81,8 +81,17 @@ public class SiteDaoImpl implements SiteDao {
 
 	@Override
 	public int deleteOneSite(Site site, Connection con) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "delete  from site where site_id = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, site.getSiteId());
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
 	}
 
 	@Override
@@ -93,8 +102,39 @@ public class SiteDaoImpl implements SiteDao {
 
 	@Override
 	public int updateSite(Site site, Connection con) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "update  site set site_id = ?,site_latitude = ?,site_longitude = ?,site_address = ?,site_peoNum = ?,site_name = ?,site_lineId = ?,site_order = ?,site_delay = ?,site_bufftag=? where site_id = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			getPreSta(pstm, site);
+			pstm.setInt(11, site.getSiteId());
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
+	
+	@Override
+	public int updateListSite(ArrayList<Site> siteList, Connection con) {
+		String sql = "update  site set site_id = ?,site_latitude = ?,site_longitude = ?,site_address = ?,site_peoNum = ?,site_name = ?,site_lineId = ?,site_order = ?,site_delay = ?,site_bufftag=? where site_id = ?";
+		int[] rs;
+		Site site;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			for(int i = 0; i<siteList.size(); i++){
+				site = siteList.get(i);
+				getPreSta(pstm,site);
+				pstm.setInt(11, site.getSiteId());
+				pstm.addBatch();
+			}
+			rs = pstm.executeBatch();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs[0];
 	}
 
 	@Override

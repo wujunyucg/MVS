@@ -204,21 +204,7 @@
       	<input type="text" id="tipinput" value="输入关键字进行查询" />
       	
       </div>
-      
- <div class="dropdown" style="position:absolute;margin-left:20px;margin-top:580px;">
-  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   添加站点
-    <span class="caret"></span>
-  </button>
-
-  <ul class="dropdown-menu" aria-labelledby="dLabel">
-  <li><a>点击选点</a></li>
-     <li> <a> 搜索选点</a></li>
-      <li> <a onclick="javascript:kmeans()"> 自动生成</a></li>
-  </ul>
-  
-</div>
-      <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
+       <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
          <ul id="info-satation" style="list-style-type:none;">
               <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
               <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;地址&nbsp;<input type="text" value="" id="satation-address"/></li>
@@ -264,9 +250,28 @@
                   </select>
               </li>
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
-              <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">修改</button></li>
+              <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">取消</button></li>
          </ul>                 
       </div>
+ <div class="dropdown" style="position:absolute;margin-left:20px;margin-top:580px;">
+  <button id="dLabel" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   添加站点
+    <span class="caret"></span>
+  </button>
+
+  <ul class="dropdown-menu" aria-labelledby="dLabel">
+  <li><a>点击选点</a></li>
+     <li> <a> 搜索选点</a></li>
+      <li> <a onclick="javascript:kmeans()"> 自动生成</a></li>
+  </ul>
+ 
+			
+			
+</div>
+<div  style="position:absolute;margin-left:20px;margin-top:620px;"> <button  class="btn btn-primary" onclick="map.clearMap();">隐藏所有站点</button></div>
+<div  style="position:absolute;margin-left:20px;margin-top:660px;"><button  class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
+<div  style="position:absolute;margin-left:20px;margin-top:700px;"><button  class="btn btn-primary">显示未分配线路站点</button></div>
+      
       <div id="route-info">
       
       </div>
@@ -285,6 +290,7 @@
       <c:if test="${site_list!=null }">
      <form action="servlet/ExportSiteServlet" method="post">
 			<button type="submit" class="btn btn-primary">导出全部数据</button>
+			
 		</form>
      	<table class="table  table-hover table-bordered " id="site_table">
 		<thead class="fixedThead">
@@ -318,10 +324,16 @@
 				<div class="modal-body">
 					<b>正在加载，请稍后...</b>
 				</div>
+				<div class="modal-footer">
+            <button type="button" id="w-modal-close"  class="btn btn-default" 
+               data-dismiss="modal" style="display:none" >确定
+            </button>
+         </div>
 			</div>
+			
 		</div>
 	</div>
-	
+	<span id="return_satationinfo"></span>
 	<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
@@ -366,31 +378,28 @@
 });
 		//调节地图大小
 		var sitelist;
- 			$("#site_table td").click(function() {
- 			$("tr").each(function() {
- 				$(this).css('background-color','white');
- 			})
- 				map.clearMap();
-             var  tr=$(this).parent().attr("id");
-               satationsmarker(sitelist[tr]);
-               moveTocenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-               $("#"+tr).css('background-color','red');
-        
-           
-            });
+ 
+            var hhj_ctn;
 		$(window).load(function(){
-			
+			 hhj_ctn=document.getElementById('addsatation-info').innerHTML;
 		var site='${json_site_list}';
 		var list = eval('(' + site + ')');
 		 sitelist = list.sitelist;
-		//map.setCity('成都');
+		map.setCity('成都');
 	for(var i=0;i<sitelist.length;i++){
 		if(sitelist[i].lineId>=0){
 			satationsmarker(sitelist[i]);
 		}
 	}
 		});
-		
+		function showall(){
+			//map.setCity('成都');
+			for(var i=0;i<sitelist.length;i++){
+				if(sitelist[i].lineId>=0){
+					satationsmarker(sitelist[i]);
+				}
+			}
+		}
 		var turn = false;
 		$("#j_nav_toggle").click(function() {
 			if (turn) {
@@ -418,7 +427,11 @@
 				up=true;
 			}
 		});
+		
+		
+		
 		function kmeans(){
+		$("#w-modal-close").css("display","none");
 		$("#load_modal").modal('show');
 		$.ajax({ 
 		type:"post",
@@ -430,11 +443,123 @@
             document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
          },
 		success: function(request){
-			 window.location.href="./jsp_user/site_get_address.jsp";
-	    
+		
+			var list = eval('(' + request + ')');
+			var sitelist = list.bsitelist;
+		
+	    	nextkmeans(sitelist);
       }});
      
+	}
+	
+	
+	
+	var n=0;
+var json="{\"slist\":[";
+var s="-1",arr=new Array();
+	var num;
+	function nextkmeans(sitelist){
+		 num=sitelist.length;
+		for(var i= 0; i<sitelist.length ;i++){
+		console.log(num);
+		 	satationSuit2(sitelist[i].longitude,sitelist[i].latitude,sitelist[i].bufftag);
+	}
+}
+
+function satationSuit2(lng,lat,sta){
+	//var name=place.name;
+	
+	var satation_search=new AMap.PlaceSearch({
+		keywords :name, //搜索关键字为“超市”的poi
+		city:'成都',
+		citylimit:true,
+		pageSize:10,
+		//panel:'panel'
+	});
+	console.log([lng,lat]);
+	satation_search.searchNearBy("街",[lng,lat],300,function(status,result){
+	
+		var dd=result.poiList.pois[0].name+","+result.poiList.pois[0].location+'';//+result.poiList.pois[0].address;
+		console.log(result.poiList.pois[0].name);
+		console.log(sta);
+		if(result.poiList.pois[0]==null){
+			arr[0]="未匹配到合适街道";
+			arr[1]=lng;
+			arr[2]=lat;
 		}
+		else 
+			arr=dd.split(",");
+		
+		if(n==0){
+		 		json=json+"{\"address\":\""+arr[0]+"\",\"long\":"+arr[1]+",\"lati\":"+arr[2]+",\"index\":"+sta+"}";
+		 	}
+		 	else
+		 	{
+		 	
+		 		json=json+",{\"address\":\""+arr[0]+"\",\"long\":"+arr[1]+",\"lati\":"+arr[2]+",\"index\":"+sta+"}";
+		 	}
+		 n++;
+		 console.log(n);
+		if(num==n){
+			json=json+']}';
+		
+			
+		$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/ManageSiteServlet", 
+		contenttype :"application/x-www-form-urlencoded;charset=utf-8",
+		data:{
+				type:1,
+				jsonlist:json
+		}, 
+		error: function(request) {
+            document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+         },
+		success: function(request){
+			$(".modal-body").html("生成站点完毕");
+			$("#w-modal-close").css("display","inline");
+			var list = eval('(' + request + ')');
+		 	sitelist = list.nsitelist;
+			var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+			for(var i=0;i<sitelist.length;i++){
+				if(sitelist[i].lineId>=0){
+				satationsmarker(sitelist[i]);
+				tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+				}
+			}
+			tab=tab+'</tbody>';
+			$("#site_table").html(tab);
+			$("#site_table td").click(function() {
+ 			$("tr").each(function() {
+ 				$(this).css('background-color','white');
+ 			})
+ 				map.clearMap();
+             var  tr=$(this).parent().attr("id");
+               satationsmarker(sitelist[tr]);
+               moveTocenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+               $("#"+tr).css('background-color','red');
+        
+           
+            });
+	    
+      }
+      });
+		}
+			
+	});
+}
+$("#site_table td").click(function() {
+ 			$("tr").each(function() {
+ 				$(this).css('background-color','white');
+ 			})
+ 				map.clearMap();
+             var  tr=$(this).parent().attr("id");
+               satationsmarker(sitelist[tr]);
+               moveTocenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+               $("#"+tr).css('background-color','red');
+        
+           
+            });
 	</script>
 </body>
 </html>
