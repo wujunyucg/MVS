@@ -379,8 +379,9 @@ function p_s(name,ctn){
 		
 	
 }
+var siteable=0;
 function EditSatation2(data,marker,ctn){
-	
+	map.on('click',function(e){});
 	document.getElementById('addsatation-info').innerHTML="";
 	document.getElementById('addsatation-info').innerHTML=ctn;
 	var s=[data.longitude,data.latitude];
@@ -397,6 +398,7 @@ function EditSatation2(data,marker,ctn){
 	//console.log(data.number);
 	num[data.order].selected='selected';
 	$('#satation-people').val(data.peoNum);
+	//$('#satation-delay').val(data.delay);
 	info(s,ctn);
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
@@ -416,6 +418,7 @@ function EditSatation2(data,marker,ctn){
 		Addsitedata(json.toString());
 		marker.hide();
 		map.on('click',function(e){});
+		siteable=0;
 		info2.close();
 	};
 	sbm[1].onclick=function(){
@@ -426,6 +429,7 @@ function EditSatation2(data,marker,ctn){
 addclicksite(hhj_ctn);
 function addclicksite(ctn){
 	map.on('click',function(e){
+		if(siteable==0){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
@@ -470,6 +474,8 @@ function addclicksite(ctn){
 				EditSatation2(data,marker,ctn);
 			});
 			
-		});
+			});
+		siteable=1;
+		}
 	});
 }
