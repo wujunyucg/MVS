@@ -296,11 +296,22 @@
 								<c:forEach items="${linelist}" var="line" varStatus="status">
 									<tr class="${line.getLineId()}">
 										<th style="width:60px;" class="row_index">${status.index+1}</th>
-										<td>${line.getName()}</td>
-										<td>${siteNames.get(status.index)}</td>
-										<td style="width:100px;">${carNumbers.get(status.index)}</td>
-										<td style="width:100px;">${line.getNum()}</td>
-										<td style="width:100px;">${line.getRate()}</td>
+										<c:choose>
+											<c:when test="${line.getRate() < 0}">
+												<td class="text-success">${line.getName()}</td>
+												<td class="text-success">${siteNames.get(status.index)}</td>
+												<td style="width:100px;" class="text-success">${carNumbers.get(status.index)}</td>
+												<td style="width:100px;" class="text-success">${line.getNum()}</td>
+												<td style="width:100px;" class="text-success">${line.getRate() * (-1.0)}</td>
+											</c:when>
+											<c:otherwise>   
+												<td>${line.getName()}</td>
+												<td>${siteNames.get(status.index)}</td>
+												<td style="width:100px;">${carNumbers.get(status.index)}</td>
+												<td style="width:100px;">${line.getNum()}</td>
+	   											<td style="width:100px;">${line.getRate()}</td>
+	 										 </c:otherwise> 
+ 										 </c:choose>
 										<td style="width:60px;">
 										<a id="${line.getName()}" onclick="javascript:linedetail('${line.getLineId()}','${line.getName()}')" href="javascript:;">查看</a>
 										</td>

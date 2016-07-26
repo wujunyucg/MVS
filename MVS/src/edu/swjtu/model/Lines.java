@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import edu.swjtu.impl.ArrangeDaoImpl;
 import edu.swjtu.impl.CarDaoImpl;
+import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.SiteDaoImpl;
 
 public class Lines {
@@ -92,5 +93,22 @@ public class Lines {
 		String[]site_ids = ids.split(",");
 		int len = site_ids.length;
 		return "" + len;
+	}
+	
+	/**
+	 * 
+	 */
+	public void deleteIllegalLine(ArrayList<Line> list, Connection con) throws NumberFormatException, SQLException{
+		for(int i=0;i<list.size();i++){
+			String[]site_ids = list.get(i).getSiteId().split(",");
+			Site site = new Site();
+			for(int j=0;j<site_ids.length;j++){
+				site = getOneSite(Integer.valueOf(site_ids[j]).intValue(),con);
+				if(site == null){
+					new LineDaoImpl().deleteLine(list.get(i).getLineId(), con);
+					break;
+				}
+			}
+		}
 	}
 }

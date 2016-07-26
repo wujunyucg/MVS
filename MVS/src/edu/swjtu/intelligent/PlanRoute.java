@@ -503,7 +503,7 @@ public class PlanRoute {
 			linelist.add(new Line());
 			linelist.get(i).setCarId("未安排");
 			linelist.get(i).setNum(carlist.get(i).getNumber()-temp_seat);
-			linelist.get(i).setRate((carlist.get(i).getNumber() + 0.0 - temp_seat) / (carlist.get(i).getNumber()+0.0) * 1.0);
+			linelist.get(i).setRate((carlist.get(i).getNumber() + 0.0 - temp_seat) / (carlist.get(i).getNumber()+0.0) * (-1.0));
 			linelist.get(i).setName("线路" + nameNum);
 			String temp_line = "";
 			for (int j = onepath.size() - 1; j > 0; j--) {

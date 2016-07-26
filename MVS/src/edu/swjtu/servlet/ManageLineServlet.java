@@ -54,6 +54,10 @@ public class ManageLineServlet extends HttpServlet {
 			
 			String type = request.getParameter("type");
 			if(type.equals("1")){
+				ArrayList<Line> prelist = null;
+				prelist = new LineDaoImpl().getAllLine(con);
+				new Lines().deleteIllegalLine(prelist, con);
+				
 				ArrayList<Line> list = null;
 				try {
 					list = new LineDaoImpl().getAllLine(con);
