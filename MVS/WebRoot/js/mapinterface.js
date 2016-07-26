@@ -348,7 +348,7 @@ function place_search(name){
 		//}
 	});
 }
-p_s('金鱼街');
+//p_s('金鱼街');
 function p_s(name){
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
@@ -420,7 +420,7 @@ function EditSatation2(data,marker){
 	};
 	console.log("4");
 }
-addclicksite();
+//addclicksite();
 function addclicksite(){
 	map.on('click',function(e){
 		var marker=new AMap.Marker({
