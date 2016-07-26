@@ -271,6 +271,8 @@ function addroute(){
 				});
 }
 
+
+
 function showAllRoute(all_satations){
 	map.clearMap();
 	var flag=1;
