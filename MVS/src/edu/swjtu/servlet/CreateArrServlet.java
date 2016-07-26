@@ -34,6 +34,10 @@ public class CreateArrServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		/*0:初始进入，1:验证日期,2:提交*/
 		String type = request.getParameter("type");
+		String multi = request.getParameter("multi");
+		if(null==multi){
+			multi = "no";
+		}
 		if(null==type){
 			type = "0";
 		}
@@ -49,7 +53,12 @@ public class CreateArrServlet extends HttpServlet {
 				
 				session.setAttribute("cre_arr_lines", lines);
 				session.setAttribute("cre_arr_cars", cars);
-				request.getRequestDispatcher("../jsp_user/create_arrange.jsp").forward(request, response);
+				
+				if(multi.equals("yes")){
+					request.getRequestDispatcher("../jsp_user/create_arr_monthly.jsp").forward(request, response);
+				}else{
+					request.getRequestDispatcher("../jsp_user/create_arrange.jsp").forward(request, response);
+				}
 			}else if(type.equals("1")){
 				PrintWriter pw = response.getWriter();
 				String date = request.getParameter("date");
@@ -89,7 +98,7 @@ public class CreateArrServlet extends HttpServlet {
 						car.setArrangeId(car.getArrangeId()+","+arr_id);
 						int rc = cdi.updateCar(car, con);
 						Line line = ldi.getLineById(con, lineId);
-						line.setCarId(carId);
+						line.setCarId(carId+"");
 						int rl = ldi.updateLine(con, line);
 						if(1==rc&&1==rl){
 							pw.write("yes");
