@@ -258,7 +258,7 @@ function addroute(){
 						
 					}
 					Dragroute(path,satation,1);
-					//$('#result').css("display","inline");
+					//$('#result').css("display","inline"); 
 					
 					//alert();
 					

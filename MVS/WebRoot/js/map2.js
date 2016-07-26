@@ -253,8 +253,8 @@
 					if(mymessage==true)
 					    {
 					    	marker.hide();
-							document.getElementById('delsatationnum').innerHTML=data.siteId;
-							console.log(document.getElementById('delsatationnum').innerHTML);
+							//document.getElementById('delsatationnum').innerHTML=data.siteId;
+							//console.log(document.getElementById('delsatationnum').innerHTML);
 							DelsatationD(data.siteId);
 					    }
 					    else
