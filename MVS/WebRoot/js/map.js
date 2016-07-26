@@ -22,6 +22,7 @@ var obj={
 var satations=hhj_satation;
 var hhj_ctn=document.getElementById('addsatation-info').innerHTML;
 console.log(hhj_ctn);
+
 var satation_routes=document.getElementById("satation-route").innerHTML;
 //站点查询
 function satation_search(){}
@@ -32,7 +33,7 @@ function AddSation(){}
 //删除站点
 function DeleteSatation(){}
 //修改站点
-function EditSatation(data){
+function EditSatation(data,marker){
 	document.getElementById('addsatation-info').innerHTML="";
 	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
 	console.log(hhj_ctn);
@@ -73,6 +74,7 @@ function EditSatation(data){
 		satationsmarker(data);
 		var json=JSON.stringify(data);
 		Editdata(json.toString());
+		marker.hide();
 		info2.close();
 	};
 	

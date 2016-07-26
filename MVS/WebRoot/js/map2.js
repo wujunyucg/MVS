@@ -264,7 +264,7 @@
 						
 					}, 1);
 					console.log("OK-----右键点击"+ss);
-					contextMenu.addItem("修改", function(){EditSatation(ss);marker.hide();}, 2); 
+					contextMenu.addItem("修改", function(){EditSatation(ss,marker);}, 2); 
 					/*@contextMenu.addItem("查看路线", function() {
 						var path = [];
 						for(var i=0;i<markers.length;i++){
