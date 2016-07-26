@@ -302,14 +302,14 @@
 												<td class="text-success">${siteNames.get(status.index)}</td>
 												<td style="width:100px;" class="text-success">${carNumbers.get(status.index)}</td>
 												<td style="width:100px;" class="text-success">${line.getNum()}</td>
-												<td style="width:100px;" class="text-success">${line.getRate() * (-1.0)}</td>
+												<td style="width:100px;" class="text-success">${line.getRate() * (-100.0) }%</td>
 											</c:when>
 											<c:otherwise>   
 												<td>${line.getName()}</td>
 												<td>${siteNames.get(status.index)}</td>
 												<td style="width:100px;">${carNumbers.get(status.index)}</td>
 												<td style="width:100px;">${line.getNum()}</td>
-	   											<td style="width:100px;">${line.getRate()}</td>
+	   											<td style="width:100px;">${line.getRate() * 100.0}%</td>
 	 										 </c:otherwise> 
  										 </c:choose>
 										<td style="width:60px;">
@@ -813,8 +813,11 @@
 			lineId = LineId;
 			$("#de_name").text("路线名称：" + Name);
 			$("#de_siteName").text("所经站点：" + siteNames);
+			if(Rate < 0){
+				Rate = Rate * (-100.0);
+			}
 			$("#de_Num").text("路线人数：" + Num);
-			$("#de_Rate").text("乘坐率：" + Rate);
+			$("#de_Rate").text("乘坐率：" + Rate + "%");
 			$("#page_d").show();
 			$("#page_ds").hide();
 			

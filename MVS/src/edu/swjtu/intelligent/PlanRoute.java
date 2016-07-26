@@ -54,8 +54,8 @@ public class PlanRoute {
 		if (num_free < 0) // 厂车座位总数小于人数
 			return linelist;
 
-		if (min_rate == 0)
-			min_rate = 1.0;
+//		if (min_rate == 0)
+//			min_rate = 1.0;
 		
 		if(max_distance == 0.0){	//设置最大距离为最远点距工厂路程的3/2
 			double temp_dis = 0.0;
