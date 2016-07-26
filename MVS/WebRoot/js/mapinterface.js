@@ -369,7 +369,8 @@ function p_s(name,ctn){
 					latitude:result.poiList.pois[0].location.lat,
 					longitude:result.poiList.pois[0].location.lng,
 					address:name,
-					name:name	
+					name:name,
+					bufftag:0
 			};
 			var marker=satationsmarker(satation);
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
@@ -422,7 +423,7 @@ function EditSatation2(data,marker,ctn){
 	};
 	console.log("4");
 }
-addclicksite();
+addclicksite(hhj_ctn);
 function addclicksite(ctn){
 	map.on('click',function(e){
 		var marker=new AMap.Marker({
@@ -444,7 +445,8 @@ function addclicksite(ctn){
 					latitude:e.lnglat.lat,
 					longitude:e.lnglat.lng,
 					address:"",
-					name:""	
+					name:"",
+					bufftag:0
 			};
 			//var conten=SatationContent(satation);
 			//info(e.lnglat,conten);
@@ -465,11 +467,6 @@ function addclicksite(ctn){
 				data.address=result.poiList.pois[0].name;
 				marker.hide();
 				satationsmarker(data);
-				
-				//var json=JSON.stringify(data);
-			//	console.log(json);
-			//	console.log(json.toString());
-			//	Editdata(json.toString());
 				EditSatation2(data,marker,ctn);
 			});
 			
