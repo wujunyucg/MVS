@@ -165,6 +165,42 @@ var pp=[{
 //显示所有线路
 showroute(pp); */
 var route2=[];
+var markersOnRoute=[];
+function siteOnroute(data,id){
+	var marker=new AMap.Marker({
+		  position:[data.longitude,data.latitude],
+		  title: data.name,	  
+		  raiseOnDrag:true,
+		  map: map,
+		  icon:"icons/satation2.svg",
+		  zIndex:100
+	});
+	markersOnRoute[id][markersOnRoute[id].length]=marker;
+	routesiztLic(markersOnRoute[id][markersOnRoute[id].length-1],data);
+}
+function routesiztLic(marker,data){
+	var flag=0;
+	map.on('click',function(){
+		info2.close();
+	});
+    var conten=SatationContent(data);
+	AMap.event.addListener(marker, 'click',function (e){
+		//data=marker.getPosition(); 
+		marker.setDraggable(false);
+		if(flag==1){
+			console.log("移动成功");
+			flag=0;
+			satationSuit(marker.getPosition().getLng(),marker.getPosition().getLat(),data);
+			console.log("匹配成功");
+			marker.hide();
+			
+		}
+		else{
+		var conten=SatationContent(data);
+		info(marker.getPosition(),conten);	
+		}
+	});
+}
 function showroute(paths,id,name){
 	console.log("enter route-----");
 	var path=[];
@@ -172,7 +208,7 @@ function showroute(paths,id,name){
 	for(var i=0;i<paths.length;i++){
 		path.push([paths[i].longitude,paths[i].latitude]);
 		if(i>0&&i<paths.length-1){
-			//satationsmarker(paths[i]);
+			siteOnroute(paths[i],id);
 		}
 		console.log(path[0]+paths[i].longitude+paths[i].latitude);
 	}
@@ -189,7 +225,7 @@ function showroute(paths,id,name){
 				},
 				polyOptions :{
 					strokeColor:'#cc9',
-					strokeOpacity:0.5
+					//strokeOpacity:0.5
 				}
 			}); 
 		//构造拖拽导航类，传入参数分别为：地图对象，初始路径，驾车策略
@@ -226,6 +262,9 @@ var rr;
 function DelRoute(id){
 	$('#result').css("display","none");
 	route2[id].destroy();
+	for(var i=0;i<markersOnRoute[id].length;i++){
+		markersOnRoute[id][i].hide();
+	}
 }
 //站点街道匹配
 //satationSuit(104.097315,30.680841);

@@ -37,7 +37,7 @@
 						},
 						polyOptions :{
 							strokeColor:'#cc9',
-							strokeOpacity:0.5
+							//strokeOpacity:0.5
 						}
 					}); 
 				//构造拖拽导航类，传入参数分别为：地图对象，初始路径，驾车策略
