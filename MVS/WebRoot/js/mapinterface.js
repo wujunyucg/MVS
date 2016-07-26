@@ -319,6 +319,7 @@ function satationSearch(){
 	});
 }
 place_search('金鱼街');
+place_search('五丁苑');
 function place_search(name){
 	//var name=place.name;
 	var satation_search=new AMap.PlaceSearch({
