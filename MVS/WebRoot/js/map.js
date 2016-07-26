@@ -55,7 +55,7 @@ function EditSatation(data){
 	var sbm=ctn.getElementsByTagName('button');	
 	console.log(sbm);
 	sbm[0].onclick=function(){
-		document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
+		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
 		alert("修改成功");
 		Editdata(data);
 		info2.close();
