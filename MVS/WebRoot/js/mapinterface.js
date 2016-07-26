@@ -116,7 +116,7 @@ function setAsatation(name){
 	place_search(name);
 	
 }
-/*显示路线
+/*显示路线 */
 var pp=[{
 	siteId:0,
 	peoNum:0,
@@ -163,10 +163,10 @@ var pp=[{
 ];
 
 //显示所有线路
-showroute(pp); */
+//showroute(pp);
 var route2=[];
-var markersOnRoute=[];
-function siteOnroute(data,id){
+
+function siteOnroute(data,id,i){
 	var marker=new AMap.Marker({
 		  position:[data.longitude,data.latitude],
 		  title: data.name,	  
@@ -175,8 +175,8 @@ function siteOnroute(data,id){
 		  icon:"icons/satation2.svg",
 		  zIndex:100
 	});
-	markersOnRoute[id][markersOnRoute[id].length]=marker;
-	routesiztLic(markersOnRoute[id][markersOnRoute[id].length-1],data);
+	routesiztLic(marker,data);
+	return marker;
 }
 function routesiztLic(marker,data){
 	var flag=0;
@@ -193,25 +193,32 @@ function routesiztLic(marker,data){
 			satationSuit(marker.getPosition().getLng(),marker.getPosition().getLat(),data);
 			console.log("匹配成功");
 			marker.hide();
-			
 		}
 		else{
 		var conten=SatationContent(data);
 		info(marker.getPosition(),conten);	
 		}
 	});
+	
 }
+var ss=new Array();
+for(var i=0;i<30;i++){
+	ss[i]=new Array();
+}
+var index=0;
 function showroute(paths,id,name){
 	console.log("enter route-----");
 	var path=[];
 //	showAllsatationinfo(paths);
+	var sitemarkers=[];
 	for(var i=0;i<paths.length;i++){
 		path.push([paths[i].longitude,paths[i].latitude]);
 		if(i>0&&i<paths.length-1){
-			siteOnroute(paths[i],id);
+			sitemarkers[i-1]=siteOnroute(paths[i],id,i-1);
 		}
-		console.log(path[0]+paths[i].longitude+paths[i].latitude);
-	}
+		console.log(path[0]+paths[i].longitude+paths[i]. latitude);
+	}  
+	//ss[0]=sitemarkers;
 	map.plugin("AMap.DragRoute",function(){
 		route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
 				midMarkerOptions:{
@@ -224,7 +231,7 @@ function showroute(paths,id,name){
 					//visible :false,	
 				},
 				polyOptions :{
-					strokeColor:'#cc9',
+					//strokeColor:'#cc9',
 					//strokeOpacity:0.5
 				}
 			}); 

@@ -39,9 +39,9 @@ function EditSatation(data){
 	var ctn=document.getElementById('info-satation');
 	console.log(document.getElementById('satation-lng'));
 	console.log("2");
-	document.getElementById('satation-lng').value=s;
-	document.getElementById('satation-name').value=data.name;
-	document.getElementById('satation-address').value=data.address;
+	$('#satation-lng').val(s);
+	$('#satation-name').val(data.name);
+	$('#satation-address').val(data.address);
 	var route=$('#satation-route option');
 	route[data.lineId-1].selected='selected';
 	var num=$('#satation-number option');
