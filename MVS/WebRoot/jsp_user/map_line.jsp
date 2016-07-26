@@ -811,7 +811,7 @@
 		var lineId="";
 		function linedelete(LineId,Name,siteNames,Num,Rate){
 			lineId = LineId;
-			$("#de_name").text("路线名称：" + LineId);
+			$("#de_name").text("路线名称：" + Name);
 			$("#de_siteName").text("所经站点：" + siteNames);
 			$("#de_Num").text("路线人数：" + Num);
 			$("#de_Rate").text("乘坐率：" + Rate);
