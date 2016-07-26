@@ -381,7 +381,9 @@ function p_s(name,ctn){
 }
 var siteable=0;
 function EditSatation2(data,marker,ctn){
-	map.on('click',function(e){});
+	map.on('click',function(e){
+		marker.hide();
+	});
 	document.getElementById('addsatation-info').innerHTML="";
 	document.getElementById('addsatation-info').innerHTML=ctn;
 	var s=[data.longitude,data.latitude];
@@ -423,23 +425,25 @@ function EditSatation2(data,marker,ctn){
 	};
 	sbm[1].onclick=function(){
 		info2.close();
+		marker.hide();
 	};
 	console.log("4");
 }
 addclicksite(hhj_ctn);
 function addclicksite(ctn){
 	map.on('click',function(e){
-		if(siteable==0){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
 			icon:"icons/satation2.svg",
 			//location:e.lnglat
 		});
+		marker.hide();
+		if(siteable==0){
+		marker.show();
 		var ll=e;
 		marker.setPosition(e.lnglat);
-		AMap.event.addListener(marker, 'click',function (e){
-			console.log(e.lnglat);
+		
 			var data={
 					siteId:0,
 					peoNum:0,
@@ -469,13 +473,22 @@ function addclicksite(ctn){
 				data.longitude=marker.getPosition().lng;
 				data.latitude=marker.getPosition().lat;
 				data.address=result.poiList.pois[0].name;
-				marker.hide();
-				satationsmarker(data);
-				EditSatation2(data,marker,ctn);
+				//marker.hide();
+				//satationsmarker(data);
+				var conten=SatationContent(data);
+				info(marker.getPosition(),conten);
+				EditSatation2(data,marker,ctn);	
 			});
-			
+			AMap.event.addListener(marker, 'click',function(e){
+				var conten=SatationContent(data);
+				info(marker.getPosition(),conten);
 			});
-		siteable=1;
+			siteable=1;
+		}
+		else{
+			info2.close();
+			marker.hide();
+			siteable=0;
 		}
 	});
 }
