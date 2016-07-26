@@ -321,6 +321,7 @@
 			url: "servlet/ManageSiteServlet",
 			data:{
 					type:2,
+					json:Data
 			}, 
 			error: function(request) {
 	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
