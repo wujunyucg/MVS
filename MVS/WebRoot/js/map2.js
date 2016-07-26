@@ -177,6 +177,7 @@
 				  zIndex:100
 			});
 			setListener(marker,data)
+			return marker;
 		}
 		function markers(data){
 			

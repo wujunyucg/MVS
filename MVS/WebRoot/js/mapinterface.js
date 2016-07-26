@@ -318,8 +318,8 @@ function satationSearch(){
 		}
 	});
 }
-place_search('金鱼街');
-place_search('五丁苑');
+//place_search('金鱼街');
+//place_search('五丁苑');
 function place_search(name){
 	//var name=place.name;
 	var satation_search=new AMap.PlaceSearch({
@@ -347,6 +347,36 @@ function place_search(name){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 		//}
 	});
+}
+p_s('金鱼街');
+function p_s(name){
+	var satation_search=new AMap.PlaceSearch({
+		keywords :name, //搜索关键字为“超市”的poi
+		city:'成都',
+		citylimit:true,
+		pageSize:1,
+		//panel:'panel'
+	});
+	satation_search.search(name,function(status,result){
+		//for(var i=0;i<result.poiList.pois.length;i++){
+			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
+			var satation={
+					siteId:1,
+					peoNum:0,
+					lineId:1,
+					order:1,
+					delay:1,
+					latitude:result.poiList.pois[0].location.lat,
+					longitude:result.poiList.pois[0].location.lng,
+					address:name,
+					name:name	
+			};
+			var marker=satationsmarker(satation);
+			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
+			EditSatation2(satation,marker);
+	});
+		
+	
 }
 function EditSatation2(data,marker){
 	document.getElementById('addsatation-info').innerHTML="";
@@ -378,7 +408,7 @@ function EditSatation2(data,marker){
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
 		console.log(data);
-		alert("修改成功");
+		alert("增加成功");
 		satationsmarker(data);
 		var json=JSON.stringify(data);
 		Editdata(json.toString());
