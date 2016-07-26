@@ -15,10 +15,11 @@ public class LineDaoImpl implements LineDao {
 	private Line getOneLine(ResultSet rs) throws SQLException {
 		Line line = new Line();
 		line.setLineId(rs.getInt("line_id"));
-		line.setCarId(rs.getInt("line_carId"));
+		line.setCarId(rs.getString("line_carId"));
 		line.setName(rs.getString("line_name"));
 		line.setNum(rs.getInt("line_num"));
 		line.setSiteId(rs.getString("line_siteId"));
+		line.setRate(rs.getDouble("line_rate"));
 		return line;
 	}
 
@@ -73,7 +74,7 @@ public class LineDaoImpl implements LineDao {
 	@Override
 	public int updateLine(Connection con, Line line) throws SQLException {
 		String sql = "update line set line_id = ?,line_siteId=?,line_num=?,"
-				+ "line_carId=?,line_name=? where line_id = ?";
+				+ "line_carId=?,line_name=? line_rate = ? where line_id = ?";
 		// String sql = "update line  set  where line_id = ?";
 		int rs;
 		try {
@@ -81,9 +82,10 @@ public class LineDaoImpl implements LineDao {
 			pstm.setInt(1, line.getLineId());
 			pstm.setString(2, line.getSiteId());
 			pstm.setInt(3, line.getNum());
-			pstm.setInt(4, line.getCarId());
+			pstm.setString(4, line.getCarId());
 			pstm.setString(5, line.getName());
-			pstm.setInt(6, line.getLineId());
+			pstm.setDouble(6, line.getRate());
+			pstm.setInt(7, line.getLineId());
 			rs = pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,4 +94,63 @@ public class LineDaoImpl implements LineDao {
 		return rs;
 	}
 
+	@Override
+	public int addLine(Line line, Connection con) throws SQLException {
+		String sql = "insert into line values(null,?,?,?,?,?)";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		pstm.setString(1, line.getSiteId());
+		pstm.setInt(2, line.getNum());
+		pstm.setString(3, line.getCarId());
+		pstm.setString(4, line.getName());
+		pstm.setDouble(5, line.getRate());
+		
+		return pstm.executeUpdate();
+	}
+
+	@Override
+	public int addMoreLine(ArrayList<Line> linelist, Connection con)
+			throws SQLException {
+		String sql = "insert into line values(null,?,?,?,?,?)";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		int u=0;
+		for(int i=0;i<linelist.size();i++){
+			pstm.setString(1, linelist.get(i).getSiteId());
+			pstm.setInt(2, linelist.get(i).getNum());
+			pstm.setString(3, linelist.get(i).getCarId());
+			pstm.setString(4, linelist.get(i).getName());
+			pstm.setDouble(5, linelist.get(i).getRate());
+			u += pstm.executeUpdate();
+		}
+		return u / linelist.size();
+	}
+
+	@Override
+	public int deleteLine(int lineId, Connection con) throws SQLException {
+		String sql = "delete  from line where line_id = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, lineId);
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
+	
+	
+	
+	public int deleteAllLine(Connection con) throws SQLException {
+		String sql = "delete from line";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
 }

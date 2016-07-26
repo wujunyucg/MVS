@@ -5,8 +5,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import edu.swjtu.model.Line;
+import edu.swjtu.model.LineRecord;
 
 public interface LineDao {
+	
+	public int addLine(Line line,Connection con) throws SQLException;
+	
+	public int addMoreLine(ArrayList<Line> linelist,Connection con) throws SQLException;
+	
+	public int deleteLine(int lineId,Connection con) throws SQLException;
+	
+	
+	
 	/**
 	 * 根据id取得线路
 	 * 2016年7月14日上午9:52:23
@@ -45,4 +55,6 @@ public interface LineDao {
 	 * @throws SQLException
 	 */
 	public int updateLine(Connection con,Line line) throws SQLException;
+
+	public int deleteAllLine(Connection con) throws SQLException;
 }

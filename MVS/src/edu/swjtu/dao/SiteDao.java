@@ -1,6 +1,7 @@
 package edu.swjtu.dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import edu.swjtu.model.Site;
@@ -71,8 +72,9 @@ public interface SiteDao {
 	 * @param siteId
 	 * @param con
 	 * @return
+	 * @throws SQLException 
 	 */
-	public Site getSiteById(int siteId,Connection con);
+	public Site getSiteById(int siteId,Connection con) throws SQLException;
 	/**
 	 * 根据站点 名称得到站点
 	 * 2016年7月9日下午1:47:53

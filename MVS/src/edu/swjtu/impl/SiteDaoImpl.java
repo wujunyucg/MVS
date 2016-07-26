@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import edu.swjtu.dao.SiteDao;
 import edu.swjtu.model.Car;
+import edu.swjtu.model.Line;
 import edu.swjtu.model.Site;
 import edu.swjtu.model.Staff;
 
@@ -97,9 +98,17 @@ public class SiteDaoImpl implements SiteDao {
 	}
 
 	@Override
-	public Site getSiteById(int siteId, Connection con) {
-		// TODO Auto-generated method stub
-		return null;
+	public Site getSiteById(int siteId, Connection con) throws SQLException{
+		String sql = "select*from site where site_id = ?";
+		PreparedStatement pstm;
+		pstm = con.prepareStatement(sql);
+		pstm.setInt(1, siteId);
+		ResultSet rs = pstm.executeQuery();
+		Site site = null;
+		if (rs.next()) {
+			site = getSiteOne(rs);
+		}
+		return site;
 	}
 
 	@Override

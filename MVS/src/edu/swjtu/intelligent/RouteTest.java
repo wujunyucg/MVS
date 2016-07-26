@@ -51,18 +51,15 @@ public class RouteTest {
 		fac_site.setPeoNum(0);
 		fac_site.setSiteId(99);
 		
-//		 new  PlanRoute().getSortedSites(0, sitelist, fac_site);
-//			for(int i=0;i<sitelist.size();i++){
-//				System.out.println(sitelist.get(i).getLatitude() + "===" +sitelist.get(i).getLongitude());
-//		
-//			}
 		
+		System.out.println((3+0.0)/4*0.1);
 		ArrayList<Line> linelist = new ArrayList<Line>();
 		PlanRoute test = new PlanRoute();
-		linelist = test.intelligentLine(0, -1.0, sitelist,carlist, fac_site, 0, 0);
-
-		for(int i=0;i<linelist.size();i++)
+		//linelist = test.intelligentLine(0.9, -1.0, sitelist,carlist, fac_site, 0, 0);
+		System.out.println(linelist);
+		for(int i=0;i<linelist.size();i++){
 			System.out.println("人数：" + linelist.get(i).getNum());
+		}
 		
 		try {
 			db.closeCon(con);

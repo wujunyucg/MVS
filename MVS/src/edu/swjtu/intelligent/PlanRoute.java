@@ -17,6 +17,8 @@ public class PlanRoute {
 	private double ave_seatrate_w;
 	private double weight;
 	private int fin_num;
+	public int pro;
+	private int nameNum;
 
 	public ArrayList<Site> copySiteList(ArrayList<Site> sitelist) {
 
@@ -35,6 +37,7 @@ public class PlanRoute {
 	public ArrayList<Line> intelligentLine(double min_rate, double max_distance,
 			ArrayList<Site> t_sitelist, ArrayList<Car> carlist, Site fac_site,
 			double dis_w, double ave_w) {
+		nameNum = 0;
 		ArrayList<Line> linelist = new ArrayList<Line>();
 		ArrayList<Site> sitelist = copySiteList(t_sitelist);
 		int num_site = 0, num_seat = 0, num_free = 0;
@@ -47,6 +50,7 @@ public class PlanRoute {
 		for (i = 0; i < siteListLen; i++)
 			num_site += sitelist.get(i).getPeoNum();
 		num_free = num_seat - num_site;
+
 		if (num_free < 0) // 厂车座位总数小于人数
 			return linelist;
 
@@ -77,7 +81,6 @@ public class PlanRoute {
 		long sortTime = 0;
 		long calcuTime = 0;
 		for (i = 0; i < siteListLen; i++) {
-
 			long start = System.currentTimeMillis();
 			sitelist = getSortedSites(i, t_sitelist, fac_site);
 			long end = System.currentTimeMillis(); // 记录结束时间
@@ -93,7 +96,7 @@ public class PlanRoute {
 			cal_DisAndRate(i, min_rate, max_distance, num_free, sitelist, carlist, fac_site);
 			long end1 = System.currentTimeMillis(); // 记录结束时间
 			calcuTime += (end1 - start1);
-			System.out.println("计算第" + i + "次运行时间：" + (end1 - start1) + "ms");
+			//System.out.println("计算第" + i + "次运行时间：" + (end1 - start1) + "ms");
 
 			if (i == 0) {
 				weight = all_distance * all_distance_w * 1.0 + ave_seatrate
@@ -109,18 +112,26 @@ public class PlanRoute {
 			}// else
 
 			// System.out.println("all_distance=" + all_distance);
-
+			pro++;
 		}// for
 
-		System.out.println("排序总时间：" + sortTime + "ms  计算总时间：" + calcuTime
-				+ "ms");
+		//System.out.println("排序总时间：" + sortTime + "ms  计算总时间：" + calcuTime
+		//		+ "ms");
 
 		long start1 = System.currentTimeMillis();
 		linelist = getLineSite(min_rate, max_distance, carlist, t_sitelist, fac_site, fin_num);
 		long end1 = System.currentTimeMillis(); // 记录结束时间
-		System.out.println("取得线路时间：" + (end1 - start1) + "ms");
+		//System.out.println("取得线路时间：" + (end1 - start1) + "ms");
 		// System.out.println(fin_num);
 		return linelist;
+	}
+
+	public int getPro() {
+		return pro;
+	}
+
+	public void setPro(int pro) {
+		this.pro = pro;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -144,16 +155,18 @@ public class PlanRoute {
 
 			while (record_s < siteListLen) {
 				// System.out.println("车上空闲座位数量：" + temp_seat);
+//				System.out.println("========"+ (carlist.get(i).getNumber() - temp_seat + 0.0) * 1.0
+//						/ ((carlist.get(i).getNumber() + 0.0) * 1.0)+"*********min_rate"+ min_rate);
 				if (temp_seat >= sitelist.get(record_s).getPeoNum()) {
 					temp_seat -= sitelist.get(record_s).getPeoNum();
 					sitelist.get(record_s).setPeoNum(0);
 					if (temp_seat == 0 || record_s == siteListLen - 1)
 						break;
 					record_s++;
-				} else if ((carlist.get(i).getNumber() - temp_seat) * 1.0
-						/ (carlist.get(i).getNumber() * 1.0) < min_rate) {
-					sitelist.get(record_s).setPeoNum(
-							sitelist.get(record_s).getPeoNum() - temp_seat);
+				} else if ((carlist.get(i).getNumber() - temp_seat + 0.0) * 1.0
+						/ ((carlist.get(i).getNumber() + 0.0) * 1.0) < min_rate) {
+					sitelist.get(record_s).setPeoNum(sitelist.get(record_s).getPeoNum() - temp_seat);
+					temp_seat = 0;
 					break;
 				} else {
 					record_s--;
@@ -180,14 +193,14 @@ public class PlanRoute {
 				
 				
 				long end = System.currentTimeMillis(); // 记录结束时间
-				System.out.println("每次分支限界法时间："+(end-start)+"ms");
+//				System.out.println("每次分支限界法时间："+(end-start)+"ms");
 			}
 			else{
 				long start = System.currentTimeMillis();
 				all_distance += greAlgorithm(beg_s, end_s, sitelist, fac_site);
 				long end = System.currentTimeMillis(); // 记录结束时间
 				//sortTime += (end - start);
-				System.out.println("每次贪心时间："+(end-start)+"ms");
+//				System.out.println("每次贪心时间："+(end-start)+"ms");
 			}
 			
 			ave_seatrate += (carlist.get(i).getNumber() - temp_seat) * 1.0
@@ -455,10 +468,11 @@ public class PlanRoute {
 					if (temp_seat == 0 || record_s == siteListLen - 1)
 						break;
 					record_s++;
-				} else if ((carlist.get(i).getNumber() - temp_seat) * 1.0
-						/ (carlist.get(i).getNumber() * 1.0) < min_rate) {
+				} else if ((carlist.get(i).getNumber() - temp_seat + 0.0) * 1.0
+						/ ((carlist.get(i).getNumber() + 0.0) * 1.0) < min_rate) {
 					sitelist.get(record_s).setPeoNum(
 							sitelist.get(record_s).getPeoNum() - temp_seat);
+					temp_seat = 0;
 					break;
 				} else {
 					record_s--;
@@ -485,42 +499,44 @@ public class PlanRoute {
 			
 			ArrayList<Integer> onepath = get_oneline(beg_s, end_s, sitelist,
 					fac_site);
-			
+			nameNum++;
 			linelist.add(new Line());
-			linelist.get(i).setCarId(carlist.get(i).getCarId());
+			linelist.get(i).setCarId("未安排");
 			linelist.get(i).setNum(carlist.get(i).getNumber()-temp_seat);
+			linelist.get(i).setRate((carlist.get(i).getNumber() + 0.0 - temp_seat) / (carlist.get(i).getNumber()+0.0) * (-1.0));
+			linelist.get(i).setName("线路" + nameNum);
 			String temp_line = "";
 			for (int j = onepath.size() - 1; j > 0; j--) {
-				temp_line += sitelist.get(onepath.get(onepath.size() - 1)).getSiteId() + ",";
+				temp_line += sitelist.get(onepath.get(j)).getSiteId() + ",";
 			}
 			temp_line += fac_site.getSiteId();
 			linelist.get(i).setSiteId(temp_line);
 			
-			System.out.println("{lng:[["
-					+ df.format(sitelist.get(
-							onepath.get(onepath.size() - 1)).getLongitude())
-					+ ","
-					+ df.format(sitelist.get(
-							onepath.get(onepath.size() - 1)).getLatitude())
-					+ "],");
-			for (int j = onepath.size() - 2; j > 0; j--) {
-				if (j != sym)
-					System.out
-							.println("["
-									+ df.format(sitelist
-											.get(onepath.get(j)).getLongitude())
-									+ ","
-									+ df.format(sitelist
-											.get(onepath.get(j)).getLatitude())
-									+ "]" + ",");
-			}
-			System.out.println("["
-					+ df.format(fac_site.getLongitude())
-					+ ","
-					+ df.format(fac_site.getLatitude())
-					+ "]]" + "},");
+//			System.out.println("{lng:[["
+//					+ df.format(sitelist.get(
+//							onepath.get(onepath.size() - 1)).getLongitude())
+//					+ ","
+//					+ df.format(sitelist.get(
+//							onepath.get(onepath.size() - 1)).getLatitude())
+//					+ "],");
+//			for (int j = onepath.size() - 2; j > 0; j--) {
+//				if (j != sym)
+////					System.out
+////							.println("["
+////									+ df.format(sitelist
+////											.get(onepath.get(j)).getLongitude())
+////									+ ","
+////									+ df.format(sitelist
+////											.get(onepath.get(j)).getLatitude())
+////									+ "]" + ",");
+//			}
+//			System.out.println("["
+//					+ df.format(fac_site.getLongitude())
+//					+ ","
+//					+ df.format(fac_site.getLatitude())
+//					+ "]]" + "},");
 			// System.out.println("");
-			System.out.println("");
+//			System.out.println("");
 
 			if (sitelist.get(record_s).getPeoNum() == 0)
 				record_s++;

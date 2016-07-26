@@ -10,8 +10,9 @@ public class Line {
 	private int lineId;
 	private int num;
 	private String siteId;
-	private int carId;
+	private String carId;
 	private String name;
+	private double rate;
 	public int getLineId() {
 		return lineId;
 	}
@@ -30,10 +31,10 @@ public class Line {
 	public void setSiteId(String siteId) {
 		this.siteId = siteId;
 	}
-	public int getCarId() {
+	public String getCarId() {
 		return carId;
 	}
-	public void setCarId(int carId) {
+	public void setCarId(String carId) {
 		this.carId = carId;
 	}
 	public String getName() {
@@ -41,5 +42,11 @@ public class Line {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public double getRate() {
+		return rate;
+	}
+	public void setRate(double rate) {
+		this.rate = rate;
 	}
 }
