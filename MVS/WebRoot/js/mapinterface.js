@@ -327,7 +327,7 @@ function place_search(name){
 		city:'成都',
 		citylimit:true,
 		pageSize:1,
-		//panel:'panel'
+		//panel:'panel'  
 	});
 	satation_search.search(name,function(status,result){
 		//for(var i=0;i<result.poiList.pois.length;i++){
@@ -348,8 +348,8 @@ function place_search(name){
 		//}
 	});
 }
-p_s('金鱼街');
-function p_s(name){
+//p_s('金鱼街',hhj_ctn);
+function p_s(name,ctn){
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
 		city:'成都',
@@ -373,14 +373,15 @@ function p_s(name){
 			};
 			var marker=satationsmarker(satation);
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
-			EditSatation2(satation,marker);
+			EditSatation2(satation,marker,ctn);
 	});
 		
 	
 }
-function EditSatation2(data,marker){
+function EditSatation2(data,marker,ctn){
+	
 	document.getElementById('addsatation-info').innerHTML="";
-	document.getElementById('addsatation-info').innerHTML=hhj_ctn;
+	document.getElementById('addsatation-info').innerHTML=ctn;
 	var s=[data.longitude,data.latitude];
 	var ctn=document.getElementById('info-satation');
 	console.log(document.getElementById('satation-lng'));
