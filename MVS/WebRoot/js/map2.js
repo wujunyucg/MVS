@@ -198,7 +198,7 @@
 			console.log(data.lineId);
 			if(data.lineId==null||data.lineId==""){
 				marker.setIcon('icons/satationOnRoute.svg');
-				alert("OK");
+				//alert("OK");
 			}
 			var conten=SatationContent(data);
 			AMap.event.addListener(marker, 'click',function (e){

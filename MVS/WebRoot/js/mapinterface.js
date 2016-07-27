@@ -589,8 +589,11 @@ for(var i=0;i<hhj_satations.length;i++){
 	//setroutesitesmk(hhj_satations[i]);
 }
 //右键不能点击
-function setroutesitesmk(data){
-	rsitesmk.push(satationsmarker2(data));
+function setroutesitesmk(data,isAll){
+	if((data.lineId==""||data.lineId==null)&&!isAll){}
+	else{
+		rsitesmk.push(satationsmarker2(data));
+	}
 }
 //隐藏
 function hideroutesitesmk(){
