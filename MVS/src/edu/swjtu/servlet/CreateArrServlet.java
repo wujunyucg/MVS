@@ -131,14 +131,16 @@ public class CreateArrServlet extends HttpServlet {
 					for (int i = 1; i <= lineArr.length; i++) {
 						Arrange arr = new Arrange();
 						arr.setCarId(Integer.parseInt(carArr[i-1]));
-						arr.setDate(date+"-"+(i>9?i:("0"+i)));/*构造日期*/
+						String nd = date+"-"+(t>9?t:("0"+t));
+						//System.out.println(nd);
+						arr.setDate(nd);/*构造日期*/
 						arr.setLineId(Integer.parseInt(lineArr[i-1]));
 						arr.setName("班次"+i);
 						arr.setTime(ts[i-1]);
 						adi.addArr(arr, con);
 						
 						/* 插入成功后,更新line和car */
-						Arrange a = adi.getArrByDateAndTime(con, date, time);
+						Arrange a = adi.getArrByDateAndTime(con, nd, time);
 						if (null != a) {
 							int arr_id = a.getArrangeId();
 							Car car = cdi.getCarById(Integer.parseInt(carArr[i-1]), con);

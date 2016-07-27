@@ -26,7 +26,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 	@Override
 	public ArrayList<Arrange> getAllArrange(Connection con) throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
-		String sql = "select * from arrange";
+		String sql = "select * from arrange"+" order by arrange_date";
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
@@ -39,7 +39,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 	public ArrayList<Arrange> getPageArrange(Connection con, int startPage,
 			int pageNum) throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
-		String sql = "select *from arrange limit "
+		String sql = "select *from arrange order by arrange_date limit "
 				+ ((startPage - 1) * pageNum) + "," + pageNum;
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
@@ -64,7 +64,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			int pageNum, String date) throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
 		String sql = "select *from arrange where arrange_date like '%"
-				+ date + "%' limit " + ((startPage - 1) * pageNum) + "," + pageNum;
+				+ date + "%'  order by arrange_date limit " + ((startPage - 1) * pageNum) + "," + pageNum;
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
@@ -104,7 +104,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
 		String sql = "select *from arrange where arrange_date like '%"
-				+ date + "%'";
+				+ date + "%'"+" order by arrange_date";
 		PreparedStatement pstm = con.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		while (rs.next()) {
@@ -159,7 +159,7 @@ public class ArrangeDaoImpl implements ArrangeDao {
 	public ArrayList<Arrange> getAllArrByDate(Connection con, String date)
 			throws SQLException {
 		ArrayList<Arrange> list = new ArrayList<Arrange>();
-		String sql = "select *from arrange where arrange_date = ?";
+		String sql = "select *from arrange where arrange_date = ? order by arrange_time";
 		PreparedStatement pstm = con.prepareStatement(sql);
 		pstm.setString(1, date);
 		ResultSet rs = pstm.executeQuery();
