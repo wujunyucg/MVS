@@ -150,7 +150,7 @@
 			console.log(data);
 			console.log([data.longitude,data.latitude]);
 			var marker=new AMap.Marker({
-				  position: [data.longitude,data.latitude],
+				  position: [data.long,data.lati],
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,

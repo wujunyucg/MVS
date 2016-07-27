@@ -494,7 +494,7 @@ function addclicksite(ctn){
 }
 
 
-Routeshowsizt(pp);
+//Routeshowsizt(pp);
 function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
