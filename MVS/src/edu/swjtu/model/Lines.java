@@ -129,16 +129,25 @@ public class Lines {
 			for(int j=0;j<site_ids.length;j++){
 				site = new SiteDaoImpl().getSiteById(Integer.valueOf(site_ids[j]).intValue(), con);
 				site.setLineId(site.getLineId() + list.get(i).getLineId() + ",");
+				int order = j + 1;
+				site.setOrder(site.getOrder() + order + ",");
 				new SiteDaoImpl().updateSite(site, con);
 			}
 		}
 		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
 		for(int i=0;i<sitelist.size();i++){
-			String temp = sitelist.get(i).getLineId();
-			if(!temp.isEmpty()){
-				if(temp.charAt(temp.length()-1) == ','){
-					temp = temp.substring(0,temp.length()-1);
-					sitelist.get(i).setLineId(temp);
+			String temp1 = sitelist.get(i).getLineId();
+			if(!temp1.isEmpty()){
+				if(temp1.charAt(temp1.length()-1) == ','){
+					temp1 = temp1.substring(0,temp1.length()-1);
+					sitelist.get(i).setLineId(temp1);
+				}
+			}
+			String temp2 = sitelist.get(i).getOrder();
+			if(!temp2.isEmpty()){
+				if(temp2.charAt(temp2.length()-1) == ','){
+					temp2 = temp2.substring(0,temp2.length()-1);
+					sitelist.get(i).setOrder(temp2);
 				}
 			}
 			 
@@ -156,6 +165,7 @@ public class Lines {
 		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
 		for(int i=0;i<sitelist.size();i++){
 			sitelist.get(i).setLineId("");
+			sitelist.get(i).setOrder("");
 			new SiteDaoImpl().updateSite(sitelist.get(i), con);
 		}
 	}
