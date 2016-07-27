@@ -173,7 +173,7 @@
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,
-				  icon:"icons/satation2.svg",
+				  icon:"icons/satations.svg",
 				  zIndex:100
 			});
 			setListener(marker,data)

@@ -211,7 +211,7 @@ function showroute(paths,id,name){
 	var path=[];
 //	showAllsatationinfo(paths);
 	var sitemarkers=[];
-	for(var i=0;i<paths.length-1;i++){
+	for(var i=0;i<paths.length;i++){
 		path.push([paths[i].longitude,paths[i].latitude]);
 		if(i>0&&i<paths.length-1){
 			//sitemarkers[i-1]=siteOnroute(paths[i],id,i-1);
@@ -471,14 +471,10 @@ function addclicksite(ctn){
 			});
 			console.log("ddddddddddd");
 			satation_search.searchNearBy("街", e.lnglat,200,function(status,result){
-				//data.longitude=lng;
-			//	console.log(data);
 				console.log(marker.getPosition());
 				data.longitude=marker.getPosition().lng;
 				data.latitude=marker.getPosition().lat;
 				data.address=result.poiList.pois[0].name;
-				//marker.hide();
-				//satationsmarker(data);
 				var conten=SatationContent(data);
 				info(marker.getPosition(),conten);
 				EditSatation2(data,marker,ctn);	
@@ -502,40 +498,52 @@ Routeshowsizt(pp);
 function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
+	//var index=0;
 	for(var i=0;i<sites.length;i++){
 		if(sites.lineId==null){
-			siteOnroutes(sites[i],path,markers);
+			siteOnroutes(sites[i],path,markers,i);
 		}
 		else if(isAll){
-			siteOnroutes(sites[i],path,markers);
+			siteOnroutes(sites[i],path,markers,i);
 		}
 	}
 }
-
-function siteOnroutes(data,path,markers){
+var index2=0;
+var ii=[];
+function siteOnroutes(data,path,markers,index){
 	
 	var marker=new AMap.Marker({
 		 position:[data.longitude,data.latitude],
 		  title: data.name,	  
 		  raiseOnDrag:true,
 		  map: map,
-		  icon:"icons/satation2.svg",
+		  icon:"icons/satations.svg",
 		  zIndex:100
 	});
-	var index=i;
+	var ii;
 	console.log(i+" "+index);
+	AMap.event.addListener(marker, 'click',function(e){
+		var conten=SatationContent(data);
+		info(marker.getPosition(),conten);
+	});
 	AMap.event.addListener(marker, 'rightclick',function(e){
 		//info();
 		var contextMenu=new AMap.ContextMenu();
 		contextMenu.addItem("设为起点", function() {
 			path.push(data);
+			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
-			console.log(i+" ;;;;"+index);
+			ii[index]=index2;
+			index2++;
+			console.log(ii+" ;;;;"+index2);
 		},0);
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
+			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
-			console.log(i+" ;;;;"+index);
+			console.log(ii+" ;;;;"+index2);
+			ii[index]=index2;
+			index2++;
 		}, 1);
 		
 		contextMenu.addItem("查看路线", function(){
@@ -543,16 +551,17 @@ function siteOnroutes(data,path,markers){
 			showroute(path,1,"线路1");
 			
 			for(var i=0;i<markers.length;i++){
-				markers[i].hide();
+				//markers[i].hide();
 			}
 			//marker.hide();
 			
 		}, 3); 
 		contextMenu.addItem("取消设置", function(){
-			path[path.length]=data;
+			//path[path.length]=data;
+			marker.setIcon('icons/satations.svg');
+			path.splice(ii[index],1);
 		}, 2);
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
-	
 	});	
 }

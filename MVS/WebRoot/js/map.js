@@ -40,9 +40,10 @@ function EditSatation(data,marker){
 	$('#satation-lng').val(s);
 	$('#satation-name').val(data.name);
 	$('#satation-address').val(data.address);
-	var route=$('#satation-route option');
-	console.log(data.lineId);
-	route[data.lineId].selected='selected';
+	//var route=$('#satation-route option');
+	//console.log(data.lineId);
+	//route[data.lineId].selected='selected';
+	var route=$('#satation-route').val(data.lineId);
 	console.log(data.order);
 	//var num=$('#satation-number');
 	//console.log(data.number);
