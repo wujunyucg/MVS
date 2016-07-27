@@ -19,10 +19,10 @@ public class SiteDaoImpl implements SiteDao {
 		site.setAddress(rs.getString("site_address"));
 		site.setDelay(rs.getInt("site_delay"));
 		site.setLatitude(rs.getDouble("site_latitude"));
-		site.setLineId(rs.getInt("site_lineId"));
+		site.setLineId(rs.getString("site_lineId"));
 		site.setLongitude(rs.getDouble("site_longitude"));
 		site.setName(rs.getString("site_name"));
-		site.setOrder(rs.getInt("site_order"));
+		site.setOrder(rs.getString("site_order"));
 		site.setPeoNum(rs.getInt("site_peoNum"));
 		site.setSiteId(rs.getInt("site_id"));
 		site.setBufftag(rs.getInt("site_bufftag"));
@@ -37,8 +37,8 @@ public class SiteDaoImpl implements SiteDao {
 		ps.setString(4,site.getAddress());
 		ps.setInt(5,site.getPeoNum());
 		ps.setString(6,site.getName());
-		ps.setInt(7,site.getLineId());
-		ps.setInt(8,site.getOrder());
+		ps.setString(7,site.getLineId());
+		ps.setString(8,site.getOrder());
 		ps.setInt(9,site.getDelay());
 		ps.setInt(10,site.getBufftag());
 	}

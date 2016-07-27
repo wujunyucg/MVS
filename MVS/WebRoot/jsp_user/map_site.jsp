@@ -35,7 +35,7 @@
 <script type="text/javascript"
 	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 <style type="text/css">
-	#content ul{
+	#addsatation-info ul{
 		list-style-type:none;
 		width:90%;
 		margin:0px auto;
@@ -207,70 +207,44 @@
        <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
          <ul id="info-satation" style="list-style-type:none;">
               <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
-              <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;地址&nbsp;<input type="text" value="" id="satation-address"/></li>
-              <li>&nbsp;&nbsp;&nbsp;经纬度 &nbsp;<input type="text" id="satation-lng"/></li>
-              <li>乘坐人数&nbsp;<input type="text" id="satation-people"/></li>
+              <li>&nbsp;&nbsp;&nbsp;经纬度 &nbsp;<input type="text" readonly="readonly" id="satation-lng"/></li>
+              <li>乘坐人数&nbsp;<input type="text" readonly="readonly" id="satation-people"/></li>
               <li>所属路线
               	<select size="1" style="margin-bottom:10px;" id="satation-route">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
+              	 <option value="0">无</option>
+                   <c:forEach items="${site_line_list}" var="line" varStatus="status" >
+                     <option value="${line.getLineId()}">${line.getName()}</option>
+                   </c:forEach>  
+                   
                  </select></li>
-              <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp编号
-                  <select size="1" style="margin-bottom:10px;" id="satation-number">
-                     <option value="1">1</option>
-                     <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                     <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                     <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                     <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                     <option value="15">15</option>
-                    <option value="16">16</option>
-                  </select>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号
+              <input type="text" value="" id="satation-number"/>
               </li>
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
               <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">取消</button></li>
          </ul>                 
       </div>
- <div class="dropdown" style="position:absolute;margin-left:20px;margin-top:580px;">
-  <button id="dLabel" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <div class="dropdown" style="position:absolute;margin-left:20px;margin-top:380px;">
+  <button id="dLabel" style="width:160px" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    添加站点
     <span class="caret"></span>
   </button>
 
   <ul class="dropdown-menu" aria-labelledby="dLabel">
-  <li><a>点击选点</a></li>
-     <li> <a> 搜索选点</a></li>
+  <li><a onclick="addclicksite(hhj_ctn)">点击选点</a></li>
+     <li> <a onclick="showinput()"> 搜索选点</a></li>
       <li> <a onclick="javascript:kmeans()"> 自动生成</a></li>
   </ul>
  
 			
 			
 </div>
-<div  style="position:absolute;margin-left:20px;margin-top:620px;"> <button  class="btn btn-primary" onclick="map.clearMap();">隐藏所有站点</button></div>
-<div  style="position:absolute;margin-left:20px;margin-top:660px;"><button  class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
-<div  style="position:absolute;margin-left:20px;margin-top:700px;"><button  class="btn btn-primary">显示未分配线路站点</button></div>
+<div id="name"  class="form-inline" style="position:absolute;margin-left:200px;margin-top:380px;display:none" > <input type="" class="form-control" id="stressname" >&nbsp;&nbsp;&nbsp;
+<button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
+<button onclick="disnone()"  class="btn btn-primary">隐藏</button> </div>
+<div  style="position:absolute;margin-left:20px;margin-top:420px;"> <button  style="width:160px" class="btn btn-primary" onclick="map.clearMap();">隐藏所有站点</button></div>
+<div  style="position:absolute;margin-left:20px;margin-top:460px;"><button  style="width:160px" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
+<div  style="position:absolute;margin-left:20px;margin-top:500px;"><button  style="width:160px" class="btn btn-primary">显示未分配线路站点</button></div>
       
       <div id="route-info">
       
@@ -325,6 +299,9 @@
 					<b>正在加载，请稍后...</b>
 				</div>
 				<div class="modal-footer">
+				 <button type="button" id="w-modal-but"  class="btn btn-default" 
+               data-dismiss="modal" style="display:none" >确定
+            </button>
             <button type="button" id="w-modal-close"  class="btn btn-default" 
                data-dismiss="modal" style="display:none" >确定
             </button>
@@ -431,6 +408,7 @@
 		
 		
 		function kmeans(){
+		$(".modal-body").html("正在处理中......");
 		$("#w-modal-close").css("display","none");
 		$("#load_modal").modal('show');
 		$.ajax({ 
@@ -555,11 +533,17 @@ $("#site_table td").click(function() {
  				map.clearMap();
              var  tr=$(this).parent().attr("id");
                satationsmarker(sitelist[tr]);
-               moveTocenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
                $("#"+tr).css('background-color','red');
         
            
             });
+  function showinput(){
+  	$("#name").css("display","inline");
+  }
+  function disnone(){
+  $("#name").css("display","none");
+  }
 	</script>
 </body>
 </html>
