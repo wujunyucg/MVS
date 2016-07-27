@@ -181,7 +181,7 @@
 			console.log(data.lineId);
 			if(data.lineId==null||data.lineId==""){
 				marker.setIcon('icons/satation2.svg');
-				alert("OK");
+				//alert("OK");
 			}
 			setListener(marker,data)
 			return marker;

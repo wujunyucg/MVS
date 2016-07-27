@@ -433,7 +433,7 @@ function EditSatation2(data,marker,ctn){
 
 
 //addclicksite(hhj_ctn);
-//satationsmarker(pp[0]);
+///satationsmarker(pp[0]);
 function addclicksite(ctn){
 	map.on('click',function(e){
 		var marker=new AMap.Marker({
@@ -494,7 +494,7 @@ function addclicksite(ctn){
 }
 
 
-//Routeshowsizt(pp);
+Routeshowsizt(hhj_satations);
 function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
@@ -520,7 +520,11 @@ function siteOnroutes(data,path,markers,index){
 		  icon:"icons/satations.svg",
 		  zIndex:100
 	});
-	var ii;
+	if(data.lineId==null||data.lineId==""){
+		marker.setIcon('icons/satationOnRoute.svg');
+		//alert("OK");
+	}
+	//var ii;
 	console.log(i+" "+index);
 	AMap.event.addListener(marker, 'click',function(e){
 		var conten=SatationContent(data);
@@ -531,6 +535,7 @@ function siteOnroutes(data,path,markers,index){
 		var contextMenu=new AMap.ContextMenu();
 		contextMenu.addItem("设为起点", function() {
 			path.push(data);
+			showPolyline(path);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
 			ii[index]=index2;
@@ -539,6 +544,7 @@ function siteOnroutes(data,path,markers,index){
 		},0);
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
+			showPolyline(path);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
 			console.log(ii+" ;;;;"+index2);
@@ -549,7 +555,7 @@ function siteOnroutes(data,path,markers,index){
 		contextMenu.addItem("查看路线", function(){
 			//path[path.length]=data;
 			showroute(path,1,"线路1");
-			
+			poly.hide();
 			for(var i=0;i<markers.length;i++){
 				//markers[i].hide();
 			}
@@ -567,20 +573,32 @@ function siteOnroutes(data,path,markers,index){
 	});	
 }
 var rsitesmk=[];
-for(var i=0;i<hhj_satations.length;i++){
-	setroutesitesmk(hhj_satations[i]);
+var terminal=[104.065349,30.655826];
+var poly=new  AMap.Polyline({map:map});
+function showPolyline(data){
+	var path=[];
+	poly.hide();
+	for(var i=0;i<data.length;i++){
+		path.push([data[i].longitude,data[i].latitude]);
+	}
+	path.push(terminal);
+	poly.setPath(path);
+	poly.show();
 }
+for(var i=0;i<hhj_satations.length;i++){
+	//setroutesitesmk(hhj_satations[i]);
+}
+//右键不能点击
 function setroutesitesmk(data){
 	rsitesmk.push(satationsmarker2(data));
 }
-$('#satation-search input').bind('input oninput',function(){
-	hideroutesitesmk();
-});
+//隐藏
 function hideroutesitesmk(){
 	for(var i=0;i<rsitesmk.length;i++){
 		rsitesmk[i].hide();
 	}
 }
+//显示
 function showroutesitesmk(){
 	for(var i=0;i<rsitesmk.length;i++){
 		rsitesmk[i].show();
