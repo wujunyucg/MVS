@@ -429,6 +429,8 @@ function EditSatation2(data,marker,ctn){
 	};
 	console.log("4");
 }
+
+
 //addclicksite(hhj_ctn);
 function addclicksite(ctn){
 	map.on('click',function(e){
