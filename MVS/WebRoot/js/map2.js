@@ -147,6 +147,8 @@
 				 name:"1"};
 		//markers(path);	*/
 		function staffmarker(data){
+			console.log(data);
+			console.log([data.longitude,data.latitude]);
 			var marker=new AMap.Marker({
 				  position: [data.longitude,data.latitude],
 				  title: data.name,	  
