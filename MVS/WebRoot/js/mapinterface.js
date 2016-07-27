@@ -498,13 +498,13 @@ function addclicksite(ctn){
 Routeshowsizt(pp);
 function Routeshowsizt(sites){
 	var path=[];
-	var markers[];
+	var markers=[];
 	for(var i=0;i<sites.length;i++){
 		siteOnroutes(sites[i],path,markers);
 	}
 }
 
-function siteOnroutes(data,path){
+function siteOnroutes(data,path,markers){
 	
 	var marker=new AMap.Marker({
 		 position:[data.longitude,data.latitude],
