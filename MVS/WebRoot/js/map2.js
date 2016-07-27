@@ -269,18 +269,15 @@
 						
 					},0);
 					contextMenu.addItem("删除", function() {
-					var mymessage=confirm('确认删除？');
-					if(mymessage==true)
-					    {
-					    	marker.hide();
-							//document.getElementById('delsatationnum').innerHTML=data.siteId;
-							//console.log(document.getElementById('delsatationnum').innerHTML);
-							DelsatationD(data.siteId);
-					    }
-					    else
-					    {
-					    	
-					    }
+						
+						var message=confirm("确认删除");
+					
+						if(message==true){
+							marker.hide();
+						//document.getElementById('delsatationnum').innerHTML=data.siteId;//console.log(document.getElementById('delsatationnum').innerHTML);
+							DelsatationD(data.siteId);}else {}
+						
+				
 						
 					}, 1);
 					console.log("OK-----右键点击"+ss);
@@ -350,9 +347,36 @@
 			}, 
 			error: function(request) {
 	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
-	         },
+				
+			},
 			success: function(request){
-				 //window.location.href="./jsp_user/site_get_address.jsp";
+				$("#w-modal-close").css("display","inline");
+				$(".modal-body").html("修改成功");
+					$("#load_modal").modal('show');
+					var list = eval('(' + request + ')');
+				 	sitelist = list.sitelist;
+					var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+					for(var i=0;i<sitelist.length;i++){
+						satationsmarker(sitelist[i]);
+						if(sitelist[i].name=="0")
+							continue;
+						tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+						}
+					alert(tab);
+					tab=tab+'</tbody>';
+					$("#site_table").html(tab);
+					$("#site_table td").click(function() {
+		 			$("tr").each(function() {
+		 				$(this).css('background-color','white');
+		 			})
+		 				map.clearMap();
+		             var  tr=$(this).parent().attr("id");
+		               satationsmarker(sitelist[tr]);
+		               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+		               $("#"+tr).css('background-color','red');
+		        
+		           
+		            });
 		    
 	      }});
 	}
@@ -368,7 +392,30 @@
 	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
 	         },
 			success: function(request){
-				 //window.location.href="./jsp_user/site_get_address.jsp";
+				$("#w-modal-close").css("display","inline");
+				$(".modal-body").html("添加成功");
+				$("#load_modal").modal('show');
+				var list = eval('(' + request + ')');
+			 	sitelist = list.sitelist;
+				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+				for(var i=0;i<sitelist.length;i++){
+					satationsmarker(sitelist[i]);
+					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+				}
+				tab=tab+'</tbody>';
+				$("#site_table").html(tab);
+				$("#site_table td").click(function() {
+	 			$("tr").each(function() {
+	 				$(this).css('background-color','white');
+	 			})
+	 				map.clearMap();
+	             var  tr=$(this).parent().attr("id");
+	               satationsmarker(sitelist[tr]);
+	               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+	               $("#"+tr).css('background-color','red');
+	        
+	           
+	            });
 		    
 	      }});
 	}
@@ -384,14 +431,16 @@
 	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
 	         },
 			success: function(request){
+				$("#w-modal-close").css("display","inline");
+				$(".modal-body").html("删除成功");
+					$("#load_modal").modal('show');
 				var list = eval('(' + request + ')');
 			 	sitelist = list.sitelist;
 				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
 				for(var i=0;i<sitelist.length;i++){
-					if(sitelist[i].lineId>=0){
+				
 					satationsmarker(sitelist[i]);
 					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
-					}
 				}
 				tab=tab+'</tbody>';
 				$("#site_table").html(tab);
@@ -402,7 +451,7 @@
 	 				map.clearMap();
 	             var  tr=$(this).parent().attr("id");
 	               satationsmarker(sitelist[tr]);
-	               moveTocenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+	               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
 	               $("#"+tr).css('background-color','red');
 	        
 	           

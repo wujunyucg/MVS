@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
+import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.SiteDaoImpl;
+import edu.swjtu.model.Line;
 import edu.swjtu.model.Site;
 import edu.swjtu.util.DBUtil;
 
@@ -49,7 +51,12 @@ public class MapSiteServlet extends HttpServlet {
 	        jsonObject.put("sitelist", siteList);  
 	       // System.out.print(jsonObject.toString());
 	        request.getSession().setAttribute("json_site_list", jsonObject.toString());
-			request.getRequestDispatcher("../jsp_user/map_site.jsp").forward(request,response);
+			
+			LineDaoImpl ldi = new LineDaoImpl();
+			ArrayList<Line> lineList = ldi.getAllLine(con);
+			 request.getSession().setAttribute("site_line_list", lineList);
+			 request.getRequestDispatcher("../jsp_user/map_site.jsp").forward(request,response);
+			
 			
 		} catch (ClassNotFoundException e) {
 			

@@ -178,13 +178,19 @@ public class ManageSiteServlet extends HttpServlet {
 				site.setDelay((int)jo.get("delay"));
 				site.setLatitude(jo.getDouble("latitude"));
 				site.setLongitude(jo.getDouble("longitude"));
-				site.setLineId(jo.getInt("lineId"));
+				site.setLineId(jo.getString("lineId"));
 				site.setName(jo.getString("name"));
-				site.setOrder(jo.getInt("order"));
+				site.setOrder(jo.getString("order"));
 				site.setPeoNum(jo.getInt("peoNum"));
 				site.setSiteId(jo.getInt("siteId"));
 				SiteDaoImpl sdi = new SiteDaoImpl();
 				sdi.updateSite(site, con);
+				ArrayList<Site> siteList = sdi.getAllSite(con);
+				 JSONObject jsonObject = new JSONObject();  
+			        jsonObject.put("sitelist", siteList);
+			        System.out.println(jsonObject.toString());
+			        out.print(jsonObject.toString());
+					out.close();
 			}
 			else if(request.getParameter("type").equals("3")){
 				
@@ -200,7 +206,30 @@ public class ManageSiteServlet extends HttpServlet {
 					 siteList.get(i).setName(String.valueOf(i));;
 				 }
 				 sdi.updateListSite(siteList, con);
-				 siteList = sdi.getAllSite(con);
+				  siteList = sdi.getAllSite(con);
+				 JSONObject jsonObject = new JSONObject();  
+			        jsonObject.put("sitelist", siteList); 
+			        out.write(jsonObject.toString());
+					out.close();
+			}
+			else if(request.getParameter("type").equals("4")){
+				
+				String json=request.getParameter("json");
+				JSONObject jo = JSONObject.fromObject(json);
+				Site site =new Site();
+				site.setAddress(jo.getString("address"));
+				site.setBufftag(0);
+				site.setDelay(5);
+				site.setLatitude(jo.getDouble("latitude"));
+				site.setLongitude(jo.getDouble("longitude"));
+				site.setLineId(jo.getString("lineId"));
+				site.setName(jo.getString("name"));
+				site.setOrder(jo.getString("order"));
+				site.setPeoNum(jo.getInt("peoNum"));
+				site.setSiteId(0);
+				SiteDaoImpl sdi = new SiteDaoImpl();
+				sdi.addOneSite(site, con);
+				ArrayList<Site> siteList = sdi.getAllSite(con);
 				 JSONObject jsonObject = new JSONObject();  
 			        jsonObject.put("sitelist", siteList); 
 			        out.write(jsonObject.toString());

@@ -40,7 +40,7 @@
 	</div>
 	<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">设置</a></li>
+			<li><a href="javascript:;" id="a_person_info">设置</a></li>
 			<li><a href="#">Help</a></li>
 			<li class="dropdown dropdown-toggle "><a href="#"
 				class="dropdown-toggle" id="dropdownMenu_user"
@@ -202,6 +202,10 @@
 				$("#content").load("<%=basePath%>servlet/ManageSynchServlet");
 		});
 		
+		/*点击个人信息*/
+		$("#a_person_info").click(function(){
+			$("#content").load("<%=path%>/person_info.jsp");
+		});
 	</script>
 </body>
 </html>
