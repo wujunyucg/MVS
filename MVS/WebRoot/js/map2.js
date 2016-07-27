@@ -228,9 +228,28 @@
 					if(flag==1){
 						console.log("移动成功");
 						flag=0;
-						satationSuit(marker.getPosition().getLng(),marker.getPosition().getLat(),data);
+						//marker.hide();
+						//satationSuit(marker.getPosition().getLng(),marker.getPosition().getLat(),data);
+						var satation_search=new AMap.PlaceSearch({
+							keywords :name, //搜索关键字为“超市”的poi
+							city:'成都',
+							citylimit:true,
+							pageSize:10,
+							//panel:'panel'
+						});
+						satation_search.searchNearBy("", marker.getPosition(),1000,function(status,result){
+							//data.longitude=lng;
+						//	console.log(data);
+							data.longitude=marker.getPosition().getLng();
+							data.latitude=marker.getPosition().getLat();
+							data.address=result.poiList.pois[0].name;
+							//marker.hide();
+							satationsmarker(data);
+							marker.hide();
+							//marker.hide();
+						});
 						console.log("匹配成功");
-						marker.hide();
+						
 						
 					}
 					else{
