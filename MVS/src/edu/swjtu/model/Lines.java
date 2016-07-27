@@ -131,6 +131,7 @@ public class Lines {
 				site.setLineId(site.getLineId() + list.get(i).getLineId() + ",");
 				int order = j + 1;
 				site.setOrder(site.getOrder() + order + ",");
+				site.setLineName(site.getLineName() + list.get(i).getName() + ",");
 				new SiteDaoImpl().updateSite(site, con);
 			}
 		}
@@ -150,6 +151,13 @@ public class Lines {
 					sitelist.get(i).setOrder(temp2);
 				}
 			}
+			String temp3 = sitelist.get(i).getLineName();
+			if(!temp3.isEmpty()){
+				if(temp3.charAt(temp3.length()-1) == ','){
+					temp3 = temp3.substring(0,temp3.length()-1);
+					sitelist.get(i).setLineName(temp3);
+				}
+			}
 			 
 		}
 		new SiteDaoImpl().updateListSite(sitelist, con);
@@ -166,6 +174,7 @@ public class Lines {
 		for(int i=0;i<sitelist.size();i++){
 			sitelist.get(i).setLineId("");
 			sitelist.get(i).setOrder("");
+			sitelist.get(i).setLineName("");
 			new SiteDaoImpl().updateSite(sitelist.get(i), con);
 		}
 	}
