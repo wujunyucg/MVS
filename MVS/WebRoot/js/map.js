@@ -44,9 +44,10 @@ function EditSatation(data,marker){
 	console.log(data.lineId);
 	route[data.lineId].selected='selected';
 	console.log(data.order);
-	var num=$('#satation-number option');
+	//var num=$('#satation-number');
 	//console.log(data.number);
-	num[data.order].selected='selected';
+	//num[data.order].selected='selected';
+	$('#satation-number').val(data.order);
 	$('#satation-people').val(data.peoNum);
 	info(s,ctn);
 	//var sbm=document.getElementById('sbm');

@@ -348,7 +348,7 @@ function place_search(name){
 		//}
 	});
 }
-//p_s('金鱼街',hhj_ctn);
+p_s('金鱼街',hhj_ctn);
 function p_s(name,ctn){
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
