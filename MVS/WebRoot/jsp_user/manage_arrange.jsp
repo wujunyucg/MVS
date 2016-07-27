@@ -62,7 +62,7 @@
 				style="width:98%;color:#000;margin-top:10px;">
 				<thead>
 					<tr>
-						<th>#</th>
+						<th><input type="checkbox" id="marr_multic"/></th>
 						<th>班次名称</th>
 						<th>日期</th>
 						<th>发车时间</th>
@@ -466,6 +466,25 @@
 			multi_turn = true;
 		}
 		});
+		
+		/*全选checkbox事件*/
+		$("#marr_multic").click(function(){
+			var tt = $(this);
+			if(tt.is(":checked")){
+				$("#arr_btn_multi_del").attr("disabled",false);
+				//遍历是否有选中的，没有则禁用删除
+				$(".arr_multi_choose").each(function(){
+					$(this).addClass("multi_bg");
+				});
+			}else{
+				$("#arr_btn_multi_del").attr("disabled",true);
+				//遍历是否有选中的，没有则禁用删除
+				$(".arr_multi_choose").each(function(){
+					$(this).removeClass("multi_bg");
+				});
+			}
+		});
+		
 		$("#load_modal").modal('hide');//隐藏加载框
 	</script>
 </body>
