@@ -558,7 +558,8 @@ function siteOnroutes(data,path,markers,index){
 		}, 3); 
 		contextMenu.addItem("取消设置", function(){
 			//path[path.length]=data;
-			marker.setIcon('icons/satations.svg');
+		  	marker.setIcon('icons/satations.svg');
+		  	console.log(ii[index]);
 			path.splice(ii[index],1);
 		}, 2);
 		contextMenu.open(map, marker.getPosition());

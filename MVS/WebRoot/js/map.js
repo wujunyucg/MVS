@@ -60,7 +60,7 @@ function EditSatation(data,marker){
 	
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
 		data.lineId=parseInt(route.val());
-		data.order=parseInt(num.val());
+		data.order=parseInt($('#satation-number').val());
 		data.name=document.getElementById('satation-name').value;
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
@@ -114,9 +114,9 @@ function addsatation(){
 			//lis[1].value=s; 
 			console.log(document.getElementById('satation-lng'));
 			document.getElementById('satation-lng').value=s;
-			var num=$('#satation-number option');
+			//var num=$('#satation-number option');
 			//console.log(data.number);
-			num[hhj_satation.length].selected='selected';
+			//num[hhj_satation.length].selected='selected';
 			console.log(s);
 			console.log(ctn);
 			info(e.lnglat,ctn);
