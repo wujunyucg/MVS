@@ -13,7 +13,7 @@ function moveTocenter(loction){
 var hhj_satations=[{
 	siteId:0,
 	peoNum:0,
-	lineId:0,
+	lineId:"",
 	order:0,
 	delay:0,
 	latitude:30.681873,
@@ -23,7 +23,7 @@ var hhj_satations=[{
 },{
 	siteId:0,
 	peoNum:0,
-	lineId:0,
+	lineId:"11",
 	order:0,
 	delay:0,
 	latitude:30.684504,
@@ -34,7 +34,7 @@ var hhj_satations=[{
 {
 	siteId:0,
 	peoNum:0,
-	lineId:0,
+	lineId:"33",
 	order:0,
 	delay:0,
 	latitude:30.680028,
@@ -45,7 +45,7 @@ var hhj_satations=[{
 {
 	siteId:0,
 	peoNum:0,
-	lineId:0,
+	lineId:"dsfsdhff",
 	order:0,
 	delay:0,
 	latitude:30.683423,
@@ -565,4 +565,24 @@ function siteOnroutes(data,path,markers,index){
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
 	});	
+}
+var rsitesmk=[];
+for(var i=0;i<hhj_satations.length;i++){
+	setroutesitesmk(hhj_satations[i]);
+}
+function setroutesitesmk(data){
+	rsitesmk.push(satationsmarker2(data));
+}
+$('#satation-search input').bind('input oninput',function(){
+	hideroutesitesmk();
+});
+function hideroutesitesmk(){
+	for(var i=0;i<rsitesmk.length;i++){
+		rsitesmk[i].hide();
+	}
+}
+function showroutesitesmk(){
+	for(var i=0;i<rsitesmk.length;i++){
+		rsitesmk[i].show();
+	}
 }

@@ -178,7 +178,35 @@
 				  icon:"icons/satations.svg",
 				  zIndex:100
 			});
+			console.log(data.lineId);
+			if(data.lineId==null||data.lineId==""){
+				marker.setIcon('icons/satation2.svg');
+				alert("OK");
+			}
 			setListener(marker,data)
+			return marker;
+		}
+		function satationsmarker2(data){
+			var marker=new AMap.Marker({
+				  position:[data.longitude,data.latitude],
+				  title: data.name,	  
+				  raiseOnDrag:true,
+				  map: map,
+				  icon:"icons/satations.svg",
+				  zIndex:100
+			});
+			console.log(data.lineId);
+			if(data.lineId==null||data.lineId==""){
+				marker.setIcon('icons/satationOnRoute.svg');
+				alert("OK");
+			}
+			var conten=SatationContent(data);
+			AMap.event.addListener(marker, 'click',function (e){
+				//data=marker.getPosition(); 
+				marker.setDraggable(false);
+				var conten=SatationContent(data);
+				info(marker.getPosition(),conten);	
+			});
 			return marker;
 		}
 		function markers(data){
