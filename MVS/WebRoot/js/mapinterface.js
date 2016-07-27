@@ -335,7 +335,7 @@ function place_search(name){
 			var satation={
 					siteId:1,
 					peoNum:0,
-					lineId:1,
+					lineId:"1",
 					order:1,
 					delay:1,
 					latitude:result.poiList.pois[0].location.lat,
@@ -363,7 +363,7 @@ function p_s(name,ctn){
 			var satation={
 					siteId:0,
 					peoNum:0,
-					lineId:0,
+					lineId:"1",
 					order:0,
 					delay:0,
 					latitude:result.poiList.pois[0].location.lat,
@@ -414,7 +414,7 @@ function EditSatation2(data,marker,ctn){
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
 		console.log(data);
-		alert("增加成功");
+		//alert("增加成功");
 		satationsmarker(data);
 		var json=JSON.stringify(data);
 		Addsitedata(json.toString());
@@ -432,7 +432,7 @@ function EditSatation2(data,marker,ctn){
 
 
 //addclicksite(hhj_ctn);
-satationsmarker(pp[0]);
+//satationsmarker(pp[0]);
 function addclicksite(ctn){
 	map.on('click',function(e){
 		var marker=new AMap.Marker({
@@ -444,9 +444,9 @@ function addclicksite(ctn){
 		marker.hide();
 		if(siteable==0){
 		marker.show();
+		siteable=1;
 		var ll=e;
 		marker.setPosition(e.lnglat);
-		
 			var data={
 					siteId:0,
 					peoNum:0,
@@ -494,4 +494,60 @@ function addclicksite(ctn){
 			siteable=0;
 		}
 	});
+}
+Routeshowsizt(pp);
+function Routeshowsizt(sites){
+	var path=[];
+	var markers[];
+	for(var i=0;i<sites.length;i++){
+		siteOnroutes(sites[i],path,markers);
+	}
+}
+
+function siteOnroutes(data,path){
+	
+	var marker=new AMap.Marker({
+		 position:[data.longitude,data.latitude],
+		  title: data.name,	  
+		  raiseOnDrag:true,
+		  map: map,
+		  icon:"icons/satation2.svg",
+		  zIndex:100
+	});
+	var index=i;
+	console.log(i+" "+index);
+	AMap.event.addListener(marker, 'rightclick',function(e){
+		//info();
+		var contextMenu=new AMap.ContextMenu();
+		contextMenu.addItem("设为起点", function() {
+			path.push(data);
+			markers.push(marker);
+			console.log(i+" ;;;;"+index);
+		},0);
+		contextMenu.addItem("路线径点", function() {
+			path.push(data);
+			markers.push(marker);
+			console.log(i+" ;;;;"+index);
+		}, 1);
+		contextMenu.addItem("设为终点", function(){
+			path.push(data);
+			markers.push(marker);
+			console.log(i+" ;;;;"+index);
+		}, 2); 
+		contextMenu.addItem("查看路线", function(){
+			//path[path.length]=data;
+			showroute(path,1,"线路1");
+			for(var i=0;i<markers.length;i++){
+				markers[i].hide();
+			}
+			//marker.hide();
+			
+		}, 4); 
+		contextMenu.addItem("取消设置", function(){
+			path[path.length]=data;
+		}, 3);
+		contextMenu.open(map, marker.getPosition());
+		contextMenuPositon = marker.getPosition();
+	
+	});	
 }

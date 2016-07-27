@@ -244,8 +244,10 @@
 							data.latitude=marker.getPosition().getLat();
 							data.address=result.poiList.pois[0].name;
 							//marker.hide();
-							satationsmarker(data);
-							marker.hide();
+							 var json=JSON.stringify(data);
+							 satationsmarker(data);
+							 Editdata(json);
+							  marker.hide();
 							//marker.hide();
 						});
 						console.log("匹配成功");
