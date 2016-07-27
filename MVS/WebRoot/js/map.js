@@ -64,7 +64,7 @@ function EditSatation(data,marker){
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
 		console.log(data);
-		alert("修改成功");
+		//alert("修改成功");
 		satationsmarker(data);
 		var json=JSON.stringify(data);
 		Editdata(json.toString());

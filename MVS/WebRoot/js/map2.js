@@ -249,8 +249,6 @@
 							//marker.hide();
 						});
 						console.log("匹配成功");
-						
-						
 					}
 					else{
 					var conten=SatationContent(data);
