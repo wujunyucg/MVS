@@ -147,10 +147,10 @@
 				 name:"1"};
 		//markers(path);	*/
 		function staffmarker(data){
-			console.log(data);
-			console.log([data.longitude,data.latitude]);
+			//console.log(data);
+			//console.log([data.longitude,data.latitude]);
 			var marker=new AMap.Marker({
-				  position: [data.long,data.lati],
+				  position: [data.longti,data.lati],
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,
