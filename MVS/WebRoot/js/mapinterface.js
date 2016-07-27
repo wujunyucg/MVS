@@ -211,13 +211,14 @@ function showroute(paths,id,name){
 	var path=[];
 //	showAllsatationinfo(paths);
 	var sitemarkers=[];
-	for(var i=0;i<paths.length;i++){
+	for(var i=0;i<paths.length-1;i++){
 		path.push([paths[i].longitude,paths[i].latitude]);
 		if(i>0&&i<paths.length-1){
 			//sitemarkers[i-1]=siteOnroute(paths[i],id,i-1);
 		}
 		console.log(path[0]+paths[i].longitude+paths[i]. latitude);
 	}  
+	path.push([104.065349,30.655826]);
 	//ss[0]=sitemarkers;
 	map.plugin("AMap.DragRoute",function(){
 		route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
@@ -495,12 +496,19 @@ function addclicksite(ctn){
 		}
 	});
 }
+
+
 Routeshowsizt(pp);
-function Routeshowsizt(sites){
+function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
 	for(var i=0;i<sites.length;i++){
-		siteOnroutes(sites[i],path,markers);
+		if(sites.lineId==null){
+			siteOnroutes(sites[i],path,markers);
+		}
+		else if(isAll){
+			siteOnroutes(sites[i],path,markers);
+		}
 	}
 }
 
@@ -529,23 +537,20 @@ function siteOnroutes(data,path,markers){
 			markers.push(marker);
 			console.log(i+" ;;;;"+index);
 		}, 1);
-		contextMenu.addItem("设为终点", function(){
-			path.push(data);
-			markers.push(marker);
-			console.log(i+" ;;;;"+index);
-		}, 2); 
+		
 		contextMenu.addItem("查看路线", function(){
 			//path[path.length]=data;
 			showroute(path,1,"线路1");
+			
 			for(var i=0;i<markers.length;i++){
 				markers[i].hide();
 			}
 			//marker.hide();
 			
-		}, 4); 
+		}, 3); 
 		contextMenu.addItem("取消设置", function(){
 			path[path.length]=data;
-		}, 3);
+		}, 2);
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
 	
