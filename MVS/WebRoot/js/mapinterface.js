@@ -590,8 +590,10 @@ for(var i=0;i<hhj_satations.length;i++){
 }
 //右键不能点击
 function setroutesitesmk(data,isAll){
-	if((data.lineId==""||data.lineId==null)&&!isAll){}
-	else{
+	if(isAll){
+		rsitesmk.push(satationsmarker2(data));
+	}
+	else if(data.lineId==""||data.lineId==null){
 		rsitesmk.push(satationsmarker2(data));
 	}
 }
