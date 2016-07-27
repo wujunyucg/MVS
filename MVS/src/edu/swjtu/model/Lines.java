@@ -111,4 +111,53 @@ public class Lines {
 			}
 		}
 	}
+	
+	/**
+	 * 根据生成路线更新站点路线信息
+	 * 2016年7月27日上午10:53:33
+	 * @author mischief7
+	 * @param list
+	 * @param con
+	 * @throws SQLException 
+	 * @throws NumberFormatException 
+	 */
+	public void addLineOfSite(Connection con) throws NumberFormatException, SQLException{
+		ArrayList<Line> list = new LineDaoImpl().getAllLine(con); 
+		Site site = new Site();
+		for(int i=0;i<list.size();i++){
+			String[]site_ids = list.get(i).getSiteId().split(",");
+			for(int j=0;j<site_ids.length;j++){
+				site = new SiteDaoImpl().getSiteById(Integer.valueOf(site_ids[j]).intValue(), con);
+				site.setLineId(site.getLineId() + list.get(i).getLineId() + ",");
+				new SiteDaoImpl().updateSite(site, con);
+			}
+		}
+		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
+		for(int i=0;i<sitelist.size();i++){
+			String temp = sitelist.get(i).getLineId();
+			if(!temp.isEmpty()){
+				if(temp.charAt(temp.length()-1) == ','){
+					temp = temp.substring(0,temp.length()-1);
+					sitelist.get(i).setLineId(temp);
+				}
+			}
+			 
+		}
+		new SiteDaoImpl().updateListSite(sitelist, con);
+	}
+	
+	/**
+	 * 情况所有站点的路线信息
+	 * 2016年7月27日上午11:13:30
+	 * @author mischief7
+	 * @param con
+	 */
+	public void deleteLineOfSite(Connection con){
+		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
+		for(int i=0;i<sitelist.size();i++){
+			sitelist.get(i).setLineId("");
+			new SiteDaoImpl().updateSite(sitelist.get(i), con);
+		}
+	}
+	
 }

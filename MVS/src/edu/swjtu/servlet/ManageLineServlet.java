@@ -144,6 +144,7 @@ public class ManageLineServlet extends HttpServlet {
 				}
 				try {
 					if(new LineDaoImpl().deleteAllLine(con) >= 0){
+						new Lines().deleteLineOfSite(con);
 						ArrayList<Line> linelist = new ArrayList<Line>();
 						request.getSession().setAttribute("pr",pr);
 						
@@ -157,6 +158,7 @@ public class ManageLineServlet extends HttpServlet {
 						pw.write("yes");
 						try {
 							new LineDaoImpl().addMoreLine(linelist, con);
+							new Lines().addLineOfSite(con);
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
