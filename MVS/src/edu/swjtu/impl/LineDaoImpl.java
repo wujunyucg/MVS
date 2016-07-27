@@ -74,7 +74,7 @@ public class LineDaoImpl implements LineDao {
 	@Override
 	public int updateLine(Connection con, Line line) throws SQLException {
 		String sql = "update line set line_id = ?,line_siteId=?,line_num=?,"
-				+ "line_carId=?,line_name=? line_rate = ? where line_id = ?";
+				+ "line_carId=?,line_name=?,line_rate = ? where line_id = ?";
 		// String sql = "update line  set  where line_id = ?";
 		int rs;
 		try {

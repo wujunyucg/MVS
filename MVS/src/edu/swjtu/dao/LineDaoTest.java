@@ -41,10 +41,11 @@ public class LineDaoTest {
 	public void testUpdate() throws ClassNotFoundException, SQLException{
 		Line line = new Line();
 		line.setCarId("1");
-		line.setLineId(1);
+		line.setLineId(728);
 		line.setName("线路1");
 		line.setNum(40);
 		line.setSiteId("1,2,3");
+		line.setRate(0.1);
 		System.out.println(new LineDaoImpl().updateLine(new DBUtil().getCon(),line));
 	}
 	

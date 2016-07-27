@@ -149,11 +149,15 @@ public class CreateArrServlet extends HttpServlet {
 							Line line = ldi.getLineById(con, Integer.parseInt(lineArr[i-1]));
 							line.setCarId(carArr[i-1]);
 							int rl = ldi.updateLine(con, line);
+							//System.out.println("rl:"+rl+" rc:"+rc);
 							if (1 == rc && 1 == rl) {
 								pw.write("yes");
+								pw.close();
 							} else {
 								pw.write("no");
 							}
+						}else{
+							System.out.println("not update");
 						}
 					}
 				}
