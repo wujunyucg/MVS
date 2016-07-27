@@ -10,8 +10,8 @@ package edu.swjtu.model;
 public class Site {
 	private int siteId;
 	private int peoNum;
-	private int lineId;
-	private int order;
+	private String lineId;
+	private String order;
 	private int delay;
 	private double latitude;
 	private double longitude;
@@ -36,16 +36,16 @@ public class Site {
 	public void setPeoNum(int peoNum) {
 		this.peoNum = peoNum;
 	}
-	public int getLineId() {
+	public String getLineId() {
 		return lineId;
 	}
-	public void setLineId(int lineId) {
+	public void setLineId(String lineId) {
 		this.lineId = lineId;
 	}
-	public int getOrder() {
+	public String getOrder() {
 		return order;
 	}
-	public void setOrder(int order) {
+	public void setOrder(String order) {
 		this.order = order;
 	}
 	public int getDelay() {
