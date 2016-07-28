@@ -221,16 +221,17 @@ public class ManageSiteServlet extends HttpServlet {
 							for(int k=j+1;k<sidList.size();k++){
 								Site site1= sdi.getSiteById(Integer.parseInt(sidList.get(k)), con);
 								String [] lineid1 = site1.getLineId().split(",");
-								String [] orders =site.getOrder().split(",");
+								String [] orders =site1.getOrder().split(",");
 								ArrayList<String> orderlist = new ArrayList<String>();
 								for(int x=0;x<orders.length;x++){
-									orderlist.add(orders[j]);
+									orderlist.add(orders[x]);
 								}
 								for(int l=0;l<lineid1.length;l++){
 									if(lineid1[l].equals(ids[i])){
+										System.out.println(lineid1.length);
+										System.out.println(orders.length);
 										orderlist.set(l, String.valueOf(Integer.parseInt(orders[l])-1));
-										String order = orderlist.toString().replace("[", "");
-										order.replace("]", "");
+										String order = orderlist.toString().replace("[", "").replace("]", "").replace(" ", "");
 										site1.setOrder(order);
 										sdi.updateSite(site1, con);
 										break;
@@ -243,8 +244,7 @@ public class ManageSiteServlet extends HttpServlet {
 						}
 						
 					}
-					String slist = sidList.toString().replace("[", "");
-					slist.replace("]", "");
+					String slist = sidList.toString().replace("[", "").replace("]", "").replace(" ", "");
 					line.setSiteId(slist);
 					ldi.updateLine(con, line);
 					

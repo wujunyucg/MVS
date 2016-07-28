@@ -43,7 +43,7 @@ function EditSatation(data,marker){
 	//var route=$('#satation-route option');
 	//console.log(data.lineId);
 	//route[data.lineId].selected='selected';
-	var route=$('#satation-route').val(data.lineId);
+	var route=$('#satation-route').val(data.lineName);
 	console.log(data.order);
 	//var num=$('#satation-number');
 	//console.log(data.number);

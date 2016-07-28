@@ -53,7 +53,7 @@ public class AdminDaoTest {
 		ArrayList<String> s = new ArrayList<String>();
 		for(int i=0;i<3;i++)
 			s.add(aa[i]);
-		System.out.println(s.toString());
+		System.out.println(s.toString().replace("[", "").replace("]", "").replace(" ", ""));
 	}
 	
 	/**

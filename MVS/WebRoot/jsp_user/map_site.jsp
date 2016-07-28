@@ -87,7 +87,7 @@
 			border-right: 1px solid #CCC;
 			border-top: 1px solid #DDD;
 			padding: 2px 3px 3px 4px;
-			height: 10px;
+		word-break:break-all; word-wrap:break-word;
 			font-size:10px
 		}
 		.table tr{
@@ -212,15 +212,10 @@
                 <li>地址&nbsp;<input type="text" readonly="readonly" id="satation-address"/></li>
               <li>乘坐人数&nbsp;<input type="text" readonly="readonly" id="satation-people"/></li>
               <li>所属路线
-              	<select size="1" style="margin-bottom:10px;" id="satation-route">
-              	 <option value="0">无</option>
-                   <c:forEach items="${site_line_list}" var="line" varStatus="status" >
-                     <option value="${line.getLineId()}">${line.getName()}</option>
-                   </c:forEach>  
-                   
-                 </select></li>
+              <input type="text" value=""id="satation-route" readonly="readonly"/>
+              </li>
               <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号
-              <input type="text" value="" id="satation-number"/>
+              <input type="text" value="" id="satation-number" readonly="readonly"/>
               </li>
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
               <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">取消</button></li>
@@ -244,7 +239,7 @@
 <div id="name"  class="form-inline" style="position:absolute;margin-left:200px;margin-top:380px;display:none" > <input type="" class="form-control" id="stressname" >&nbsp;&nbsp;&nbsp;
 <button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
 <button onclick="disnone()"  class="btn btn-primary">隐藏</button> </div>
-<div  style="position:absolute;margin-left:20px;margin-top:420px;"> <button  style="width:160px" class="btn btn-primary" onclick="map.clearMap();">隐藏所有信息</button></div>
+<div  style="position:absolute;margin-left:20px;margin-top:420px;"> <button  style="width:160px" class="btn btn-primary" onclick="disp();">显示/隐藏所有信息</button></div>
 <div  style="position:absolute;margin-left:20px;margin-top:460px;"><button  style="width:160px" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
 <div  style="position:absolute;margin-left:20px;margin-top:500px;"><button  style="width:160px" class="btn btn-primary" onclick="showsite()">显示未分配线路站点</button></div>
  <div  style="position:absolute;margin-left:20px;margin-top:540px;"><button  style="width:160px" class="btn btn-primary" onclick="showallstaff()">显示所有员工</button></div>  
@@ -607,6 +602,23 @@ $("#site_table td").click(function() {
 			}
          }
          });
+  }
+  var dis=true;
+  function disp(){
+  	if(dis){
+  		map.clearMap();
+  		dis=false;
+  	}
+  	else{
+  		for(var i=0;i<sitelist.length;i++){
+				if(sitelist[i].lineId>=0){
+					satationsmarker(sitelist[i]);
+				}
+			}
+		for(var i=0;i<stafflist.length;i++){
+					staffmarker(stafflist[i]);
+		}
+  	}
   }
 	</script>
 </body>
