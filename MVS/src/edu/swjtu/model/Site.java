@@ -15,9 +15,17 @@ public class Site {
 	private int delay;
 	private double latitude;
 	private double longitude;
+	public String getLineName() {
+		return lineName;
+	}
+	public void setLineName(String lineName) {
+		this.lineName = lineName;
+	}
 	private String address;
 	private String name;
 	private int bufftag;
+	private String lineName;
+	
 	public int getBufftag() {
 		return bufftag;
 	}

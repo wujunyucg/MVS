@@ -57,4 +57,7 @@ public interface LineDao {
 	public int updateLine(Connection con,Line line) throws SQLException;
 
 	public int deleteAllLine(Connection con) throws SQLException;
+	
+	public int getLineIdByName(Connection con,String name) throws SQLException;
+	
 }

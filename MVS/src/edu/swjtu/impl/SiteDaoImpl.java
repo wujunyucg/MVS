@@ -26,6 +26,7 @@ public class SiteDaoImpl implements SiteDao {
 		site.setPeoNum(rs.getInt("site_peoNum"));
 		site.setSiteId(rs.getInt("site_id"));
 		site.setBufftag(rs.getInt("site_bufftag"));
+		site.setLineName(rs.getString("site_lineName"));
 		return site;
 	}
 	
@@ -41,12 +42,13 @@ public class SiteDaoImpl implements SiteDao {
 		ps.setString(8,site.getOrder());
 		ps.setInt(9,site.getDelay());
 		ps.setInt(10,site.getBufftag());
+		ps.setString(11,site.getLineName());
 	}
 	
 	@Override
 	public int addOneSite(Site site, Connection con) {
 		// TODO Auto-generated method stub
-		String sql = "insert into site (site_id,site_latitude,site_longitude,site_address,site_peoNum,site_name,site_lineId,site_order,site_delay,site_bufftag) values (? , ?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into site (site_id,site_latitude,site_longitude,site_address,site_peoNum,site_name,site_lineId,site_order,site_delay,site_bufftag,site_lineName) values (? , ?,?,?,?,?,?,?,?,?,?)";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -62,7 +64,7 @@ public class SiteDaoImpl implements SiteDao {
 	@Override
 	public int addListSite(ArrayList<Site> siteList, Connection con) {
 		Site site = new Site();
-		String sql ="insert into site (site_id,site_latitude,site_longitude,site_address,site_peoNum,site_name,site_lineId,site_order,site_delay,site_bufftag) values (? , ?,?,?,?,?,?,?,?,?)";
+		String sql ="insert into site (site_id,site_latitude,site_longitude,site_address,site_peoNum,site_name,site_lineId,site_order,site_delay,site_bufftag,site_lineName) values (? , ?,?,?,?,?,?,?,?,?,?)";
 		int [] rs = null;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -102,12 +104,12 @@ public class SiteDaoImpl implements SiteDao {
 
 	@Override
 	public int updateSite(Site site, Connection con) {
-		String sql = "update  site set site_id = ?,site_latitude = ?,site_longitude = ?,site_address = ?,site_peoNum = ?,site_name = ?,site_lineId = ?,site_order = ?,site_delay = ?,site_bufftag=? where site_id = ?";
+		String sql = "update  site set site_id = ?,site_latitude = ?,site_longitude = ?,site_address = ?,site_peoNum = ?,site_name = ?,site_lineId = ?,site_order = ?,site_delay = ?,site_bufftag=?, site_lineName=? where site_id = ?";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			getPreSta(pstm, site);
-			pstm.setInt(11, site.getSiteId());
+			pstm.setInt(12, site.getSiteId());
 			rs = pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,7 +120,7 @@ public class SiteDaoImpl implements SiteDao {
 	
 	@Override
 	public int updateListSite(ArrayList<Site> siteList, Connection con) {
-		String sql = "update  site set site_id = ?,site_latitude = ?,site_longitude = ?,site_address = ?,site_peoNum = ?,site_name = ?,site_lineId = ?,site_order = ?,site_delay = ?,site_bufftag=? where site_id = ?";
+		String sql = "update  site set site_id = ?,site_latitude = ?,site_longitude = ?,site_address = ?,site_peoNum = ?,site_name = ?,site_lineId = ?,site_order = ?,site_delay = ?,site_bufftag=?,site_lineName=? where site_id = ?";
 		int[] rs;
 		Site site;
 		try {
@@ -126,7 +128,7 @@ public class SiteDaoImpl implements SiteDao {
 			for(int i = 0; i<siteList.size(); i++){
 				site = siteList.get(i);
 				getPreSta(pstm,site);
-				pstm.setInt(11, site.getSiteId());
+				pstm.setInt(12, site.getSiteId());
 				pstm.addBatch();
 			}
 			rs = pstm.executeBatch();

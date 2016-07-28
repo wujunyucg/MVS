@@ -153,4 +153,22 @@ public class LineDaoImpl implements LineDao {
 		}
 		return rs;
 	}
+
+	@Override
+	public int getLineIdByName(Connection con, String name) throws SQLException {
+		Line line = null;
+		String sql = "select * from line where line_name=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, name);
+			ResultSet rs = pstm.executeQuery();
+			if (rs.next()) {
+				line = getOneLine(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		return line.getLineId();
+	}
 }

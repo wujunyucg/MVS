@@ -278,7 +278,17 @@
 			<button type="button" id="getallline" class="btn btn-primary" data-toggle="modal" title="${linelist.size()}">隐藏全部路线</button>
 			<button type="button" id="showallsite" class="btn btn-primary" data-toggle="modal" title="json_allsite">显示全部站点</button>
 			<button type="button" id="shownotsite" class="btn btn-primary" data-toggle="modal" title="json_allsite">显示未排站点</button>
-	 			 <b class="json_line" id="getallline_json">${json_allline}</b>
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					添加新路线 <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a id="creNotSite" href="javascript:;">对未排站点规划</a></li>
+					<li><a href="javascript:;">对所有站点规划</a></li>
+				</ul>
+			</div>
+				<b class="json_line" id="getallline_json">${json_allline}</b>
 	 			  <b class="json_line" id="json_allsite">${json_allsite}</b>
 	 			 <div class="panel-body " style="height: 200px; overflow:auto;">
 					<table class="table table-bordered table-condensed">
@@ -637,7 +647,6 @@
 			
 		}
 
-		showallsite
 
 		$("#icreline").click(function() {
 		
@@ -911,6 +920,15 @@
 			$("#cre_page2").hide();
 			$("#cre_page3").hide();
 			$("#cre_page4").hide("1000");
+		});
+		
+		$("#creNotSite").click(function(){
+			var s_id = "#" + $("#showallsite").attr("title");
+			var allsite = $(s_id).text();
+			var obj = eval("("+allsite+")");
+			Routeshowsizt(obj.sitelist,0);
+			
+//			showroutesitesmk();
 		});
 		
 	</script>
