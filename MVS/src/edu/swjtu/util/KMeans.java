@@ -320,7 +320,7 @@ public class KMeans {
 	   return s;
 	}
 
-	 public double getDistance(double longt1, double lat1, double longt2, double lat2){
+	 public double getDistance(double lat1, double longt1,  double lat2, double longt2){
 	        double x,y, distance;
 	        x=(longt2-longt1)*Math.PI*R*Math.cos( ((lat1+lat2)/2)*Math.PI/180)/180;
 	        y=(lat2-lat1)*Math.PI*R/180;

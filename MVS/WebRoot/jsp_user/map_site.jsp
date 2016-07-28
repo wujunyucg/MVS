@@ -200,14 +200,16 @@
 			<div id="myPageTop"
 				style="position: absolute; top:175px; right:100px;">
 			</div>
-      <div id="satation-search" style="position:absolute;margin-left:65px;margin-top:80px;width:180px" autoComplete='off'>
-      	<input type="text" id="tipinput" value="输入关键字进行查询" />
+      <div id="satation-search" class="form-inline" style="position:absolute;margin-left:65px;margin-top:80px;" autoComplete='off'>
+      	<input type="text" id="tipinput" placeholder="查询已有站点" />
+      	 <button id="checkbut"  style="height: 25px;font-size:10px" class="btn btn-primary" onclick="checksite()">查询</button>
       	
       </div>
        <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
          <ul id="info-satation" style="list-style-type:none;">
               <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
               <li>&nbsp;&nbsp;&nbsp;经纬度 &nbsp;<input type="text" readonly="readonly" id="satation-lng"/></li>
+                <li>地址&nbsp;<input type="text" readonly="readonly" id="satation-address"/></li>
               <li>乘坐人数&nbsp;<input type="text" readonly="readonly" id="satation-people"/></li>
               <li>所属路线
               	<select size="1" style="margin-bottom:10px;" id="satation-route">
@@ -242,10 +244,11 @@
 <div id="name"  class="form-inline" style="position:absolute;margin-left:200px;margin-top:380px;display:none" > <input type="" class="form-control" id="stressname" >&nbsp;&nbsp;&nbsp;
 <button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
 <button onclick="disnone()"  class="btn btn-primary">隐藏</button> </div>
-<div  style="position:absolute;margin-left:20px;margin-top:420px;"> <button  style="width:160px" class="btn btn-primary" onclick="map.clearMap();">隐藏所有站点</button></div>
+<div  style="position:absolute;margin-left:20px;margin-top:420px;"> <button  style="width:160px" class="btn btn-primary" onclick="map.clearMap();">隐藏所有信息</button></div>
 <div  style="position:absolute;margin-left:20px;margin-top:460px;"><button  style="width:160px" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
-<div  style="position:absolute;margin-left:20px;margin-top:500px;"><button  style="width:160px" class="btn btn-primary">显示未分配线路站点</button></div>
-      
+<div  style="position:absolute;margin-left:20px;margin-top:500px;"><button  style="width:160px" class="btn btn-primary" onclick="showsite()">显示未分配线路站点</button></div>
+ <div  style="position:absolute;margin-left:20px;margin-top:540px;"><button  style="width:160px" class="btn btn-primary" onclick="showallstaff()">显示所有员工</button></div>  
+    <div  style="position:absolute;margin-left:20px;margin-top:580px;"><button  style="width:160px" class="btn btn-primary" onclick="showstaff()">显示未分配站点员工</button></div>      
       <div id="route-info">
       
       </div>
@@ -320,6 +323,7 @@
 	$(function(){
 	var turn = true;
 	var openMenus = new Array();//存放展开的子menu的div
+	
 	$("#j_nav_toggle").click(function(){
 	
 		if(turn){
@@ -354,7 +358,7 @@
 	});
 });
 		//调节地图大小
-		var sitelist;
+		var sitelist,stafflist;
  
             var hhj_ctn;
 		$(window).load(function(){
@@ -362,19 +366,54 @@
 		var site='${json_site_list}';
 		var list = eval('(' + site + ')');
 		 sitelist = list.sitelist;
-		map.setCity('成都');
-	for(var i=0;i<sitelist.length;i++){
-		if(sitelist[i].lineId>=0){
-			satationsmarker(sitelist[i]);
-		}
-	}
+			map.setCity('成都');
+		for(var i=0;i<sitelist.length;i++){
+				if(sitelist[i].lineId>=0){
+					satationsmarker(sitelist[i]);
+				}
+			}
+			
+		var staff='${json_staff_list}';
+		 list = eval('(' + staff + ')');
+		 stafflist = list.stafflist;
+		 
+		 for(var i=0;i<stafflist.length;i++){
+		 	//console.log(stafflist[i]);
+					staffmarker(stafflist[i]);
+					
+			}
 		});
 		function showall(){
 			//map.setCity('成都');
+			map.clearMap();
 			for(var i=0;i<sitelist.length;i++){
 				if(sitelist[i].lineId>=0){
 					satationsmarker(sitelist[i]);
 				}
+			}
+		}
+		function showsite(){
+			//map.setCity('成都');
+			map.clearMap();
+			for(var i=0;i<sitelist.length;i++){
+				if(sitelist[i].lineId==null||sitelist[i].lineId==""){
+					satationsmarker(sitelist[i]);
+				}
+			}
+		}
+		function showallstaff(){
+			//map.setCity('成都');
+			map.clearMap();
+			for(var i=0;i<stafflist.length;i++){
+					staffmarker(stafflist[i]);
+			}
+		}
+		function showstaff(){
+			//map.setCity('成都');
+			map.clearMap();
+			for(var i=0;i<stafflist.length;i++){
+				if(stafflist[i].siteId==0)
+					staffmarker(stafflist[i]);
 			}
 		}
 		var turn = false;
@@ -455,7 +494,7 @@ function satationSuit2(lng,lat,sta){
 		//panel:'panel'
 	});
 	console.log([lng,lat]);
-	satation_search.searchNearBy("街",[lng,lat],300,function(status,result){
+	satation_search.searchNearBy("街|路|道",[lng,lat],300,function(status,result){
 	
 		var dd=result.poiList.pois[0].name+","+result.poiList.pois[0].location+'';//+result.poiList.pois[0].address;
 		console.log(result.poiList.pois[0].name);
@@ -543,6 +582,31 @@ $("#site_table td").click(function() {
   }
   function disnone(){
   $("#name").css("display","none");
+  }
+  
+  function checksite(){
+  		//alert($("#tipinput").val());
+  		$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/ManageSiteServlet", 
+		contenttype :"application/x-www-form-urlencoded;charset=utf-8",
+		data:{
+				type:5,
+				sitename:$("#tipinput").val()
+		}, 
+		error: function(request) {
+           // document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+         },
+         success:function(request){
+        // alert(request);
+         map.clearMap();
+         	var list = eval('(' + request + ')');
+		 	var csitelist = list.csitelist;
+		 	for(var i=0;i<csitelist.length;i++){
+					satationsmarker(csitelist[i]);
+			}
+         }
+         });
   }
 	</script>
 </body>

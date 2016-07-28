@@ -288,7 +288,7 @@ public class StaffDaoImpl implements StaffDao {
 	public ArrayList<Staff> getStaffBySiteId(int siteId, Connection con) {
 		// TODO Auto-generated method stub
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_siteId  like %?%";
+		String sql = "select * from staff where staff_siteId =? ";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			pstm.setInt(1, siteId);

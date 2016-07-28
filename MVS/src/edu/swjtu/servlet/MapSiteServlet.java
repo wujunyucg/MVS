@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.SiteDaoImpl;
+import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.model.Line;
 import edu.swjtu.model.Site;
+import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
 
 /**
@@ -51,7 +53,12 @@ public class MapSiteServlet extends HttpServlet {
 	        jsonObject.put("sitelist", siteList);  
 	       // System.out.print(jsonObject.toString());
 	        request.getSession().setAttribute("json_site_list", jsonObject.toString());
-			
+			StaffDaoImpl sdi1= new StaffDaoImpl();
+			ArrayList<Staff> staffList = sdi1.getAllStaff(con);
+			JSONObject jsonObject1 = new JSONObject();  
+	        jsonObject1.put("stafflist", staffList);  
+	       // System.out.print(jsonObject.toString());
+	        request.getSession().setAttribute("json_staff_list", jsonObject1.toString());
 			LineDaoImpl ldi = new LineDaoImpl();
 			ArrayList<Line> lineList = ldi.getAllLine(con);
 			 request.getSession().setAttribute("site_line_list", lineList);

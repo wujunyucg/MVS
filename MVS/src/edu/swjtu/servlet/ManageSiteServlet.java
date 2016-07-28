@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.SiteDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
+import edu.swjtu.model.Line;
 import edu.swjtu.model.Site;
 import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
@@ -64,7 +66,7 @@ public class ManageSiteServlet extends HttpServlet {
 					int f=0;
 					for(int j =0;j<cluster.size();j++){
 						for(int k=0;k<cluster.get(j).size();k++){
-							if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>1.5){
+							if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>1.0){
 									f=1;
 									break;				
 							}
@@ -159,6 +161,9 @@ public class ManageSiteServlet extends HttpServlet {
 						staff = cluster.get(site.getBufftag()).get(j);
 						staff.setSiteId(site.getSiteId());
 						staffList.add(staff);
+					//	System.out.println(site.getBufftag());
+					//	KMeans km = new KMeans(0);
+					//	System.out.println(km.GetDistance(site.getLatitude(),site.getLongitude(),staff.getLati(),staff.getLongti()));
 					}
 					sdi.updateListStaff(staffList, con);
 				}
@@ -195,20 +200,73 @@ public class ManageSiteServlet extends HttpServlet {
 			else if(request.getParameter("type").equals("3")){
 				
 				String id=request.getParameter("sizeId");
-				System.out.println(id);
+				//System.out.println(id);
 				Site site =new Site();
 				site.setSiteId(Integer.parseInt(id));
 				SiteDaoImpl sdi = new SiteDaoImpl();
+				site = sdi.getSiteById(site.getSiteId(), con);
+				String lineId = site.getLineId();
+				String [] ids = lineId.split(",");
+				LineDaoImpl ldi = new LineDaoImpl();
+				for(int i=0;i<ids.length;i++){
+					int lid = Integer.parseInt(ids[i]);
+					Line line = ldi.getLineById(con, lid);
+					String [] sids = line.getSiteId().split(",");
+					ArrayList<String> sidList = new ArrayList<String>();
+					for(int j=0;j<sids.length;j++){
+						sidList.add(sids[j]);
+					}
+					for(int j=0;j<sidList.size();j++){
+						if(sidList.get(j).equals(id)){
+							for(int k=j+1;k<sidList.size();k++){
+								Site site1= sdi.getSiteById(Integer.parseInt(sidList.get(k)), con);
+								String [] lineid1 = site1.getLineId().split(",");
+								String [] orders =site.getOrder().split(",");
+								ArrayList<String> orderlist = new ArrayList<String>();
+								for(int x=0;x<orders.length;x++){
+									orderlist.add(orders[j]);
+								}
+								for(int l=0;l<lineid1.length;l++){
+									if(lineid1[l].equals(ids[i])){
+										orderlist.set(l, String.valueOf(Integer.parseInt(orders[l])-1));
+										String order = orderlist.toString().replace("[", "");
+										order.replace("]", "");
+										site1.setOrder(order);
+										sdi.updateSite(site1, con);
+										break;
+									}
+								}
+								
+							}
+							sidList.remove(j);
+							j--;
+						}
+						
+					}
+					String slist = sidList.toString().replace("[", "");
+					slist.replace("]", "");
+					line.setSiteId(slist);
+					ldi.updateLine(con, line);
+					
+				}
 				sdi.deleteOneSite(site, con);
-				
+				StaffDaoImpl sdi1= new StaffDaoImpl();
+				ArrayList<Staff> staffList = new ArrayList<Staff>();
+				staffList=sdi1.getStaffBySiteId(site.getSiteId(), con);
+				for(int i=0;i<staffList.size();i++){
+					staffList.get(i).setSiteId(0);;
+				 }
+				sdi1.updateListStaff(staffList, con);
 				 ArrayList<Site> siteList = sdi.getAllSite(con);
 				 for(int i=0;i<siteList.size();i++){
 					 siteList.get(i).setName(String.valueOf(i));;
 				 }
 				 sdi.updateListSite(siteList, con);
 				  siteList = sdi.getAllSite(con);
+				  staffList=sdi1.getAllStaff(con);
 				 JSONObject jsonObject = new JSONObject();  
 			        jsonObject.put("sitelist", siteList); 
+			        jsonObject.put("stafflist", staffList); 
 			        out.write(jsonObject.toString());
 					out.close();
 			}
@@ -232,6 +290,17 @@ public class ManageSiteServlet extends HttpServlet {
 				ArrayList<Site> siteList = sdi.getAllSite(con);
 				 JSONObject jsonObject = new JSONObject();  
 			        jsonObject.put("sitelist", siteList); 
+			        out.write(jsonObject.toString());
+					out.close();
+			}
+			else if(request.getParameter("type").equals("5")){
+				
+				String name=request.getParameter("sitename");
+			//	System.out.println(name);
+				SiteDaoImpl sdi = new SiteDaoImpl();
+				ArrayList<Site> siteList = sdi.getListSiteByAddress(name, con);
+				 JSONObject jsonObject = new JSONObject();  
+			        jsonObject.put("csitelist", siteList); 
 			        out.write(jsonObject.toString());
 					out.close();
 			}

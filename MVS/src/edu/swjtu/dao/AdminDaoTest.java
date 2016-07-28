@@ -48,62 +48,12 @@ public class AdminDaoTest {
 	public void test() throws ClassNotFoundException, SQLException, SAXException, IOException, ParserConfigurationException {
 		DBUtil db = new DBUtil();
 		Connection con = db.getCon();
-		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		StaffDaoImpl sdi = new StaffDaoImpl();
-		staffList = sdi.getAllStaff(new DBUtil().getCon());
-		KMeans km = new KMeans(0);
-		for(int i=1;;i++){
-			km.setK(i);
-			km.setDataSet(staffList);
-			km.execute();
-			ArrayList<ArrayList<Staff>> cluster = km.getCluster();
-			ArrayList<double[]> center = km.getCenter();
-			int f=0;
-			for(int j =0;j<cluster.size();j++){
-				for(int k=0;k<cluster.get(j).size();k++){
-					if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>0.5)
-						f=1;
-				}
-			}
-			if(f==1 )
-				continue;
-			for(int j =0;j<cluster.size();j++){
-				if(cluster.get(j).size()==0){
-					cluster.remove(j);
-					center.remove(j);
-				}
-			}
-			ArrayList<Site> siteList = new ArrayList<Site>();
-			for(int j =0;j<center.size();j++){
-				Site site = new Site();
-				site.setLatitude(center.get(j)[0]);
-				site.setLongitude(center.get(j)[1]);
-				site.setBufftag(j);
-				site.setAddress("chen");
-				site.setName("123");
-				site.setPeoNum(cluster.get(j).size());
-				siteList.add(site);
-			}
-			SiteDaoImpl sdi1 = new SiteDaoImpl();
-			sdi1.addListSite(siteList, con);
-			siteList = sdi1.getAllSite(con);
-			for(Site site:siteList){
-				staffList.clear();
-				for(int j=0;j<cluster.get(site.getBufftag()).size();j++){					
-					Staff staff =new Staff();
-					staff = cluster.get(site.getBufftag()).get(j);
-					staff.setSiteId(site.getSiteId());
-					staffList.add(staff);
-				}
-				sdi.updateListStaff(staffList, con);
-			}
-		//	for(int j=0;j<cluster.size();j++)
-		//	{
-				//km.printDataArray(cluster.get(i), "cluster["+i+"]");
-		//	}
-			System.out.print(cluster.size());
-			break;
-		}
+		String[] aa = "aaa,bbb,ccc".split(",");
+		System.out.println(aa.toString());
+		ArrayList<String> s = new ArrayList<String>();
+		for(int i=0;i<3;i++)
+			s.add(aa[i]);
+		System.out.println(s.toString());
 	}
 	
 	/**

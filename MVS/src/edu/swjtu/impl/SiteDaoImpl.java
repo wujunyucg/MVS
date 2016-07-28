@@ -155,10 +155,45 @@ public class SiteDaoImpl implements SiteDao {
 
 	@Override
 	public Site getSiteByName(String name, Connection con) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from site where site_name like ?";
+		PreparedStatement pstm;
+		Site site = null;
+		ResultSet rs;
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, "%"+name+"%");
+			rs = pstm.executeQuery();
+			if (rs.next()) {
+				site = getSiteOne(rs);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return site;
 	}
-
+	public ArrayList<Site> getListSiteByAddress(String address, Connection con) {
+		String sql = "select * from site where site_address like ?";
+		PreparedStatement pstm;
+		ArrayList<Site> siteList = new ArrayList<Site>();
+		ResultSet rs;
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, "%"+address+"%");
+			rs = pstm.executeQuery();
+			while(rs.next()){
+				siteList.add(getSiteOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return siteList;
+	} 
 	@Override
 	public ArrayList<Site> getSiteByLineId(int lineId, Connection con) {
 		// TODO Auto-generated method stub
