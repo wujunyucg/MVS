@@ -500,10 +500,7 @@ function Routeshowsizt(sites,isAll){
 	var markers=[];
 	//var index=0;
 	for(var i=0;i<sites.length;i++){
-		if(sites.lineId==null){
-			siteOnroutes(sites[i],path,markers,i);
-		}
-		else if(isAll){
+		if(sites[i].lineId==null||sites[i].lineId==""||isAll){
 			siteOnroutes(sites[i],path,markers,i);
 		}
 	}
@@ -512,7 +509,7 @@ var index2=0;
 var ii=[];
 //var isfristsiteor=0;//是否为第一条被点击
 function siteOnroutes(data,path,markers,index){
-	
+	//console.log(path);
 	var marker=new AMap.Marker({
 		 position:[data.longitude,data.latitude],
 		  title: data.name,	  
@@ -536,7 +533,7 @@ function siteOnroutes(data,path,markers,index){
 		var contextMenu=new AMap.ContextMenu();
 		contextMenu.addItem("设为起点", function() {
 			path.push(data);
-			console.log(path);
+			console.log("pppppppppppppppp"+path);
 			showPolyline(path);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
@@ -546,7 +543,7 @@ function siteOnroutes(data,path,markers,index){
 		},0);
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
-			console.log(path);
+			console.log("pppppppppppppppp"+path);
 			showPolyline(path);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
@@ -585,11 +582,12 @@ var poly=new  AMap.Polyline({map:map});
 function showPolyline(data){
 	var path=[];
 	poly.hide();
+	
 	for(var i=0;i<data.length;i++){
 		path.push([data[i].longitude,data[i].latitude]);
 	}
 	path.push(terminal);
-	console.log(path);
+	console.log("sssssssssssss"+path);
 	poly.setPath(path);
 	poly.show();
 }
