@@ -12,6 +12,7 @@ import edu.swjtu.impl.SiteDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
 import edu.swjtu.model.Car;
 import edu.swjtu.model.Line;
+import edu.swjtu.model.Lines;
 import edu.swjtu.model.Site;
 import edu.swjtu.util.DBUtil;
 
@@ -272,4 +273,17 @@ public class RouteTest {
 //		s2.setLatitude("1");
 //		System.out.println(new PlanRoute().getArc(s1, s2, s));
 //	}
+	
+	@Test
+	public void testModifyLine() throws ClassNotFoundException, SQLException{
+		Line line = new Line();
+		line.setLineId(729);
+		line.setCarId("1");
+		line.setName("xian");
+		line.setRate(0);
+		line.setSiteId("609,674,704,612,625,666,0");
+		
+		Connection con = new DBUtil().getCon();
+		new Lines().modifyLineNum(line, con);
+	}
 }

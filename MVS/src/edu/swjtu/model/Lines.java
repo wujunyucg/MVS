@@ -155,21 +155,21 @@ public class Lines {
 		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
 		for (int i = 0; i < sitelist.size(); i++) {
 			String temp1 = sitelist.get(i).getLineId();
-			if (temp1!=null&&!temp1.isEmpty()) {
+			if (temp1 != null && !temp1.isEmpty()) {
 				if (temp1.charAt(temp1.length() - 1) == ',') {
 					temp1 = temp1.substring(0, temp1.length() - 1);
 					sitelist.get(i).setLineId(temp1);
 				}
 			}
 			String temp2 = sitelist.get(i).getOrder();
-			if (temp2!=null&&!temp2.isEmpty()) {
+			if (temp2 != null && !temp2.isEmpty()) {
 				if (temp2.charAt(temp2.length() - 1) == ',') {
 					temp2 = temp2.substring(0, temp2.length() - 1);
 					sitelist.get(i).setOrder(temp2);
 				}
 			}
 			String temp3 = sitelist.get(i).getLineName();
-			if (temp3!=null&&!temp3.isEmpty()) {
+			if (temp3 != null && !temp3.isEmpty()) {
 				if (temp3.charAt(temp3.length() - 1) == ',') {
 					temp3 = temp3.substring(0, temp3.length() - 1);
 					sitelist.get(i).setLineName(temp3);
@@ -236,21 +236,21 @@ public class Lines {
 				}// for j
 
 				String temp1 = site.getLineId();
-				if (temp1!=null&&!temp1.isEmpty()) {
+				if (temp1 != null && !temp1.isEmpty()) {
 					if (temp1.charAt(temp1.length() - 1) == ',') {
 						temp1 = temp1.substring(0, temp1.length() - 1);
 						site.setLineId(temp1);
 					}
 				}
 				String temp2 = site.getOrder();
-				if (temp2!=null&&!temp2.isEmpty()) {
+				if (temp2 != null && !temp2.isEmpty()) {
 					if (temp2.charAt(temp2.length() - 1) == ',') {
 						temp2 = temp2.substring(0, temp2.length() - 1);
 						site.setOrder(temp2);
 					}
 				}
 				String temp3 = site.getLineName();
-				if (temp3!=null&&!temp3.isEmpty()) {
+				if (temp3 != null && !temp3.isEmpty()) {
 					if (temp3.charAt(temp3.length() - 1) == ',') {
 						temp3 = temp3.substring(0, temp3.length() - 1);
 						site.setLineName(temp3);
@@ -365,21 +365,21 @@ public class Lines {
 		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
 		for (int i = 0; i < sitelist.size(); i++) {
 			String temp1 = sitelist.get(i).getLineId();
-			if (temp1!=null&&!(temp1.isEmpty() || temp1.equals(""))) {
+			if (temp1 != null && !(temp1.isEmpty() || temp1.equals(""))) {
 				if (temp1.charAt(temp1.length() - 1) == ',') {
 					temp1 = temp1.substring(0, temp1.length() - 1);
 					sitelist.get(i).setLineId(temp1);
 				}
 			}
 			String temp2 = sitelist.get(i).getOrder();
-			if (temp2!=null&&!(temp2.isEmpty() || temp1.equals(""))) {
+			if (temp2 != null && !(temp2.isEmpty() || temp1.equals(""))) {
 				if (temp2.charAt(temp2.length() - 1) == ',') {
 					temp2 = temp2.substring(0, temp2.length() - 1);
 					sitelist.get(i).setOrder(temp2);
 				}
 			}
 			String temp3 = sitelist.get(i).getLineName();
-			if (temp3!=null&&!(temp3.isEmpty() || temp1.equals(""))) {
+			if (temp3 != null && !(temp3.isEmpty() || temp1.equals(""))) {
 				if (temp3.charAt(temp3.length() - 1) == ',') {
 					temp3 = temp3.substring(0, temp3.length() - 1);
 					sitelist.get(i).setLineName(temp3);
@@ -392,22 +392,28 @@ public class Lines {
 
 	/**
 	 * 修改一条线路的人数 2016年7月28日下午12:42:17
-	 * 
 	 * @author jimolonely
 	 * @param line
-	 *            con
-	 * @throws SQLException 
-	 * @throws NumberFormatException 
+	 * @throws SQLException
+	 * @throws NumberFormatException
 	 */
-	public void modifyLineNum(Line line, Connection con) throws NumberFormatException, SQLException {
+	public void modifyLineNum(Line line, Connection con)
+			throws NumberFormatException, SQLException {
 		String[] siteIds = line.getSiteId().split(",");
 		SiteDaoImpl sdi = new SiteDaoImpl();
-		
+		LineDaoImpl ldi = new LineDaoImpl();
 		for (int i = 0; i < siteIds.length; i++) {
-			String[] lines = (sdi
-					.getSiteById(Integer.parseInt(siteIds[i]), con))
-					.getLineId().split(",");
-			
+			Site s = sdi.getSiteById(Integer.parseInt(siteIds[i]), con);
+			String[] lines = s.getLineId().split(",");
+			int siteNum = s.getPeoNum();
+			int len = lines.length;
+			for (int j = 0; j < len-1; j++) {
+				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
+				l.setNum(siteNum/len);
+				siteNum -= siteNum/len;
+			}
+			/*最后一个*/
+			ldi.getLineById(con, Integer.parseInt(lines[len-1])).setNum(siteNum);
 		}
 	}
 }
