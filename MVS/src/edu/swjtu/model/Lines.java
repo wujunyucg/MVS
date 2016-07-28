@@ -277,9 +277,9 @@ public class Lines {
 		temp = new SiteDaoImpl().getAllSite(con);
 		ArrayList<Site> sitelist = new ArrayList<Site>();
 		for (int i = 0; i < temp.size(); i++) {
-			if (temp.get(i).getLineId().equals("")
+			if (temp.get(i).getLineId() == null || temp.get(i).getLineId().equals("")
 					|| temp.get(i).getLineId() == ""
-					|| temp.get(i).getLineId() == null) {
+					) {
 				sitelist.add(temp.get(i));
 			}
 		}
