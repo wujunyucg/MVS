@@ -328,7 +328,7 @@ public class Lines {
 				site = new SiteDaoImpl().getSiteById(
 						Integer.valueOf(site_ids[j]).intValue(), con);
 
-				if (site.getLineId().equals("")) {
+				if (site.getLineId()==null||site.getLineId().equals("")) {
 					site.setLineId(list.get(i).getLineId() + ",");
 				} else if (site.getLineId().charAt(
 						site.getLineId().length() - 1) == ',') {
@@ -341,7 +341,7 @@ public class Lines {
 
 				int order = j + 1;
 
-				if (site.getOrder().equals("")) {
+				if (site.getOrder()==null||site.getOrder().equals("")) {
 					site.setOrder(order + ",");
 				} else if (site.getOrder().charAt(site.getOrder().length() - 1) == ',') {
 					site.setOrder(site.getOrder() + order + ",");
@@ -349,7 +349,7 @@ public class Lines {
 					site.setOrder(site.getOrder() + "," + order);
 				}
 
-				if (site.getLineName().equals("")) {
+				if (site.getLineName()==null||site.getLineName().equals("")) {
 					site.setLineName(list.get(i).getName() + ",");
 				} else if (site.getLineName().charAt(
 						site.getLineName().length() - 1) == ',') {
