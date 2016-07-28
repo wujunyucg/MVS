@@ -494,7 +494,7 @@ function addclicksite(ctn){
 }
 
 
-Routeshowsizt(hhj_satations);
+//Routeshowsizt(hhj_satations);
 function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
@@ -505,6 +505,7 @@ function Routeshowsizt(sites,isAll){
 			siteOnroutes(sites[i],path,markers,i,poly);
 		}
 	}
+	
 }
 var index2=0;
 var ii=[];
