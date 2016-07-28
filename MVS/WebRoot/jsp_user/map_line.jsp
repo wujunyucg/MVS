@@ -275,9 +275,11 @@
 			</a>
 			<div id="linetable"  class="panel-collapse collapse">
 			<button type="button" id="icreline" class="btn btn-primary" data-toggle="modal" >智能生成路线</button>
-			<button type="button" id="getallline" class="btn btn-primary" data-toggle="modal" title="${linelist.size()}">显示全部路线</button>
-			<button type="button" id="hideallline" class="btn btn-primary" data-toggle="modal" title="${linelist.size()}">隐藏全部路线</button>
+			<button type="button" id="getallline" class="btn btn-primary" data-toggle="modal" title="${linelist.size()}">隐藏全部路线</button>
+			<button type="button" id="showallsite" class="btn btn-primary" data-toggle="modal" title="json_allsite">显示全部站点</button>
+			<button type="button" id="shownotsite" class="btn btn-primary" data-toggle="modal" title="json_allsite">显示未排站点</button>
 	 			 <b class="json_line" id="getallline_json">${json_allline}</b>
+	 			  <b class="json_line" id="json_allsite">${json_allsite}</b>
 	 			 <div class="panel-body " style="height: 200px; overflow:auto;">
 					<table class="table table-bordered table-condensed">
 						<thead>
@@ -481,7 +483,7 @@
 	<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
- 		<script type="text/javascript" src="js/mapinterface.js"></script> 
+  		<script type="text/javascript" src="js/mapinterface.js"></script>  
 	<script type="text/javascript" src="js/testroute.js"></script> 
 	<script type="text/javascript">
 
@@ -564,17 +566,56 @@
 		});
 
 		$("#getallline").click(function (){
-			var allline = $("#getallline_json").text();
-			var allobj = eval("("+allline+")");
-			var size = $("#getallline").attr("title");
-			for(var i=0;i<size;i++){
-				showroute(allobj[i].sitelist);
+			if($("#getallline").text() == "显示全部路线"){
+				var allline = $("#getallline_json").text();
+				var allobj = eval("("+allline+")");
+				var size = $("#getallline").attr("title");
+				for(var i=0;i<size;i++){
+					showroute(allobj[i].sitelist);
+				}
+				$("#getallline").text("隐藏全部路线");
+			}
+			else if($("#getallline").text() == "隐藏全部路线"){
+				map.clearMap();
+				$("#getallline").text("显示全部路线");
 			}
 		});
 		
-		$("#hideallline").click(function (){
-			map.clearMap();
+		
+		$("#showallsite").click(function(){
+			var s_id = "#" + $("#showallsite").attr("title");
+			var allsite = $(s_id).text();
+			var obj = eval("("+allsite+")");
+			if($("#showallsite").text() == "显示全部站点"){
+				for(var i=0;i<obj.sitelist.length;i++){
+					setroutesitesmk(obj.sitelist[i],1);
+				}
+				
+				$("#showallsite").text("隐藏全部站点");
+			}
+			else if($("#showallsite").text() == "隐藏全部站点"){
+				hideroutesitesmk();
+				$("#showallsite").text("显示全部站点");
+			}
 		});
+		
+		$("#shownotsite").click(function(){
+			var s_id = "#" + $("#showallsite").attr("title");
+			var allsite = $(s_id).text();
+			var obj = eval("("+allsite+")");
+			if($("#shownotsite").text() == "显示未排站点"){
+				for(var i=0;i<obj.sitelist.length;i++){
+					setroutesitesmk(obj.sitelist[i],0);
+				}
+				$("#shownotsite").text("隐藏未排站点");
+			}
+			else if($("#shownotsite").text() == "隐藏未排站点"){
+				hideroutesitesmk();
+				$("#shownotsite").text("显示未排站点");
+			}
+		});
+		
+		
 		
 		function linedetail(number,name){
 			var l_id = "#" + number;
@@ -582,7 +623,6 @@
 			var linesite = $(l_id).text();
 			var obj = eval("("+linesite+")");
 			if($(l_na).text() == "查看"){
-			console.log(number);
 				showroute(obj.sitelist, number,name);
 				console.log(number);
 				
@@ -596,6 +636,8 @@
 			}
 			
 		}
+
+		showallsite
 
 		$("#icreline").click(function() {
 		
@@ -724,7 +766,7 @@
 						url : "servlet/ManageLineServlet",
 						type : "POST",
 						data : {
-							type : "2",
+							type : "6",
 							min_rec : min_rec,
 							max_len : max_len,
 						},

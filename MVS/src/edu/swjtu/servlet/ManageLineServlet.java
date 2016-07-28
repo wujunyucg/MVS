@@ -95,9 +95,17 @@ public class ManageLineServlet extends HttpServlet {
 					String temp4 = new String();
 					temp4 = jsonObject.get(i).toString();
 					onesite.add(temp4);
-					System.out.println(onesite.get(i));
 				}
-				
+				ArrayList<Site> allsitelist = new ArrayList<Site>();
+				allsitelist = new SiteDaoImpl().getAllSite(con);
+				JSONObject jsonObject_s = new JSONObject();  
+		        jsonObject_s.put("sitelist", allsitelist);  
+		        String temp_sitejson = "[" +jsonObject_s.toString()  + "]";
+		        System.out.println(jsonObject_s.toString());
+		        System.out.println(temp_sitejson);
+		        System.out.println(jsonObject.toString());
+		        System.out.println(onesite);
+		        request.getSession().setAttribute("json_allsite", jsonObject_s.toString());
 		        request.getSession().setAttribute("json_allline", jsonObject.toString());
 		        request.getSession().setAttribute("json_oneline", onesite);
 	//	        System.out.println("*****");
@@ -107,7 +115,7 @@ public class ManageLineServlet extends HttpServlet {
 				request.getSession().setAttribute("carNumbers", carNumbers);
 		        request.getRequestDispatcher("../jsp_user/map_line.jsp").forward(request, response);		
 			}
-			else if(type.equals("2")){	//智能规划路线
+			else if(type.equals("2")){	//完全智能规划路线
 				String min_rec = request.getParameter("min_rec");
 				String max_len = request.getParameter("max_len");
 				double minRec = Double.valueOf(min_rec).doubleValue();
@@ -152,7 +160,7 @@ public class ManageLineServlet extends HttpServlet {
 							linelist = pr.intelligentLine(minRec, maxLen, sitelist,carlist, fac_site, 0, 0);
 						}catch(Exception e){
 							pw.write("no");
-							return;
+							pw.close();
 						}
 						
 						pw.write("yes");
@@ -199,7 +207,7 @@ public class ManageLineServlet extends HttpServlet {
 			}
 			else if(type.equals("5")){	//删除路线
 				int lineid = Integer.valueOf(request.getParameter("lineId")).intValue();
-				System.out.println("come");
+				new Lines().deleteOneLine(lineid, con);
 				int u = new LineDaoImpl().deleteLine(lineid, con);
 				if(u!=0){
 					pw.write("yes");
@@ -207,8 +215,58 @@ public class ManageLineServlet extends HttpServlet {
 					pw.write("no");
 				}
 			}
-			else{
-		
+			else if(type.equals("6")){	//部分智能线路规划——只设计未规划线路的站点集合
+				String min_rec = request.getParameter("min_rec");
+				String max_len = request.getParameter("max_len");
+				double minRec = Double.valueOf(min_rec).doubleValue();
+				minRec = minRec * 0.01;
+				if(minRec == 0.0){
+					minRec = 0.000000001;
+				}
+				double maxLen = Double.valueOf(max_len).doubleValue();
+				ArrayList<Site> sitelist = new ArrayList<Site>();
+				sitelist = new Lines().getNotSiteList(con);	
+				ArrayList<Car> carlist = new ArrayList<Car>();
+				carlist = new CarDaoImpl().getAllCar(con);
+				
+				Collections.sort(carlist, new Comparator<Car>() {
+		            @Override
+		            public int compare(Car c1, Car c2) {
+		                Integer num1 = c1.getNumber();
+		                Integer num2 = c2.getNumber();
+		                return num2.compareTo(num1);
+		            }
+				});
+				
+				Site fac_site = new Site();
+				fac_site.setLatitude(30.655826);
+				fac_site.setLongitude(104.065349);
+				int proces = 0;
+				PlanRoute pr = new PlanRoute();
+				pr.pro = 0;
+				request.getSession().removeAttribute("pr");
+				if(request.getSession().getAttribute("pr")==null){
+					System.out.println("nullll");
+				}else{
+					System.out.println("not null");
+				}
+				ArrayList<Line> linelist = new ArrayList<Line>();
+				request.getSession().setAttribute("pr",pr);
+				
+				try{
+					linelist = pr.intelligentLine(minRec, maxLen, sitelist,carlist, fac_site, 0, 0);
+				}catch(Exception e){
+					pw.write("no");
+					pw.close();
+				}
+				
+				pw.write("yes");
+				try {
+					new LineDaoImpl().addMoreLine(linelist, con);
+					new Lines().addMoreLineOfSite(linelist,con);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block

@@ -78,9 +78,7 @@ public class Lines {
 			String names = "";
 			for(int i=0;i<site_ids.length;i++){
 				Site site = new Site();
-				System.out.println("****" + site_ids[i]);
 				site = new SiteDaoImpl().getSiteById(Integer.valueOf(site_ids[i]).intValue(), con);
-				System.out.println( site.getName()  + "||"  +  site.getLatitude() );
 				names += site.getName() + "->";
 			}
 			names = names.substring(0,names.length()-1);
@@ -96,7 +94,13 @@ public class Lines {
 	}
 	
 	/**
-	 * 
+	 * 删除不存在站点相关的线路
+	 * 2016年7月27日下午2:28:25
+	 * @author mischief7
+	 * @param list
+	 * @param con
+	 * @throws NumberFormatException
+	 * @throws SQLException
 	 */
 	public void deleteIllegalLine(ArrayList<Line> list, Connection con) throws NumberFormatException, SQLException{
 		for(int i=0;i<list.size();i++){
@@ -123,6 +127,10 @@ public class Lines {
 	 */
 	public void addLineOfSite(Connection con) throws NumberFormatException, SQLException{
 		ArrayList<Line> list = new LineDaoImpl().getAllLine(con); 
+		for(int i=0;i<list.size();i++){
+			list.get(i).setName("智能路线" + list.get(i).getLineId());
+			new LineDaoImpl().updateLine(con, list.get(i));
+		}
 		Site site = new Site();
 		for(int i=0;i<list.size();i++){
 			String[]site_ids = list.get(i).getSiteId().split(",");
@@ -178,5 +186,187 @@ public class Lines {
 			new SiteDaoImpl().updateSite(sitelist.get(i), con);
 		}
 	}
+	
+	/**
+	 * 删除一条线路时，相关站点的LineId、Order、LineName
+	 * 2016年7月27日下午2:29:53
+	 * @author mischief7
+	 * @param lineId
+	 * @param com
+	 * @throws SQLException 
+	 */
+	public void deleteOneLine(int lineid, Connection con) throws SQLException{
+		Line line = new Line();
+		line = new LineDaoImpl().getLineById(con, lineid);
+		String[]site_ids = line.getSiteId().split(",");
+		for(int i=0;i<site_ids.length;i++){
+			Site site = new Site();
+			site = new SiteDaoImpl().getSiteById(Integer.valueOf(site_ids[i]).intValue(), con);
+			String[]site_lines = site.getLineId().split(",");
+			String[]site_orders = site.getOrder().split(",");
+			String[]site_names = site.getLineName().split(",");
+			int flag_pos = -1;
+			for(int j=0;j<site_lines.length;j++){
+				if(site_lines[j].equals(line.getLineId() + "")){
+					flag_pos = j;
+					break;
+				}
+			}
+			if(flag_pos != -1){
+				site.setLineId("");
+				site.setOrder("");
+				site.setLineName("");
+				for(int j=0;j<site_lines.length;j++){
+					if(j != flag_pos){
+						site.setLineId(site.getLineId() + site_lines[j] +",");
+						site.setOrder(site.getOrder() + site_orders[j] +",");
+						site.setLineName(site.getLineName() + site_names[j] +",");
+					}
+				}// for j
+				
+				String temp1 = site.getLineId();
+				if(!temp1.isEmpty()){
+					if(temp1.charAt(temp1.length()-1) == ','){
+						temp1 = temp1.substring(0,temp1.length()-1);
+						site.setLineId(temp1);
+					}
+				}
+				String temp2 = site.getOrder();
+				if(!temp2.isEmpty()){
+					if(temp2.charAt(temp2.length()-1) == ','){
+						temp2 = temp2.substring(0,temp2.length()-1);
+						site.setOrder(temp2);
+					}
+				}
+				String temp3 = site.getLineName();
+				if(!temp3.isEmpty()){
+					if(temp3.charAt(temp3.length()-1) == ','){
+						temp3 = temp3.substring(0,temp3.length()-1);
+						site.setLineName(temp3);
+					}
+				}
+				new SiteDaoImpl().updateSite(site, con);			
+			}// if flag_pos != -1
+			
+		}//for i
+	}
+	
+	/**
+	 * 返回未规划线路的站点
+	 * 2016年7月27日下午3:14:51
+	 * @author mischief7
+	 * @param ids
+	 * @param con
+	 * @return
+	 * @throws NumberFormatException
+	 * @throws SQLException
+	 */
+	public ArrayList<Site> getNotSiteList(Connection con){
+		ArrayList<Site> temp = new ArrayList<Site>();
+		temp = new SiteDaoImpl().getAllSite(con);
+		ArrayList<Site> sitelist = new ArrayList<Site>();
+		for(int i=0;i<temp.size();i++){
+			if(temp.get(i).getLineId().equals("")||temp.get(i).getLineId()==""||temp.get(i).getLineId()==null){
+				sitelist.add(temp.get(i));
+			}
+		}
+		return sitelist;
+	}
+	
+	public String reNewName(Line line, Connection con) throws SQLException{
+		String name = "";
+		name = line.getName();
+		ArrayList<Line> list = new ArrayList<Line>();
+		list = new LineDaoImpl().getAllLine(con);
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).getName().equals(name)){
+				name = name + "*";
+				i = 0;
+				continue;
+			}
+		}
+		return name;
+	}
+	
+	/**
+	 * 部分生成线路——增加站点的路线信息
+	 * 2016年7月27日下午3:37:07
+	 * @author mischief7
+	 * @param con
+	 * @throws SQLException 
+	 * @throws NumberFormatException 
+	 */
+	public void addMoreLineOfSite(ArrayList<Line> list, Connection con) throws NumberFormatException, SQLException {
+		for(int i=0;i<list.size();i++){
+			int lid = new LineDaoImpl().getLineIdByName(con, list.get(i).getName());
+			if(lid != -1){
+				list.get(i).setLineId(lid);
+				list.get(i).setName("智能路线" + list.get(i).getLineId());
+				list.get(i).setName(reNewName(list.get(i),con));
+			}
+			new LineDaoImpl().updateLine(con, list.get(i));
+		}
+		Site site = new Site();
+		for(int i=0;i<list.size();i++){
+			String[]site_ids = list.get(i).getSiteId().split(",");
+			for(int j=0;j<site_ids.length;j++){
+				site = new SiteDaoImpl().getSiteById(Integer.valueOf(site_ids[j]).intValue(), con);
+				
+				if(site.getLineId().equals("")){
+					site.setLineId(list.get(i).getLineId() + ",");
+				}else if(site.getLineId().charAt(site.getLineId().length()-1) == ','){
+					site.setLineId(site.getLineId() + list.get(i).getLineId() + ",");
+				}else{
+					site.setLineId(site.getLineId() + "," + list.get(i).getLineId());
+				}
+				
+				int order = j + 1;
+				
+				if(site.getOrder().equals("")){
+					site.setOrder(order + ",");
+				}else if(site.getOrder().charAt(site.getOrder().length()-1) == ','){
+					site.setOrder(site.getOrder() + order + ",");
+				}else{
+					site.setOrder(site.getOrder() + "," + order);
+				}
+				
+				if(site.getLineName().equals("")){
+					site.setLineName(list.get(i).getName() + ",");
+				}else if(site.getLineName().charAt(site.getLineName().length()-1) == ','){
+					site.setLineName(site.getLineName() + list.get(i).getName() + ",");
+				}else{
+					site.setLineName(site.getLineName() + "," + list.get(i).getName());
+				}
+				new SiteDaoImpl().updateSite(site, con);
+			}
+		}
+		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
+		for(int i=0;i<sitelist.size();i++){
+			String temp1 = sitelist.get(i).getLineId();
+			if(!(temp1.isEmpty()||temp1.equals(""))){
+				if(temp1.charAt(temp1.length()-1) == ','){
+					temp1 = temp1.substring(0,temp1.length()-1);
+					sitelist.get(i).setLineId(temp1);
+				}
+			}
+			String temp2 = sitelist.get(i).getOrder();
+			if(!(temp2.isEmpty()||temp1.equals(""))){
+				if(temp2.charAt(temp2.length()-1) == ','){
+					temp2 = temp2.substring(0,temp2.length()-1);
+					sitelist.get(i).setOrder(temp2);
+				}
+			}
+			String temp3 = sitelist.get(i).getLineName();
+			if(!(temp3.isEmpty()||temp1.equals(""))){
+				if(temp3.charAt(temp3.length()-1) == ','){
+					temp3 = temp3.substring(0,temp3.length()-1);
+					sitelist.get(i).setLineName(temp3);
+				}
+			}
+			 
+		}
+		new SiteDaoImpl().updateListSite(sitelist, con);
+	}
+	
 	
 }
