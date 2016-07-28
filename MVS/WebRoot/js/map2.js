@@ -175,12 +175,12 @@
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,
-				  icon:"icons/satations.svg",
+				  icon:"icons/satationOnRoute.svg",
 				  zIndex:100
 			});
 			console.log(data.lineId);
 			if(data.lineId==null||data.lineId==""){
-				marker.setIcon('icons/satation2.svg');
+				marker.setIcon('icons/satations.svg');
 				//alert("OK");
 			}
 			setListener(marker,data)
@@ -192,12 +192,12 @@
 				  title: data.name,	  
 				  raiseOnDrag:true,
 				  map: map,
-				  icon:"icons/satations.svg",
+				  icon:"icons/satationOnRoute.svg",
 				  zIndex:100
 			});
 			console.log(data.lineId);
 			if(data.lineId==null||data.lineId==""){
-				marker.setIcon('icons/satationOnRoute.svg');
+				marker.setIcon('icons/satations.svg');
 				//alert("OK");
 			}
 			var conten=SatationContent(data);

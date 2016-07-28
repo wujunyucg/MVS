@@ -510,6 +510,7 @@ function Routeshowsizt(sites,isAll){
 }
 var index2=0;
 var ii=[];
+//var isfristsiteor=0;//是否为第一条被点击
 function siteOnroutes(data,path,markers,index){
 	
 	var marker=new AMap.Marker({
@@ -517,11 +518,11 @@ function siteOnroutes(data,path,markers,index){
 		  title: data.name,	  
 		  raiseOnDrag:true,
 		  map: map,
-		  icon:"icons/satations.svg",
+		  icon:"icons/satationOnRoute.svg",
 		  zIndex:100
 	});
 	if(data.lineId==null||data.lineId==""){
-		marker.setIcon('icons/satationOnRoute.svg');
+		 marker.setIcon('icons/satations.svg');
 		//alert("OK");
 	}
 	//var ii;
@@ -535,6 +536,7 @@ function siteOnroutes(data,path,markers,index){
 		var contextMenu=new AMap.ContextMenu();
 		contextMenu.addItem("设为起点", function() {
 			path.push(data);
+			console.log(path);
 			showPolyline(path);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
@@ -544,6 +546,7 @@ function siteOnroutes(data,path,markers,index){
 		},0);
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
+			console.log(path);
 			showPolyline(path);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
@@ -554,7 +557,9 @@ function siteOnroutes(data,path,markers,index){
 		
 		contextMenu.addItem("查看路线", function(){
 			//path[path.length]=data;
+			
 			showroute(path,1,"线路1");
+			//route2[1].destory();
 			poly.hide();
 			for(var i=0;i<markers.length;i++){
 				//markers[i].hide();
@@ -565,13 +570,15 @@ function siteOnroutes(data,path,markers,index){
 		contextMenu.addItem("取消设置", function(){
 			//path[path.length]=data;
 		  	marker.setIcon('icons/satations.svg');
-		  	console.log(ii[index]);
+		  	console.log("qxxxxxxxxxxx"+ii[index]);
 			path.splice(ii[index],1);
+			showPolyline(path);
+			console.log(path);
 		}, 2);
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
 	});	
-}
+}  
 var rsitesmk=[];
 var terminal=[104.065349,30.655826];
 var poly=new  AMap.Polyline({map:map});
@@ -582,6 +589,7 @@ function showPolyline(data){
 		path.push([data[i].longitude,data[i].latitude]);
 	}
 	path.push(terminal);
+	console.log(path);
 	poly.setPath(path);
 	poly.show();
 }
