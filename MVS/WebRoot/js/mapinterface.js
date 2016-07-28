@@ -499,16 +499,17 @@ function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
 	//var index=0;
+	var poly=new  AMap.Polyline({map:map});
 	for(var i=0;i<sites.length;i++){
 		if(sites[i].lineId==null||sites[i].lineId==""||isAll){
-			siteOnroutes(sites[i],path,markers,i);
+			siteOnroutes(sites[i],path,markers,i,poly);
 		}
 	}
 }
 var index2=0;
 var ii=[];
 //var isfristsiteor=0;//是否为第一条被点击
-function siteOnroutes(data,path,markers,index){
+function siteOnroutes(data,path,markers,index,poly){
 	//console.log(path);
 	var marker=new AMap.Marker({
 		 position:[data.longitude,data.latitude],
@@ -534,7 +535,7 @@ function siteOnroutes(data,path,markers,index){
 		contextMenu.addItem("设为起点", function() {
 			path.push(data);
 			console.log("pppppppppppppppp"+path);
-			showPolyline(path);
+			showPolyline(path,poly);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
 			ii[index]=index2;
@@ -544,7 +545,7 @@ function siteOnroutes(data,path,markers,index){
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
 			console.log("pppppppppppppppp"+path);
-			showPolyline(path);
+			showPolyline(path,poly);
 			marker.setIcon('icons/satationOnRoute.svg');
 			markers.push(marker);
 			console.log(ii+" ;;;;"+index2);
@@ -569,7 +570,7 @@ function siteOnroutes(data,path,markers,index){
 		  	marker.setIcon('icons/satations.svg');
 		  	console.log("qxxxxxxxxxxx"+ii[index]);
 			path.splice(ii[index],1);
-			showPolyline(path);
+			showPolyline(path,poly);
 			console.log(path);
 		}, 2);
 		contextMenu.open(map, marker.getPosition());
@@ -578,17 +579,18 @@ function siteOnroutes(data,path,markers,index){
 }  
 var rsitesmk=[];
 var terminal=[104.065349,30.655826];
-var poly=new  AMap.Polyline({map:map});
-function showPolyline(data){
-	var path=[];
+
+function showPolyline(data,poly){
+	var path2=[];
 	poly.hide();
 	
 	for(var i=0;i<data.length;i++){
-		path.push([data[i].longitude,data[i].latitude]);
+		path2.push([data[i].longitude,data[i].latitude]);
 	}
-	path.push(terminal);
-	console.log("sssssssssssss"+path);
-	poly.setPath(path);
+	path2.push(terminal);
+	console.log("sssssssssssss"+path2);
+	poly.setPath(path2);
+	console.log("sssssssssssss"+path2);
 	poly.show();
 }
 for(var i=0;i<hhj_satations.length;i++){
