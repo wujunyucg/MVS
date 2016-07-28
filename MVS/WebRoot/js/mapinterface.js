@@ -498,6 +498,23 @@ function addclicksite(ctn){
 function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
+	var json=JSON.stringify(path);
+	
+	$('#').bind('click', function(){
+		console.log(json);
+		$.ajax({ 
+			type:"post",
+			url: "servlet/ManageSiteServlet",
+			data:{
+					path:json.toString()
+			}, 
+			error: function(request) {
+	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+	         },
+			success: function(request){}
+	         
+		});
+	});
 	//var index=0;
 	var poly=new  AMap.Polyline({map:map});
 	for(var i=0;i<sites.length;i++){
