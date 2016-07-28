@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sun.launcher.resources.launcher;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import edu.swjtu.impl.LineDaoImpl;
@@ -176,19 +177,15 @@ public class ManageSiteServlet extends HttpServlet {
 			}
 			else if(request.getParameter("type").equals("2")){
 				String json=request.getParameter("json");
+				SiteDaoImpl sdi = new SiteDaoImpl();
 				JSONObject jo = JSONObject.fromObject(json);
-				Site site =new Site();
+				Site site = sdi.getSiteById(jo.getInt("siteId"), con);
 				site.setAddress(jo.getString("address"));
-				site.setBufftag(jo.getInt("bufftag"));
 				site.setDelay((int)jo.get("delay"));
 				site.setLatitude(jo.getDouble("latitude"));
 				site.setLongitude(jo.getDouble("longitude"));
-				site.setLineId(jo.getString("lineId"));
 				site.setName(jo.getString("name"));
-				site.setOrder(jo.getString("order"));
-				site.setPeoNum(jo.getInt("peoNum"));
-				site.setSiteId(jo.getInt("siteId"));
-				SiteDaoImpl sdi = new SiteDaoImpl();
+	
 				sdi.updateSite(site, con);
 				ArrayList<Site> siteList = sdi.getAllSite(con);
 				 JSONObject jsonObject = new JSONObject();  
@@ -301,6 +298,24 @@ public class ManageSiteServlet extends HttpServlet {
 				ArrayList<Site> siteList = sdi.getListSiteByAddress(name, con);
 				 JSONObject jsonObject = new JSONObject();  
 			        jsonObject.put("csitelist", siteList); 
+			        out.write(jsonObject.toString());
+					out.close();
+			}
+			else if(request.getParameter("type").equals("6")){
+				
+				String lineid=request.getParameter("lineid");
+			//	System.out.println(name);
+				LineDaoImpl ldi = new LineDaoImpl();
+				SiteDaoImpl sdi = new SiteDaoImpl();
+				ArrayList<Site> siteList = new ArrayList<Site>();
+				Line line = ldi.getLineById(con, Integer.parseInt(lineid));
+				String [] siteids =line.getSiteId().split(",");
+				for(int i=0;i<siteids.length;i++){
+					Site site = sdi.getSiteById(Integer.parseInt(siteids[i]), con);
+					siteList.add(site);
+				}
+				 JSONObject jsonObject = new JSONObject();  
+			        jsonObject.put("lsitelist", siteList); 
 			        out.write(jsonObject.toString());
 					out.close();
 			}

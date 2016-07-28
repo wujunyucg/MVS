@@ -76,7 +76,7 @@
 		}
 		.scrollTbody{
 			display: block;
-			height: 150px;
+			height: 110px;
 			overflow: auto;
 			width: 100%;
 		}
@@ -208,14 +208,17 @@
        <div id="addsatation-info" style="position: absolute;margin-top:480px;display:none;">	 
          <ul id="info-satation" style="list-style-type:none;">
               <li>&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp;名称&nbsp;<input type="text" value="" id="satation-name"/></li>
-              <li>&nbsp;&nbsp;&nbsp;经纬度 &nbsp;<input type="text" readonly="readonly" id="satation-lng"/></li>
-                <li>地址&nbsp;<input type="text" readonly="readonly" id="satation-address"/></li>
+              <li>&nbsp;&nbsp;&nbsp;&nbsp;经纬度 <input type="text" readonly="readonly" id="satation-lng"/></li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址<input type="text" readonly="readonly" id="satation-address"/></li>
               <li>乘坐人数&nbsp;<input type="text" readonly="readonly" id="satation-people"/></li>
               <li>所属路线
               <input type="text" value=""id="satation-route" readonly="readonly"/>
               </li>
               <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编号
               <input type="text" value="" id="satation-number" readonly="readonly"/>
+              </li>
+               <li>停留时间
+              <input type="text" value="" id="satation-delay" />
               </li>
               <li style="float:left;margin-left:30%;width:20%"><button type="submit" id="sbm">确认</button></li>
               <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">取消</button></li>
@@ -243,7 +246,16 @@
 <div  style="position:absolute;margin-left:20px;margin-top:460px;"><button  style="width:160px" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
 <div  style="position:absolute;margin-left:20px;margin-top:500px;"><button  style="width:160px" class="btn btn-primary" onclick="showsite()">显示未分配线路站点</button></div>
  <div  style="position:absolute;margin-left:20px;margin-top:540px;"><button  style="width:160px" class="btn btn-primary" onclick="showallstaff()">显示所有员工</button></div>  
-    <div  style="position:absolute;margin-left:20px;margin-top:580px;"><button  style="width:160px" class="btn btn-primary" onclick="showstaff()">显示未分配站点员工</button></div>      
+    <div  style="position:absolute;margin-left:20px;margin-top:580px;"><button  style="width:160px" class="btn btn-primary" onclick="showstaff()">显示未分配站点员工</button></div>    
+    <div  style="position:absolute;margin-left:20px;margin-top:620px;"> <select id="listselect" style="width:160px"  class="btn btn-primary form-control" >
+         <option value="-1">选择线路查看</option>
+           <c:if test="${site_line_list!=null }">
+       <c:forEach items="${site_line_list}" var="line" varStatus="status">
+       <option value="${line.getLineId()}">${line.getName()}</option>
+       </c:forEach>
+       </c:if>
+      </select> </div>    
+    
       <div id="route-info">
       
       </div>
@@ -267,7 +279,7 @@
      	<table class="table  table-hover table-bordered " id="site_table">
 		<thead class="fixedThead">
 			<tr><th>#</th><th>站点名称</th>
-			<th>站点地址</th><th>站点人数</th><th>站点所属线路</th>
+			<th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th>
 			</tr>
 		</thead>
 		<tbody class="scrollTbody">
@@ -277,7 +289,8 @@
 	<td>${site.getName()}</td>
 	<td>${site.getAddress()}</td>
 	<td>${site.getPeoNum()}</td>
-	<td>${site.getLineId()}</td>
+	<td>${site.getLineName()}</td>
+		<td>${site.getOrder()}</td>
 	</tr>
 	</c:forEach>
 		</tbody>
@@ -316,6 +329,32 @@
 	<!-- <script type="text/javascript" src="js/testroute.js"></script> -->
 	<script type="text/javascript">
 	$(function(){
+	$('#listselect').change(function () {
+		var id = $(this).val();
+		if(id==-1)
+			map.clearMap();
+		else
+		$.ajax({ 
+		type:"post",
+		url: "servlet/ManageSiteServlet",
+		data:{
+				type:6,
+				lineid:id
+		}, 
+		error: function(request) {
+           // document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+         },
+		success: function(request){
+			map.clearMap();
+			var list = eval('(' + request + ')');
+			var lsitelist = list.lsitelist;
+		
+	    	for(var i=0;i<lsitelist.length;i++){		
+					satationsmarker(lsitelist[i]);
+			}
+      }});
+	});
+	
 	var turn = true;
 	var openMenus = new Array();//存放展开的子menu的div
 	
@@ -532,11 +571,11 @@ function satationSuit2(lng,lat,sta){
 			$("#w-modal-close").css("display","inline");
 			var list = eval('(' + request + ')');
 		 	sitelist = list.nsitelist;
-			var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+			var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
 			for(var i=0;i<sitelist.length;i++){
 				if(sitelist[i].lineId>=0){
 				satationsmarker(sitelist[i]);
-				tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+				tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td><td>'+sitelist[i].order+'</td></tr>';
 				}
 			}
 			tab=tab+'</tbody>';

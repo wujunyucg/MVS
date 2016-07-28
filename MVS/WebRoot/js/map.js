@@ -50,6 +50,7 @@ function EditSatation(data,marker){
 	//num[data.order].selected='selected';
 	$('#satation-number').val(data.order);
 	$('#satation-people').val(data.peoNum);
+	$('#satation-delay').val(data.delay);
 	info(s,ctn);
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
@@ -64,6 +65,7 @@ function EditSatation(data,marker){
 		data.name=document.getElementById('satation-name').value;
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
+		data.delay=parseInt($('#satation-delay').val());
 		console.log(data);
 		//alert("修改成功");
 		satationsmarker(data);
