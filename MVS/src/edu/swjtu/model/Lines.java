@@ -409,25 +409,36 @@ public class Lines {
 			String sLineIds = s.getLineId();
 			String[] lines = sLineIds.split(",");
 			int siteNum = s.getPeoNum();
+			boolean isEven = false;
 			int len = lines.length;
-			for (int j = 0; j < len; j++) {
+			if (siteNum % len == 1) {
+				isEven = true;
+			}
+			for (int j = 0; j < len - 1; j++) {
 				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
 				l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
+				ldi.updateLine(con, l);
+			}
+			if (isEven) {//最后一个且站点人数是奇数的话要多减一
+				Line ll = ldi
+						.getLineById(con, Integer.parseInt(lines[len - 1]));
+				ll.setNum(ll.getNum() - (siteNum / len - siteNum / (len + 1))-1);
+				ldi.updateLine(con, ll);
 			}
 			/* 最后一个是新加进来的line分配到的人数 */
 			sum += siteNum - siteNum * len / (len + 1);
 			/* 加入line到此site后面 */
 			s.setLineId(sLineIds + "," + line.getLineId());
-			/*改变此站点order*/
-			s.setOrder(s.getOrder()+","+(i+1));
-			/*更新站点线路名称*/
-			s.setLineName(s.getLineName()+","+line.getName());
-			/*更新此站点存入数据库*/
+			/* 改变此站点order */
+			s.setOrder(s.getOrder() + "," + (i + 1));
+			/* 更新站点线路名称 */
+			s.setLineName(s.getLineName() + "," + line.getName());
+			/* 更新此站点存入数据库 */
 			sdi.updateSite(s, con);
 		}
-		/*更新line人数*/
+		/* 更新line人数 */
 		line.setNum(sum);
-		/*存入数据库*/
+		/* 存入数据库 */
 		ldi.updateLine(con, line);
 	}
 }
