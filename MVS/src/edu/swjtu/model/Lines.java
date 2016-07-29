@@ -277,9 +277,9 @@ public class Lines {
 		temp = new SiteDaoImpl().getAllSite(con);
 		ArrayList<Site> sitelist = new ArrayList<Site>();
 		for (int i = 0; i < temp.size(); i++) {
-			if (temp.get(i).getLineId() == null || temp.get(i).getLineId().equals("")
-					|| temp.get(i).getLineId() == ""
-					) {
+			if (temp.get(i).getLineId() == null
+					|| temp.get(i).getLineId().equals("")
+					|| temp.get(i).getLineId() == "") {
 				sitelist.add(temp.get(i));
 			}
 		}
@@ -328,7 +328,7 @@ public class Lines {
 				site = new SiteDaoImpl().getSiteById(
 						Integer.valueOf(site_ids[j]).intValue(), con);
 
-				if (site.getLineId()==null||site.getLineId().equals("")) {
+				if (site.getLineId() == null || site.getLineId().equals("")) {
 					site.setLineId(list.get(i).getLineId() + ",");
 				} else if (site.getLineId().charAt(
 						site.getLineId().length() - 1) == ',') {
@@ -341,7 +341,7 @@ public class Lines {
 
 				int order = j + 1;
 
-				if (site.getOrder()==null||site.getOrder().equals("")) {
+				if (site.getOrder() == null || site.getOrder().equals("")) {
 					site.setOrder(order + ",");
 				} else if (site.getOrder().charAt(site.getOrder().length() - 1) == ',') {
 					site.setOrder(site.getOrder() + order + ",");
@@ -349,7 +349,7 @@ public class Lines {
 					site.setOrder(site.getOrder() + "," + order);
 				}
 
-				if (site.getLineName()==null||site.getLineName().equals("")) {
+				if (site.getLineName() == null || site.getLineName().equals("")) {
 					site.setLineName(list.get(i).getName() + ",");
 				} else if (site.getLineName().charAt(
 						site.getLineName().length() - 1) == ',') {
@@ -392,6 +392,7 @@ public class Lines {
 
 	/**
 	 * 修改一条线路的人数 2016年7月28日下午12:42:17
+	 * 
 	 * @author jimolonely
 	 * @param line
 	 * @throws SQLException
@@ -402,18 +403,31 @@ public class Lines {
 		String[] siteIds = line.getSiteId().split(",");
 		SiteDaoImpl sdi = new SiteDaoImpl();
 		LineDaoImpl ldi = new LineDaoImpl();
+		int sum = 0;// line最后累加每个站点的人数结果
 		for (int i = 0; i < siteIds.length; i++) {
 			Site s = sdi.getSiteById(Integer.parseInt(siteIds[i]), con);
-			String[] lines = s.getLineId().split(",");
+			String sLineIds = s.getLineId();
+			String[] lines = sLineIds.split(",");
 			int siteNum = s.getPeoNum();
 			int len = lines.length;
-			for (int j = 0; j < len-1; j++) {
+			for (int j = 0; j < len; j++) {
 				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
-				l.setNum(siteNum/len);
-				siteNum -= siteNum/len;
+				l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
 			}
-			/*最后一个*/
-			ldi.getLineById(con, Integer.parseInt(lines[len-1])).setNum(siteNum);
+			/* 最后一个是新加进来的line分配到的人数 */
+			sum += siteNum - siteNum * len / (len + 1);
+			/* 加入line到此site后面 */
+			s.setLineId(sLineIds + "," + line.getLineId());
+			/*改变此站点order*/
+			s.setOrder(s.getOrder()+","+(i+1));
+			/*更新站点线路名称*/
+			s.setLineName(s.getLineName()+","+line.getName());
+			/*更新此站点存入数据库*/
+			sdi.updateSite(s, con);
 		}
+		/*更新line人数*/
+		line.setNum(sum);
+		/*存入数据库*/
+		ldi.updateLine(con, line);
 	}
 }
