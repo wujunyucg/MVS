@@ -494,36 +494,33 @@ function addclicksite(ctn){
 }
 
 
-Routeshowsizt(hhj_satations,0);
+//Routeshowsizt(hhj_satations,0);
 function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
 	var wei=[];
-	var json=JSON.stringify(path);
-	
-	$('#').bind('click', function(){
-		console.log(json);
-		$.ajax({ 
-			type:"post",
-			url: "servlet/ManageSiteServlet",
-			data:{
-					path:json.toString()
-			}, 
-			error: function(request) {
-	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
-	         },
-			success: function(request){}
-	         
-		});
+	$('#surecreLsite').bind('click', function(){
+		console.log(path);
+		if(path==null||path==""||path==[]||path.length < 0){
+			$("#surecreLsite").attr("data-target","#linesiteNull");
+		}else{
+			$("#surecreLsite").attr("data-target","#h_creline");
+			$("#hcre_page1").show();
+			$("#hcre_page2").hide();
+			h_creLine(path);
+		}
 	});
+	
 	//var index=0;
 	var poly=new  AMap.Polyline({map:map});
 	var k=0;
 	for(var i=0;i<sites.length;i++){
-		if(sites[i].lineId==null||sites[i].lineId==""||isAll){
+		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""||isAll){
 			
-			siteOnroutes(sites[i],path,markers,k,poly,wei,zn);
-			if(sites[i].lineId.indexOf("智能")<0)
+			siteOnroutes(sites[i].allsite,path,markers,k,poly,wei);
+			var ss=sites[i].allsite.lineName;
+			console.log(ss);
+			if(ss.indexOf("智能")<0)
 				k++;
 		}
 	}
@@ -549,10 +546,15 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 		 marker.setIcon('icons/satations.svg');
 		//alert("OK");
 	}
-	if(data.lineId.indexOf("智能")>=0){
+	console.log(data);
+	var ss=data.lineName;
+	console.log(ss);
+	if(ss.indexOf("智能")>=0){
 		marker.setIcon('icons/znzd.svg');
 	}
-	if(data.lineId.indexOf("智能")<0){
+	var ss=data.lineName;
+	console.log(ss);
+	if(ss.indexOf("智能")<0){
 	//var ii;
 	console.log(i+" "+index);
 	AMap.event.addListener(marker, 'click',function(e){
