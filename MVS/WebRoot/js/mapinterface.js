@@ -521,8 +521,10 @@ function Routeshowsizt(sites,isAll){
 	var k=0;
 	for(var i=0;i<sites.length;i++){
 		if(sites[i].lineId==null||sites[i].lineId==""||isAll){
-			siteOnroutes(sites[i],path,markers,k,poly,wei);
-			k++;
+			
+			siteOnroutes(sites[i],path,markers,k,poly,wei,zn);
+			if(sites[i].lineId.indexOf("智能")<0)
+				k++;
 		}
 	}
 	
@@ -544,6 +546,10 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 		 marker.setIcon('icons/satations.svg');
 		//alert("OK");
 	}
+	if(data.lineId.indexOf("智能")>=0){
+		marker.setIcon('icons/znzd.svg');
+	}
+	if(data.lineId.indexOf("智能")<0){
 	//var ii;
 	console.log(i+" "+index);
 	AMap.event.addListener(marker, 'click',function(e){
@@ -559,7 +565,7 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 			wei[ii[index]]=1;
 			console.log("pppppppppppppppp"+path);
 			showPolyline(path,poly,wei);
-			marker.setIcon('icons/satationOnRoute.svg');
+			marker.setIcon('icons/newrtsizt.svg');
 			markers.push(marker);
 			
 			index2++;
@@ -571,7 +577,7 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 			ii[index]=index2;
 			wei[ii[index]]=1;
 			showPolyline(path,poly,wei);
-			marker.setIcon('icons/satationOnRoute.svg');
+			marker.setIcon('icons/newrtsizt.svg');
 			markers.push(marker);
 			console.log(ii+" ;;;;"+index2);
 			
@@ -608,6 +614,7 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
 	});	
+	}
 }  
 var rsitesmk=[];
 var terminal=[104.065349,30.655826];
