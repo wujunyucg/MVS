@@ -529,6 +529,9 @@ function Routeshowsizt(sites,isAll){
 	}
 	
 }
+
+
+
 var index2=0;
 var ii=[];
 //var isfristsiteor=0;//是否为第一条被点击
