@@ -464,8 +464,10 @@ public class Lines {
 			}
 			for (int j = 0; j < len - 1; j++) {
 				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
-				l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
-				ldi.updateLine(con, l);
+				if (null != l) {
+					l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
+					ldi.updateLine(con, l);
+				}
 			}
 			if (isEven) {// 最后一个且站点人数是奇数的话要多减一
 				Line ll = ldi
