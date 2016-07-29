@@ -84,9 +84,8 @@ public class Lines {
 				Site site = new Site();
 				site = new SiteDaoImpl().getSiteById(
 						Integer.valueOf(site_ids[i]).intValue(), con);
-				names += site.getName() + "->";
+				names += site.getName() + "-";
 			}
-			names = names.substring(0, names.length() - 1);
 			names = names.substring(0, names.length() - 1);
 			return names;
 		}
@@ -277,9 +276,9 @@ public class Lines {
 		temp = new SiteDaoImpl().getAllSite(con);
 		ArrayList<Site> sitelist = new ArrayList<Site>();
 		for (int i = 0; i < temp.size(); i++) {
-			if (temp.get(i).getLineId() == null || temp.get(i).getLineId().equals("")
-					|| temp.get(i).getLineId() == ""
-					) {
+			if (temp.get(i).getLineId() == null
+					|| temp.get(i).getLineId().equals("")
+					|| temp.get(i).getLineId() == "") {
 				sitelist.add(temp.get(i));
 			}
 		}
@@ -328,7 +327,7 @@ public class Lines {
 				site = new SiteDaoImpl().getSiteById(
 						Integer.valueOf(site_ids[j]).intValue(), con);
 
-				if (site.getLineId()==null||site.getLineId().equals("")) {
+				if (site.getLineId() == null || site.getLineId().equals("")) {
 					site.setLineId(list.get(i).getLineId() + ",");
 				} else if (site.getLineId().charAt(
 						site.getLineId().length() - 1) == ',') {
@@ -341,7 +340,7 @@ public class Lines {
 
 				int order = j + 1;
 
-				if (site.getOrder()==null||site.getOrder().equals("")) {
+				if (site.getOrder() == null || site.getOrder().equals("")) {
 					site.setOrder(order + ",");
 				} else if (site.getOrder().charAt(site.getOrder().length() - 1) == ',') {
 					site.setOrder(site.getOrder() + order + ",");
@@ -349,7 +348,7 @@ public class Lines {
 					site.setOrder(site.getOrder() + "," + order);
 				}
 
-				if (site.getLineName()==null||site.getLineName().equals("")) {
+				if (site.getLineName() == null || site.getLineName().equals("")) {
 					site.setLineName(list.get(i).getName() + ",");
 				} else if (site.getLineName().charAt(
 						site.getLineName().length() - 1) == ',') {
@@ -391,7 +390,47 @@ public class Lines {
 	}
 
 	/**
+	 * 手动增加线路时更新站点信息 2016年7月28日下午10:19:33
+	 * 
+	 * @author mischief7
+	 * @param line
+	 *            , con
+	 * @throws NumberFormatException
+	 * @throws SQLException
+	 */
+	public void haddLineOfSite(Line line, Connection con)
+			throws NumberFormatException, SQLException {
+		String[] site_ids = line.getSiteId().split(",");
+		Site site = new Site();
+
+		for (int j = 0; j < site_ids.length; j++) {
+			site = new SiteDaoImpl().getSiteById(Integer.valueOf(site_ids[j])
+					.intValue(), con);
+			if (site.getLineId() == null || site.getLineId().equals("")) {
+				site.setLineId(line.getLineId() + "");
+			} else {
+				site.setLineId(site.getLineId() + "," + line.getLineId());
+			}
+			if (site.getOrder() == null || site.getOrder().equals("")) {
+				int order = j + 1;
+				site.setOrder(order + "");
+			} else {
+				int order = j + 1;
+				site.setOrder(site.getOrder() + "," + order);
+			}
+			if (site.getLineName() == null || site.getLineName().equals("")) {
+				site.setLineName(line.getName() + "");
+			} else {
+				site.setLineName(site.getLineName() + "," + line.getName());
+			}
+
+			new SiteDaoImpl().updateSite(site, con);
+		}
+	}
+
+	/**
 	 * 修改一条线路的人数 2016年7月28日下午12:42:17
+	 * 
 	 * @author jimolonely
 	 * @param line
 	 * @throws SQLException
@@ -402,18 +441,142 @@ public class Lines {
 		String[] siteIds = line.getSiteId().split(",");
 		SiteDaoImpl sdi = new SiteDaoImpl();
 		LineDaoImpl ldi = new LineDaoImpl();
+		int sum = 0;// line最后累加每个站点的人数结果
 		for (int i = 0; i < siteIds.length; i++) {
 			Site s = sdi.getSiteById(Integer.parseInt(siteIds[i]), con);
-			String[] lines = s.getLineId().split(",");
+			String sLineIds = s.getLineId();
+			int siteNum = s.getPeoNum();
+			/* 考虑站点线路为空的情况 */
+			if (sLineIds.equals("")) {
+				s.setLineId(line.getLineId() + "");
+				s.setOrder((i + 1) + "");
+				s.setLineName(line.getName());
+				sum += siteNum;
+				/* 更新此站点存入数据库 */
+				sdi.updateSite(s, con);
+				continue;
+			}
+			String[] lines = sLineIds.split(",");
+			boolean isEven = false;
+			int len = lines.length;
+			if (siteNum % len == 1) {
+				isEven = true;
+			}
+			for (int j = 0; j < len - 1; j++) {
+				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
+				if (null != l) {
+					l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
+					ldi.updateLine(con, l);
+				}
+			}
+			if (isEven) {// 最后一个且站点人数是奇数的话要多减一
+				Line ll = ldi
+						.getLineById(con, Integer.parseInt(lines[len - 1]));
+				ll.setNum(ll.getNum() - (siteNum / len - siteNum / (len + 1))
+						- 1);
+				ldi.updateLine(con, ll);
+			}
+			/* 最后一个是新加进来的line分配到的人数 */
+			sum += siteNum - siteNum * len / (len + 1);
+			/* 加入line到此site后面 */
+			s.setLineId(sLineIds + "," + line.getLineId());
+			/* 改变此站点order */
+			s.setOrder(s.getOrder() + "," + (i + 1));
+			/* 更新站点线路名称 */
+			s.setLineName(s.getLineName() + "," + line.getName());
+			/* 更新此站点存入数据库 */
+			sdi.updateSite(s, con);
+		}
+		/* 更新line人数 */
+		line.setNum(sum);
+		/* 存入数据库 */
+		ldi.updateLine(con, line);
+	}
+
+	/**
+	 * 删除一条路线 2016年7月29日上午11:00:17
+	 * 
+	 * @author jimolonely
+	 * @param line
+	 * @param con
+	 * @throws NumberFormatException
+	 * @throws SQLException
+	 */
+	public void deleteOneLine(Line line, Connection con)
+			throws NumberFormatException, SQLException {
+		String[] siteIds = line.getSiteId().split(",");
+		SiteDaoImpl sdi = new SiteDaoImpl();
+		LineDaoImpl ldi = new LineDaoImpl();
+		int sum = 0;// line最后累加每个站点的人数结果
+		for (int i = 0; i < siteIds.length; i++) {
+			Site s = sdi.getSiteById(Integer.parseInt(siteIds[i]), con);
+			String sLineIds = s.getLineId();
+			String[] lines = sLineIds.split(",");
+			String[] sOrders = s.getOrder().split(",");
+			String[] sLineName = s.getLineName().split(",");
+
 			int siteNum = s.getPeoNum();
 			int len = lines.length;
-			for (int j = 0; j < len-1; j++) {
-				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
-				l.setNum(siteNum/len);
-				siteNum -= siteNum/len;
+			int key = 0;
+			String newLineIds = "";
+			String newOrder = "";
+			String newLineName = "";
+			for (int k = 0; k < len; k++) {
+				if (lines[k].equals(line.getLineId() + "")) {
+					key = k;
+					continue;
+				}
+				newLineIds += lines[k] + ",";
+				newOrder += sOrders[k] + ",";
+				newLineName += sLineName[k] + ",";
 			}
-			/*最后一个*/
-			ldi.getLineById(con, Integer.parseInt(lines[len-1])).setNum(siteNum);
+			// 去掉最后的分号
+			if (key != 0) {
+				newLineIds = newLineIds.substring(0, newLineIds.length() - 1);
+				newOrder = newOrder.substring(0, newOrder.length() - 1);
+				newLineName = newLineName
+						.substring(0, newLineName.length() - 1);
+			}
+			// 更新site线路
+			s.setLineId(newLineIds);
+			s.setLineName(newLineName);
+			s.setOrder(newOrder);
+			/* 下面更新其他线路的人数 */
+			int[] b = new int[len];
+			int bb = siteNum;
+			int[] a = new int[len];
+			int aa = siteNum;
+			for (int k = 0; k < len; k++) {
+				if (k == len - 1) {
+					b[k] = bb;
+					break;
+				}
+				b[k] = siteNum / len;
+				bb -= b[k];
+			}
+			for (int k = 0; k < len; k++) {
+				if (key == k) {
+					continue;
+				}
+				if (k == len - 2) {
+					a[k] = aa;
+					break;
+				}
+				a[k] = siteNum / (len - 1);
+				aa -= a[k];
+			}
+			for (int k = 0; k < len; k++) {
+				if (k != key) {
+					Line ll = ldi.getLineById(con, Integer.parseInt(lines[k]));
+					ll.setNum(ll.getNum() + a[k] - b[k]);
+					ldi.updateLine(con, ll);
+				}
+			}
+
+			/* 更新此站点存入数据库 */
+			sdi.updateSite(s, con);
 		}
+		/* 删除线路 */
+		ldi.deleteLine(line.getLineId(), con);
 	}
 }

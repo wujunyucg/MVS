@@ -410,4 +410,20 @@ public class StaffDaoImpl implements StaffDao {
 		}
 		return staffList;
 	}
+	
+	public ArrayList<Staff> getNoSiteStaff(Connection con) {
+		ArrayList<Staff> staffList = new ArrayList<Staff>();
+		String sql = "select * from staff where staff_id >-1 ";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				staffList.add(getStaffOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staffList;
+	}
 }

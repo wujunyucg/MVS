@@ -55,6 +55,8 @@ public class ManageSiteServlet extends HttpServlet {
 			if(request.getParameter("type").equals("0")){
 				ArrayList<Staff> staffList = new ArrayList<Staff>();
 				StaffDaoImpl sdi = new StaffDaoImpl();
+				 SiteDaoImpl sdi1 = new SiteDaoImpl();
+	                sdi1.deleteAllSite(con);
 				staffList = sdi.getAllStaff(new DBUtil().getCon());
 				KMeans km = new KMeans(0);
 				for(int i=1;;i++){
@@ -152,7 +154,7 @@ public class ManageSiteServlet extends HttpServlet {
                 }
                 SiteDaoImpl sdi1 = new SiteDaoImpl();
 				sdi1.addListSite(siteList, con);
-				siteList=sdi1.getAllSite(con);
+				siteList=sdi1.getBuffSite(con);
 				ArrayList<Staff> staffList = new ArrayList<Staff>();
 				StaffDaoImpl sdi = new StaffDaoImpl();
 				for(Site site:siteList){
@@ -167,7 +169,10 @@ public class ManageSiteServlet extends HttpServlet {
 					//	System.out.println(km.GetDistance(site.getLatitude(),site.getLongitude(),staff.getLati(),staff.getLongti()));
 					}
 					sdi.updateListStaff(staffList, con);
+					site.setBufftag(-1);
 				}
+				sdi1.updateListSite(siteList, con);
+				siteList=sdi1.getAllSite(con);
 				JSONObject jsonObject = new JSONObject();  
 		        jsonObject.put("nsitelist", siteList); 
 		      //  System.out.println(jsonObject.toString());
@@ -203,55 +208,61 @@ public class ManageSiteServlet extends HttpServlet {
 				SiteDaoImpl sdi = new SiteDaoImpl();
 				site = sdi.getSiteById(site.getSiteId(), con);
 				String lineId = site.getLineId();
-				String [] ids = lineId.split(",");
-				LineDaoImpl ldi = new LineDaoImpl();
-				for(int i=0;i<ids.length;i++){
-					int lid = Integer.parseInt(ids[i]);
-					Line line = ldi.getLineById(con, lid);
-					String [] sids = line.getSiteId().split(",");
-					ArrayList<String> sidList = new ArrayList<String>();
-					for(int j=0;j<sids.length;j++){
-						sidList.add(sids[j]);
-					}
-					for(int j=0;j<sidList.size();j++){
-						if(sidList.get(j).equals(id)){
-							for(int k=j+1;k<sidList.size();k++){
-								Site site1= sdi.getSiteById(Integer.parseInt(sidList.get(k)), con);
-								String [] lineid1 = site1.getLineId().split(",");
-								String [] orders =site1.getOrder().split(",");
-								ArrayList<String> orderlist = new ArrayList<String>();
-								for(int x=0;x<orders.length;x++){
-									orderlist.add(orders[x]);
-								}
-								for(int l=0;l<lineid1.length;l++){
-									if(lineid1[l].equals(ids[i])){
-										System.out.println(lineid1.length);
-										System.out.println(orders.length);
-										orderlist.set(l, String.valueOf(Integer.parseInt(orders[l])-1));
-										String order = orderlist.toString().replace("[", "").replace("]", "").replace(" ", "");
-										site1.setOrder(order);
-										sdi.updateSite(site1, con);
-										break;
-									}
-								}
-								
-							}
-							sidList.remove(j);
-							j--;
-						}
-						
-					}
-					String slist = sidList.toString().replace("[", "").replace("]", "").replace(" ", "");
-					line.setSiteId(slist);
-					ldi.updateLine(con, line);
+				if(lineId==null||lineId.equals("")){
 					
 				}
+				else{
+					String [] ids = lineId.split(",");
+					LineDaoImpl ldi = new LineDaoImpl();
+					for(int i=0;i<ids.length;i++){
+						int lid = Integer.parseInt(ids[i]);
+						Line line = ldi.getLineById(con, lid);
+						String [] sids = line.getSiteId().split(",");
+						ArrayList<String> sidList = new ArrayList<String>();
+						for(int j=0;j<sids.length;j++){
+							sidList.add(sids[j]);
+						}
+						for(int j=0;j<sidList.size();j++){
+							if(sidList.get(j).equals(id)){
+								for(int k=j+1;k<sidList.size();k++){
+									Site site1= sdi.getSiteById(Integer.parseInt(sidList.get(k)), con);
+									String [] lineid1 = site1.getLineId().split(",");
+									String [] orders =site1.getOrder().split(",");
+									ArrayList<String> orderlist = new ArrayList<String>();
+									for(int x=0;x<orders.length;x++){
+										orderlist.add(orders[x]);
+									}
+									for(int l=0;l<lineid1.length;l++){
+										if(lineid1[l].equals(ids[i])){
+											System.out.println(lineid1.length);
+											System.out.println(orders.length);
+											orderlist.set(l, String.valueOf(Integer.parseInt(orders[l])-1));
+											String order = orderlist.toString().replace("[", "").replace("]", "").replace(" ", "");
+											site1.setOrder(order);
+											sdi.updateSite(site1, con);
+											break;
+										}
+									}
+									
+								}
+								sidList.remove(j);
+								j--;
+							}
+							
+						}
+						String slist = sidList.toString().replace("[", "").replace("]", "").replace(" ", "");
+						line.setSiteId(slist);
+						ldi.updateLine(con, line);
+						
+					}
+				}
+				
 				sdi.deleteOneSite(site, con);
 				StaffDaoImpl sdi1= new StaffDaoImpl();
 				ArrayList<Staff> staffList = new ArrayList<Staff>();
 				staffList=sdi1.getStaffBySiteId(site.getSiteId(), con);
 				for(int i=0;i<staffList.size();i++){
-					staffList.get(i).setSiteId(0);;
+					staffList.get(i).setSiteId(-1);;
 				 }
 				sdi1.updateListStaff(staffList, con);
 				 ArrayList<Site> siteList = sdi.getAllSite(con);
@@ -318,6 +329,61 @@ public class ManageSiteServlet extends HttpServlet {
 			        jsonObject.put("lsitelist", siteList); 
 			        out.write(jsonObject.toString());
 					out.close();
+			}
+			else if(request.getParameter("type").equals("7")){
+				ArrayList<Staff> staffList = new ArrayList<Staff>();
+				StaffDaoImpl sdi = new StaffDaoImpl();
+				staffList = sdi.getNoSiteStaff(new DBUtil().getCon());
+				KMeans km = new KMeans(0);
+				for(int i=1;;i++){
+					//System.out.println(i);
+					km.setK(i);
+					km.setDataSet(staffList);
+					km.execute();
+					ArrayList<ArrayList<Staff>> cluster = km.getCluster();
+					ArrayList<double[]> center = km.getCenter();
+					int f=0;
+					for(int j =0;j<cluster.size();j++){
+						for(int k=0;k<cluster.get(j).size();k++){
+							if(km.GetDistance(cluster.get(j).get(k).getLati(), cluster.get(j).get(k).getLongti(), center.get(j)[0], center.get(j)[1])>1.0){
+									f=1;
+									break;				
+							}
+								
+						}
+						if(f==1)
+							break;
+					}
+					if(f==1 )
+						continue;
+					for(int j =0;j<cluster.size();j++){
+						if(cluster.get(j).size()==0){
+							cluster.remove(j);
+							center.remove(j);
+						}
+					}
+					ArrayList<Site> siteList = new ArrayList<Site>();
+					DecimalFormat df = new DecimalFormat( "0.000000");  
+					for(int j =0;j<center.size();j++){
+						Site site = new Site();
+						site.setLatitude(Double.valueOf(df.format(center.get(j)[0])));
+						site.setLongitude(Double.valueOf(df.format(center.get(j)[1])));
+						site.setBufftag(j);
+						site.setAddress("无法匹配到街道");
+						site.setName(String.valueOf(j+1));
+						site.setPeoNum(cluster.get(j).size());
+						siteList.add(site);
+					}
+					request.getSession().setAttribute("buff_site_list",siteList);
+					request.getSession().setAttribute("buff_cluster",cluster);
+					JSONObject jsonObject = new JSONObject();  
+			        jsonObject.put("bsitelist", siteList);  
+			        out.print(jsonObject.toString());
+					out.close();
+					break;
+				}
+				//System.out.println(123);
+				//response.sendRedirect("../jsp_user/site_get_address.jsp");
 			}
 		} catch (ClassNotFoundException e) {
 			
