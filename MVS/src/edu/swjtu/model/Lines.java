@@ -441,4 +441,88 @@ public class Lines {
 		/* 存入数据库 */
 		ldi.updateLine(con, line);
 	}
+	/**
+	 * 删除一条路线
+	 * 2016年7月29日上午11:00:17
+	 * @author jimolonely
+	 * @param line
+	 * @param con
+	 * @throws NumberFormatException
+	 * @throws SQLException
+	 */
+	public void deleteOneLine(Line line, Connection con)
+			throws NumberFormatException, SQLException {
+		String[] siteIds = line.getSiteId().split(",");
+		SiteDaoImpl sdi = new SiteDaoImpl();
+		LineDaoImpl ldi = new LineDaoImpl();
+		int sum = 0;// line最后累加每个站点的人数结果
+		for (int i = 0; i < siteIds.length; i++) {
+			Site s = sdi.getSiteById(Integer.parseInt(siteIds[i]), con);
+			String sLineIds = s.getLineId();
+			String[] lines = sLineIds.split(",");
+			String[] sOrders = s.getOrder().split(",");
+			String[] sLineName = s.getLineName().split(",");
+			
+			int siteNum = s.getPeoNum();
+			int len = lines.length;
+			int key = 0;
+			String newLineIds = "";
+			String newOrder = "";
+			String newLineName = "";
+			for(int k=0;k<len;k++){
+				if(lines[k].equals(line.getLineId()+"")){
+					key = k;
+					continue;
+				}
+				newLineIds+=lines[k]+",";
+				newOrder+=sOrders[k]+",";
+				newLineName+=sLineName[k]+",";
+			}
+			//去掉最后的分号
+			newLineIds = newLineIds.substring(0, newLineIds.length()-1);
+			newOrder = newOrder.substring(0, newOrder.length()-1);
+			newLineName = newLineName.substring(0, newLineName.length()-1);
+			//更新site线路
+			s.setLineId(newLineIds);
+			s.setLineName(newLineName);
+			s.setOrder(newOrder);
+			/*下面更新其他线路的人数*/
+			int[]b = new int[len];
+			int bb = siteNum;
+			int[]a = new int[len];
+			int aa = siteNum;
+			for(int k=0;k<len;k++){
+				if(k==len-1){
+					b[k] = bb;
+					break;
+				}
+				b[k] = siteNum/len;
+				bb-=b[k];
+			}
+			for(int k=0;k<len;k++){
+				if(key==k){
+					continue;
+				}
+				if(k==len-2){
+					a[k] = aa;
+					break;
+				}
+				a[k] = siteNum/(len-1);
+				aa-=a[k];
+			}
+			for(int k=0;k<len;k++){
+				if(k!=key){
+					Line ll = ldi
+							.getLineById(con, Integer.parseInt(lines[k]));
+					ll.setNum(ll.getNum() + a[k]-b[k]);
+					ldi.updateLine(con, ll);
+				}
+			}
+			
+			/* 更新此站点存入数据库 */
+			sdi.updateSite(s, con);
+		}
+		/*删除线路*/
+		ldi.deleteLine(line.getLineId(), con);
+	}
 }

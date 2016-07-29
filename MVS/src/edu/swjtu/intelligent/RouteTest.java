@@ -286,4 +286,17 @@ public class RouteTest {
 		Connection con = new DBUtil().getCon();
 		new Lines().modifyLineNum(line, con);
 	}
+	
+	@Test
+	public void testDeleteOneLine() throws ClassNotFoundException, SQLException{
+		Line line = new Line();
+		line.setLineId(857);
+		line.setCarId("1");
+		line.setName("xian");
+		line.setRate(0);
+		line.setSiteId("630,0");
+		
+		Connection con = new DBUtil().getCon();
+		new Lines().deleteOneLine(line, con);
+	}
 }
