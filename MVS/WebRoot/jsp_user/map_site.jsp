@@ -233,7 +233,7 @@
   <ul class="dropdown-menu" aria-labelledby="dLabel">
   <li><a onclick="addclicksite(hhj_ctn)">点击选点</a></li>
      <li> <a onclick="showinput()"> 搜索选点</a></li>
-      <li> <a onclick="javascript:kmeans()"> 自动生成</a></li>
+      <li> <a onclick="javascript:autosite()"> 自动生成</a></li>
   </ul>
  
 			
@@ -310,11 +310,14 @@
 					<b>正在加载，请稍后...</b>
 				</div>
 				<div class="modal-footer">
+				 <button type="button" id="w-modal-but2"  class="btn btn-default" 
+              style="display:none" >确定
+            </button>
 				 <button type="button" id="w-modal-but"  class="btn btn-default" 
-               data-dismiss="modal" style="display:none" >确定
+              style="display:none" >确定
             </button>
             <button type="button" id="w-modal-close"  class="btn btn-default" 
-               data-dismiss="modal" style="display:none" >确定
+               data-dismiss="modal" style="display:none" >取消
             </button>
          </div>
 			</div>
@@ -478,12 +481,25 @@
 			}
 		});
 		
+		function autosite(){
+		$(".modal-body").html("请选择是全部生成(清除以往数据)或为未匹配站点员工生成站点");
+		$("#w-modal-but2").css("display","inline");
+		$("#w-modal-but").css("display","inline");
+		$("#w-modal-close").css("display","inline");
+		$("#w-modal-but").html("全部生成");
+		$("#w-modal-but2").html("部分生成");
+		$("#w-modal-close").html("取消");
+		$("#w-modal-but").attr("onclick","kmeans();");
+		$("#w-modal-but2").attr("onclick","kmeans2();");
+		$("#load_modal").modal('show');
+		}
 		
 		
 		function kmeans(){
 		$(".modal-body").html("正在处理中......");
+		$("#w-modal-but2").css("display","none");
+		$("#w-modal-but").css("display","none");
 		$("#w-modal-close").css("display","none");
-		$("#load_modal").modal('show');
 		$.ajax({ 
 		type:"post",
 		url: "servlet/ManageSiteServlet",
@@ -496,9 +512,34 @@
 		success: function(request){
 		
 			var list = eval('(' + request + ')');
-			var sitelist = list.bsitelist;
+			var sitelist2 = list.bsitelist;
 		
-	    	nextkmeans(sitelist);
+	    	nextkmeans(sitelist2);
+      }});
+     
+	}
+	
+	function kmeans2(){
+		$(".modal-body").html("正在处理中......");
+		$("#w-modal-but2").css("display","none");
+		$("#w-modal-but").css("display","none");
+		$("#w-modal-close").css("display","none");
+		
+		$.ajax({ 
+		type:"post",
+		url: "servlet/ManageSiteServlet",
+		data:{
+				type:7,
+		}, 
+		error: function(request) {
+            document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+         },
+		success: function(request){
+		
+			var list = eval('(' + request + ')');
+			var sitelist2 = list.bsitelist;
+		
+	    	nextkmeans(sitelist2);
       }});
      
 	}
@@ -509,11 +550,11 @@
 var json="{\"slist\":[";
 var s="-1",arr=new Array();
 	var num;
-	function nextkmeans(sitelist){
-		 num=sitelist.length;
-		for(var i= 0; i<sitelist.length ;i++){
+	function nextkmeans(sitelist2){
+		 num=sitelist2.length;
+		for(var i= 0; i<sitelist2.length ;i++){
 		console.log(num);
-		 	satationSuit2(sitelist[i].longitude,sitelist[i].latitude,sitelist[i].bufftag);
+		 	satationSuit2(sitelist2[i].longitude,sitelist2[i].latitude,sitelist2[i].bufftag);
 	}
 }
 
@@ -569,6 +610,7 @@ function satationSuit2(lng,lat,sta){
 		success: function(request){
 			$(".modal-body").html("生成站点完毕");
 			$("#w-modal-close").css("display","inline");
+			$("#w-modal-close").html("确定");
 			var list = eval('(' + request + ')');
 		 	sitelist = list.nsitelist;
 			var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';

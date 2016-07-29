@@ -98,8 +98,34 @@ public class SiteDaoImpl implements SiteDao {
 
 	@Override
 	public int deleteListSite(ArrayList<Site> siteList, Connection con) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "delete  from site where site_id = ? ";
+		int [] rs = null;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			for(int i = 0; i<siteList.size(); i++){
+				pstm.setInt(1, siteList.get(i).getSiteId());
+				pstm.addBatch();
+			}
+			rs = pstm.executeBatch();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs[0];
+	}
+	
+	@Override
+	public int deleteAllSite(Connection con) {
+		String sql = "delete  from site  where 1=1 ";
+		int  rs = 0;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
 	}
 
 	@Override
@@ -204,6 +230,23 @@ public class SiteDaoImpl implements SiteDao {
 	public ArrayList<Site> getAllSite(Connection con) {
 		ArrayList<Site> staffList = new ArrayList<Site>();
 		String sql = "select * from site  ";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				staffList.add(getSiteOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staffList;
+	}
+	
+	@Override
+	public ArrayList<Site> getBuffSite(Connection con) {
+		ArrayList<Site> staffList = new ArrayList<Site>();
+		String sql = "select * from site where site_bufftag >-1 ";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			ResultSet rs = pstm.executeQuery();
