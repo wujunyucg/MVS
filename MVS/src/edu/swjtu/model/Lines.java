@@ -443,8 +443,18 @@ public class Lines {
 		for (int i = 0; i < siteIds.length; i++) {
 			Site s = sdi.getSiteById(Integer.parseInt(siteIds[i]), con);
 			String sLineIds = s.getLineId();
-			String[] lines = sLineIds.split(",");
 			int siteNum = s.getPeoNum();
+			/*考虑站点线路为空的情况*/
+			if(sLineIds.equals("")){
+				s.setLineId(line.getLineId()+"");
+				s.setOrder((i+1)+"");
+				s.setLineName(line.getName());
+				sum+=siteNum;
+				/* 更新此站点存入数据库 */
+				sdi.updateSite(s, con);
+				continue;
+			}
+			String[] lines = sLineIds.split(",");
 			boolean isEven = false;
 			int len = lines.length;
 			if (siteNum % len == 1) {
