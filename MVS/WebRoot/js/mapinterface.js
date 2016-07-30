@@ -625,6 +625,95 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 	});	
 	}
 }  
+function siteOnroutes2(data,path,markers,index,poly,wei){
+	//console.log(path);
+	var marker=new AMap.Marker({
+		 position:[data.longitude,data.latitude],
+		  title: data.name,	  
+		  raiseOnDrag:true,
+		  map: map,
+		  icon:"icons/satationOnRoute.svg",
+		  zIndex:100
+	});
+	if(data.lineId==null||data.lineId==""){
+		 marker.setIcon('icons/satations.svg');
+		//alert("OK");
+	}
+	console.log(data);
+	var ss=data.lineName;
+	console.log(ss);
+	if(ss.indexOf("智能")>=0){
+		marker.setIcon('icons/znzd.svg');
+	}
+	var ss=data.lineName;
+	console.log(ss);
+
+	//var ii;
+	console.log(i+" "+index);
+	AMap.event.addListener(marker, 'click',function(e){
+		var conten=SatationContent(data);
+		info(marker.getPosition(),conten);
+	});
+	AMap.event.addListener(marker, 'rightclick',function(e){
+		//info();
+		var contextMenu=new AMap.ContextMenu();
+		contextMenu.addItem("设为起点", function() {
+			path.push(data);
+			ii[index]=index2;
+			wei[ii[index]]=1;
+			console.log("pppppppppppppppp"+path);
+			showPolyline(path,poly,wei);
+			marker.setIcon('icons/newrtsizt.svg');
+			markers.push(marker);
+			
+			index2++;
+			console.log(ii+" ;;;;"+index2);
+		},0);
+		contextMenu.addItem("路线径点", function() {
+			path.push(data);
+			console.log("pppppppppppppppp"+path);
+			ii[index]=index2;
+			wei[ii[index]]=1;
+			showPolyline(path,poly,wei);
+			marker.setIcon('icons/newrtsizt.svg');
+			markers.push(marker);
+			console.log(ii+" ;;;;"+index2);
+			
+			index2++;
+		}, 1);
+		
+		contextMenu.addItem("查看路线", function(){
+			//path[path.length]=data;
+			var path2=[];
+			//poly.hide();
+			console.log(wei);
+			for(var i=0;i<path.length;i++){
+				if(wei[i]==1)
+					path2.push(path[i]);
+			}
+			showroute(path2,1,"线路1");
+			//route2[1].destory();
+			poly.hide();
+			for(var i=0;i<markers.length;i++){
+				//markers[i].hide();
+			}
+			//marker.hide();
+			
+		}, 3); 
+		contextMenu.addItem("取消设置", function(){
+			//path[path.length]=data;
+		  	marker.setIcon('icons/satations.svg');
+		  	console.log("qxxxxxxxxxxx"+ii[index]);
+			//path.splice(ii[index],1);
+			wei[ii[index]]=0;
+			showPolyline(path,poly,wei);
+			console.log(path);
+		}, 2);
+		contextMenu.open(map, marker.getPosition());
+		contextMenuPositon = marker.getPosition();
+	});	
+	
+}  
 var rsitesmk=[];
 var terminal=[104.065349,30.655826];
 
@@ -661,5 +750,42 @@ function hideroutesitesmk(){
 function showroutesitesmk(){
 	for(var i=0;i<rsitesmk.length;i++){
 		rsitesmk[i].show();
+	}
+}
+function EditRoutes(sites,route){
+	var path=[];
+	var markers=[];
+	var wei=[];
+	ii=[];
+	index2=0;
+	for(var i=0;i<route.length;i++){
+		path.push(route[i]);
+		wei[i]=1;
+		ii[i]=i;
+	}
+	$('#surecreLsite').bind('click', function(){
+		console.log(path);
+		if(path==null||path==""||path==[]||path.length < 0){
+			$("#surecreLsite").attr("data-target","#linesiteNull");
+		}else{
+			$("#surecreLsite").attr("data-target","#h_creline");
+			$("#hcre_page1").show();
+			$("#hcre_page2").hide();
+			h_creLine(path);
+		}
+	});
+	
+	//var index=0;
+	var poly=new  AMap.Polyline({map:map});
+	showPolyline(path,poly,wei);
+	var k=0;
+	for(var i=0;i<sites.length;i++){
+		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""||isAll){	
+			siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei);
+			var ss=sites[i].allsite.lineName;
+			console.log(ss);
+			//if(ss.indexOf("智能")<0)
+				k++;
+		}
 	}
 }
