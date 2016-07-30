@@ -5,7 +5,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -58,6 +58,7 @@
 	<div id="j-main">
 		<div id="j-left-menu">
 			<div class="list-group">
+				<c:if test="${admin1!=null||admin2!=null}">
 				<button type="button"
 					class="list-group-item btn-menu btn_text">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
@@ -65,13 +66,19 @@
 						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 				</button>
 				<div class="list-group j-child-menu" style="display:none;">
+					<c:if test="${admin2!=null}">
 					<button type="button" class="list-group-item " id="manange_staff">数据维护</button>
+					</c:if>
+					<c:if test="${admin1!=null}">
 					<button type="button" class="list-group-item" id="synch_staff">数据同步</button>
+					</c:if>
 				</div>
 				<button type="button" style="display:none;"
 					class="list-group-item btn-menu btn_icon">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 				</button>
+				</c:if>
+				<c:if test="${admin3!=null}">
 				<button type="button" class="list-group-item  btn-menu btn_text" onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 					线路管理
@@ -80,6 +87,8 @@
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 				</button>
+				</c:if>
+				<c:if test="${admin7!=null}">
 				<button type="button" class="list-group-item  btn-menu btn_text" id="map_site" onclick="window.location.href='servlet/MapSiteServlet'">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 					站点管理
@@ -88,8 +97,9 @@
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
 				</button>
+				</c:if>
 
-
+				<c:if test="${admin9!=null}">
 				<button type="button"
 					class="list-group-item btn-menu btn_text">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
@@ -97,9 +107,11 @@
 						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
+					<c:if test="${admin10!=null}">
 						<button type="button" class="list-group-item" id="cre_car">
 							新建车辆数据
 							</button>
+							</c:if>
 							<button type="button" class="list-group-item" id="man_car">
 								数据维护与查询
 								</button>
@@ -108,20 +120,24 @@
 						class="list-group-item btn-menu btn_icon">
 						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 						</button>
-
+					</c:if>
+					<c:if test="${admin5!=null}">
 						<button type="button" class="list-group-item  btn-menu btn_text">
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 							班次管理 <span style="float:right;"
 								class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 						</button>
 						<div class="list-group j-child-menu" style="display:none;">
+							<c:if test="${admin6!=null}">
 							<button type="button" class="list-group-item add-arrange">新增班次</button>
+							</c:if>
 							<button type="button" class="list-group-item manage-arrange">数据维护</button>
 						</div>
 						<button type="button" style="display:none;"
 							class="list-group-item  btn-menu btn_icon">
 							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						</button>
+						</c:if>
 			</div>
 			<div class="panel panel-default j-no-radous">
 				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
