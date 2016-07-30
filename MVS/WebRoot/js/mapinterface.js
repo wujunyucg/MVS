@@ -495,10 +495,14 @@ function addclicksite(ctn){
 
 
 //Routeshowsizt(hhj_satations,0);
+var index2=0;
+var ii=[];
 function Routeshowsizt(sites,isAll){
 	var path=[];
 	var markers=[];
 	var wei=[];
+	ii=[];
+	index2=0;
 	$('#surecreLsite').bind('click', function(){
 		console.log(path);
 		if(path==null||path==""||path==[]||path.length < 0){
