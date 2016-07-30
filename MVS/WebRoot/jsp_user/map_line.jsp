@@ -26,7 +26,7 @@
 	<link rel="stylesheet" type="text/css" href="css/j-css/map-theme.css">
 	<link rel="stylesheet" type="text/css"
 		href="css/bootstrap/bootstrap.min.css">
-	
+
 	<script src='scripts/jquery.js'></script>
 	<script src='scripts/bootstrap.min.js'></script>
 	<!-- map- -->
@@ -263,7 +263,45 @@
       </div>
 	
 	
-	
+		<div class="btn-group" style="position:fixed;top:150px;right:0px;z-index: 600;">
+				<button type="button" class="btn btn-primary dropdown-toggle hc_button" style="width:130px;"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					智能生成路线&nbsp; <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a class="icreline" href="javascript:;" data-toggle="modal" onclick="javascript:icreLine(0)">对未排站点规划</a></li>
+					<li><a  class="icreline" href="javascript:;" data-toggle="modal" onclick="javascript:icreLine(1)">对所有站点规划</a></li>
+				</ul>
+			</div>
+			<div style="position:fixed;top:190px;right:0px;">
+				<button type="button" id="getallline" class="btn btn-primary hc_button"  style="width:130px;" data-toggle="modal" title="${linelist.size()}">隐藏全部路线</button>
+			</div>
+			<div class="btn-group"  style="position:fixed;top:230px;right:0px;z-index: 500;">
+				<button type="button" class="btn btn-primary dropdown-toggle hc_button"  style="width:130px;"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					显示/隐藏站点 <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" >
+					<li><a id="shownotsite" href="javascript:;" title="json_allsite">显示未排站点</a></li>
+					<li><a id="showallsite" href="javascript:;" title="json_allsite">显示全部站点</a></li>
+				</ul>
+			</div>
+			<div class="btn-group"  style="position:fixed;top:270px;right:0px;z-index: 400;">
+				<button type="button" class="btn btn-primary dropdown-toggle hc_button"  style="width:130px;"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					手动创建路线&nbsp; <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a id="creNotSite" href="javascript:;" title="0">对未排站点规划</a></li>
+					<li><a  id="creAllSite" href="javascript:;" title="1">对所有站点规划</a></li>
+				</ul>
+			</div>
+			<div  style="position:fixed;top:310px;right:0px;">
+				<button type="button"  style="width:130px;" id="surecreLsite" class="btn btn-success" data-toggle="modal">确认所选路线</button>
+			</div>
+			<div  style="position:fixed;top:350px;right:0px;">
+				<button type="button"  style="width:130px;" id="outcreLsite" class="btn btn-danger" data-toggle="modal">退出路线创建</button>
+			</div>
 	
 			
 		  <div id="show_linetable" class="panel panel-group panel-default" id="accordion" style="position:fixed;bottom:0px;left:15%;right:0px;">
@@ -274,22 +312,7 @@
 				</div>
 			</a>
 			<div id="linetable"  class="panel-collapse collapse">
-			<button type="button" id="icreline" class="btn btn-primary" data-toggle="modal" >智能生成路线</button>
-			<button type="button" id="getallline" class="btn btn-primary" data-toggle="modal" title="${linelist.size()}">隐藏全部路线</button>
-			<button type="button" id="showallsite" class="btn btn-primary" data-toggle="modal" title="json_allsite">显示全部站点</button>
-			<button type="button" id="shownotsite" class="btn btn-primary" data-toggle="modal" title="json_allsite">显示未排站点</button>
-			<div class="btn-group">
-				<button type="button" class="btn btn-primary dropdown-toggle"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					添加新路线 <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a id="creNotSite" href="javascript:;">对未排站点规划</a></li>
-					<li><a href="javascript:;">对所有站点规划</a></li>
-				</ul>
-			</div>
-				<b class="json_line" id="getallline_json">${json_allline}</b>
-	 			  <b class="json_line" id="json_allsite">${json_allsite}</b>
+			
 	 			 <div class="panel-body " style="height: 200px; overflow:auto;">
 					<table class="table table-bordered table-condensed">
 						<thead>
@@ -304,7 +327,8 @@
 								<th style="width:60px;" >删除</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody  id="linetab_con">
+						
 							<c:if test="${linelist != null }">
 								<c:forEach items="${linelist}" var="line" varStatus="status">
 									<tr class="${line.getLineId()}">
@@ -312,25 +336,24 @@
 										<c:choose>
 											<c:when test="${line.getRate() < 0}">
 												<td class="text-success">${line.getName()}</td>
-												<td class="text-success">${siteNames.get(status.index)}</td>
-												<td style="width:100px;" class="text-success">${carNumbers.get(status.index)}</td>
+												<td class="text-success">${line.getSiteId()}</td>
+												<td style="width:100px;" class="text-success"></td>
 												<td style="width:100px;" class="text-success">${line.getNum()}</td>
 												<td style="width:100px;" class="text-success">
 												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
 											</c:when>
 											<c:otherwise>   
 												<td>${line.getName()}</td>
-												<td>${siteNames.get(status.index)}</td>
-												<td style="width:100px;">${carNumbers.get(status.index)}</td>
+												<td>${line.getSiteId()}</td>
+												<td style="width:100px;"></td>
 												<td style="width:100px;">${line.getNum()}</td>
 	   											<td style="width:100px;">
 												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
 	 										 </c:otherwise> 
  										 </c:choose>
 										<td style="width:60px;">
-										<a id="${line.getName()}" onclick="javascript:linedetail('${line.getLineId()}','${line.getName()}')" href="javascript:;">查看</a>
+										<a id="${line.getName()}" onclick="javascript:linedetail('${line.getLineId()}','${line.getName()}')" href="javascript:;" title="${status.index}">查看</a>
 										</td>
-										<b class="json_line" id="${line.getLineId()}">${json_oneline.get(status.index)}</b>
 										<td style="width:60px;"><a class="jimomo">修改</a></td>    
 										<td style="width:60px;"  id="dline" onclick="javascript:linedelete('${line.getLineId()}',
 										'${line.getName()}','${siteNames.get(status.index)}','${line.getNum()}',
@@ -339,11 +362,84 @@
 									</tr>
 								</c:forEach>
 							</c:if>
+							
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
+
+		<!-- 确认手动生成路线 -->   
+		<div class="modal fade" id="h_creline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">新建路线</h4></div>
+
+					<div id="hcre_page1" class="mypage">
+					
+						<div class="modal-body">
+							
+							<div class="alert alert-info" role="alert">请填写线路名称：</div>
+							
+							<div class="row">
+								<div class="col-lg-7"><div class="input-group">
+										<span class="input-group-addon" id="sizing-addon2">线路名称</span>
+										<input type="text" id="lin_nam" class="form-control" aria-describedby="sizing-addon2" placeholder="请输入创建路线名称">
+								</div></div>
+								<div class="col-lg-5">
+									<h6>
+										<div id="judgeLN1"  class="label label-danger" role="alert" style="display:none;">线路名称未填写</div>
+										<div id="judgeLN2"  class="label label-danger" role="alert" style="display:none;">线路名称已存在或含非法字符</div>
+									</h6>
+								</div>
+							</div>
+							<br/>
+							<li id="runsites" class="list-group-item list-group-item-success" title="" role="alert"></li>
+							<li id="peonum" class="list-group-item list-group-item-success" title="" role="alert"></li>
+							<li class="list-group-item list-group-item-success" role="alert">乘坐率：0%（未知）</li>
+							<br/>
+						</div>
+						<div class="modal-footer">
+							<button id="btn_pre" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+							<button id="hsure_cre" type="button" class="btn btn-primary">确认创建</button>
+						</div>
+					</div>
+
+
+					
+					<div id="hcre_page2" class="mypage2">
+						<div class="modal-body">
+							<div id="result" class="alert alert-success" role="alert">已成功新建线路</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" >查看线路</button>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 手动生成路线 站点数为空 -->
+		<div class="modal fade" id="linesiteNull" role="dialog" aria-labelledby="gridSystemModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content"><div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="gridSystemModalLabel">路线创建</h4>
+				</div>
+					<div class="modal-body">
+						<div class="alert alert-danger" role="alert">您尚未设置路线所经站点！</div>
+					</div>
+				<div class="modal-footer">
+        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+    </div>
+    </div>
 
 		<!-- 确认生成路线 -->
 		<div class="modal fade" id="in_creline" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -431,8 +527,7 @@
 							<div id="result" class="alert alert-success" role="alert">已成功智能规划满足条件的所有线路</div>
 						</div>
 						<div class="modal-footer">
-							<button id="sea_fin" type="button" class="btn btn-primary" 
-							onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">查看线路</button>
+							<button id="sea_fin" type="button" class="btn btn-primary" data-dismiss="modal">查看线路</button>
 						</div>
 					</div>
 					<div id="cre_page4" class="mypage4">
@@ -447,6 +542,7 @@
 				</div>
 			</div>
 		</div>
+
 
 		<!-- 删除路线 -->
 		<div class="modal fade" id="de_line" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -478,14 +574,12 @@
 							<div class="alert alert-success" role="alert">已成功删除该车辆数据信息</div>
 						</div>
 						<div class="modal-footer"><button type="button" class="btn btn-primary"  data-dismiss="modal"
-						onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'"
+						
 						>确认并刷新</button></div>
 						</div>
 				</div>
 			</div>
 		</div>
-
-
 
 		</div>
 
@@ -500,18 +594,25 @@
 		var max_length = "-1";
 		var jud_r = 0;
 		var jud_l = 1;
+		var jud_ln1 = 0;
+		var jud_ln2 = 0;
+		var json_lines = ${json_linelist};
+		var json_sites = ${json_sitelist};
+		var json_allsite = ${json_allsite};
+		var hcremet = 0;
+		var choice_icre = 0; 
+		var judgecreing = 0;
 		
 		$("#max_len").hide();
 		$("#kil").hide();
-		$(".json_line").hide();
 		$("#getallline_json").hide();
 		$("#cre_page4").hide();
+		$("#surecreLsite").hide();
+		$("#outcreLsite").hide();
 		
-		var allline = $("#getallline_json").text();
-		var allobj = eval("("+allline+")");
-		var size = $("#getallline").attr("title");
-		for(var i=0;i<size;i++){
-			showroute(allobj[i].sitelist);
+		var obj_lt = eval(json_lines);
+		for(var i=0;i<obj_lt.length;i++){
+			linedetail(obj_lt[i].linelist.lineId,obj_lt[i].linelist.name);
 		}
 	
 		var turn = true;
@@ -565,42 +666,51 @@
 		
 		var up=true;
 		$("#updown").click(function(){
-			if(up){
-				$("#updownimg").attr("src","images/down.png");
-				up=false;
-			}
-			else{
-				$("#updownimg").attr("src","images/up.png");
-				up=true;
+			if(judgecreing == 0){
+				if(up){
+					$("#updownimg").attr("src","images/down.png");
+					up=false;
+				}
+				else{
+					$("#updownimg").attr("src","images/up.png");
+					up=true;
+				}
 			}
 		});
 
 		$("#getallline").click(function (){
+			var obj_linesss = eval(json_lines);
+			var temp = "#"
 			if($("#getallline").text() == "显示全部路线"){
-				var allline = $("#getallline_json").text();
-				var allobj = eval("("+allline+")");
-				var size = $("#getallline").attr("title");
-				for(var i=0;i<size;i++){
-					showroute(allobj[i].sitelist);
+				for(var i=0;i<obj_linesss.length;i++){
+					if(	$(temp+obj_linesss[i].linelist.name).text() == "查看"){
+						linedetail(obj_linesss[i].linelist.lineId,obj_linesss[i].linelist.name);
+					}
 				}
 				$("#getallline").text("隐藏全部路线");
 			}
 			else if($("#getallline").text() == "隐藏全部路线"){
-				map.clearMap();
+				for(var i=0;i<obj_linesss.length;i++){
+					if(	$(temp+obj_linesss[i].linelist.name).text() == "隐藏"){
+						linedetail(obj_linesss[i].linelist.lineId,obj_linesss[i].linelist.name);
+					}
+				}
+			//	map.clearMap();
 				$("#getallline").text("显示全部路线");
 			}
 		});
 		
 		
 		$("#showallsite").click(function(){
-			var s_id = "#" + $("#showallsite").attr("title");
-			var allsite = $(s_id).text();
-			var obj = eval("("+allsite+")");
+			var allobj = eval(json_allsite);
 			if($("#showallsite").text() == "显示全部站点"){
-				for(var i=0;i<obj.sitelist.length;i++){
-					setroutesitesmk(obj.sitelist[i],1);
+				if($("#shownotsite").text() == "隐藏未排站点"){
+					hideroutesitesmk();
+					$("#shownotsite").text("显示未排站点");
 				}
-				
+				for(var i=0;i<allobj.length;i++){
+					setroutesitesmk(allobj[i].allsite,1);
+				}
 				$("#showallsite").text("隐藏全部站点");
 			}
 			else if($("#showallsite").text() == "隐藏全部站点"){
@@ -610,12 +720,14 @@
 		});
 		
 		$("#shownotsite").click(function(){
-			var s_id = "#" + $("#showallsite").attr("title");
-			var allsite = $(s_id).text();
-			var obj = eval("("+allsite+")");
+			var allobj = eval(json_allsite);
 			if($("#shownotsite").text() == "显示未排站点"){
-				for(var i=0;i<obj.sitelist.length;i++){
-					setroutesitesmk(obj.sitelist[i],0);
+				 if($("#showallsite").text() == "隐藏全部站点"){
+					hideroutesitesmk();
+					$("#showallsite").text("显示全部站点");
+				}
+				for(var i=0;i<allobj.length;i++){
+					setroutesitesmk(allobj[i].allsite,0);
 				}
 				$("#shownotsite").text("隐藏未排站点");
 			}
@@ -626,18 +738,26 @@
 		});
 		
 		
+		$("#outcreLsite").click(function(){
+			map.clearMap();
+			judgecreing = 0;
+			$("#shownotsite").text("显示未排站点");
+			$("#shownotsite").text("显示未排站点");
+			$("#updown").attr("href","#linetable");
+			$("#getallline").text("隐藏全部路线");
+			$("#getallline").click();  
+			$("#getallline").click();  
+			$(".hc_button").attr("disabled",false);
+			$("#surecreLsite").hide("1000");	
+			$("#outcreLsite").hide("1000");	
+		});
 		
 		function linedetail(number,name){
-			var l_id = "#" + number;
+			var obj = eval(json_sites);
 			var l_na = "#" + name;
-			var linesite = $(l_id).text();
-			var obj = eval("("+linesite+")");
+			var num = $(l_na).attr("title");
 			if($(l_na).text() == "查看"){
-				showroute(obj.sitelist, number,name);
-				console.log(number);
-				
-			//	$(".l_id").toggleClass("btn-success");
-				
+				showroute(obj[num].sitelist, number,name);
 				$(l_na).text("隐藏");
 			}
 			else if($(l_na).text() == "隐藏"){
@@ -648,8 +768,8 @@
 		}
 
 
-		$("#icreline").click(function() {
-		
+		function icreLine(cho){
+			choice_icre = cho;
 			document.getElementById("max_len").value="";
 			document.getElementById("min_rec").value="";
 			jud_l = 1;
@@ -675,8 +795,8 @@
 			$("#cre_page2").hide();
 			$("#cre_page3").hide();
 			$("#cre_page4").hide();
-			$("#icreline").attr("data-target","#in_creline");
-		});
+			$(".icreline").attr("data-target","#in_creline");
+		}
 		
 		function notMAXLen(){
 			jud_l = 1;
@@ -771,30 +891,81 @@
 				max_len =  $("#max_len").val();
 			}
 			if(min_rec!=null&&min_rec!=""&&max_len!=null&&max_len!=""){
+				var choice = "0";
+				if(choice_icre == 0){
+					choice = "6";
+				}else if(choice_icre == 1){
+					choice = "2";
+				}
 				$.ajax({
 						url : "servlet/ManageLineServlet",
 						type : "POST",
 						data : {
-							type : "6",
+							type : choice,
 							min_rec : min_rec,
 							max_len : max_len,
 						},
-						success : function(re) {
+						success : function(json_list) {
 							fin = true;
-							alert(fin)
-							if ("yes" == re) {
-								$("#cre_page1").hide();
-								$("#cre_page2").hide("1000");
-								$("#cre_page3").show();
-								$("#cre_page4").hide();
-							} else   if("no" == re){
-								$("#cre_page4").show();
-								$("#cre_page1").hide();
-								$("#cre_page2").hide("1000");
-								$("#cre_page3").hide();
-							}else{
+							$("#hcre_page1").hide("1000");
+							$("#hcre_page2").show();
+								
+						if (json_list != "no") {
+							$("#cre_page1").hide();
+							$("#cre_page2").hide("1000");
+							$("#cre_page3").show();
+							$("#cre_page4").hide();
+							
+							var arr = json_list.toString().split("&");
+							json_lines = arr[0];
+							json_sites = arr[1];
+							json_allsite = arr[2];
+							$("#linetab_con").text("");
+							$("#linetab_con").html("");
+							var lines = json_lines;	
+							var obj_lines = eval(lines);
+							var tab = "";
+							for(var i=0;i<obj_lines.length;i++){
+								var index = i+1;
+								if(obj_lines[i].linelist.rate < 0){
+									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
+									tab += "<td class='text-success'>"+"</td>";
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
+								}else{
+									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+									tab += "<td>"+obj_lines[i].linelist.name+"</td>";
+									tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
+									tab += "<td>"+"</td>";
+									tab += "<td>"+obj_lines[i].linelist.num+"</td>";
+									tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
+								}
+								
+								tab += "<td style='width:60px;'><a id='"+obj_lines[i].linelist.name;
+								tab += "' onclick=javascript:linedetail('"+obj_lines[i].linelist.lineId+"','"+obj_lines[i].linelist.name+"') href='javascript:;' title='"+i+"'>查看</a></td>";
+								
+								tab += "<td style='width:60px;'><a class='jimomo'>修改</a></td>";
+								
+								tab += "<td style='width:60px;'  id='dline' onclick=javascript:linedelete('"+obj_lines[i].linelist.lineId+"',";
+								tab += "'"+obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.siteId+"','"+obj_lines[i].linelist.num+"',";
+								tab += "'"+obj_lines[i].linelist.rate+"') href='javascript:;'  data-toggle='modal' data-target='#de_line'><a>删除</a></td>    ";
+							
 							}
+							
+	 						$("#linetab_con").html(tab);	
+	 						$("#outcreLsite").click();  
+						} else{
+							$("#cre_page4").show();
+							$("#cre_page1").hide();
+							$("#cre_page2").hide("1000");
+							$("#cre_page3").hide();
+							//if(choice_icre == 1){
+							
+							//}
 						}
+					}
 				});
 			}
 			else{
@@ -822,6 +993,7 @@
 							if (re == "yes") {
 								$("#judgeMinRec2").hide();
 								jud_r = 1;
+								
 							} else {
 								$("#judgeMinRec2").show();
 								jud_r = 0;
@@ -905,13 +1077,50 @@
 							type : "5",
 							lineId : lineId,
 						},
-						success : function(re) {
-						if ("yes" == re) {
+						success : function(json_list) {
 							$("#page_d").hide("1000");
 							$("#page_ds").show();
-						} else{
+							var arr = json_list.toString().split("&");
+							json_lines = arr[0];
+							json_sites = arr[1];
+							json_allsite = arr[2];
+							$("#linetab_con").text("");
+							$("#linetab_con").html("");
+							var lines = json_lines;	
+							var obj_lines = eval(lines);
+							var tab = "";
+							for(var i=0;i<obj_lines.length;i++){
+							
+								var index = i+1;
+								if(obj_lines[i].linelist.rate < 0){
+									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
+									tab += "<td class='text-success'>"+"</td>";
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
+									tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
+								}else{
+									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+									tab += "<td>"+obj_lines[i].linelist.name+"</td>";
+									tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
+									tab += "<td>"+"</td>";
+									tab += "<td>"+obj_lines[i].linelist.num+"</td>";
+									tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
+								}
+								
+								tab += "<td style='width:60px;'><a id='"+obj_lines[i].linelist.name;
+								tab += "' onclick=javascript:linedetail('"+obj_lines[i].linelist.lineId+"','"+obj_lines[i].linelist.name+"') href='javascript:;' title='"+i+"'>查看</a></td>";
+								
+								tab += "<td style='width:60px;'><a class='jimomo'>修改</a></td>";
+								
+								tab += "<td style='width:60px;'  id='dline' onclick=javascript:linedelete('"+obj_lines[i].linelist.lineId+"',";
+								tab += "'"+obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.siteId+"','"+obj_lines[i].linelist.num+"',";
+								tab += "'"+obj_lines[i].linelist.rate+"') href='javascript:;'  data-toggle='modal' data-target='#de_line'><a>删除</a></td>    ";
+								
+							}
+	 						$("#linetab_con").html(tab);			
+							$("#outcreLsite").click();  
 						}
-					}
 				});
 		});
 
@@ -923,17 +1132,178 @@
 		});
 		
 		$("#creNotSite").click(function(){
-			var s_id = "#" + $("#showallsite").attr("title");
-			var allsite = $(s_id).text();
-			var obj = eval("("+allsite+")");
-			Routeshowsizt(obj.sitelist,0);
-			
-//			showroutesitesmk();
+			$("#getallline").text("显示全部路线");
+			map.clearMap();
+			if(up==false){
+				document.getElementById("updown").click();  
+			}
+			judgecreing = 1;
+			$("#updown").attr("href","javascript:;");
+			$(".hc_button").attr("disabled","true");
+			$("#surecreLsite").show("1000");
+			$("#outcreLsite").show("1000");
+			creNotSite = 0;
+			var allobj = eval(json_allsite);
+			Routeshowsizt(allobj,0);
 		});
 		
+		$("#creAllSite").click(function(){
+			$("#getallline").text("显示全部路线");
+			map.clearMap();
+			if(up==false){
+				document.getElementById("updown").click();  
+			}
+			judgecreing = 1;
+			$("#updown").attr("href","javascript:;");
+			$(".hc_button").attr("disabled","true");
+			$("#surecreLsite").show("1000");
+			$("#outcreLsite").show("1000");
+			creNotSite = 1;
+			var allobj = eval(json_allsite);
+			Routeshowsizt(allobj,1);
+		});
+		
+		
+		$("#surecreLsite").click(function(){
+			
+		});
+		
+		$("#lin_nam").keyup(function() {
+				var line_name = $("#lin_nam").val();
+				if(line_name != ""){
+					jud_ln1 = 1;
+					$("#judgeLN1").hide();
+					$.ajax({
+						url : "servlet/ManageLineServlet",
+						type : "POST",
+						data : {
+							type : "7",
+							line_name : line_name,
+						},
+						success : function(re) {
+							if (re == "yes") {
+								$("#judgeLN2").hide();
+								jud_ln2 = 1;
+							} else {
+								$("#judgeLN2").show();
+								jud_ln2 = 0;
+							}
+						}
+					});
+				}
+				else{
+					$("#judgeLN2").hide();
+					$("#judgeLN1").show();
+					jud_ln1 = 0;
+				}
+		});
+		
+		function h_creLine(newline){
+			var site_ids = newline[0].siteId;
+			var site_names = newline[0].name;
+			var num = newline[0].peoNum;
+			if(creNotSite == 1){
+				num = "预计人数请创建后查看";
+			}
+			for(var i=1;i<newline.length;i++){
+				site_ids += "," + newline[i].siteId; 
+				site_names += "-" + newline[i].name;
+				if(creNotSite == 0){
+					num += newline[i].peoNum; 
+				}
+			}
+			$("#runsites").attr("title",site_ids);
+			$("#runsites").text("路径站点：" + site_names);
+			if(creNotSite == 0){
+				$("#peonum").attr("title",num);
+				$("#peonum").text("预计人数："+num);
+			}else{
+				$("#peonum").attr("title","预计人数请创建后查看");
+				$("#peonum").text("预计人数：请创建后查看");
+			}
+		}
+			
+		$("#hsure_cre").click(function(){
+			var line_name = $("#lin_nam").val();
+			var siteId = $("#runsites").attr("title");
+			var peoNum = $("#peonum").attr("title");
+			if(jud_ln1 == 1 && jud_ln2 == 1){
+				$.ajax({
+					url : "servlet/ManageLineServlet",
+					type : "POST",
+					data : {
+						type : "8",
+						line_name : line_name,
+						siteId : siteId,
+						peoNum : peoNum,
+					},
+					success : function(json_list) {
+						$("#hcre_page1").hide("1000");
+						$("#hcre_page2").show();
+						var arr = json_list.toString().split("&");
+						json_lines = arr[0];
+						json_sites = arr[1];
+						json_allsite = arr[2];
+						$("#linetab_con").text("");
+						$("#linetab_con").html("");
+						
+						var lines = json_lines;	
+						var obj_lines = eval(lines);
+						var tab = "";
+						for(var i=0;i<obj_lines.length;i++){
+							var index = i+1;
+							if(obj_lines[i].linelist.rate < 0){
+								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
+								tab += "<td class='text-success'>"+"</td>";
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
+							}else{
+								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+								tab += "<td>"+obj_lines[i].linelist.name+"</td>";
+								tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
+								tab += "<td>"+"</td>";
+								tab += "<td>"+obj_lines[i].linelist.num+"</td>";
+								tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
+							}
+							
+							tab += "<td style='width:60px;'><a id='"+obj_lines[i].linelist.name;
+							tab += "' onclick=javascript:linedetail('"+obj_lines[i].linelist.lineId+"','"+obj_lines[i].linelist.name+"') href='javascript:;' title='"+i+"'>查看</a></td>";
+							tab += "<td style='width:60px;'><a class='jimomo'>修改</a></td>";
+							
+							tab += "<td style='width:60px;'  id='dline' onclick=javascript:linedelete('"+obj_lines[i].linelist.lineId+"',";
+							tab += "'"+obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.siteId+"','"+obj_lines[i].linelist.num+"',";
+							tab += "'"+obj_lines[i].linelist.rate+"') href='javascript:;'  data-toggle='modal' data-target='#de_line'><a>删除</a></td>    ";
+						
+						}
+						
+ 						$("#linetab_con").html(tab);		
+ 						$("#surecreLsite").hide("1000");	
+						$("#outcreLsite").hide("1000");	
+						map.clearMap();
+						linedetail(obj_lines[obj_lines.length-1].linelist.lineId,obj_lines[obj_lines.length-1].linelist.name);
+						judgecreing = 0;
+						$("#updown").attr("href","#linetable");
+						$("#getallline").text("显示全部路线");
+						$(".hc_button").attr("disabled",false);
+						$("#surecreLsite").hide("1000");	
+						$("#outcreLsite").hide("1000");	
+					}
+				});
+			}
+			else{
+				if(jud_ln1 == 0){
+					$("#judgeLN1").show();
+				}
+				if(jud_ln2 == 0){
+					$("#judgeLN2").show();
+				}
+			}
+		});		
 	</script>
 <div>
-
+ 	
 </div>
   </body>
 </html>
