@@ -45,9 +45,6 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 		HttpSession session = request.getSession();
 		
-		/*清除session*/
-		session.invalidate();
-		
 		//System.out.println(session.getAttribute("validationCode"));
 		/*首先判断验证码*/
 		if(!session.getAttribute("validationCode").equals(validCode)){
@@ -90,8 +87,18 @@ public class LoginServlet extends HttpServlet {
 					Admin admin = adi.getAdminById(result.getAdminId(), con);
 					
 					if(null!=admin){
-						//String powers = admin.getPowerId();
-						session.setAttribute("admin", admin);
+						for(int i=0;i<11;i++){
+							if(session.getAttribute("admin"+i)!=null){
+								session.removeAttribute("admin"+i);
+								System.out.println("remove admin"+i);
+							}
+						}
+						String[]powers = admin.getPowerId().split(",");
+						int len = powers.length;
+						/*把权限分别放在session里*/
+						for(int i=0;i<len;i++){
+							session.setAttribute("admin"+powers[i], powers[i]);
+						}
 						pw.write("user");
 					}else{
 						pw.write("noadmin");
