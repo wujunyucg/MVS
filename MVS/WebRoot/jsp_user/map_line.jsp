@@ -414,7 +414,7 @@
 							<div id="result" class="alert alert-success" role="alert">已成功新建线路</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" >查看线路</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">查看线路</button>
 						</div>
 					</div>
 			</div>
@@ -1132,6 +1132,7 @@
 		});
 		
 		$("#creNotSite").click(function(){
+		document.getElementById("lin_nam").value="";
 			$("#getallline").text("显示全部路线");
 			map.clearMap();
 			if(up==false){
@@ -1148,6 +1149,7 @@
 		});
 		
 		$("#creAllSite").click(function(){
+		document.getElementById("lin_nam").value="";
 			$("#getallline").text("显示全部路线");
 			map.clearMap();
 			if(up==false){
