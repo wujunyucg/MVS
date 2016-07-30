@@ -1155,6 +1155,7 @@
 			if(up==false){
 				document.getElementById("updown").click();  
 			}
+			
 			judgecreing = 1;
 			$("#updown").attr("href","javascript:;");
 			$(".hc_button").attr("disabled","true");
