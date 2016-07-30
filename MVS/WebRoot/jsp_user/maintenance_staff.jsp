@@ -26,6 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body onload="searchcontent()">
+  <c:if test="${admin1!=null}">
   <div style="font-size:25px">
   <!-- Nav tabs -->
   <ul class="nav  nav-pills" role="tablist" style="height: 40px;font-size:25px">  
@@ -53,9 +54,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </ul>
   </div>
 <hr style="height:3px;border:none;border-top:3px double blue;" />
+  </c:if>
   <h1>员工维护</h1>
   <div style="text-align: center;margin-right: auto;margin-left: auto;">
+  	<c:if test="${admin0!=null}">
    	<button type="button" class="btn btn-danger" id="deleteall" onclick="javascript:deleteall();" data-toggle="modal"  data-target="#w-modal" style="float:left">删除</button>
+   	</c:if>
   <div class="form-inline" >
   
   <div class="form-group">
@@ -90,29 +94,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <table  id ="usertab" class="table table-hover table-bordered" style="text-align: center; width:98%;margin-right: auto;margin-left: auto;color:#000,float:right">
 	  <thead>
 	    <tr>
+	    <c:if test="${admin0!=null}">
 	   	  <th><input name="" type="checkbox" id ="checkall" value="" onclick="javascript:checkall();"/>全选\不选</th>
+	   	  </c:if>
 	      <th>#</th>
 	      <th>员工工号</th>
 	      <th>员工姓名</th>
 	      <th>员工部门</th>
 	      <th>员工组别</th>
 	      <th>查看详情</th>
+	      <c:if test="${admin0!=null}">
 	      <th>修改</th>
 	      <th>删除</th>
+	      </c:if>
 	    </tr>
 	  </thead>
 	  <tbody>
 	       <c:forEach items="${staff_list}" var="staff" varStatus="status" >
           <tr id="tr${(staff_page-1)*staff_page_num+status.index+1}">
+          <c:if test="${admin0!=null}">
             <td><input name="deletecheck" type="checkbox" value="${staff.getStaffId()}" /></td>
+            </c:if>
             <td >${(staff_page-1)*staff_page_num+status.index+1}</td>
             <td >${staff.getNumber()}</td>            
            <td>${staff.getName()}</td>
            <td>${staff.getDepartment()}</td>
             <td>${staff.getGroup()}</td>
             <td ><a data-toggle="modal"  data-target="#w-modal" onclick="javascript:layer1('${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">查看详情</a></td>
+            <c:if test="${admin0!=null}">
             <td ><a data-toggle="modal"  data-target="#w-modal" onclick="javascript:layer2('${staff.getStaffId()}','${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">修改</a></td>
             <td><a onclick="javascript:deleteone('${staff.getStaffId()}')"  data-toggle="modal"  data-target="#w-modal">删除</a></td>
+            </c:if>
           </tr>
           </c:forEach>
 	  </tbody>
