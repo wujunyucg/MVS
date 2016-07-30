@@ -636,25 +636,24 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 		 marker.setIcon('icons/satations.svg');
 		//alert("OK");
 	}
-	console.log(data);
+	//console.log(data);
 	var ss=data.lineName;
-	console.log(ss);
+	//console.log(ss);
 	if(ss.indexOf("智能")>=0){
 		marker.setIcon('icons/znzd.svg');
 	}
 	if(onroute){
+		console.log("1111111111111111111111");
+		console.log(data);
+		console.log(path);
 		marker.setIcon('icons/newrtsizt.svg');
 	}
-	var ss=data.lineName;
-	console.log(ss);
-
-	//var ii;
-	console.log(i+" "+index);
+	//console.log(i+" "+index);
 	AMap.event.addListener(marker, 'click',function(e){
 		var conten=SatationContent(data);
 		info(marker.getPosition(),conten);
 	});
-	console.log(ss);
+//	console.log(ss);
 	if((ss.indexOf("智能")<0)||onroute){
 	AMap.event.addListener(marker, 'rightclick',function(e){
 		//info();
