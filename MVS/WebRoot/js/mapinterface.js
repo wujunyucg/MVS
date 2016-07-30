@@ -758,11 +758,7 @@ function EditRoutes(sites,route){
 	var wei=[];
 	ii=[];
 	index2=0;
-	for(var i=0;i<route.length;i++){
-		path.push(route[i]);
-		wei[i]=1;
-		ii[i]=i;
-	}
+	
 	$('#surecreLsite').bind('click', function(){
 		console.log(path);
 		if(path==null||path==""||path==[]||path.length < 0){
@@ -774,10 +770,8 @@ function EditRoutes(sites,route){
 			h_creLine(path);
 		}
 	});
-	
-	//var index=0;
 	var poly=new  AMap.Polyline({map:map});
-	showPolyline(path,poly,wei);
+	
 	var k=0;
 	for(var i=0;i<sites.length;i++){
 		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""||isAll){	
@@ -786,6 +780,17 @@ function EditRoutes(sites,route){
 			console.log(ss);
 			//if(ss.indexOf("智能")<0)
 				k++;
+				wei[i]=0;
 		}
 	}
+	
+	for(var i=0;i<route.length;i++){
+		path.push(route[i]);
+		siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei);
+		k++;
+		wei[index2]=1;
+		ii[sites.length+i]=i;
+		index2++;
+	}
+	showPolyline(path,poly,wei);
 }
