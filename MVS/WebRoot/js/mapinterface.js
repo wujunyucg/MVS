@@ -10,6 +10,7 @@ function moveTocenter(loction){
 
 //展示所有员工数据
 
+
 var hhj_satations=[{
 	siteId:0,
 	peoNum:0,
@@ -460,8 +461,6 @@ function addclicksite(ctn){
 					name:"",
 					bufftag:0
 			};
-			//var conten=SatationContent(satation);
-			//info(e.lnglat,conten);
 			var satation_search=new AMap.PlaceSearch({
 				keywords :name, //搜索关键字为“超市”的poi
 				city:'成都',
@@ -625,7 +624,7 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 	});	
 	}
 }  
-function siteOnroutes2(data,path,markers,index,poly,wei){
+function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 	//console.log(path);
 	var marker=new AMap.Marker({
 		 position:[data.longitude,data.latitude],
@@ -645,6 +644,13 @@ function siteOnroutes2(data,path,markers,index,poly,wei){
 	if(ss.indexOf("智能")>=0){
 		marker.setIcon('icons/znzd.svg');
 	}
+	if(onroute){
+		marker.setIcon('icons/newrtsizt.svg');
+	}
+	
+	
+	
+	
 	var ss=data.lineName;
 	console.log(ss);
 
@@ -654,6 +660,8 @@ function siteOnroutes2(data,path,markers,index,poly,wei){
 		var conten=SatationContent(data);
 		info(marker.getPosition(),conten);
 	});
+	console.log(ss);
+	if((ss.indexOf("智能")<0)||onroute){
 	AMap.event.addListener(marker, 'rightclick',function(e){
 		//info();
 		var contextMenu=new AMap.ContextMenu();
@@ -712,7 +720,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei){
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
 	});	
-	
+	}
 }  
 var rsitesmk=[];
 var terminal=[104.065349,30.655826];
@@ -775,7 +783,7 @@ function EditRoutes(sites,route){
 	var k=0;
 	for(var i=0;i<sites.length;i++){
 		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""||isAll){	
-			siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei);
+			siteOnroute2(sites[i].allsite,path,markers,k,poly,wei,0);
 			var ss=sites[i].allsite.lineName;
 			console.log(ss);
 			//if(ss.indexOf("智能")<0)
@@ -786,7 +794,7 @@ function EditRoutes(sites,route){
 	
 	for(var i=0;i<route.length;i++){
 		path.push(route[i]);
-		siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei);
+		siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei,1);
 		k++;
 		wei[index2]=1;
 		ii[sites.length+i]=i;
