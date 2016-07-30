@@ -36,8 +36,9 @@
 <body>
 	<h2>排班数据维护</h2>
 	<div style="">
+		<c:if test="${admin6!=null}">
 		<button id="arr_btn_multi_del"disabled="disabled"
-		style="float:left;margin-right:10px;"type="button" class="btn btn-default">删除</button>
+		style="float:left;margin-right:10px;"type="button" class="btn btn-default">删除</button></c:if>
 		<div style="float:left;" class="input-group date form_date col-md-2"
 			data-date="" data-date-format="yyyy-mm">
 			<input id="arr_date" class="form-control" size="16" type="text"
@@ -49,12 +50,14 @@
 		</button>
 		<button id="arr_show_all" type="button" class="btn btn-primary">全部班次
 		</button>
+		<c:if test="${admin6!=null}">
 		<form id="export_form" style="float:right;margin-right:20px;"
 			action="servlet/ModifyArrServlet?deltype=3" method="POST">
 			<button id="arr_export" type="button" class="btn btn-primary">导出</button>
 		</form>
 		<button id="arr_inport"type="button" style="float:right;margin-right:20px;"
 			class="btn btn-primary">导入</button>
+		</c:if>
 	</div>
 	<c:if test="${arr_data != null }">
 		<div>
@@ -69,8 +72,10 @@
 						<th>线路名称</th>
 						<th>车牌号</th>
 						<th>司机</th>
+						<c:if test="${admin6!=null}">
 						<th>修改</th>
 						<th>删除</th>
+						</c:if>
 					</tr>
 				</thead>
 				<tbody>
@@ -86,8 +91,10 @@
 								<td class="can_change">${arr.getLineName()}</td>
 								<td class="can_change">${arr.getLicensePlate()}</td>
 								<td class="can_change">${arr.getDriver()}</td>
+								<c:if test="${admin6!=null}">
 								<td><a class="arr_modify" href="javascript:;">修改</a></td>
 								<td><a class="arr_delete" href="javascript:;">删除</a></td>
+								</c:if>
 							</tr>
 						</c:forEach>
 					</tr>

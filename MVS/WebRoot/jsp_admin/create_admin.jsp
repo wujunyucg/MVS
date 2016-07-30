@@ -53,10 +53,9 @@
 				aria-describedby="sizing-addon2">
 		</div>
 		</div>
-		<div class="col-lg-6">
+		<br/><br/>
 		<button type="button" class="btn btn-default" id="btn_next1"
-			disabled="disabled">下一步</button>
-		</div>
+			disabled="disabled" style="float:left">下一步</button>
 		</div>
 		
 	</div>
@@ -66,37 +65,25 @@
 		<button id="btn_select_all" type="button" class="btn btn-default">全选</button>
 
 		<p class="bg-success text-primary">人员管理</p>
-		<button type="button" class="btn btn-default btn-single-power">增加人员</button>
-		<button type="button" class="btn btn-default btn-single-power">删除人员</button>
-		<button type="button" class="btn btn-default btn-single-power">修改人员</button>
-		<button type="button" class="btn btn-default btn-single-power">查询人员</button>
+		<button type="button" class="btn btn-default btn-single-power">人员数据维护</button>
+		<button type="button" class="btn btn-default btn-single-power">人员数据同步</button>
+		<button type="button" class="btn btn-default btn-single-power">人员信息查询</button>
 
 		<p class="bg-info text-primary">线路管理</p>
-		<button type="button" class="btn btn-default btn-single-power">增加线路</button>
-		<button type="button" class="btn btn-default btn-single-power">删除线路</button>
-		<button type="button" class="btn btn-default btn-single-power">修改线路</button>
+		<button type="button" class="btn btn-default btn-single-power">安排线路</button>
 		<button type="button" class="btn btn-default btn-single-power">查询线路</button>
 
 		<p class="bg-success text-primary">排班管理</p>
-		<button type="button" class="btn btn-default btn-single-power">增加班次</button>
-		<button type="button" class="btn btn-default btn-single-power">删除班次</button>
-		<button type="button" class="btn btn-default btn-single-power">修改班次</button>
-		<button type="button" class="btn btn-default btn-single-power">查询班次</button>
-		<button type="button" class="btn btn-default btn-single-power">班次数据导出</button>
+		<button type="button" class="btn btn-default btn-single-power">班次查询</button>
+		<button type="button" class="btn btn-default btn-single-power">班次数据维护</button>
 
 		<p class="bg-info text-primary">站点管理</p>
-		<button type="button" class="btn btn-default btn-single-power">增加站点</button>
-		<button type="button" class="btn btn-default btn-single-power">删除站点</button>
-		<button type="button" class="btn btn-default btn-single-power">修改站点</button>
-		<button type="button" class="btn btn-default btn-single-power">查询站点</button>
-		<button type="button" class="btn btn-default btn-single-power">站点数据导出</button>
+		<button type="button" class="btn btn-default btn-single-power">站点数据维护</button>
 
 		<p class="bg-success text-primary">车辆管理</p>
 		<button type="button" class="btn btn-default btn-single-power">新车入厂</button>
-		<button type="button" class="btn btn-default btn-single-power">删除车辆</button>
-		<button type="button" class="btn btn-default btn-single-power">更新车辆信息</button>
 		<button type="button" class="btn btn-default btn-single-power">查询车辆信息</button>
-		<button type="button" class="btn btn-default btn-single-power">车辆数据导出</button>
+		<button type="button" class="btn btn-default btn-single-power">车辆数据维护</button>
 
 		<p class="text-primary">
 			<button type="button" class="btn btn-default" id="btn_pre2">上一步</button>
