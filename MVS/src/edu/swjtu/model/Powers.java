@@ -53,16 +53,21 @@ public class Powers {
 		String[]powers = ids.split(",");
 		Set<Integer> set = new HashSet<Integer>();//集合为了保证数据不重复 
 		for(int i=0;i<powers.length;i++){
-			int id = Integer.parseInt(powers[i]);
-			if(id<8){
-				set.add(id/4);
-			}else{
-				set.add((id+2)/5);
+			if(powers[i].contains("人员")){
+				set.add(0);
+			}else if(powers[i].contains("线路")){
+				set.add(1);
+			}else if(powers[i].contains("班次")){
+				set.add(2);
+			}else if(powers[i].contains("站点")){
+				set.add(3);
+			}else if(powers[i].contains("车")){
+				set.add(4);
 			}
 		}
 		String p = "";
 		for(int i : set){
-			p+=powerType[i];
+			p+=powerType[i]+" ";
 		}
 		return p;
 	}
