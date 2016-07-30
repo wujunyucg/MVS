@@ -462,7 +462,7 @@ public class Lines {
 			if (siteNum % len == 1) {
 				isEven = true;
 			}
-			for (int j = 0; j < len - 1; j++) {
+			for (int j = 0; j < len; j++) {
 				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
 				if (null != l) {
 					l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
@@ -472,9 +472,10 @@ public class Lines {
 			if (isEven) {// 最后一个且站点人数是奇数的话要多减一
 				Line ll = ldi
 						.getLineById(con, Integer.parseInt(lines[len - 1]));
-				ll.setNum(ll.getNum() - (siteNum / len - siteNum / (len + 1))
-						- 1);
-				ldi.updateLine(con, ll);
+				if(ll!=null){
+					ll.setNum(ll.getNum() - 1);
+					ldi.updateLine(con, ll);
+				}
 			}
 			/* 最后一个是新加进来的line分配到的人数 */
 			sum += siteNum - siteNum * len / (len + 1);

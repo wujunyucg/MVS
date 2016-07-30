@@ -238,6 +238,7 @@ function showroute(paths,id,name){
 			}); 
 		//构造拖拽导航类，传入参数分别为：地图对象，初始路径，驾车策略
 		route.search(); //查询导航路径并开启拖拽导航
+		route2[id]=route;
 		//当路径完成时的事件
 	//	console.log("enter serach-----");
 		console.log(id);
@@ -261,7 +262,6 @@ function showroute(paths,id,name){
 			tds[1].innerHTML=e.data.routes[0].distance/1000+"千米";
 			var s_e=document.getElementById("start-end");
 			s_e.innerHTML=paths[0].name+"-----"+paths[paths.length-1].name;
-			route2[id]=route;
 			//route2.destroy();
 		});
 	});

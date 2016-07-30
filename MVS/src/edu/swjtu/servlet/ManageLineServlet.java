@@ -59,60 +59,43 @@ public class ManageLineServlet extends HttpServlet {
 				new Lines().deleteIllegalLine(prelist, con);
 				
 				ArrayList<Line> list = null;
-				try {
-					list = new LineDaoImpl().getAllLine(con);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				ArrayList<String> siteNames = new ArrayList<String> ();
-				ArrayList<String> carNumbers = new ArrayList<String> ();
-				ArrayList<String> onesite = new ArrayList<String> ();
-				ArrayList<JSONObject> jsonObject = new ArrayList<JSONObject>();  
+				list = new LineDaoImpl().getAllLine(con);
+				ArrayList<JSONObject> json_linelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_sitelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_allsite = new ArrayList<JSONObject>();  
+				
 				for(int i=0;i<list.size();i++){
 					DecimalFormat df = new DecimalFormat( "0.00000 ");  
 					list.get(i).setRate(Double.valueOf(df.format(list.get(i).getRate())).doubleValue());
 					String temp1 = new String();
-					try {
-						temp1 = new Lines().getSitesNameByIds(list.get(i).getSiteId(), con);
-					} catch (NumberFormatException | SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					siteNames.add(temp1);
-					String temp2 = new Lines().getCarNumByIds(list.get(i).getCarId(), con);
-					carNumbers.add(temp2);
+					temp1 = new Lines().getSitesNameByIds(list.get(i).getSiteId(), con);
 					
 					ArrayList<Site> sitelist = new ArrayList<Site>();
-					try {
-						sitelist = new Lines().getSiteListByIds(list.get(i).getSiteId(), con);
-					} catch (NumberFormatException | SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					JSONObject temp3 = new JSONObject();
-					jsonObject.add(temp3);
-					jsonObject.get(i).put("sitelist", sitelist);  
-					String temp4 = new String();
-					temp4 = jsonObject.get(i).toString();
-					onesite.add(temp4);
+					sitelist = new Lines().getSiteListByIds(list.get(i).getSiteId(), con);
+					
+					json_sitelist.add(new JSONObject());
+					json_sitelist.get(i).put("sitelist", sitelist);  
+					
+					list.get(i).setSiteId(temp1);
+					
+					json_linelist.add(new JSONObject());
+					json_linelist.get(i).put("linelist", list.get(i));  
+					
 				}
-				ArrayList<Site> allsitelist = new ArrayList<Site>();
-				allsitelist = new SiteDaoImpl().getAllSite(con);
-				JSONObject jsonObject_s = new JSONObject();  
-		        jsonObject_s.put("sitelist", allsitelist);  
-		        String temp_sitejson = "[" +jsonObject_s.toString()  + "]";
-		        System.out.println(jsonObject_s.toString());
-		        System.out.println(temp_sitejson);
-		        System.out.println(jsonObject.toString());
-		        System.out.println(onesite);
-		        request.getSession().setAttribute("json_allsite", jsonObject_s.toString());
-		        request.getSession().setAttribute("json_allline", jsonObject.toString());
-		        request.getSession().setAttribute("json_oneline", onesite);
-	//	        System.out.println("*****");
-	//	        System.out.println( jsonObject.toString());
+				ArrayList<Site> allsite = null;
+				allsite = new SiteDaoImpl().getAllSite(con);
+				for(int j=0;j<allsite.size();j++){
+					json_allsite.add(new JSONObject());
+					json_allsite.get(j).put("allsite", allsite.get(j));  
+					
+				}
 				request.getSession().setAttribute("linelist",list);
-				request.getSession().setAttribute("siteNames", siteNames);
-				request.getSession().setAttribute("carNumbers", carNumbers);
+				request.getSession().setAttribute("json_sitelist",json_sitelist.toString());
+				request.getSession().setAttribute("json_linelist",json_linelist.toString());
+				request.getSession().setAttribute("json_allsite",json_allsite.toString());
+				System.out.println(json_sitelist.toString());
+				System.out.println(json_linelist.toString());
+				System.out.println(json_allsite.toString());
 		        request.getRequestDispatcher("../jsp_user/map_line.jsp").forward(request, response);		
 			}
 			else if(type.equals("2")){	//完全智能规划路线
@@ -163,13 +146,46 @@ public class ManageLineServlet extends HttpServlet {
 							pw.close();
 						}
 						
-						pw.write("yes");
 						try {
 							new LineDaoImpl().addMoreLine(linelist, con);
 							new Lines().addLineOfSite(con);
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
+						
+						ArrayList<Line> list = null;
+						list = new LineDaoImpl().getAllLine(con);
+						ArrayList<JSONObject> json_linelist = new ArrayList<JSONObject>();  
+						ArrayList<JSONObject> json_sitelist = new ArrayList<JSONObject>();  
+						ArrayList<JSONObject> json_allsite = new ArrayList<JSONObject>();  
+						for(int i=0;i<list.size();i++){
+							DecimalFormat df = new DecimalFormat( "0.00000 ");  
+							list.get(i).setRate(Double.valueOf(df.format(list.get(i).getRate())).doubleValue());
+							String temp1 = new String();
+							temp1 = new Lines().getSitesNameByIds(list.get(i).getSiteId(), con);
+
+							ArrayList<Site> sitelist1 = new ArrayList<Site>();
+							sitelist1 = new Lines().getSiteListByIds(list.get(i).getSiteId(), con);
+							
+							json_sitelist.add(new JSONObject());
+							json_sitelist.get(i).put("sitelist", sitelist1);  
+							
+							list.get(i).setSiteId(temp1);
+							
+							json_linelist.add(new JSONObject());
+							json_linelist.get(i).put("linelist", list.get(i));  
+						}
+						ArrayList<Site> allsite = null;
+						allsite = new SiteDaoImpl().getAllSite(con);
+						for(int j=0;j<allsite.size();j++){
+							json_allsite.add(new JSONObject());
+							json_allsite.get(j).put("allsite", allsite.get(j));  
+						}
+						
+						String json_s  = json_linelist.toString() + "&" + json_sitelist.toString() + "&" + json_allsite.toString();
+						System.out.println("$"+json_linelist);
+						pw.write(json_s);
+						
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -207,13 +223,66 @@ public class ManageLineServlet extends HttpServlet {
 			}
 			else if(type.equals("5")){	//删除路线
 				int lineid = Integer.valueOf(request.getParameter("lineId")).intValue();
-				new Lines().deleteOneLine(lineid, con);
-				int u = new LineDaoImpl().deleteLine(lineid, con);
-				if(u!=0){
-					pw.write("yes");
-				}else{
-					pw.write("no");
+				Line line  = new Line();
+				line = new LineDaoImpl().getLineById(con, lineid);
+				if(line.getRate() < 0.0 && line.getRate() != 0.0){	//智能路线的删除
+					String[] sites = line.getSiteId().split(",");
+					for(int i=0;i<sites.length;i++){
+						if(!sites[i].equals("0")){
+							Site site = new Site();
+							site = new SiteDaoImpl().getSiteById(Integer.valueOf(sites[i]).intValue(), con);
+							String[] lines = site.getLineId().split(",");
+							site.setLineId("");
+							site.setOrder("");
+							site.setLineName("");
+							new SiteDaoImpl().updateSite(site, con);
+							for(int j=0;j<lines.length;j++){
+								new LineDaoImpl().deleteLine(Integer.valueOf(lines[j]).intValue(), con);
+							}
+						}
+					}
+				}else{			//手动创建路线的删除
+					new Lines().deleteOneLine(lineid, con);
+					new LineDaoImpl().deleteLine(lineid, con);
 				}
+				
+				ArrayList<Line> list = null;
+				try {
+					list = new LineDaoImpl().getAllLine(con);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				ArrayList<JSONObject> json_linelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_sitelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_allsite = new ArrayList<JSONObject>();  
+				for(int i=0;i<list.size();i++){
+					DecimalFormat df = new DecimalFormat( "0.00000 ");  
+					list.get(i).setRate(Double.valueOf(df.format(list.get(i).getRate())).doubleValue());
+					String temp1 = new String();
+					temp1 = new Lines().getSitesNameByIds(list.get(i).getSiteId(), con);
+
+					ArrayList<Site> sitelist = new ArrayList<Site>();
+					sitelist = new Lines().getSiteListByIds(list.get(i).getSiteId(), con);
+					
+					json_sitelist.add(new JSONObject());
+					json_sitelist.get(i).put("sitelist", sitelist);  
+					
+					list.get(i).setSiteId(temp1);
+					
+					json_linelist.add(new JSONObject());
+					json_linelist.get(i).put("linelist", list.get(i));  
+				}
+				ArrayList<Site> allsite = null;
+				allsite = new SiteDaoImpl().getAllSite(con);
+				for(int j=0;j<allsite.size();j++){
+					json_allsite.add(new JSONObject());
+					json_allsite.get(j).put("allsite", allsite.get(j));  
+				}
+				System.out.println("+"+json_linelist.toString());
+				System.out.println("+"+json_sitelist.toString());
+				System.out.println("+"+json_allsite.toString());
+				String json_s  = json_linelist.toString() + "&" + json_sitelist.toString() + "&" + json_allsite.toString();
+				pw.write(json_s);
 			}
 			else if(type.equals("6")){	//部分智能线路规划——只设计未规划线路的站点集合
 				String min_rec = request.getParameter("min_rec");
@@ -260,13 +329,132 @@ public class ManageLineServlet extends HttpServlet {
 					pw.close();
 				}
 				
-				pw.write("yes");
 				try {
 					new LineDaoImpl().addMoreLine(linelist, con);
 					new Lines().addMoreLineOfSite(linelist,con);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+				ArrayList<Line> list = null;
+				list = new LineDaoImpl().getAllLine(con);
+				ArrayList<JSONObject> json_linelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_sitelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_allsite = new ArrayList<JSONObject>();  
+				for(int i=0;i<list.size();i++){
+					DecimalFormat df = new DecimalFormat( "0.00000 ");  
+					list.get(i).setRate(Double.valueOf(df.format(list.get(i).getRate())).doubleValue());
+					String temp1 = new String();
+					temp1 = new Lines().getSitesNameByIds(list.get(i).getSiteId(), con);
+
+					ArrayList<Site> sitelist1 = new ArrayList<Site>();
+					sitelist1 = new Lines().getSiteListByIds(list.get(i).getSiteId(), con);
+					
+					json_sitelist.add(new JSONObject());
+					json_sitelist.get(i).put("sitelist", sitelist1);  
+					
+					list.get(i).setSiteId(temp1);
+					
+					json_linelist.add(new JSONObject());
+					json_linelist.get(i).put("linelist", list.get(i));  
+				}
+				ArrayList<Site> allsite = null;
+				allsite = new SiteDaoImpl().getAllSite(con);
+				for(int j=0;j<allsite.size();j++){
+					json_allsite.add(new JSONObject());
+					json_allsite.get(j).put("allsite", allsite.get(j));  
+				}
+				String json_s  = json_linelist.toString() + "&" + json_sitelist.toString() + "&" + json_allsite.toString();
+				pw.write(json_s);
+			}
+			else if(type.equals("7")){	//判断路线是否重名
+				String line_name = request.getParameter("line_name");
+				ArrayList<Line> linelist = new ArrayList<Line>();
+				linelist = new LineDaoImpl().getAllLine(con);
+				for(int i=0;i<linelist.size();i++){
+					if(linelist.get(i).getName().equals(line_name)){
+						pw.write("no");
+						pw.close();
+						break;
+					}
+				}
+				if(line_name.contains("&")){
+					pw.write("no");
+					pw.close();
+				}
+				pw.write("yes");
+			}
+			else if(type.equals("8")){		//手动创建线路
+				String line_name = request.getParameter("line_name");
+				String siteId = request.getParameter("siteId");
+				siteId += ",0";
+				String[] site_ids = siteId.split(",");
+				String peoNum = request.getParameter("peoNum");
+				if(peoNum.equals("预计人数请创建后查看")){			//重复站点路线
+					Line line = new Line();
+					line.setCarId("未安排");
+					line.setName(line_name);
+					line.setNum(-1);
+					line.setRate(0.0);
+					line.setSiteId(siteId);
+					new LineDaoImpl().addLine(line, con);
+					Line temp_line = null;
+					temp_line = new LineDaoImpl().getLineByName(con, line.getName());
+					line.setLineId(temp_line.getLineId());
+					new Lines().modifyLineNum(line,con);
+				}else{	//无重复站点路线
+					Line line = new Line();
+					line.setCarId("未安排");
+					line.setName(line_name);
+					int peonumber = 0;
+					for(int i=0;i<site_ids.length;i++){
+						Site site = new Site();
+						 site = new SiteDaoImpl().getSiteById(Integer.valueOf(site_ids[i]).intValue(), con);
+						 peonumber += site.getPeoNum();
+					}
+					line.setNum(peonumber);
+					line.setRate(0.0);
+					line.setSiteId(siteId);
+					new LineDaoImpl().addLine(line, con);
+					
+					Line line_t = new Line();
+					line_t = new LineDaoImpl().getLineByName(con, line_name);
+					new Lines().haddLineOfSite(line_t,con);
+				}
+				
+				ArrayList<Line> list = null;
+				list = new LineDaoImpl().getAllLine(con);
+				ArrayList<JSONObject> json_linelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_sitelist = new ArrayList<JSONObject>();  
+				ArrayList<JSONObject> json_allsite = new ArrayList<JSONObject>();  
+				for(int i=0;i<list.size();i++){
+					DecimalFormat df = new DecimalFormat( "0.00000 ");  
+					list.get(i).setRate(Double.valueOf(df.format(list.get(i).getRate())).doubleValue());
+					String temp1 = new String();
+					temp1 = new Lines().getSitesNameByIds(list.get(i).getSiteId(), con);
+
+					ArrayList<Site> sitelist = new ArrayList<Site>();
+					sitelist = new Lines().getSiteListByIds(list.get(i).getSiteId(), con);
+					
+					json_sitelist.add(new JSONObject());
+					json_sitelist.get(i).put("sitelist", sitelist);  
+					
+					list.get(i).setSiteId(temp1);
+					
+					json_linelist.add(new JSONObject());
+					json_linelist.get(i).put("linelist", list.get(i));  
+				}
+				ArrayList<Site> allsite = null;
+				allsite = new SiteDaoImpl().getAllSite(con);
+				for(int j=0;j<allsite.size();j++){
+					json_allsite.add(new JSONObject());
+					json_allsite.get(j).put("allsite", allsite.get(j));  
+				}
+				
+				String json_s  = json_linelist.toString() + "&" + json_sitelist.toString() + "&" + json_allsite.toString();
+				pw.write(json_s);
+			}
+			else{
+				
 			}
 		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block

@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import edu.swjtu.impl.CarDaoImpl;
 import edu.swjtu.impl.PowerDaoImpl;
 import edu.swjtu.impl.UserDaoImpl;
+import edu.swjtu.model.Car;
 import edu.swjtu.model.Power;
 import edu.swjtu.model.User;
 import edu.swjtu.util.DBUtil;
@@ -41,7 +43,7 @@ public class PowerDaoTest {
 		PowerDaoImpl powerDao = new PowerDaoImpl();
 		
 		power.setPowerId(3);
-		power.setContent("5-8-10-4");
+		power.setContent("带去我的");
 		
 		int u = new PowerDaoImpl().updatePower(power, new DBUtil().getCon());
 		System.out.println(u);//1
@@ -58,5 +60,13 @@ public class PowerDaoTest {
 	public void testFindPower() throws ClassNotFoundException, SQLException{
 		Power power = new PowerDaoImpl().getPowerById(3, new DBUtil().getCon());
 		 System.out.println(power.getContent());
+	}
+	
+
+	@Test
+	public void testFindCar() throws ClassNotFoundException, SQLException{
+		ArrayList<Car> carList = new CarDaoImpl().getCarByLicensePlate_V("13",new DBUtil().getCon()); 
+		for(int i=0;i<carList.size();i++)
+			System.out.println(carList.get(i).getCarId());
 	}
 }

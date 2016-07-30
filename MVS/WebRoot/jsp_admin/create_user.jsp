@@ -273,7 +273,7 @@
 						url : "servlet/CreUserNSServlet",
 						type : "POST",
 						data : {
-							type : "2",
+							type : "1",
 							userNumber : usernumber,
 							userPassword : userpassword,
 							adminId : adminid,
