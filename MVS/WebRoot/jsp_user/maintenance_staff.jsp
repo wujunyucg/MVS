@@ -181,7 +181,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </body>
    
-  <script>
+   <script>
 <c:choose>
        <c:when test="${staff_type == null}">
  			 function searchcontent(){}
@@ -194,52 +194,137 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                </c:otherwise>
            </c:choose>
 $(window).load(searchcontent());
-  function  layer1(number,name,department,group,arrange,line,site ,address){
-  $("#w-modal-close").attr("onclick","");
-	  var tab='<table class="table table-hover table-bordered" style="width:100%;">'
+  function  layer1(number,name,department,group,arrangeid,lineid,siteid ,address){
+  		$("#w-modal-close").attr("onclick","");
+	
+  		$.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/ManageStaffServlet", 
+		data:{
+			type:1,
+			siteid:siteid,
+			lineid:lineid,
+			arrid:arrangeid
+		}, 
+		error: function(request) {
+            document.getElementById("w-modal-p2"). innerHTML = '修改失败，请重新修改';
+         },
+		success: function(request){
+			//alert(request);
+			 var list = eval('(' + request + ')');
+			 var site=list.site;
+			 var line=list.line;
+			var arr=list.arrange;
+			var tab='<table class="table table-hover table-bordered" style="width:100%;">'
 	  +'<tr><td class="td1">员工工号</td><td>'+number+'</td></tr>'
 	  +'<tr><td class="td1">员工姓名</td><td>'+name+'</td></tr>'
 	  +'<tr><td class="td1">员工部门</td><td>'+department+'</td></tr>'
-	  +'<tr><td class="td1">员工组别</td><td>'+group+'</td></tr>'
-	  +'<tr><td class="td1">所属班次</td><td>'+arrange+'</td></tr>'
-	  +'<tr><td class="td1">所属线路</td><td>'+line+'</td></tr>'
-	  +'<tr><td class="td1">所属站点</td><td>'+site+'</td></tr>'
-	  +'<tr><td class="td1">所属站点</td><td>'+address+'</td></tr>'
-	  +'<table>';
+	  +'<tr><td class="td1">员工组别</td><td>'+group+'</td></tr>';
+	  if(arr==undefined)
+	  	tab=tab+'<tr><td class="td1">所属班次</td><td>'+'无'+'</td></tr>';
+	  else
+	  	tab=tab+'<tr><td class="td1">所属班次</td><td>'+arr.name+'</td></tr>';
+	 if(line==undefined)
+	  	tab=tab+'<tr><td class="td1">所属线路</td><td>'+'无'+'</td></tr>';
+	  else
+	  	tab=tab+'<tr><td class="td1">所属线路</td><td>'+line.name+'</td></tr>';
+	   if(site==undefined)
+	  	tab=tab+'<tr><td class="td1">所属站点</td><td>'+'无'+'</td></tr>';
+	  else
+	  	tab=tab+'<tr><td class="td1">所属站点</td><td>'+site.name+'</td></tr>';
+	  
+	 tab=tab +'<tr><td class="td1">员工地址</td><td>'+address+'</td></tr>'
+	  +'</table>';
 	   document.getElementById("w-modal-p1"). innerHTML = '查看详情';
 	  document.getElementById("w-modal-div"). innerHTML = tab;
 	  document.getElementById("w-modal-but"). style.display="none"; 
+	    
+      }});
+    
+	  
 }
 
-function  layer2(staffid,number,name,department,group,arrange,line,site,address ){
+function  layer2(staffid,number,name,department,group,arrangeid,lineid,siteid,address ){
  document.getElementById("w-modal-p2"). innerHTML = '';
   $("#w-modal-but").html("提交更改"); 
 
  document.getElementById("w-modal-but"). style.display="inline "; 
-  var tab= '<form id="updateuser">'
-  	  +'<table class="table table-hover table-bordered" style="width:100%;">'
-  	  +'<input type="text" id= "staffid" name="staffid" value="'+staffid+'" style="display:none;"/>'
-	  +'<tr><td class="td1">员工工号</td><td ><input type="text"  name="number" value="'+number+'" /></td></tr>'
-	  +'<tr><td class="td1" >员工姓名</td><td><input type="text"  name="name" value="'+name+'"/></td></tr>'
-	  +'<tr><td class="td1">员工部门</td><td  ><input type="text"  name="department" value="'+department+'"/>'
-	/*  +' <select name="admin" id="useradmin" >';
-	  <c:forEach items="${user_admin_list}" var="admin1" varStatus="status" >
-	  	if(admin != '${admin1.getName()}')
-  		 tab=tab+'<option >${admin1.getName()}</option>';
-  		 else
-   			tab=tab+'<option selected="selected">${admin1.getName()}</option>';
-		</c:forEach>
-		tab=tab+'</select>'*/
-	  +'</td></tr>'
-	   +'<tr><td class="td1" >员工组别</td><td ><input type="text"  name="group" value="'+group+'"/></td></tr>'
-	    +'<tr><td class="td1" >所属班次</td><td ><input type="text"  name="arrange" value="'+arrange+'"/></td></tr>'
-	     +'<tr><td class="td1" >所属线路</td><td ><input type="text"  name="line" value="'+line+'"/></td></tr>'
-	      +'<tr><td class="td1" >所属站点</td><td ><input type="text"  name="site" value="'+site+'"/></td></tr>'
-	       +'<tr><td class="td1" >员工地址</td><td ><input type="text"  name="address" value="'+address+'"/></td></tr>'
-	  +'<table> </form>';
-	 
+ $.ajax({ 
+		type:"post",
+		url: "<%=basePath%>servlet/ManageStaffServlet", 
+		data:{
+			type:2,
+			siteid:siteid,
+			lineid:lineid,
+			arrid:arrangeid
+		}, 
+		error: function(request) {
+            document.getElementById("w-modal-p2"). innerHTML = '修改失败，请重新修改';
+         },
+		success: function(request){
+			//alert(request);
+			 var list = eval('(' + request + ')');
+			 var site=list.site;
+			 var line=list.line;
+			var arr=list.arrange;
+			var allsite=list.allsite;
+			 var allline=list.allline;
+			var allarr=list.allarrange;
+			var tab='<form id="updateuser">'
+			+'<table class="table table-hover table-bordered" style="width:100%;">'
+	  +'<tr><td class="td1">员工工号</td><td>'+number+'</td></tr>'
+	  +'<tr><td class="td1">员工姓名</td><td>'+name+'</td></tr>'
+	  +'<tr><td class="td1">员工部门</td><td>'+department+'</td></tr>'
+	  +'<tr><td class="td1">员工组别</td><td>'+group+'</td></tr>';
+	  	tab=tab+'<tr><td class="td1">所属班次</td><td>';
+	  	tab=tab+'<select name="arrange">';
+	  if(arr==undefined)
+	 	tab=tab+'<option selected="selected" value="-1">无</option>';
+	  else{
+	  		tab=tab+'<option value="-1">无</option>';
+	  		for(var i=0;i<allarr.length;i++){
+	  			if(allarr[i].arrangeId == arr.arrangeId)
+	  				tab=tab+'<option selected="selected" value="'+allarr[i].arrangeId+'">'+allarr[i].name+'</option>';
+	  			else
+	  				tab=tab+'<option  value="'+allarr[i].arrangeId+'">'+allarr[i].name+'</option>';
+	  		}
+	  }
+	  	tab=tab+'</select></td></tr><tr><td class="td1">所属线路</td><td><select name="line">';
+	  
+	 if(line==undefined)
+	  	tab=tab+'<option selected="selected" value="-1">无</option>';
+	   else{
+	  		tab=tab+'<option value="-1">无</option>';
+	  		for(var i=0;i<allline.length;i++){
+	  			if(allline[i].lineId == line.lineId)
+	  				tab=tab+'<option selected="selected" value="'+allline[i].lineId+'">'+allline[i].name+'</option>';
+	  			else
+	  				tab=tab+'<option  value="'+allline[i].lineId+'">'+allline[i].name+'</option>';
+	  		}
+	  }
+	  	tab=tab+'</select></td></tr><tr><td class="td1">所属站点</td><td><select name="site">';
+	   if(site==undefined)
+	  		tab=tab+'<option selected="selected" value="-1">无</option>';
+	   else{
+	  		tab=tab+'<option value="-1">无</option>';
+	  		for(var i=0;i<allsite.length;i++){
+	  			if(allsite[i].siteId == site.siteId)
+	  				tab=tab+'<option selected="selected" value="'+allsite[i].siteId+'">'+allsite[i].name+'</option>';
+	  			else
+	  				tab=tab+'<option  value="'+allsite[i].siteId+'">'+allsite[i].name+'</option>';
+	  		}
+	  }
+	  tab=tab+'</select></td></tr>';
+	 tab=tab +'<tr><td class="td1">员工地址</td><td>'+address+'</td></tr>'
+	  +'</table></form>';
 	   document.getElementById("w-modal-p1"). innerHTML = '修改';
       document.getElementById("w-modal-div"). innerHTML = tab;
+	  document.getElementById("w-modal-but"). style.display="inline";
+	  $("#w-modal-but").attr("onclick","update();")
+	    
+      }});
+	 
+	  
      // alert($("#useradmin").html())
 }
 function pagination(page){

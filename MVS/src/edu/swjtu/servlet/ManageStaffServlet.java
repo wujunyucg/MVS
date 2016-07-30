@@ -1,6 +1,7 @@
 package edu.swjtu.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+import edu.swjtu.impl.ArrangeDaoImpl;
+import edu.swjtu.impl.LineDaoImpl;
+import edu.swjtu.impl.SiteDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
+import edu.swjtu.model.Arrange;
+import edu.swjtu.model.Line;
+import edu.swjtu.model.Site;
 import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
 
@@ -38,8 +46,11 @@ public class ManageStaffServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int staffPage;
-		DBUtil db = new DBUtil();
-		if(request.getParameter("staff_type") == null){
+		  response.setContentType("text/html;charset=UTF-8");
+			DBUtil db = new DBUtil();
+			PrintWriter out = response.getWriter();
+			if(request.getParameter("type") == null){
+				if(request.getParameter("staff_type") == null){
 				if(request.getParameter("staff_page") == null){
 					staffPage = 1;
 				}
@@ -116,8 +127,65 @@ public class ManageStaffServlet extends HttpServlet {
 				
 				e.printStackTrace();
 			}
+			
 		}
-		
+		}
+		else{
+			try {
+				Connection con = db.getCon();
+				if(request.getParameter("type").equals("1")){
+					String siteid = request.getParameter("siteid");
+					
+					String lineid = request.getParameter("lineid");
+					String arrid = request.getParameter("arrid");
+					SiteDaoImpl sdi = new SiteDaoImpl();
+					LineDaoImpl ldi = new LineDaoImpl();
+					ArrangeDaoImpl adi = new ArrangeDaoImpl();
+					Site site = sdi.getSiteById(Integer.parseInt(siteid), con);
+					Line line = ldi.getLineById(con, Integer.parseInt(lineid));
+					Arrange arrange = adi.getArrById(Integer.parseInt(arrid), con);
+					JSONObject jo = new JSONObject();
+					
+					jo.put("site", site);
+					jo.put("line", line);
+					jo.put("arrange", arrange);
+					out.print(jo.toString());
+					out.close();
+				}
+				if(request.getParameter("type").equals("2")){
+					String siteid = request.getParameter("siteid");
+					
+					String lineid = request.getParameter("lineid");
+					String arrid = request.getParameter("arrid");
+					SiteDaoImpl sdi = new SiteDaoImpl();
+					LineDaoImpl ldi = new LineDaoImpl();
+					ArrangeDaoImpl adi = new ArrangeDaoImpl();
+					Site site = sdi.getSiteById(Integer.parseInt(siteid), con);
+					Line line = ldi.getLineById(con, Integer.parseInt(lineid));
+					Arrange arrange = adi.getArrById(Integer.parseInt(arrid), con);
+					JSONObject jo = new JSONObject();
+					ArrayList<Site> allsite = sdi.getAllSite(con);
+					ArrayList<Line> allline =ldi.getAllLine(con);
+					ArrayList<Arrange> allarr = adi.getAllArrange(con);
+					jo.put("site", site);
+					jo.put("line", line);
+					jo.put("arrange", arrange);
+					jo.put("allsite", allsite);
+					jo.put("allline", allline);
+					jo.put("allarr", allarr);
+					out.print(jo.toString());
+					out.close();
+				}
+			
+			} catch (ClassNotFoundException e) {
+				
+				e.printStackTrace();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+	}
 		
 	}
 

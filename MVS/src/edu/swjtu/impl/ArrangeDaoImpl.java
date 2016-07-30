@@ -183,4 +183,24 @@ public class ArrangeDaoImpl implements ArrangeDao {
 		}
 		return arr;
 	}
+	
+	public Arrange getArrById(int arrId, Connection con) throws SQLException {
+		Arrange arr  = null;
+		String sql = "select * from arrange where arrange_id=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, arrId);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				arr = getOneArrange(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(arr == null){
+			return null;
+		}else{
+			return arr;
+		}
+	}
 }

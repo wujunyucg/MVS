@@ -449,7 +449,7 @@
 			//map.setCity('成都');
 			map.clearMap();
 			for(var i=0;i<stafflist.length;i++){
-				if(stafflist[i].siteId==0)
+				if(stafflist[i].siteId<0)
 					staffmarker(stafflist[i]);
 			}
 		}
@@ -481,6 +481,10 @@
 			}
 		});
 		
+		var n=0;
+var json="{\"slist\":[";
+var s="-1",arr=new Array();
+	var num;
 		function autosite(){
 		$(".modal-body").html("请选择是全部生成(清除以往数据)或为未匹配站点员工生成站点");
 		$("#w-modal-but2").css("display","inline");
@@ -513,7 +517,9 @@
 		
 			var list = eval('(' + request + ')');
 			var sitelist2 = list.bsitelist;
-		
+			json="{\"slist\":[";
+			arr=new Array();
+			n=0;
 	    	nextkmeans(sitelist2);
       }});
      
@@ -538,7 +544,9 @@
 		
 			var list = eval('(' + request + ')');
 			var sitelist2 = list.bsitelist;
-		
+			json="{\"slist\":[";
+			arr=new Array();
+			n=0;
 	    	nextkmeans(sitelist2);
       }});
      
@@ -546,12 +554,10 @@
 	
 	
 	
-	var n=0;
-var json="{\"slist\":[";
-var s="-1",arr=new Array();
-	var num;
+	
 	function nextkmeans(sitelist2){
 		 num=sitelist2.length;
+		 
 		for(var i= 0; i<sitelist2.length ;i++){
 		console.log(num);
 		 	satationSuit2(sitelist2[i].longitude,sitelist2[i].latitude,sitelist2[i].bufftag);
@@ -613,6 +619,7 @@ function satationSuit2(lng,lat,sta){
 			$("#w-modal-close").html("确定");
 			var list = eval('(' + request + ')');
 		 	sitelist = list.nsitelist;
+		 	stafflist=list.stafflist;
 			var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
 			for(var i=0;i<sitelist.length;i++){
 				if(sitelist[i].lineId>=0){

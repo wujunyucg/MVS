@@ -173,8 +173,10 @@ public class ManageSiteServlet extends HttpServlet {
 				}
 				sdi1.updateListSite(siteList, con);
 				siteList=sdi1.getAllSite(con);
+				staffList = sdi.getAllStaff(con);
 				JSONObject jsonObject = new JSONObject();  
 		        jsonObject.put("nsitelist", siteList); 
+		        jsonObject.put("stafflist", staffList); 
 		      //  System.out.println(jsonObject.toString());
 		      
 		        out.write(jsonObject.toString());
@@ -334,6 +336,7 @@ public class ManageSiteServlet extends HttpServlet {
 				ArrayList<Staff> staffList = new ArrayList<Staff>();
 				StaffDaoImpl sdi = new StaffDaoImpl();
 				staffList = sdi.getNoSiteStaff(new DBUtil().getCon());
+				System.out.println(staffList.size());
 				KMeans km = new KMeans(0);
 				for(int i=1;;i++){
 					//System.out.println(i);
@@ -362,6 +365,7 @@ public class ManageSiteServlet extends HttpServlet {
 							center.remove(j);
 						}
 					}
+					System.out.println(center.size());
 					ArrayList<Site> siteList = new ArrayList<Site>();
 					DecimalFormat df = new DecimalFormat( "0.000000");  
 					for(int j =0;j<center.size();j++){
