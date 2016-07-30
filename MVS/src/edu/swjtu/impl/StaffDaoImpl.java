@@ -413,7 +413,7 @@ public class StaffDaoImpl implements StaffDao {
 	
 	public ArrayList<Staff> getNoSiteStaff(Connection con) {
 		ArrayList<Staff> staffList = new ArrayList<Staff>();
-		String sql = "select * from staff where staff_id >-1 ";
+		String sql = "select * from staff where staff_siteId = -1 ";
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
 			ResultSet rs = pstm.executeQuery();
