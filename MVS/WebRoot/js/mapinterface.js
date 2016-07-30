@@ -1,9 +1,7 @@
 /**
  * 
  */
-//设置地图中心，把地图拉到中心
-//参数：loction:[],
-//var loc=[104.11,30.25];moveTocenter(loc);
+
 function moveTocenter(loction){
 	map.setCenter(loction);
 }
@@ -647,10 +645,6 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 	if(onroute){
 		marker.setIcon('icons/newrtsizt.svg');
 	}
-	
-	
-	
-	
 	var ss=data.lineName;
 	console.log(ss);
 
@@ -766,7 +760,9 @@ function EditRoutes(sites,route){
 	var wei=[];
 	ii=[];
 	index2=0;
-	
+	console.log('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
+	console.log(sites);
+	console.log(route);
 	$('#surecreLsite').bind('click', function(){
 		console.log(path);
 		if(path==null||path==""||path==[]||path.length < 0){
@@ -782,13 +778,13 @@ function EditRoutes(sites,route){
 	
 	var k=0;
 	for(var i=0;i<sites.length;i++){
-		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""||isAll){	
-			siteOnroute2(sites[i].allsite,path,markers,k,poly,wei,0);
+		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""){	
+			siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei,0);
 			var ss=sites[i].allsite.lineName;
 			console.log(ss);
 			//if(ss.indexOf("智能")<0)
 				k++;
-				wei[i]=0;
+				//wei[i]=0;
 		}
 	}
 	
@@ -796,9 +792,13 @@ function EditRoutes(sites,route){
 		path.push(route[i]);
 		siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei,1);
 		k++;
-		wei[index2]=1;
+		wei[i]=1;
 		ii[sites.length+i]=i;
 		index2++;
 	}
+	console.log(path);
+	console.log(wei);
+	console.log('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
 	showPolyline(path,poly,wei);
+	console.log('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
 }
