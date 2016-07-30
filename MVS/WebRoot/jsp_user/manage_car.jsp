@@ -52,7 +52,8 @@
 	&nbsp;
 	<button type="button" class="btn btn-primary" onclick="serall()">查询全部车辆</button>
 	&nbsp;
-
+	
+	<c:if test="${admin10!=null}">
 	<div style="float:right;">
 		<form action="servlet/ExportCarData" method="post">
 			<button type="submit" class="btn btn-primary">导出全部数据</button>
@@ -64,6 +65,7 @@
 			<button type="submit" class="btn btn-primary">导出当前查询数据</button>
 		</form>
 	</div>	
+	</c:if>
 	
 	<br/><br/>
 	<!--  -->
@@ -78,8 +80,10 @@
 					<th>座位数</th>
 					<th>排班名称</th>
 					<th style="width:100px;">查看详情</th>
+					<c:if test="${admin10!=null}">
 					<th style="width:100px;">维护数据</th>
 					<th style="width:100px;">删除数据</th>
+					</c:if>
 				</tr>
 			</thead>
 			<tbody>
@@ -98,6 +102,7 @@
 							'${car.getDrivingLicense()}', '${car.getLicense()}', '${car.getArrangeId()}', '${car.getDriver()}', 
 							'${car.getNumber()}', '${arrangeName.get(status.index)}');">
 							查看详情</a></td>
+							<c:if test="${admin10!=null}">
 							<td style="width:100px;"><a class="car_modify" id="${car.getCarId()}" href="" 
 							data-toggle="modal" data-target="#myModal_C" onclick="javascript:carmodify('${pageSize*(page_index-1)+status.index+1}',${car.getCarId()}, 
 							'${car.getLicensePlate()}', '${car.getBrand()}', '${car.getRegistrationDate()}', '${car.getInsuranceDate()}', 
@@ -105,6 +110,7 @@
 							'${car.getNumber()}', '${arrangeName.get(status.index)}')">修改数据</a></td>    
 							<td style="width:100px;"><a class="car_delete" href=""  data-toggle="modal" data-target="#myModal_D"
 							 onclick="javascript:car_delete('${car.getLicensePlate()}')">删除车辆</a></td>
+							 </c:if>
 						</tr>
 					</c:forEach>
 				</c:if>
