@@ -116,7 +116,7 @@ public class SiteDaoImpl implements SiteDao {
 	
 	@Override
 	public int deleteAllSite(Connection con) {
-		String sql = "delete  from site  where 1=1 ";
+		String sql = "delete  from site  where site_id >0 ";
 		int  rs = 0;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);

@@ -459,14 +459,16 @@ public class Lines {
 			String[] lines = sLineIds.split(",");
 			boolean isEven = false;
 			int len = lines.length;
-			if (siteNum % len == 1) {
+			if (0!=len&&siteNum % len == 1) {
 				isEven = true;
 			}
 			for (int j = 0; j < len; j++) {
-				Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
-				if (null != l) {
-					l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
-					ldi.updateLine(con, l);
+				if(!lines[j].equals("")){
+					Line l = ldi.getLineById(con, Integer.parseInt(lines[j]));
+					if (null != l) {
+						l.setNum(l.getNum() - (siteNum / len - siteNum / (len + 1)));
+						ldi.updateLine(con, l);
+					}
 				}
 			}
 			if (isEven) {// 最后一个且站点人数是奇数的话要多减一
@@ -567,10 +569,12 @@ public class Lines {
 				aa -= a[k];
 			}
 			for (int k = 0; k < len; k++) {
-				if (k != key) {
+				if (k != key&&!lines[k].equals("")) {
 					Line ll = ldi.getLineById(con, Integer.parseInt(lines[k]));
-					ll.setNum(ll.getNum() + a[k] - b[k]);
-					ldi.updateLine(con, ll);
+					if(null!=ll){
+						ll.setNum(ll.getNum() + a[k] - b[k]);
+						ldi.updateLine(con, ll);
+					}
 				}
 			}
 
@@ -579,5 +583,54 @@ public class Lines {
 		}
 		/* 删除线路 */
 		ldi.deleteLine(line.getLineId(), con);
+	}
+	
+	/**
+	 * 智能路线的一连串删除
+	 * 2016年7月30日下午2:45:11
+	 * @author mischief7
+	 * @param line
+	 * @param con
+	 * @throws SQLException 
+	 * @throws NumberFormatException 
+	 */
+	public void deleteIntelLine(Line line, Connection con) throws NumberFormatException, SQLException{
+		ArrayList<Line> linelist = new ArrayList<Line>();
+		linelist.add(line);
+		Line temp = null;
+		for(int k=0;k<linelist.size();k++){
+			if(linelist.get(k).getRate() < 0.0 && linelist.get(k).getRate() != 0.0){	//智能路线的删除
+				String[] sites = linelist.get(k).getSiteId().split(",");
+				for(int i=0;i<sites.length;i++){
+					if(!sites[i].equals("0")){
+						Site site = new Site();
+						site = new SiteDaoImpl().getSiteById(Integer.valueOf(sites[i]).intValue(), con);
+						String[] lines = site.getLineId().split(",");
+						for(int j=0;j<lines.length;j++){
+							if(lines[j] != null && !lines[j].equals("")){
+								temp = new LineDaoImpl().getLineById(con, Integer.valueOf(lines[j]).intValue());
+								int flag = 1;
+								for(int ii=0;ii<linelist.size();ii++){
+									if(linelist.get(ii).getLineId() == temp.getLineId()){
+										flag = 0;
+										break;
+									}//if
+								}
+								if(flag == 1){
+									linelist.add(temp);
+								}
+								
+							}
+						}//for j
+						site.setLineId("");
+						site.setOrder("");
+						site.setLineName("");
+						new SiteDaoImpl().updateSite(site, con);
+					}//if !0
+				}//sites
+				new LineDaoImpl().deleteLine(linelist.get(k).getLineId(), con);
+			}//判断智能
+		}
+		
 	}
 }
