@@ -187,10 +187,10 @@ function routesiztLic(marker,data){
 		//data=marker.getPosition(); 
 		marker.setDraggable(false);
 		if(flag==1){
-			console.log("移动成功");
+			//console.log("移动成功");
 			flag=0;
 			satationSuit(marker.getPosition().getLng(),marker.getPosition().getLat(),data);
-			console.log("匹配成功");
+		//	console.log("匹配成功");
 			marker.hide();
 		}
 		else{
@@ -206,7 +206,7 @@ for(var i=0;i<30;i++){
 }
 var index=0;
 function showroute(paths,id,name){
-	console.log("enter route-----");
+	//console.log("enter route-----");
 	var path=[];
 //	showAllsatationinfo(paths);
 	var sitemarkers=[];
@@ -215,7 +215,7 @@ function showroute(paths,id,name){
 		if(i>0&&i<paths.length-1){
 			//sitemarkers[i-1]=siteOnroute(paths[i],id,i-1);
 		}
-		console.log(path[0]+paths[i].longitude+paths[i]. latitude);
+		//console.log(path[0]+paths[i].longitude+paths[i]. latitude);
 	}  
 	path.push([104.065349,30.655826]);
 	//ss[0]=sitemarkers;
@@ -240,13 +240,13 @@ function showroute(paths,id,name){
 		route2[id]=route;
 		//当路径完成时的事件
 	//	console.log("enter serach-----");
-		console.log(id);
+		//console.log(id);
 		AMap.event.addListener(route,'complete',function(e){
 			//alert("OK");
 			//alert(e.data.routes[0].steps[0].action);
-			console.log("-------------------------enter complete-----");
+		//	console.log("-------------------------enter complete-----");
 			AMap.event.addListener(route,'addway',function(e){
-				alert("dd");
+				//alert("dd");
 			});	
 			//参考这个格式
 			//var trs=$('#result table tr');
@@ -254,7 +254,7 @@ function showroute(paths,id,name){
 			$('#result').css("display","inline");
 			$('#addroute').css("display","none");
 			var trs=document.getElementById("routenumber");
-			console.log(paths[0].lineId);
+		//	console.log(paths[0].lineId);
 			trs.innerHTML=name;
 			var tds=document.getElementById("time-distance").getElementsByTagName("td");
 			tds[0].innerHTML=e.data.routes[0].time/60+"分钟";
@@ -278,7 +278,7 @@ function DelRoute(id){
 function satationSuit(lng,lat,data){
 	//var name=place.name;
 	//document.getElementById('return_satationinfo').innerHTML='';
-	console.log(data);
+//	console.log(data);
 	var satation_search=new AMap.PlaceSearch({
 		keywords :name, //搜索关键字为“超市”的poi
 		city:'成都',
@@ -286,7 +286,7 @@ function satationSuit(lng,lat,data){
 		pageSize:10,
 		//panel:'panel'
 	});
-	console.log("ddddddddddd");
+	//console.log("ddddddddddd");
 	satation_search.searchNearBy("街", [lng,lat],200,function(status,result){
 		//data.longitude=lng;
 	//	console.log(data);
@@ -303,7 +303,7 @@ function satationSuit(lng,lat,data){
  
 function read(data){
 	rr=data;
-	console.log(rr+';;;;;'+data);
+	//console.log(rr+';;;;;'+data);
 	return rr;
 }
 
@@ -388,14 +388,14 @@ function EditSatation2(data,marker,ctn){
 	document.getElementById('addsatation-info').innerHTML=ctn;
 	var s=[data.longitude,data.latitude];
 	var ctn=document.getElementById('info-satation');
-	console.log(document.getElementById('satation-lng'));
+	//console.log(document.getElementById('satation-lng'));
 	$('#satation-lng').val(s);
 	$('#satation-name').val(data.name);
 	$('#satation-address').val(data.address);
 	var route=$('#satation-route option');
-	console.log(data.lineId);
+//	console.log(data.lineId);
 	route[data.lineId].selected='selected';
-	console.log(data.order);
+	//console.log(data.order);
 	var num=$('#satation-number option');
 	//console.log(data.number);
 	num[data.order].selected='selected';
@@ -405,7 +405,7 @@ function EditSatation2(data,marker,ctn){
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
 	//console.log(sbm);
-	console.log(data);
+	//console.log(data);
 	sbm[0].onclick=function(){
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
 		data.lineId=parseInt(route.val());
@@ -413,7 +413,7 @@ function EditSatation2(data,marker,ctn){
 		data.name=document.getElementById('satation-name').value;
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
-		console.log(data);
+		///console.log(data);
 		//alert("增加成功");
 		satationsmarker(data);
 		var json=JSON.stringify(data);
@@ -427,7 +427,7 @@ function EditSatation2(data,marker,ctn){
 		info2.close();
 		marker.hide();
 	};
-	console.log("4");
+	//console.log("4");
 }
 
 
@@ -466,9 +466,9 @@ function addclicksite(ctn){
 				pageSize:10,
 				//panel:'panel'
 			});
-			console.log("ddddddddddd");
+			//console.log("ddddddddddd");
 			satation_search.searchNearBy("街", e.lnglat,200,function(status,result){
-				console.log(marker.getPosition());
+				//console.log(marker.getPosition());
 				data.longitude=marker.getPosition().lng;
 				data.latitude=marker.getPosition().lat;
 				data.address=result.poiList.pois[0].name;
@@ -501,7 +501,7 @@ function Routeshowsizt(sites,isAll){
 	ii=[];
 	index2=0;
 	$('#surecreLsite').bind('click', function(){
-		console.log(path);
+		//console.log(path);
 		if(path==null||path==""||path==[]||path.length < 0){
 			$("#surecreLsite").attr("data-target","#linesiteNull");
 		}else{
@@ -520,7 +520,7 @@ function Routeshowsizt(sites,isAll){
 			
 			siteOnroutes(sites[i].allsite,path,markers,k,poly,wei);
 			var ss=sites[i].allsite.lineName;
-			console.log(ss);
+			//console.log(ss);
 			if(ss.indexOf("智能")<0)
 				k++;
 		}
@@ -547,17 +547,17 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 		 marker.setIcon('icons/satations.svg');
 		//alert("OK");
 	}
-	console.log(data);
+	//console.log(data);
 	var ss=data.lineName;
-	console.log(ss);
+	//console.log(ss);
 	if(ss.indexOf("智能")>=0){
 		marker.setIcon('icons/znzd.svg');
 	}
 	var ss=data.lineName;
-	console.log(ss);
+	//console.log(ss);
 	if(ss.indexOf("智能")<0){
 	//var ii;
-	console.log(i+" "+index);
+	//console.log(i+" "+index);
 	AMap.event.addListener(marker, 'click',function(e){
 		var conten=SatationContent(data);
 		info(marker.getPosition(),conten);
@@ -569,23 +569,23 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 			path.push(data);
 			ii[index]=index2;
 			wei[ii[index]]=1;
-			console.log("pppppppppppppppp"+path);
+			//console.log("pppppppppppppppp"+path);
 			showPolyline(path,poly,wei);
 			marker.setIcon('icons/newrtsizt.svg');
 			markers.push(marker);
 			
 			index2++;
-			console.log(ii+" ;;;;"+index2);
+			//console.log(ii+" ;;;;"+index2);
 		},0);
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
-			console.log("pppppppppppppppp"+path);
+			//console.log("pppppppppppppppp"+path);
 			ii[index]=index2;
 			wei[ii[index]]=1;
 			showPolyline(path,poly,wei);
 			marker.setIcon('icons/newrtsizt.svg');
 			markers.push(marker);
-			console.log(ii+" ;;;;"+index2);
+			//console.log(ii+" ;;;;"+index2);
 			
 			index2++;
 		}, 1);
@@ -594,7 +594,7 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 			//path[path.length]=data;
 			var path2=[];
 			//poly.hide();
-			console.log(wei);
+			//console.log(wei);
 			for(var i=0;i<path.length;i++){
 				if(wei[i]==1)
 					path2.push(path[i]);
@@ -611,11 +611,11 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 		contextMenu.addItem("取消设置", function(){
 			//path[path.length]=data;
 		  	marker.setIcon('icons/satations.svg');
-		  	console.log("qxxxxxxxxxxx"+ii[index]);
+		  	//console.log("qxxxxxxxxxxx"+ii[index]);
 			//path.splice(ii[index],1);
 			wei[ii[index]]=0;
 			showPolyline(path,poly,wei);
-			console.log(path);
+			//console.log(path);
 		}, 2);
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
@@ -632,6 +632,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 		  icon:"icons/satationOnRoute.svg",
 		  zIndex:100
 	});
+	//console.log(data.lineId);
 	if(data.lineId==null||data.lineId==""){
 		 marker.setIcon('icons/satations.svg');
 		//alert("OK");
@@ -643,9 +644,6 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 		marker.setIcon('icons/znzd.svg');
 	}
 	if(onroute){
-		console.log("1111111111111111111111");
-		console.log(data);
-		console.log(path);
 		marker.setIcon('icons/newrtsizt.svg');
 	}
 	//console.log(i+" "+index);
@@ -658,27 +656,27 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 	AMap.event.addListener(marker, 'rightclick',function(e){
 		//info();
 		var contextMenu=new AMap.ContextMenu();
-		contextMenu.addItem("设为起点", function() {
+		contextMenu.addItem("设为起点", function() { 
 			path.push(data);
 			ii[index]=index2;
 			wei[ii[index]]=1;
-			console.log("pppppppppppppppp"+path);
+			//console.log("pppppppppppppppp"+path);
 			showPolyline(path,poly,wei);
 			marker.setIcon('icons/newrtsizt.svg');
 			markers.push(marker);
 			
 			index2++;
-			console.log(ii+" ;;;;"+index2);
+			//console.log(ii+" ;;;;"+index2);
 		},0);
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
-			console.log("pppppppppppppppp"+path);
+			//console.log("pppppppppppppppp"+path);
 			ii[index]=index2;
 			wei[ii[index]]=1;
 			showPolyline(path,poly,wei);
 			marker.setIcon('icons/newrtsizt.svg');
 			markers.push(marker);
-			console.log(ii+" ;;;;"+index2);
+			//console.log(ii+" ;;;;"+index2);
 			
 			index2++;
 		}, 1);
@@ -687,7 +685,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 			//path[path.length]=data;
 			var path2=[];
 			//poly.hide();
-			console.log(wei);
+			//console.log(wei);
 			for(var i=0;i<path.length;i++){
 				if(wei[i]==1)
 					path2.push(path[i]);
@@ -704,11 +702,11 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 		contextMenu.addItem("取消设置", function(){
 			//path[path.length]=data;
 		  	marker.setIcon('icons/satations.svg');
-		  	console.log("qxxxxxxxxxxx"+ii[index]);
+		  //	console.log("qxxxxxxxxxxx"+ii[index]);
 			//path.splice(ii[index],1);
 			wei[ii[index]]=0;
 			showPolyline(path,poly,wei);
-			console.log(path);
+			//console.log(path);
 		}, 2);
 		contextMenu.open(map, marker.getPosition());
 		contextMenuPositon = marker.getPosition();
@@ -721,15 +719,15 @@ var terminal=[104.065349,30.655826];
 function showPolyline(data,poly,wei){
 	var path2=[];
 	poly.hide();
-	console.log(wei);
+	//console.log(wei);
 	for(var i=0;i<data.length;i++){
 		if(wei[i]==1)
 			path2.push([data[i].longitude,data[i].latitude]);
 	}
 	path2.push(terminal);
-	console.log("sssssssssssss"+path2);
+	//console.log("sssssssssssss"+path2);
 	poly.setPath(path2);
-	console.log("sssssssssssss"+path2);
+	//console.log("sssssssssssss"+path2);
 	poly.show();
 }
 for(var i=0;i<hhj_satations.length;i++){
@@ -753,17 +751,16 @@ function showroutesitesmk(){
 		rsitesmk[i].show();
 	}
 }
+//EditRoutes(hhj_satations,pp);
 function EditRoutes(sites,route){
 	var path=[];
 	var markers=[];
 	var wei=[];
 	ii=[];
 	index2=0;
-	console.log('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
-	console.log(sites);
-	console.log(route);
+
 	$('#surecreLsite').bind('click', function(){
-		console.log(path);
+	//	console.log(path);
 		if(path==null||path==""||path==[]||path.length < 0){
 			$("#surecreLsite").attr("data-target","#linesiteNull");
 		}else{
@@ -780,24 +777,20 @@ function EditRoutes(sites,route){
 		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""){	
 			siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei,0);
 			var ss=sites[i].allsite.lineName;
-			console.log(ss);
-			//if(ss.indexOf("智能")<0)
-				k++;
-				//wei[i]=0;
+			k++;
 		}
 	}
 	
 	for(var i=0;i<route.length;i++){
+		 
+		//path.push(route[i].allsite);
+		//siteOnroutes2(route[i].allsite,path,markers,k,poly,wei,1);
 		path.push(route[i]);
-		siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei,1);
+		siteOnroutes2(route[i],path,markers,k,poly,wei,1);
 		k++;
 		wei[i]=1;
 		ii[sites.length+i]=i;
 		index2++;
 	}
-	console.log(path);
-	console.log(wei);
-	console.log('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
 	showPolyline(path,poly,wei);
-	console.log('ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
 }
