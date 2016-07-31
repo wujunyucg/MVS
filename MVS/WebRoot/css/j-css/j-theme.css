@@ -19,16 +19,16 @@
 }
 #j-left-menu{
 	position:fixed;
-	width: 250px;
-	min-height: 900px;
+	width: 15%;
+	min-height: 2500px;
 	min-width:50px;
 	background-color: #ececec;
 	float:left;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 #content{
 	min-width:400px;
-	margin-left: 260px ;
+	margin-left: 16% ;
 }
 .btn-menu{
 	background-color: #ececec !important;
@@ -55,7 +55,7 @@
 .j-child-menu button{
 	padding-left:50px !important;
 	border-radius:0 !important;
-	width: 250px !important;
+	width: 100% !important;
 }
 .j-no-radous{
 	border-radius:0 !important;

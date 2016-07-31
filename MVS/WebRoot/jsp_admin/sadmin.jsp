@@ -168,7 +168,7 @@ $.ajaxSetup ({
 							function() {
 								if (turn) {
 									$("#left-menu").css("width", "60px");
-									$("#content").css("marginLeft", "80px");
+									$("#content").css("marginLeft", "70px");
 									//
 									$(".btn_text").hide();
 									$(".btn_icon").show();
@@ -190,8 +190,8 @@ $.ajaxSetup ({
 														}
 													});
 								} else {
-									$("#left-menu").css("width", "250px");
-									$("#content").css("marginLeft", "260px");
+									$("#left-menu").css("width", "15%");
+									$("#content").css("marginLeft", "16%");
 									$(".btn_text").show();
 									$(".btn_icon").hide();
 									turn = true;

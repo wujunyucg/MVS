@@ -12,7 +12,7 @@ $(function(){
 			
 			$(".j-child-menu").hide();
 			$("#j-left-menu").css("width","60px");
-			$("#content").css("marginLeft","80px");
+			$("#content").css("marginLeft","70px");
 			$(".btn_text").hide();
 			$(".btn_icon").show();
 			turn = false;
@@ -20,8 +20,8 @@ $(function(){
 			for(var i=0;i<openMenus.length;i++){
 				openMenus[i].show();//显示出来
 			}
-			$("#j-left-menu").css("width","250px");
-			$("#content").css("marginLeft","260px");
+			$("#j-left-menu").css("width","15%");
+			$("#content").css("marginLeft","16%");
 			$(".btn_text").show();
 			$(".btn_icon").hide();
 			turn = true;
