@@ -323,7 +323,6 @@
 							<tr>
 								<th>#</th><th>路线名称</th>
 								<th>所经站点</th>
-								<th style="width:100px;">车辆数</th>
 								<th style="width:100px;">总人数</th>
 								<th style="width:100px;">乘坐率</th>
 								<th style="width:60px;" >查看</th
@@ -338,10 +337,9 @@
 									<tr class="${line.getLineId()}">
 										<th style="width:60px;" class="row_index">${status.index+1}</th>
 										<c:choose>
-											<c:when test="${line.getRate() < 0}">
+											<c:when test="${line.getRate() < 0 && line.getRate() != 0}">
 												<td class="text-success">${line.getName()}</td>
 												<td class="text-success">${line.getSiteId()}</td>
-												<td style="width:100px;" class="text-success"></td>
 												<td style="width:100px;" class="text-success">${line.getNum()}</td>
 												<td style="width:100px;" class="text-success">
 												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
@@ -349,10 +347,9 @@
 											<c:otherwise>   
 												<td>${line.getName()}</td>
 												<td>${line.getSiteId()}</td>
-												<td style="width:100px;"></td>
 												<td style="width:100px;">${line.getNum()}</td>
 	   											<td style="width:100px;">
-												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
+												<fmt:formatNumber type="number" value="${line.getRate() * (100.0) }" maxFractionDigits="3"/>%</td>
 	 										 </c:otherwise> 
  										 </c:choose>
 										<td style="width:60px;">
@@ -431,7 +428,7 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">新建路线</h4></div>
+						<h4 class="modal-title" id="myModalLabel">修改路线</h4></div>
 
 					<div id="hcre_page11" class="mypage">
 					
@@ -459,7 +456,7 @@
 						</div>
 						<div class="modal-footer">
 							<button id="btn_pre" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-							<button id="hsure_cre1" type="button" class="btn btn-primary">确认创建</button>
+							<button id="hsure_cre1" type="button" class="btn btn-primary">确认修改</button>
 						</div>
 					</div>
 
@@ -467,7 +464,7 @@
 					
 					<div id="hcre_page21" class="mypage2">
 						<div class="modal-body">
-							<div id="result" class="alert alert-success" role="alert">已成功新建线路</div>
+							<div id="result" class="alert alert-success" role="alert">已成功修改线路</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" data-dismiss="modal">查看线路</button>
@@ -993,14 +990,12 @@
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td class='text-success'>"+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
 								}else{
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td>"+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
 								}
@@ -1149,14 +1144,12 @@
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td class='text-success'>"+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
 								}else{
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td>"+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
 								}
@@ -1293,6 +1286,8 @@
 		function h_creLine(newline){
 			var site_ids = newline[0].siteId;
 			var site_names = newline[0].name;
+			
+			
 			var num = newline[0].peoNum;
 			if(creNotSite == 1){
 				num = "预计人数请创建后查看";
@@ -1304,6 +1299,8 @@
 					num += newline[i].peoNum; 
 				}
 			}
+			var obj_lines = eval(json_allsite);
+			site_names += "-" + obj_lines[0].allsite.name;
 			$("#runsites").attr("title",site_ids);
 			$("#runsites").text("路径站点：" + site_names);
 			if(creNotSite == 0){
@@ -1348,14 +1345,12 @@
 								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
-								tab += "<td class='text-success'>"+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
 							}else{
 								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 								tab += "<td>"+obj_lines[i].linelist.name+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
-								tab += "<td>"+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.num+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
 							}
@@ -1390,7 +1385,7 @@
 				if(jud_ln1 == 0){
 					$("#judgeLN1").show();
 				}
-				if(jud_ln2 == 0){
+				else if(jud_ln2 == 0){
 					$("#judgeLN2").show();
 				}
 			}
@@ -1454,14 +1449,12 @@
 								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
-								tab += "<td class='text-success'>"+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
 							}else{
 								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 								tab += "<td>"+obj_lines[i].linelist.name+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
-								tab += "<td>"+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.num+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
 							}
@@ -1497,7 +1490,7 @@
 				if(jud_ln1 == 0){
 					$("#judgeLN11").show();
 				}
-				if(jud_ln2 == 0){
+				else if(jud_ln2 == 0){
 					$("#judgeLN21").show();
 				}
 			}
@@ -1506,10 +1499,13 @@
 		function h_creLine1(newline){
 			var site_ids = newline[0].siteId;
 			var site_names = newline[0].name;
+			
 			for(var i=1;i<newline.length;i++){
 				site_ids += "," + newline[i].siteId; 
 				site_names += "-" + newline[i].name;
 			}
+			var obj_lines = eval(json_allsite);
+			site_names += "-" + obj_lines[0].allsite.name;
 			$("#lin_nam1").val(modlineName);
 			$("#runsites1").attr("title",site_ids);
 			$("#runsites1").text("路径站点：" + site_names);

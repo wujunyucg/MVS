@@ -118,9 +118,7 @@ public class ManageLineServlet extends HttpServlet {
 		            }
 				});
 				
-				Site fac_site = new Site();
-				fac_site.setLatitude(30.655826);
-				fac_site.setLongitude(104.065349);
+				Site fac_site = new SiteDaoImpl().getSiteById(0, con);
 				int proces = 0;
 				PlanRoute pr = new PlanRoute();
 				pr.pro = 0;
@@ -149,7 +147,6 @@ public class ManageLineServlet extends HttpServlet {
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-						
 						ArrayList<Line> list = null;
 						list = new LineDaoImpl().getAllLine(con);
 						ArrayList<JSONObject> json_linelist = new ArrayList<JSONObject>();  
@@ -220,7 +217,7 @@ public class ManageLineServlet extends HttpServlet {
 			}
 			else if(type.equals("5")){	//删除路线
 				int lineid = Integer.valueOf(request.getParameter("lineId")).intValue();
-				Line line  = new Line();
+				Line line  = null;
 				line = new LineDaoImpl().getLineById(con, lineid);
 				if(line.getRate() < 0.0 && line.getRate() != 0.0){	//智能路线的删除
 					new Lines().deleteIntelLine(line,con);

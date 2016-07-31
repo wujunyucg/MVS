@@ -217,7 +217,7 @@ function showroute(paths,id,name){
 		}
 		//console.log(path[0]+paths[i].longitude+paths[i]. latitude);
 	}  
-	path.push([104.065349,30.655826]);
+	path.push([104.067475,30.654737]);
 	//ss[0]=sitemarkers;
 	map.plugin("AMap.DragRoute",function(){
 		route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
@@ -716,7 +716,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 	}
 }  
 var rsitesmk=[];
-var terminal=[104.065349,30.655826];
+var terminal=[104.067475,30.654737];
 
 function showPolyline(data,poly,wei){
 	var path2=[];
@@ -785,17 +785,12 @@ function EditRoutes(sites,route){
 	
 	var k=0;
 	for(var i=0;i<sites.length;i++){
-		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""){	
 			siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei,0);
 			var ss=sites[i].allsite.lineName;
 			k++;
-		}
 	}
 	
-	for(var i=0;i<route.length;i++){
-		 
-		//path.push(route[i].allsite);
-		//siteOnroutes2(route[i].allsite,path,markers,k,poly,wei,1);
+	for(var i=0;i<route.length-1;i++){
 		path.push(route[i]);
 		siteOnroutes2(route[i],path,markers,k,poly,wei,1);
 		wei[i]=1;
