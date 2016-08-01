@@ -285,4 +285,14 @@
     <servlet-name>ManageSiteServlet</servlet-name>
     <url-pattern>/servlet/ManageSiteServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowSiteServlet</display-name>
+    <servlet-name>ShowSiteServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ShowSiteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowSiteServlet</servlet-name>
+    <url-pattern>/servlet/ShowSiteServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
