@@ -297,6 +297,16 @@
     <servlet-name>StatisticsLineServlet</servlet-name>
     <servlet-class>statistics_line.StatisticsLineServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>APPLoginServlet</servlet-name>
+    <servlet-class>edu.swjtu.app.APPLoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>APPLocationServlet</servlet-name>
+    <servlet-class>edu.swjtu.app.APPLocationServlet</servlet-class>
+  </servlet>
+
+
 
   <servlet-mapping>
     <servlet-name>ShowSiteServlet</servlet-name>
@@ -305,5 +315,13 @@
   <servlet-mapping>
     <servlet-name>StatisticsLineServlet</servlet-name>
     <url-pattern>/servlet/StatisticsLineServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>APPLoginServlet</servlet-name>
+    <url-pattern>/servlet/APPLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>APPLocationServlet</servlet-name>
+    <url-pattern>/servlet/APPLocationServlet</url-pattern>
   </servlet-mapping>
 </web-app>
