@@ -291,8 +291,19 @@
     <servlet-name>ShowSiteServlet</servlet-name>
     <servlet-class>edu.swjtu.servlet.ShowSiteServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>StatisticsLineServlet</servlet-name>
+    <servlet-class>statistics_line.StatisticsLineServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>ShowSiteServlet</servlet-name>
     <url-pattern>/servlet/ShowSiteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StatisticsLineServlet</servlet-name>
+    <url-pattern>/servlet/StatisticsLineServlet</url-pattern>
   </servlet-mapping>
 </web-app>
