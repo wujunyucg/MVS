@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import edu.swjtu.dao.SiteRecordDao;
 import edu.swjtu.model.SiteRecord;
@@ -108,6 +111,83 @@ public class SiteRecordDaoImpl implements SiteRecordDao {
 			e.printStackTrace();
 			return null;
 		}
+		return siterecList;
+	}
+	
+	public static String[] dayForWeek(String pTime) throws Exception {
+		  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		  Calendar c = Calendar.getInstance();
+		  c.setTime(format.parse(pTime));
+		  int dayForWeek = 0;
+		  if(c.get(Calendar.DAY_OF_WEEK) == 1){
+		   dayForWeek = 7;
+		  }else{
+		   dayForWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+		  }
+		  String [] week = new String[7];
+		  Date  date = format.parse(pTime);
+		  for(int i=dayForWeek;i>0;i--){
+			  week[i-1]= format.format(new Date(date.getTime() +(i-dayForWeek) * 24 * 60 * 60 * 1000));
+		  }
+		  for(int i=dayForWeek;i<8;i++){
+			  week[i-1]= format.format(new Date(date.getTime() +(i-dayForWeek) * 24 * 60 * 60 * 1000));
+		  }
+		  return week;
+		 }
+	
+	@Override
+	public ArrayList<SiteRecord> getSiteRecordByDate(int type,String date,Connection con) throws Exception {
+		ArrayList<SiteRecord> siterecList = new ArrayList<SiteRecord>(); 
+		String sql =null;
+		
+	
+		try {
+			PreparedStatement pstm ;
+			if(type==1){
+				System.out.println(date);
+				 sql = "select * from siterecord where siteRecord_date = ?";
+				
+				 pstm = con.prepareStatement(sql);
+				 pstm.setString(1, date);
+				ResultSet rs = pstm.executeQuery();
+				while(rs.next()){
+					siterecList.add(getSiteRecordOne(rs));
+				}
+			}
+			else if(type==2){
+						String []week= dayForWeek(date);
+						for(int i=0;i<7;i++){
+							sql = "select * from siterecord where siteRecord_date = ?";
+							 pstm = con.prepareStatement(sql);
+							 pstm.setString(1, week[i]);
+							 ResultSet rs = pstm.executeQuery();
+							 while(rs.next()){
+									siterecList.add(getSiteRecordOne(rs));
+								}
+						}
+						 
+			}
+			else if(type==3){
+				String []s = date.split("-");
+				date=s[0]+"-"+s[1];
+				 sql = "select * from siterecord where siteRecord_date like ?";
+				 pstm = con.prepareStatement(sql);
+				 pstm.setString(1, "%"+date+"%");
+				ResultSet rs = pstm.executeQuery();
+				while(rs.next()){
+					siterecList.add(getSiteRecordOne(rs));
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		return siterecList;
 	}
 

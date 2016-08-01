@@ -22,4 +22,7 @@ public int addSiteRecord(SiteRecord siterecord,Connection con) throws SQLExcepti
 	public SiteRecord getSiteRecordById(int siterecordId,Connection con) throws SQLException;
 	
 	public ArrayList getAllSiteRecord(Connection con) throws SQLException;
+
+	ArrayList getSiteRecordByDate(int type, String date, Connection con)
+			throws SQLException, Exception;
 }

@@ -2197,6 +2197,22 @@
 
 			return barsArray;
 		},
+		getBarSingleAtEvent : function(e){
+			var barsArray = [],
+				eventPosition = helpers.getRelativePosition(e),
+				barIndex;
+
+			for (var datasetIndex = 0; datasetIndex < this.datasets.length; datasetIndex++) {
+				for (barIndex = 0; barIndex < this.datasets[datasetIndex].bars.length; barIndex++) {
+					if (this.datasets[datasetIndex].bars[barIndex].inRange(eventPosition.x,eventPosition.y)){
+						barsArray.push(this.datasets[datasetIndex].bars[barIndex]);
+						break;
+					}
+				}
+			}
+
+			return barsArray.length == 0 ? null : barsArray[0];
+		},
 		buildScale : function(labels){
 			var self = this;
 
