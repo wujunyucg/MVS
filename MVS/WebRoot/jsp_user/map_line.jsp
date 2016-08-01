@@ -297,13 +297,16 @@
 				</ul>
 			</div>
 			<div  style="position:fixed;top:310px;right:0px;">
-				<button type="button"  style="width:130px;" id="surecreLsite" class="btn btn-success" data-toggle="modal">确认所选路线</button>
+				<button type="button"  style="width:130px;" id="modstaffline" class="btn btn-success" data-toggle="modal">生成员工路线</button>
 			</div>
 			<div  style="position:fixed;top:350px;right:0px;">
+				<button type="button"  style="width:130px;" id="surecreLsite" class="btn btn-success" data-toggle="modal">确认所选路线</button>
+			</div>
+			<div  style="position:fixed;top:390px;right:0px;">
 				<button type="button"  style="width:130px;" id="outcreLsite" class="btn btn-danger" data-toggle="modal">退出路线编辑</button>
 			</div>
 			
-			<div  style="position:fixed;top:310px;right:0px;">
+			<div  style="position:fixed;top:350px;right:0px;">
 				<button type="button"  style="width:130px;" id="suremodLsite" class="btn btn-success" data-toggle="modal">确认修改路线</button>
 			</div>
 	
@@ -627,15 +630,48 @@
 						<div class="modal-body">
 							<div class="alert alert-success" role="alert">已成功删除该车辆数据信息</div>
 						</div>
-						<div class="modal-footer"><button type="button" class="btn btn-primary"  data-dismiss="modal"
-						
-						>确认并刷新</button></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary"  data-dismiss="modal">确认并刷新</button></div>
 						</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- 进度等待模态框 -->
+		<div class="modal fade" id="waitprocess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					
+					 <div class="modal-header">
+				        <h4 class="modal-title" id="myModalLabel">数据处理</h4>
+				     </div>
+						<div id="waitingpro">
+						<div class="modal-body">
+							<div class="alert alert-info" role="alert">正在处理数据信息，请等待……</div>
+							<div class="progress">
+								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+									aria-valuemax="100" style="width: 100%">
+								</div>
+							</div>
+							</div>
+							 <div class="modal-footer">
+					     	 </div>
+						</div>
+						<div id="finstaffline">
+							<div class="modal-body">
+					        	<div class="alert alert-success" role="alert">已成功生成员工的乘车路线信息</div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+					      </div>
+						</div>
+				</div>
+			</div>
 		</div>
+
+
+
+	</div>
 
 
 	<script type="text/javascript" src="js/satation.js"></script>
@@ -950,6 +986,13 @@
 				max_len =  $("#max_len").val();
 			}
 			if(min_rec!=null&&min_rec!=""&&max_len!=null&&max_len!=""){
+			
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#in_creline").modal("hide");////////////////////////////////////////////////////
 				var choice = "0";
 				if(choice_icre == 0){
 					choice = "6";
@@ -1013,15 +1056,15 @@
 							
 	 						$("#linetab_con").html(tab);	
 	 						$("#outcreLsite").click();  
+	 						
 						} else{
 							$("#cre_page4").show();
 							$("#cre_page1").hide();
 							$("#cre_page2").hide("1000");
 							$("#cre_page3").hide();
-							//if(choice_icre == 1){
-							
-							//}
 						}
+						$("#waitprocess").modal("hide");
+						$("#in_creline").modal();
 					}
 				});
 			}
@@ -1118,6 +1161,13 @@
 		}
 		
 		$("#su_delete").click(function(){
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#de_line").modal("hide");///////////////////////////////
+		
 			$.ajax({
 						url : "servlet/ManageLineServlet",
 						type : "POST",
@@ -1166,7 +1216,10 @@
 							}
 	 						$("#linetab_con").html(tab);			
 							$("#outcreLsite").click();  
+							$("#waitprocess").modal("hide");
+							$("#de_line").modal();
 						}
+						
 				});
 		});
 
@@ -1317,6 +1370,12 @@
 			var siteId = $("#runsites").attr("title");
 			var peoNum = $("#peonum").attr("title");
 			if(jud_ln1 == 1 && jud_ln2 == 1){
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#h_creline").modal("hide");
 				$.ajax({
 					url : "servlet/ManageLineServlet",
 					type : "POST",
@@ -1378,6 +1437,8 @@
 						$("#surecreLsite").hide("1000");	
 						$("#outcreLsite").hide("1000");	
 						$("#suremodLsite").hide();
+						$("#waitprocess").modal("hide");
+						$("#h_creline").modal();
 					}
 				});
 			}
@@ -1420,6 +1481,12 @@
 			var siteId = $("#runsites1").attr("title");
 			var peoNum = $("#peonum1").attr("title");
 			if(jud_ln1 == 1 && jud_ln2 == 1){
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#h_creline1").modal("hide");
 				$.ajax({
 					url : "servlet/ManageLineServlet",
 					type : "POST",
@@ -1483,6 +1550,8 @@
 						$("#outcreLsite").hide("1000");	
 						$("#suremodLsite").hide("1000");
 						modlineId = -1;
+						$("#waitprocess").modal("hide");
+						$("#h_creline1").modal();
 					}
 				});
 			}
@@ -1512,6 +1581,27 @@
 			$("#peonum1").attr("title","预计人数请创建后查看");
 			$("#peonum1").text("预计人数：请创建后查看");
 		}
+		
+		$("#modstaffline").click(function (){
+			$("#waitprocess").modal({
+			  keyboard: false,
+			  backdrop:'static'
+			});
+			$("#finstaffline").hide();
+			
+			$.ajax({
+				url : "servlet/ManageLineServlet",
+				type : "POST",
+				data : {
+					type : "10",
+				},
+				success : function(re) {
+					$("#waitingpro").hide("1000");
+					$("#finstaffline").show("1000");
+					$("#waitprocess").modal(); 
+				}
+			});
+		});
 	</script>
 <div>
  	

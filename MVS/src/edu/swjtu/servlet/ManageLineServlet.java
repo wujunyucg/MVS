@@ -511,7 +511,8 @@ public class ManageLineServlet extends HttpServlet {
 				String json_s  = json_linelist.toString() + "&" + json_sitelist.toString() + "&" + json_allsite.toString();
 				pw.write(json_s);
 			}
-			else{
+			else if(type.equals("10")){
+				new Lines().modifyLineOfStaff(con);
 				
 			}
 		} catch (ClassNotFoundException | SQLException e1) {

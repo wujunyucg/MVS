@@ -8,6 +8,7 @@ import edu.swjtu.impl.ArrangeDaoImpl;
 import edu.swjtu.impl.CarDaoImpl;
 import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.SiteDaoImpl;
+import edu.swjtu.impl.StaffDaoImpl;
 
 public class Lines {
 
@@ -633,4 +634,42 @@ public class Lines {
 		}
 		
 	}
+	
+	public void modifyLineOfStaff(Connection con){
+		ArrayList<Site> allsite = new ArrayList<Site>();
+		allsite = new SiteDaoImpl().getAllSite(con);
+		for(int i=0;i<allsite.size();i++){
+			allsite.get(i).setBufftag(0);
+		}
+		ArrayList<Staff> allstaff = new ArrayList<Staff>();
+		allstaff = new StaffDaoImpl().getAllStaff(con);
+		int temp_site;
+		int j, order;
+		for(int i=0;i<allstaff.size();i++){
+			temp_site = allstaff.get(i).getSiteId();
+			for(j=0;j<allsite.size();j++){
+				if(allsite.get(j).getSiteId() == temp_site){
+					break;
+				}
+			}
+			String[] lines = allsite.get(j).getLineId().split(",");
+			if(lines.length>0&&lines[0]!=null&&!lines[0].equals("")){
+				order =  allsite.get(j).getPeoNum() / lines.length;
+				if(allsite.get(j).getBufftag() / order < lines.length){
+					allstaff.get(i).setLineId(Integer.valueOf(lines[allsite.get(j).getBufftag() / order]).intValue());
+				}else{
+					allstaff.get(i).setLineId(Integer.valueOf(lines[lines.length-1]).intValue());
+				}
+			}
+			else{
+				allstaff.get(i).setLineId(-1);
+			}
+			allsite.get(j).setBufftag(allsite.get(j).getBufftag() + 1);
+			
+		}
+		
+		new StaffDaoImpl().updateListStaff(allstaff, con);
+		
+	}
+	
 }
