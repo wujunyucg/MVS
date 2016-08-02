@@ -311,6 +311,11 @@
     <servlet-name>StatisticLineServlet</servlet-name>
     <servlet-class>edu.swjtu.impl.StatisticLineServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>APPLostServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.APPLostServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -334,5 +339,9 @@
   <servlet-mapping>
     <servlet-name>StatisticLineServlet</servlet-name>
     <url-pattern>/servlet/StatisticLineServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>APPLostServlet</servlet-name>
+    <url-pattern>/servlet/APPLostServlet</url-pattern>
   </servlet-mapping>
 </web-app>
