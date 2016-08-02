@@ -17,9 +17,11 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.SiteDaoImpl;
+import edu.swjtu.impl.SiteRecordDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.model.Line;
 import edu.swjtu.model.Site;
+import edu.swjtu.model.SiteRecord;
 import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
 import edu.swjtu.util.KMeans;
@@ -258,7 +260,8 @@ public class ManageSiteServlet extends HttpServlet {
 						
 					}
 				}
-				
+				SiteRecordDaoImpl srdi= new SiteRecordDaoImpl();
+				srdi.deleteSiteRecordBySiteId(site.getSiteId(), con);
 				sdi.deleteOneSite(site, con);
 				StaffDaoImpl sdi1= new StaffDaoImpl();
 				ArrayList<Staff> staffList = new ArrayList<Staff>();

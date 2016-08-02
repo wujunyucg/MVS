@@ -224,8 +224,16 @@
               <li style="float:right;margin-right:30%;width:20%""><button type="reset" id="set">取消</button></li>
          </ul>                 
       </div>
- <div class="dropdown" style="position:absolute;margin-left:20px;margin-top:380px;">
-  <button id="dLabel" style="width:160px" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      
+       <div id="name"  class="form-inline" style="position:relative;float:left;margin-left:63%;margin-top:15%;height: 50%;display:none" > <input type="" class="form-control" id="stressname" >&nbsp;&nbsp;&nbsp;
+<button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
+<button onclick="disnone()"  class="btn btn-primary">隐藏</button> 
+</div>
+     <div style="position:relative;float:right;margin-right:2%;margin-top:15%;height: 50%;">
+    
+
+ <div class="dropdown" style="position:relative;margin-top:0%;">
+  <button id="dLabel" style="width:100%" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    添加站点
     <span class="caret"></span>
   </button>
@@ -239,15 +247,14 @@
 			
 			
 </div>
-<div id="name"  class="form-inline" style="position:absolute;margin-left:200px;margin-top:380px;display:none" > <input type="" class="form-control" id="stressname" >&nbsp;&nbsp;&nbsp;
-<button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
-<button onclick="disnone()"  class="btn btn-primary">隐藏</button> </div>
-<div  style="position:absolute;margin-left:20px;margin-top:420px;"> <button  style="width:160px" class="btn btn-primary" onclick="disp();">显示/隐藏所有信息</button></div>
-<div  style="position:absolute;margin-left:20px;margin-top:460px;"><button  style="width:160px" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
-<div  style="position:absolute;margin-left:20px;margin-top:500px;"><button  style="width:160px" class="btn btn-primary" onclick="showsite()">显示未分配线路站点</button></div>
- <div  style="position:absolute;margin-left:20px;margin-top:540px;"><button  style="width:160px" class="btn btn-primary" onclick="showallstaff()">显示所有员工</button></div>  
-    <div  style="position:absolute;margin-left:20px;margin-top:580px;"><button  style="width:160px" class="btn btn-primary" onclick="showstaff()">显示未分配站点员工</button></div>    
-    <div  style="position:absolute;margin-left:20px;margin-top:620px;"> <select id="listselect" style="width:160px"  class="btn btn-primary form-control" >
+
+
+<div  style="position:relative;margin-top:8%;"> <button  style="width:100%" class="btn btn-primary" onclick="disp();">显示/隐藏所有信息</button></div>
+<div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
+<div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showsite()">显示未分配线路站点</button></div>
+ <div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showallstaff()">显示所有员工</button></div>  
+    <div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showstaff()">显示未分配站点员工</button></div>    
+    <div  style="position:relative;margin-top:8%;"> <select id="listselect" style="width:100%"  class="btn btn-primary form-control" >
          <option value="-1">选择线路查看</option>
            <c:if test="${site_line_list!=null }">
        <c:forEach items="${site_line_list}" var="line" varStatus="status">
@@ -255,7 +262,7 @@
        </c:forEach>
        </c:if>
       </select> </div>    
-    
+  </div>  
       <div id="route-info">
       
       </div>

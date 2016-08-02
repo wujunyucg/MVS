@@ -54,6 +54,22 @@ public class SiteRecordDaoImpl implements SiteRecordDao {
 		}
 		return rs;
 	}
+	
+	@Override
+	public int deleteSiteRecordBySiteId(int siteId, Connection con)
+			throws SQLException {
+		String sql = "delete  from siterecord where siteRecord_siteId = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, siteId);
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
 
 	@Override
 	public int updateSiteRecord(SiteRecord siterecord, Connection con)
@@ -144,7 +160,7 @@ public class SiteRecordDaoImpl implements SiteRecordDao {
 		try {
 			PreparedStatement pstm ;
 			if(type==1){
-				System.out.println(date);
+				//System.out.println(date);
 				 sql = "select * from siterecord where siteRecord_date = ?";
 				
 				 pstm = con.prepareStatement(sql);

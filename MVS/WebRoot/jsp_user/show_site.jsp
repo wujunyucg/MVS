@@ -45,7 +45,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 			<div>
-		
+		<form action="servlet/ShowSiteServlet?type=2" method="post">
+			<button type="submit" class="btn btn-primary">导出报表</button>
+			
+		</form>
 			<div id="canvasp"class="demo-chat" style="position:relative;width:75%;overflow :auto;left:5%;top:10px;height:600px;">
 				<canvas id="canvas" style="height:580px" ></canvas>
 			</div>
@@ -140,6 +143,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				chartBar = new Chart(ctx).Bar(barChartData, {
 					barDatasetSpacing : 20,
 				});
+				
+				
+				
+				
+				
+				
+				if($("#select").val()=="day"){
+				
 				canvas.onclick = function(evt){
            		var activeBar = chartBar.getBarSingleAtEvent(evt);
             	//alert(activeBar.label)
@@ -179,9 +190,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 	$("#w-modal").modal('show');
 		         }
 		         });
+		      
             // => activeBars is an array of bars on the canvas that are at the same position as the click event.
             };
-				
+		   }		
 		      }});
 	});
 	

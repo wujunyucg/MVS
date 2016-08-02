@@ -25,4 +25,7 @@ public int addSiteRecord(SiteRecord siterecord,Connection con) throws SQLExcepti
 
 	ArrayList getSiteRecordByDate(int type, String date, Connection con)
 			throws SQLException, Exception;
+
+	int deleteSiteRecordBySiteId(int siteId, Connection con)
+			throws SQLException;
 }
