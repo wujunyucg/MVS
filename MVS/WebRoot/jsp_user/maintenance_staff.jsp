@@ -193,10 +193,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	}
                </c:otherwise>
            </c:choose>
+ $("#w-modal-div").css("overflow","");
+$("#w-modal-div").css("height","");
 $(window).load(searchcontent());
   function  layer1(number,name,department,group,arrangeid,lineid,siteid ,address){
   		$("#w-modal-close").attr("onclick","");
-	
+	$("#w-modal-export").css("display","none");
   		$.ajax({ 
 		type:"post",
 		url: "<%=basePath%>servlet/ManageStaffServlet", 
@@ -247,7 +249,7 @@ $(window).load(searchcontent());
 function  layer2(staffid,number,name,department,group,arrangeid,lineid,siteid,address ){
  document.getElementById("w-modal-p2"). innerHTML = '';
   $("#w-modal-but").html("提交更改"); 
-
+$("#w-modal-export").css("display","none");
  document.getElementById("w-modal-but"). style.display="inline "; 
  $.ajax({ 
 		type:"post",

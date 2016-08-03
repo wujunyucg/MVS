@@ -34,23 +34,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <br>
-  <input type="hidden" id="select" value="day"/>
   <div class="row">
-  <form action="servlet/ShowSiteServlet?type=2" method="post" >
-		<div class="col-lg-2"><div class="input-group">
-				<span class="input-group-addon" id="sizing-addon2">查询周期</span>
-				<div class="input-group-btn">
-					<button type="button" id="search_c" title="1" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						天 <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li><a href="javascript:;" onclick="javascript:$('#select').val('day');byday()">天</a></li>
-						<li><a href="javascript:;" onclick="javascript:$('#select').val('week');byweek();">周</a></li>
-						<li><a href="javascript:;" onclick="javascript:$('#select').val('month');bymonth()">月</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+  <form class="form-inline" action="servlet/ShowSiteServlet?type=2" method="post" >
+<div class="form-group">
+    <div class="input-group">
+  <div class="input-group-addon">搜索类型</div>
+    <select class="form-control" id="select">
+  <option value="day" >天</option>
+   <option value="week">周</option>
+  <option value="month">月</option>
+</select>
+    </div>
+ </div>
 		<div class="col-lg-3">
 			<div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
 			<input size="50" id="search_date" class="form-control" type="text" readonly>
@@ -65,44 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 
 		
-			<div id="canvasp"class="demo-chat" style="position:relative;width:75%;overflow :auto;left:5%;top:10px;height:600px;">
+			<div id="canvasp"class="demo-chat" style="position:relative;width:80%;overflow :auto;left:5%;top:10px;height:600px;">
 				<canvas id="canvas" style="height:580px" ></canvas>
 			</div>
 	
 	
-	<div class="modal fade" id="w-modal" tabindex="-1" role="dialog" 
-   aria-labelledby="w-modal-label" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close" id="w-modal-close2"
-               data-dismiss="modal" aria-hidden="true">
-                  &times;
-            </button>
-            <h4 class="modal-title" id="w-modal-label">
-              <p id= "w-modal-p1"></p>
-            </h4>
-         </div>
-         <div class="modal-body">
-           <div id = "w-modal-div"></div>
-           <p id="w-modal-p2"></p>
-            <p id="w-modal-p3"></p>
-         </div>
-         <div class="modal-footer">
-         <form action="servlet/ShowSiteServlet?type=3" method="post" >
-			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
-			
-		
-            <button type="button" id="w-modal-close"  class="btn btn-default" 
-               data-dismiss="modal" >关闭
-            </button>
-            <button type="button" class="btn btn-primary" id="w-modal-but" onclick="javascript:update()">
-               提交更改
-            </button></form>
-         </div>
-      </div><!-- /.modal-content -->
-</div><!-- /.modal -->	
-</div>
+	
   </body>
   <script>
 

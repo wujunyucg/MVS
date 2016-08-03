@@ -388,14 +388,14 @@
 					$("#load_modal").modal('show');
 					var list = eval('(' + request + ')');
 				 	sitelist = list.sitelist;
-					var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+				 	var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
 					for(var i=0;i<sitelist.length;i++){
 						satationsmarker(sitelist[i]);
 						if(sitelist[i].name=="0")
 							continue;
-						tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+						tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineName+'</td><td>'+sitelist[i].order+'</td></tr>';
 						}
-					alert(tab);
+				
 					tab=tab+'</tbody>';
 					$("#site_table").html(tab);
 					$("#site_table td").click(function() {
@@ -406,7 +406,7 @@
 		             var  tr=$(this).parent().attr("id");
 		               satationsmarker(sitelist[tr]);
 		               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-		               $("#"+tr).css('background-color','red');
+		               $("#"+tr).css('background-color','#CCFFFF');
 		        
 		           
 		            });
@@ -430,11 +430,14 @@
 				$("#load_modal").modal('show');
 				var list = eval('(' + request + ')');
 			 	sitelist = list.sitelist;
-				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+			 	var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
 				for(var i=0;i<sitelist.length;i++){
 					satationsmarker(sitelist[i]);
-					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
-				}
+					if(sitelist[i].name=="0")
+						continue;
+					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineName+'</td><td>'+sitelist[i].order+'</td></tr>';
+					}
+			
 				tab=tab+'</tbody>';
 				$("#site_table").html(tab);
 				$("#site_table td").click(function() {
@@ -445,7 +448,7 @@
 	             var  tr=$(this).parent().attr("id");
 	               satationsmarker(sitelist[tr]);
 	               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-	               $("#"+tr).css('background-color','red');
+	               $("#"+tr).css('background-color','#CCFFFF');
 	        
 	           
 	            });
@@ -469,12 +472,14 @@
 					$("#load_modal").modal('show');
 				var list = eval('(' + request + ')');
 			 	sitelist = list.sitelist;
-				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+			 	var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
 				for(var i=0;i<sitelist.length;i++){
-				
 					satationsmarker(sitelist[i]);
-					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
-				}
+					if(sitelist[i].name=="0")
+						continue;
+					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineName+'</td><td>'+sitelist[i].order+'</td></tr>';
+					}
+			
 				tab=tab+'</tbody>';
 				$("#site_table").html(tab);
 				$("#site_table td").click(function() {
@@ -485,7 +490,7 @@
 	             var  tr=$(this).parent().attr("id");
 	               satationsmarker(sitelist[tr]);
 	               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-	               $("#"+tr).css('background-color','red');
+	               $("#"+tr).css('background-color','#CCFFFF');
 	        
 	           
 	            });

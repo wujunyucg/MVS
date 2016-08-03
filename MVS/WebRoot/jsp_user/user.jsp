@@ -177,20 +177,20 @@
             <p id="w-modal-p3"></p>
          </div>
          <div class="modal-footer">
-         	<div>
-		<form action="servlet/ShowSiteServlet?type=3" method="post" >
-			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出乘车人员</button>
+         <form action="servlet/ShowSiteServlet?type=3" method="post" >
+			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
 			
-		</form>
+		
             <button type="button" id="w-modal-close"  class="btn btn-default" 
                data-dismiss="modal" >关闭
             </button>
             <button type="button" class="btn btn-primary" id="w-modal-but" onclick="javascript:update()">
                提交更改
-            </button>
+            </button></form>
          </div>
       </div><!-- /.modal-content -->
-</div><!-- /.modal -->
+</div><!-- /.modal -->	
+</div>
 	<!-- jimo -->
 	<div id="load_modal" class="modal fade" id="myModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">

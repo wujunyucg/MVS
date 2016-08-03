@@ -225,21 +225,21 @@
          </ul>                 
       </div>
       
-       <div id="name"  class="form-inline" style="position:relative;float:left;margin-left:63%;margin-top:15%;height: 50%;display:none" > <input type="" class="form-control" id="stressname" >&nbsp;&nbsp;&nbsp;
+       <div id="name"  class="form-inline" style="position:absolute;display:none;top:190px;right:165px" > <input type="" class="form-control" id="stressname" >&nbsp;&nbsp;&nbsp;
 <button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
 <button onclick="disnone()"  class="btn btn-primary">隐藏</button> 
 </div>
-     <div style="position:relative;float:right;margin-right:2%;margin-top:15%;height: 50%;">
+     <div style="position:absolute;right:160px;top:190px;">
     
 
- <div class="dropdown" style="position:relative;margin-top:0%;">
-  <button id="dLabel" style="width:100%" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <div class="dropdown" style="position:absolute;top:0px">
+  <button id="dLabel" style="width:160px" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    添加站点
     <span class="caret"></span>
   </button>
 
   <ul class="dropdown-menu" aria-labelledby="dLabel">
-  <li><a onclick="addclicksite(hhj_ctn)">点击选点</a></li>
+  <li><a onclick="console.log(hhj_ctn);addclicksite(hhj_ctn)">点击选点</a></li>
      <li> <a onclick="showinput()"> 搜索选点</a></li>
       <li> <a onclick="javascript:autosite()"> 自动生成</a></li>
   </ul>
@@ -249,12 +249,12 @@
 </div>
 
 
-<div  style="position:relative;margin-top:8%;"> <button  style="width:100%" class="btn btn-primary" onclick="disp();">显示/隐藏所有信息</button></div>
-<div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
-<div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showsite()">显示未分配线路站点</button></div>
- <div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showallstaff()">显示所有员工</button></div>  
-    <div  style="position:relative;margin-top:8%;"><button  style="width:100%" class="btn btn-primary" onclick="showstaff()">显示未分配站点员工</button></div>    
-    <div  style="position:relative;margin-top:8%;"> <select id="listselect" style="width:100%"  class="btn btn-primary form-control" >
+<div  style="position:absolute;top:40px"> <button  style="width:160px" class="btn btn-primary" onclick="disp();">显示/隐藏所有信息</button></div>
+<div  style="position:absolute;top:80px"><button  style="width:160px" class="btn btn-primary" onclick="showall()">显示所有站点</button></div>
+<div  style="position:absolute;top:120px"><button  style="width:160px" class="btn btn-primary" onclick="showsite()">显示未分配线路站点</button></div>
+ <div  style="position:absolute;top:160px"><button  style="width:160px" class="btn btn-primary" onclick="showallstaff()">显示所有员工</button></div>  
+    <div  style="position:absolute;top:200px"><button  style="width:160px" class="btn btn-primary" onclick="showstaff()">显示未分配站点员工</button></div>    
+    <div  style="position:absolute;top:240px"> <select id="listselect" style="width:160px"  class="btn btn-primary form-control" >
          <option value="-1">选择线路查看</option>
            <c:if test="${site_line_list!=null }">
        <c:forEach items="${site_line_list}" var="line" varStatus="status">
@@ -407,6 +407,7 @@
             var hhj_ctn;
 		$(window).load(function(){
 			 hhj_ctn=document.getElementById('addsatation-info').innerHTML;
+			 console.log(hhj_ctn);
 		var site='${json_site_list}';
 		var list = eval('(' + site + ')');
 		 sitelist = list.sitelist;
@@ -631,7 +632,7 @@ function satationSuit2(lng,lat,sta){
 			for(var i=0;i<sitelist.length;i++){
 				if(sitelist[i].lineId>=0){
 				satationsmarker(sitelist[i]);
-				tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td><td>'+sitelist[i].order+'</td></tr>';
+				tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineName+'</td><td>'+sitelist[i].order+'</td></tr>';
 				}
 			}
 			tab=tab+'</tbody>';
@@ -663,7 +664,7 @@ $("#site_table td").click(function() {
              var  tr=$(this).parent().attr("id");
                satationsmarker(sitelist[tr]);
                map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-               $("#"+tr).css('background-color','red');
+               $("#"+tr).css('background-color','#CCFFFF');
         
            
             });
@@ -713,6 +714,7 @@ $("#site_table td").click(function() {
 		for(var i=0;i<stafflist.length;i++){
 					staffmarker(stafflist[i]);
 		}
+		dis=true;
   	}
   }
 	</script>
