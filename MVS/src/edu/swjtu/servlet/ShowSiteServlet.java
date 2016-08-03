@@ -45,6 +45,7 @@ import org.apache.poi.hssf.usermodel.HSSFPatriarch;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.Region;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -201,6 +202,9 @@ public class ShowSiteServlet extends HttpServlet {
 					if(staff!=null)
 						staffList.add(staff);
 				}
+				request.getSession().setAttribute("staff_list", staffList);
+				request.getSession().setAttribute("siteid", request.getParameter("siteid"));
+				request.getSession().setAttribute("srid", request.getParameter("srid"));
 				JSONObject jo =new JSONObject();
 				jo.put("staff_list", staffList);
 				out.print(jo.toString());
@@ -277,7 +281,7 @@ public class ShowSiteServlet extends HttpServlet {
 //				FileOutputStream fout = new FileOutputStream("E:/car_data.xls");  
 //				wb.write(fout);  
 //				fout.close();  
-				String myexcel="All_Site";
+				String myexcel="site_analysis";
 			    //回去输出流
 			    OutputStream out1=response.getOutputStream();
 			    //重置输出流
@@ -306,6 +310,80 @@ public class ShowSiteServlet extends HttpServlet {
 			    if(out1!=null){
 			      out1.close();
 			    }
+				
+			}
+			else if(type.equals("3")){
+				ArrayList<Staff> staffList=(ArrayList<Staff>) request.getSession().getAttribute("staff_list");
+				int siteid=Integer.parseInt((String) request.getSession().getAttribute("siteid")) ;
+				int srid=Integer.parseInt((String) request.getSession().getAttribute("srid")) ;
+				Site site = sdi.getSiteById(siteid, con);
+				SiteRecord sr = srdi.getSiteRecordById(srid, con);
+				 HSSFWorkbook wb = new HSSFWorkbook();
+					// 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
+					HSSFSheet sheet = wb.createSheet("站点信息表");
+					// 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short
+					HSSFRow row = sheet.createRow((int) 0);
+					// 第四步，创建单元格，并设置值表头 设置表头居中
+					HSSFCellStyle style = wb.createCellStyle();
+					style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+					sheet.addMergedRegion(new Region(0,(short)0,0,(short)4));
+					row.createCell(0).setCellValue(site.getName()+"站点 "+sr.getDate()+"乘车名单");
+					
+					row = sheet.createRow(1);
+					HSSFCell cell = row.createCell(0);
+					cell.setCellValue("序号");
+					cell.setCellStyle(style);
+					cell = row.createCell(1);
+					cell.setCellValue("员工工号");
+					cell.setCellStyle(style);
+					cell = row.createCell(2);
+					cell.setCellValue("员工姓名");
+					cell.setCellStyle(style);
+					cell = row.createCell(3);
+					cell.setCellValue("员工部门");
+					cell.setCellStyle(style);
+					cell = row.createCell(2);
+					cell.setCellValue("员工组别");
+					cell.setCellStyle(style);
+				
+					
+					// 第五步，写入实体数据 实际应用中这些数据从数据库得到，
+					for (int i = 0; i < staffList.size(); i++) {
+						row = sheet.createRow((int) i + 2);
+						Staff staff = (Staff) staffList.get(i);
+						// 第四步，创建单元格，并设置值
+						row.createCell(0).setCellValue(i+1);
+						row.createCell(1).setCellValue(staff.getNumber());
+						row.createCell(2).setCellValue(staff.getName());
+						row.createCell(3).setCellValue(staff.getDepartment());
+						row.createCell(4).setCellValue(staff.getGroup());
+					}
+
+					//根据路径下载
+//					FileOutputStream fout = new FileOutputStream("E:/car_data.xls");  
+//					wb.write(fout);  
+//					fout.close();  
+					String myexcel="Site_People";
+				    //回去输出流
+				    OutputStream out1=response.getOutputStream();
+				    //重置输出流
+				    response.reset();
+				    //设置导出Excel报表的导出形式
+				    response.setContentType("application/vnd.ms-excel");
+				    response.setHeader("Content-Disposition","attachment;filename="+myexcel+".xls");
+		
+				    wb.write(out1);
+				   
+				    out1.close();
+				     
+				    //设置输出形式
+				    System.setOut(new PrintStream(out1));
+				    //刷新输出流
+				    out1.flush();
+				    //关闭输出流
+				    if(out1!=null){
+				      out1.close();
+				    }
 				
 			}
 		} catch (ClassNotFoundException e) {

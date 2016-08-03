@@ -33,22 +33,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  		<div  style="">
-  			
-					<div style="width: 30%;" class="input-group date form_date" data-date="" >
-					<select id="select" class="form-control">
-			<option value="day">按天查看</option>
-			<option value="week">按周查看</option>
-			<option value="month">按月查看</option>
-					<input size="50" id="res_date" class="form-control" type="text" placeholder="请选择日期"  
-					style=" -webkit-border-radius: 0; -moz-border-radius: 0;border-radius: 0;"readonly>
-					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-					</div>
-			<div>
-		<form action="servlet/ShowSiteServlet?type=2" method="post">
-			<button type="submit" class="btn btn-primary">导出报表</button>
+  <br>
+  <input type="hidden" id="select" value="day"/>
+  <div class="row">
+  <form action="servlet/ShowSiteServlet?type=2" method="post" >
+		<div class="col-lg-2"><div class="input-group">
+				<span class="input-group-addon" id="sizing-addon2">查询周期</span>
+				<div class="input-group-btn">
+					<button type="button" id="search_c" title="1" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						天 <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:;" onclick="javascript:$('#select').val('day');byday()">天</a></li>
+						<li><a href="javascript:;" onclick="javascript:$('#select').val('week');byweek();">周</a></li>
+						<li><a href="javascript:;" onclick="javascript:$('#select').val('month');bymonth()">月</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+			<input size="50" id="search_date" class="form-control" type="text" readonly>
+			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+		</div>
+		</div>
+	<button type="button" class="btn btn-default" id="sure_sta" onclick="javascript:check()">确认</button>
+	
+			<button type="submit" id="export"class="btn btn-primary" style="display:none">导出报表</button>
 			
 		</form>
+	</div>
+
+		
 			<div id="canvasp"class="demo-chat" style="position:relative;width:75%;overflow :auto;left:5%;top:10px;height:600px;">
 				<canvas id="canvas" style="height:580px" ></canvas>
 			</div>
@@ -76,13 +92,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <form action="servlet/ShowSiteServlet?type=3" method="post" >
 			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
 			
-		</form>
+		
             <button type="button" id="w-modal-close"  class="btn btn-default" 
                data-dismiss="modal" >关闭
             </button>
             <button type="button" class="btn btn-primary" id="w-modal-but" onclick="javascript:update()">
                提交更改
-            </button>
+            </button></form>
          </div>
       </div><!-- /.modal-content -->
 </div><!-- /.modal -->	
@@ -98,19 +114,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			endDate:'2015-07-31',
 			weekStart : 1,
 			todayBtn : 1,
-			autoclose : false,
+			autoclose : 1,
 			todayHighlight : 1,
 			startView : 2,
 			minView : 2,
 			forceParse : 0,
 		});	
-	$('.form_date').on('changeDate', function(ev){
+	function check(){
+	
    		$.ajax({ 
 				type:"post",
 				url: "<%=basePath%>servlet/ShowSiteServlet", 
 				data:{
 								type :$("#select").val(),
-								date:$("#res_date").val() ,			
+								date:$("#search_date").val() ,			
 					},
 				error: function(request) {
 		          alert('修改失败，请重新修改');
@@ -147,7 +164,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				chartBar = new Chart(ctx).Bar(barChartData, {
 					barDatasetSpacing : 20,
 				});
-				
+				$("#export").css("display","inline");
 				
 				
 				
@@ -158,10 +175,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				canvas.onclick = function(evt){
            		var activeBar = chartBar.getBarSingleAtEvent(evt);
             	//alert(activeBar.label)
-            	var staffids=null;;
+            	var staffids=null,siteid,srid;
             	for(var i=0;i<site_list.length;i++){
             		if(site_list[i].name==activeBar.label){
             			staffids=sr_list[i].staffIds;
+            			siteid=sr_list[i].siteId;
+            			srid=sr_list[i].siterecordId;
             		}
             	}
             	
@@ -171,7 +190,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				contenttype :"application/x-www-form-urlencoded;charset=utf-8",
 				data:{
 						type:1,
-						staffids:staffids
+						staffids:staffids,
+						siteid:siteid,
+						srid:srid
 				}, 
 				error: function(request) {
 		           // document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
@@ -200,8 +221,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             };
 		   }		
 		      }});
-	});
+	}
 	
+	function byday(){
+			$("#search_c").html("天 <span class='caret'></span>");
+			$("#search_c").attr("title","1");
+		}
+		function byweek(){
+			$("#search_c").html("周 <span class='caret'></span>");
+			$("#search_c").attr("title","2");
+		}
+		function bymonth(){
+			$("#search_c").html("月 <span class='caret'></span>");
+			$("#search_c").attr("title","3");
+		}
 	
   </script>
 </html>
