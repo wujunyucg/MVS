@@ -188,6 +188,24 @@ public class StaffDaoImpl implements StaffDao {
 		}
 		return staff;
 	}
+	
+	@Override
+	public Staff getStaffByNumberS(String number, Connection con) {
+		Staff staff = null;
+		String sql = "select * from staff where staff_number = ?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, number);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()){
+				staff = getStaffOne(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return staff;
+	}
 
 	@Override
 	public ArrayList<Staff> getStaffByName(String name, Connection con) {

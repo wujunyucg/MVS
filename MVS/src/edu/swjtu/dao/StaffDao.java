@@ -176,4 +176,13 @@ public interface StaffDao {
 	 */
 	public Staff getLastStaff(Connection con);
 	int updateListStaff(ArrayList<Staff> staffList, Connection con);
+	/**
+	 * 确切number的到员工
+	 * 2016年8月3日下午9:04:47
+	 * @author jimolonely
+	 * @param number
+	 * @param con
+	 * @return
+	 */
+	public Staff getStaffByNumberS(String number,Connection con);
 }
