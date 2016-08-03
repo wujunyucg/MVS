@@ -3,15 +3,89 @@ package edu.swjtu.model;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import edu.swjtu.impl.ArrangeDaoImpl;
 import edu.swjtu.impl.CarDaoImpl;
 import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.SiteDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
+import edu.swjtu.intelligent.SearchRoute;
 
 public class Lines {
-
+	
+	public double lineLength(int lineId, Connection con) throws SQLException{
+		Line line = null;
+		line = new LineDaoImpl().getLineById(con, lineId);
+		SiteDaoImpl sdi = new SiteDaoImpl(); 
+		String[] site_ids = line.getSiteId().split(",");
+		double all_len = 0.0;
+		Site s1 = null, s2 = null;
+		
+		for(int i=0;i<site_ids.length-1;i++){
+			s1 = sdi
+		}
+	}
+	
+	/**
+	 * 根据两点经纬度计算距离
+	 */
+	private static double EARTH_RADIUS = 6378.137; 
+	   
+    private static double rad(double d) { 
+        return d * Math.PI / 180.0; 
+    }
+	public static String getDistance(String lat1Str, String lng1Str, String lat2Str, String lng2Str) {
+        Double lat1 = Double.parseDouble(lat1Str);
+        Double lng1 = Double.parseDouble(lng1Str);
+        Double lat2 = Double.parseDouble(lat2Str);
+        Double lng2 = Double.parseDouble(lng2Str);
+         
+        double radLat1 = rad(lat1);
+        double radLat2 = rad(lat2);
+        double difference = radLat1 - radLat2;
+        double mdifference = rad(lng1) - rad(lng2);
+        double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(difference / 2), 2)
+                + Math.cos(radLat1) * Math.cos(radLat2)
+                * Math.pow(Math.sin(mdifference / 2), 2)));
+        distance = distance * EARTH_RADIUS;
+        distance = Math.round(distance * 10000) / 10000;
+        String distanceStr = distance+"";
+        distanceStr = distanceStr.
+            substring(0, distanceStr.indexOf("."));
+         
+        return distanceStr;
+    }
+	
+	/**
+	 * 优先队列比较
+	 */
+	public Comparator<LineRecord> OrderIsdn1 = new Comparator<LineRecord>() {
+		@Override
+		public int compare(LineRecord o1, LineRecord o2) {
+			if (o1.getRate() < o2.getRate()) {
+				return -1;
+			} else if (o1.getRate() > o2.getRate()) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	};
+	
+	public Comparator<LineRecord> OrderIsdn2 = new Comparator<LineRecord>() {
+		@Override
+		public int compare(LineRecord o1, LineRecord o2) {
+			if (Double.parseDouble(o1.getStaffIds()) < Double.parseDouble(o2.getStaffIds())) {
+				return -1;
+			} else if (Double.parseDouble(o1.getStaffIds()) > Double.parseDouble(o2.getStaffIds())) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	};
+	
 	public Site getOneSite(int site_id, Connection con) throws SQLException {
 		Site site = new SiteDaoImpl().getSiteById(site_id, con);
 		return site;
@@ -327,39 +401,40 @@ public class Lines {
 			for (int j = 0; j < site_ids.length; j++) {
 				site = new SiteDaoImpl().getSiteById(
 						Integer.valueOf(site_ids[j]).intValue(), con);
-
-				if (site.getLineId() == null || site.getLineId().equals("")) {
-					site.setLineId(list.get(i).getLineId() + ",");
-				} else if (site.getLineId().charAt(
-						site.getLineId().length() - 1) == ',') {
-					site.setLineId(site.getLineId() + list.get(i).getLineId()
-							+ ",");
-				} else {
-					site.setLineId(site.getLineId() + ","
-							+ list.get(i).getLineId());
+				if(site != null){
+					if (site.getLineId() == null || site.getLineId().equals("")) {
+						site.setLineId(list.get(i).getLineId() + ",");
+					} else if (site.getLineId().charAt(
+							site.getLineId().length() - 1) == ',') {
+						site.setLineId(site.getLineId() + list.get(i).getLineId()
+								+ ",");
+					} else {
+						site.setLineId(site.getLineId() + ","
+								+ list.get(i).getLineId());
+					}
+	
+					int order = j + 1;
+	
+					if (site.getOrder() == null || site.getOrder().equals("")) {
+						site.setOrder(order + ",");
+					} else if (site.getOrder().charAt(site.getOrder().length() - 1) == ',') {
+						site.setOrder(site.getOrder() + order + ",");
+					} else {
+						site.setOrder(site.getOrder() + "," + order);
+					}
+	
+					if (site.getLineName() == null || site.getLineName().equals("")) {
+						site.setLineName(list.get(i).getName() + ",");
+					} else if (site.getLineName().charAt(
+							site.getLineName().length() - 1) == ',') {
+						site.setLineName(site.getLineName() + list.get(i).getName()
+								+ ",");
+					} else {
+						site.setLineName(site.getLineName() + ","
+								+ list.get(i).getName());
+					}
+					new SiteDaoImpl().updateSite(site, con);
 				}
-
-				int order = j + 1;
-
-				if (site.getOrder() == null || site.getOrder().equals("")) {
-					site.setOrder(order + ",");
-				} else if (site.getOrder().charAt(site.getOrder().length() - 1) == ',') {
-					site.setOrder(site.getOrder() + order + ",");
-				} else {
-					site.setOrder(site.getOrder() + "," + order);
-				}
-
-				if (site.getLineName() == null || site.getLineName().equals("")) {
-					site.setLineName(list.get(i).getName() + ",");
-				} else if (site.getLineName().charAt(
-						site.getLineName().length() - 1) == ',') {
-					site.setLineName(site.getLineName() + list.get(i).getName()
-							+ ",");
-				} else {
-					site.setLineName(site.getLineName() + ","
-							+ list.get(i).getName());
-				}
-				new SiteDaoImpl().updateSite(site, con);
 			}
 		}
 		ArrayList<Site> sitelist = new SiteDaoImpl().getAllSite(con);
