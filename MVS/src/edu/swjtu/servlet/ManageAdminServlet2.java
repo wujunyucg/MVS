@@ -41,11 +41,12 @@ public class ManageAdminServlet2 extends HttpServlet {
 				con = db.getCon();
 				Admin admin = adi.getAdminByName(adminname, con);
 				if(null!=admin){
-					String re = "";
+					String re = "<b>";
 					ArrayList<String> list = Powers.getPower(admin.getPowerId());
 					for(int i=0;i<list.size();i++){
-						re+=list.get(i)+"  &nbsp;&nbsp;";
+						re+=list.get(i)+"&nbsp;&nbsp;";
 					}
+					re+="</b>";
 					pw.write(re);
 				}else{
 					pw.write("no");

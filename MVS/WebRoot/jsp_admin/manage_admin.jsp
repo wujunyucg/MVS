@@ -248,7 +248,7 @@
 					success : function(re) {
 						if ("no" != re) {
 							$("#show_name").text(adminname);
-							$("#show_power").text(re);
+							$("#show_power").html(re);
 						} else {
 						}
 					}
