@@ -432,7 +432,7 @@ function addclicksite(ctn){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
-			icon:"icons/satations.svg",
+			icon:"icons/satation2.svg",
 			//location:e.lnglat
 		});
 		marker.hide();
