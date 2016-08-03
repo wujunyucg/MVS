@@ -227,10 +227,12 @@
 		/***缩小**/
 		function SatationContent(data) {  //信息窗体内容
 			var s = [];
-			s.push('<div class="info-content">'+"地址：" + data.address);
-			s.push("路线："+data.lineId);
-			s.push("编号："+data.name);
-			s.push("人数："+data.peoNum);
+			s.push("名称：" + data.name);
+			s.push("地址：" + data.address);
+			s.push("路线："+ data.lineName);
+			s.push("编号："+ data.siteId);
+			s.push("人数："+ data.peoNum);
+			s.push("停留："+ data.delay);
 			s.push('<div>');
 			return s.join("<br>");
    		 }
