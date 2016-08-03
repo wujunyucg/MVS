@@ -285,4 +285,74 @@
     <servlet-name>ManageSiteServlet</servlet-name>
     <url-pattern>/servlet/ManageSiteServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowSiteServlet</display-name>
+    <servlet-name>ShowSiteServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.ShowSiteServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>StatisticsLineServlet</servlet-name>
+    <servlet-class>statistics_line.StatisticsLineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>APPLoginServlet</servlet-name>
+    <servlet-class>edu.swjtu.app.APPLoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>APPLocationServlet</servlet-name>
+    <servlet-class>edu.swjtu.app.APPLocationServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>StatisticLineServlet</servlet-name>
+    <servlet-class>edu.swjtu.impl.StatisticLineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>APPLostServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.APPLostServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>StaAnaLineServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.StaAnaLineServlet</servlet-class>
+  </servlet>
+
+
+
+
+
+
+  <servlet-mapping>
+    <servlet-name>ShowSiteServlet</servlet-name>
+    <url-pattern>/servlet/ShowSiteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StatisticsLineServlet</servlet-name>
+    <url-pattern>/servlet/StatisticsLineServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>APPLoginServlet</servlet-name>
+    <url-pattern>/servlet/APPLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>APPLocationServlet</servlet-name>
+    <url-pattern>/servlet/APPLocationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StatisticLineServlet</servlet-name>
+    <url-pattern>/servlet/StatisticLineServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>APPLostServlet</servlet-name>
+    <url-pattern>/servlet/APPLostServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StaAnaLineServlet</servlet-name>
+    <url-pattern>/servlet/StaAnaLineServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

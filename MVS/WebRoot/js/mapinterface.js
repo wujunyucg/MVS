@@ -217,7 +217,7 @@ function showroute(paths,id,name){
 		}
 		//console.log(path[0]+paths[i].longitude+paths[i]. latitude);
 	}  
-	path.push([104.065349,30.655826]);
+	path.push([104.067475,30.654737]);
 	//ss[0]=sitemarkers;
 	map.plugin("AMap.DragRoute",function(){
 		route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
@@ -495,6 +495,7 @@ function Routeshowsizt(sites,isAll){
 	ii=[];
 	index2=0;
 	$('#surecreLsite').bind('click', function(){
+		modlineId = -1;
 		//console.log(path);
 		if(path==null||path==""||path==[]||path.length < 0){
 			$("#surecreLsite").attr("data-target","#linesiteNull");
@@ -700,6 +701,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 		  //	console.log("qxxxxxxxxxxx"+ii[index]);
 			//path.splice(ii[index],1);
 			wei[ii[index]]=0;
+			console.log(wei);
 			showPolyline(path,poly,wei);
 			//console.log(path);
 		}, 2);
@@ -709,16 +711,18 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 	}
 }  
 var rsitesmk=[];
-var terminal=[104.065349,30.655826];
+var terminal=[104.067475,30.654737];
 
 function showPolyline(data,poly,wei){
 	var path2=[];
 	poly.hide();
-	//console.log(wei);
+	console.log(data);
+	console.log(wei);
 	for(var i=0;i<data.length;i++){
 		if(wei[i]==1)
 			path2.push([data[i].longitude,data[i].latitude]);
 	}
+	console.log(path2);
 	path2.push(terminal);
 	//console.log("sssssssssssss"+path2);
 	poly.setPath(path2);
@@ -754,37 +758,39 @@ function EditRoutes(sites,route){
 	ii=[];
 	index2=0;
 
-	$('#surecreLsite').bind('click', function(){
-	//	console.log(path);
-		if(path==null||path==""||path==[]||path.length < 0){
-			$("#surecreLsite").attr("data-target","#linesiteNull");
+	/*路线*/
+	$('#suremodLsite').bind('click', function(){
+		var path22=[];
+		for(var i=0;i<path.length;i++){
+			if(wei[i])
+				path22.push(path[i]);
+		}
+		if(path22==null||path22==""||path22==[]||path22.length < 0){
+			$("#suremodLsite").attr("data-target","#linesiteNull");
 		}else{
-			$("#surecreLsite").attr("data-target","#h_creline");
-			$("#hcre_page1").show();
-			$("#hcre_page2").hide();
-			h_creLine(path);
+			$("#suremodLsite").attr("data-target","#h_creline1");
+			$("#hcre_page11").show();
+			$("#hcre_page21").hide();
+			
+			h_creLine1(path22);
 		}
 	});
+	/*路线*/
 	var poly=new  AMap.Polyline({map:map});
 	
 	var k=0;
 	for(var i=0;i<sites.length;i++){
-		if(sites[i].allsite.lineId==null||sites[i].allsite.lineId==""){	
 			siteOnroutes2(sites[i].allsite,path,markers,k,poly,wei,0);
 			var ss=sites[i].allsite.lineName;
 			k++;
-		}
 	}
 	
-	for(var i=0;i<route.length;i++){
-		 
-		//path.push(route[i].allsite);
-		//siteOnroutes2(route[i].allsite,path,markers,k,poly,wei,1);
+	for(var i=0;i<route.length-1;i++){
 		path.push(route[i]);
 		siteOnroutes2(route[i],path,markers,k,poly,wei,1);
-		k++;
 		wei[i]=1;
-		ii[sites.length+i]=i;
+		ii[k]=i;
+		k++;
 		index2++;
 	}
 	showPolyline(path,poly,wei);

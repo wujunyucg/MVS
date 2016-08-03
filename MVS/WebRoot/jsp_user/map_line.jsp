@@ -297,10 +297,17 @@
 				</ul>
 			</div>
 			<div  style="position:fixed;top:310px;right:0px;">
-				<button type="button"  style="width:130px;" id="surecreLsite" class="btn btn-success" data-toggle="modal">确认所选路线</button>
+				<button type="button"  style="width:130px;" id="modstaffline" class="btn btn-success" data-toggle="modal">生成员工路线</button>
 			</div>
 			<div  style="position:fixed;top:350px;right:0px;">
-				<button type="button"  style="width:130px;" id="outcreLsite" class="btn btn-danger" data-toggle="modal">退出路线创建</button>
+				<button type="button"  style="width:130px;" id="surecreLsite" class="btn btn-success" data-toggle="modal">确认所选路线</button>
+			</div>
+			<div  style="position:fixed;top:390px;right:0px;">
+				<button type="button"  style="width:130px;" id="outcreLsite" class="btn btn-danger" data-toggle="modal">退出路线编辑</button>
+			</div>
+			
+			<div  style="position:fixed;top:350px;right:0px;">
+				<button type="button"  style="width:130px;" id="suremodLsite" class="btn btn-success" data-toggle="modal">确认修改路线</button>
 			</div>
 	
 			
@@ -319,7 +326,6 @@
 							<tr>
 								<th>#</th><th>路线名称</th>
 								<th>所经站点</th>
-								<th style="width:100px;">车辆数</th>
 								<th style="width:100px;">总人数</th>
 								<th style="width:100px;">乘坐率</th>
 								<th style="width:60px;" >查看</th
@@ -334,10 +340,9 @@
 									<tr class="${line.getLineId()}">
 										<th style="width:60px;" class="row_index">${status.index+1}</th>
 										<c:choose>
-											<c:when test="${line.getRate() < 0}">
+											<c:when test="${line.getRate() < 0 && line.getRate() != 0}">
 												<td class="text-success">${line.getName()}</td>
 												<td class="text-success">${line.getSiteId()}</td>
-												<td style="width:100px;" class="text-success"></td>
 												<td style="width:100px;" class="text-success">${line.getNum()}</td>
 												<td style="width:100px;" class="text-success">
 												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
@@ -345,16 +350,15 @@
 											<c:otherwise>   
 												<td>${line.getName()}</td>
 												<td>${line.getSiteId()}</td>
-												<td style="width:100px;"></td>
 												<td style="width:100px;">${line.getNum()}</td>
 	   											<td style="width:100px;">
-												<fmt:formatNumber type="number" value="${line.getRate() * (-100.0) }" maxFractionDigits="3"/>%</td>
+												<fmt:formatNumber type="number" value="${line.getRate() * (100.0) }" maxFractionDigits="3"/>%</td>
 	 										 </c:otherwise> 
  										 </c:choose>
 										<td style="width:60px;">
 										<a id="${line.getName()}" onclick="javascript:linedetail('${line.getLineId()}','${line.getName()}')" href="javascript:;" title="${status.index}">查看</a>
 										</td>
-										<td style="width:60px;"><a class="jimomo">修改</a></td>    
+										<td style="width:60px;"><a onclick="javascript:modifyline('${line.getName()}','${line.getLineId()}')">修改</a></td>    
 										<td style="width:60px;"  id="dline" onclick="javascript:linedelete('${line.getLineId()}',
 										'${line.getName()}','${siteNames.get(status.index)}','${line.getNum()}',
 										'${line.getRate()}')" href="javascript:;"  data-toggle="modal" 
@@ -420,6 +424,59 @@
 			</div>
 		</div>
 	</div>
+	
+			<!-- 确认手动修改路线 -->   
+		<div class="modal fade" id="h_creline1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">修改路线</h4></div>
+
+					<div id="hcre_page11" class="mypage">
+					
+						<div class="modal-body">
+							
+							<div class="alert alert-info" role="alert">请填写线路名称：</div>
+							
+							<div class="row">
+								<div class="col-lg-7"><div class="input-group">
+										<span class="input-group-addon" id="sizing-addon2">线路名称</span>
+										<input type="text" id="lin_nam1" class="form-control" aria-describedby="sizing-addon2" placeholder="请输入创建路线名称">
+								</div></div>
+								<div class="col-lg-5">
+									<h6>
+										<div id="judgeLN11"  class="label label-danger" role="alert" style="display:none;">线路名称未填写</div>
+										<div id="judgeLN21"  class="label label-danger" role="alert" style="display:none;">线路名称已存在或含非法字符</div>
+									</h6>
+								</div>
+							</div>
+							<br/>
+							<li id="runsites1" class="list-group-item list-group-item-success" title="" role="alert"></li>
+							<li id="peonum1" class="list-group-item list-group-item-success" title="" role="alert"></li>
+							<li class="list-group-item list-group-item-success" role="alert">乘坐率：0%（未知）</li>
+							<br/>
+						</div>
+						<div class="modal-footer">
+							<button id="btn_pre" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+							<button id="hsure_cre1" type="button" class="btn btn-primary">确认修改</button>
+						</div>
+					</div>
+
+
+					
+					<div id="hcre_page21" class="mypage2">
+						<div class="modal-body">
+							<div id="result" class="alert alert-success" role="alert">已成功修改线路</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">查看线路</button>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	
 	
 	<!-- 手动生成路线 站点数为空 -->
 		<div class="modal fade" id="linesiteNull" role="dialog" aria-labelledby="gridSystemModalLabel">
@@ -573,15 +630,48 @@
 						<div class="modal-body">
 							<div class="alert alert-success" role="alert">已成功删除该车辆数据信息</div>
 						</div>
-						<div class="modal-footer"><button type="button" class="btn btn-primary"  data-dismiss="modal"
-						
-						>确认并刷新</button></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary"  data-dismiss="modal">确认并刷新</button></div>
 						</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- 进度等待模态框 -->
+		<div class="modal fade" id="waitprocess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					
+					 <div class="modal-header">
+				        <h4 class="modal-title" id="myModalLabel">数据处理</h4>
+				     </div>
+						<div id="waitingpro">
+						<div class="modal-body">
+							<div class="alert alert-info" role="alert">正在处理数据信息，请等待……</div>
+							<div class="progress">
+								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+									aria-valuemax="100" style="width: 100%">
+								</div>
+							</div>
+							</div>
+							 <div class="modal-footer">
+					     	 </div>
+						</div>
+						<div id="finstaffline">
+							<div class="modal-body">
+					        	<div class="alert alert-success" role="alert">已成功生成员工的乘车路线信息</div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+					      </div>
+						</div>
+				</div>
+			</div>
 		</div>
+
+
+
+	</div>
 
 
 	<script type="text/javascript" src="js/satation.js"></script>
@@ -602,6 +692,9 @@
 		var hcremet = 0;
 		var choice_icre = 0; 
 		var judgecreing = 0;
+		var modlineId = -1;
+		var modlineName = "";
+		
 		
 		$("#max_len").hide();
 		$("#kil").hide();
@@ -609,6 +702,7 @@
 		$("#cre_page4").hide();
 		$("#surecreLsite").hide();
 		$("#outcreLsite").hide();
+		$("#suremodLsite").hide();
 		
 		var obj_lt = eval(json_lines);
 		for(var i=0;i<obj_lt.length;i++){
@@ -750,6 +844,7 @@
 			$(".hc_button").attr("disabled",false);
 			$("#surecreLsite").hide("1000");	
 			$("#outcreLsite").hide("1000");	
+			$("#suremodLsite").hide("1000");
 		});
 		
 		function linedetail(number,name){
@@ -891,6 +986,13 @@
 				max_len =  $("#max_len").val();
 			}
 			if(min_rec!=null&&min_rec!=""&&max_len!=null&&max_len!=""){
+			
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#in_creline").modal("hide");////////////////////////////////////////////////////
 				var choice = "0";
 				if(choice_icre == 0){
 					choice = "6";
@@ -931,14 +1033,12 @@
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td class='text-success'>"+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
 								}else{
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td>"+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
 								}
@@ -946,7 +1046,7 @@
 								tab += "<td style='width:60px;'><a id='"+obj_lines[i].linelist.name;
 								tab += "' onclick=javascript:linedetail('"+obj_lines[i].linelist.lineId+"','"+obj_lines[i].linelist.name+"') href='javascript:;' title='"+i+"'>查看</a></td>";
 								
-								tab += "<td style='width:60px;'><a class='jimomo'>修改</a></td>";
+								tab += "<td style='width:60px;'><a  onclick=javascript:modifyline('" + obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.lineId+"')>修改</a></td>";
 								
 								tab += "<td style='width:60px;'  id='dline' onclick=javascript:linedelete('"+obj_lines[i].linelist.lineId+"',";
 								tab += "'"+obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.siteId+"','"+obj_lines[i].linelist.num+"',";
@@ -956,15 +1056,15 @@
 							
 	 						$("#linetab_con").html(tab);	
 	 						$("#outcreLsite").click();  
+	 						
 						} else{
 							$("#cre_page4").show();
 							$("#cre_page1").hide();
 							$("#cre_page2").hide("1000");
 							$("#cre_page3").hide();
-							//if(choice_icre == 1){
-							
-							//}
 						}
+						$("#waitprocess").modal("hide");
+						$("#in_creline").modal();
 					}
 				});
 			}
@@ -1042,15 +1142,6 @@
 			});
 		
 		
-		$(".jimomo").click(function(){
- 				var id = setInterval(function() {
- 					if(true){
- 						var pr = "${pr.getPro()}";
- 						console.log("pr:"+pr+"fin:"+fin);
- 					}
- 				}, 500);
-		});
-		
 		var lineId="";
 		function linedelete(LineId,Name,siteNames,Num,Rate){
 			lineId = LineId;
@@ -1070,6 +1161,13 @@
 		}
 		
 		$("#su_delete").click(function(){
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#de_line").modal("hide");///////////////////////////////
+		
 			$.ajax({
 						url : "servlet/ManageLineServlet",
 						type : "POST",
@@ -1096,14 +1194,12 @@
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td class='text-success'>"+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
 								}else{
 									tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 									tab += "<td>"+obj_lines[i].linelist.name+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
-									tab += "<td>"+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.num+"</td>";
 									tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
 								}
@@ -1111,7 +1207,7 @@
 								tab += "<td style='width:60px;'><a id='"+obj_lines[i].linelist.name;
 								tab += "' onclick=javascript:linedetail('"+obj_lines[i].linelist.lineId+"','"+obj_lines[i].linelist.name+"') href='javascript:;' title='"+i+"'>查看</a></td>";
 								
-								tab += "<td style='width:60px;'><a class='jimomo'>修改</a></td>";
+								tab += "<td style='width:60px;'><a  onclick=javascript:modifyline('" + obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.lineId+"')>修改</a></td>";
 								
 								tab += "<td style='width:60px;'  id='dline' onclick=javascript:linedelete('"+obj_lines[i].linelist.lineId+"',";
 								tab += "'"+obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.siteId+"','"+obj_lines[i].linelist.num+"',";
@@ -1120,7 +1216,10 @@
 							}
 	 						$("#linetab_con").html(tab);			
 							$("#outcreLsite").click();  
+							$("#waitprocess").modal("hide");
+							$("#de_line").modal();
 						}
+						
 				});
 		});
 
@@ -1132,6 +1231,7 @@
 		});
 		
 		$("#creNotSite").click(function(){
+		modlineId = -1;
 		document.getElementById("lin_nam").value="";
 			$("#getallline").text("显示全部路线");
 			map.clearMap();
@@ -1143,12 +1243,14 @@
 			$(".hc_button").attr("disabled","true");
 			$("#surecreLsite").show("1000");
 			$("#outcreLsite").show("1000");
+			$("#suremodLsite").hide();
 			creNotSite = 0;
 			var allobj = eval(json_allsite);
 			Routeshowsizt(allobj,0);
 		});
 		
 		$("#creAllSite").click(function(){
+		modlineId = -1;
 		document.getElementById("lin_nam").value="";
 			$("#getallline").text("显示全部路线");
 			map.clearMap();
@@ -1161,6 +1263,7 @@
 			$(".hc_button").attr("disabled","true");
 			$("#surecreLsite").show("1000");
 			$("#outcreLsite").show("1000");
+			$("#suremodLsite").hide();
 			creNotSite = 1;
 			var allobj = eval(json_allsite);
 			Routeshowsizt(allobj,1);
@@ -1182,6 +1285,7 @@
 						data : {
 							type : "7",
 							line_name : line_name,
+							line_id : modlineId,
 						},
 						success : function(re) {
 							if (re == "yes") {
@@ -1201,9 +1305,42 @@
 				}
 		});
 		
+		$("#lin_nam1").keyup(function() {
+				var line_name = $("#lin_nam1").val();
+				if(line_name != ""){
+					jud_ln1 = 1;
+					$("#judgeLN11").hide();
+					$.ajax({
+						url : "servlet/ManageLineServlet",
+						type : "POST",
+						data : {
+							type : "7",
+							line_name : line_name,
+							line_id : modlineId,
+						},
+						success : function(re) {
+							if (re == "yes") {
+								$("#judgeLN21").hide();
+								jud_ln2 = 1;
+							} else {
+								$("#judgeLN21").show();
+								jud_ln2 = 0;
+							}
+						}
+					});
+				}
+				else{
+					$("#judgeLN21").hide();
+					$("#judgeLN11").show();
+					jud_ln1 = 0;
+				}
+		});
+		
 		function h_creLine(newline){
 			var site_ids = newline[0].siteId;
 			var site_names = newline[0].name;
+			
+			
 			var num = newline[0].peoNum;
 			if(creNotSite == 1){
 				num = "预计人数请创建后查看";
@@ -1215,6 +1352,8 @@
 					num += newline[i].peoNum; 
 				}
 			}
+			var obj_lines = eval(json_allsite);
+			site_names += "-" + obj_lines[0].allsite.name;
 			$("#runsites").attr("title",site_ids);
 			$("#runsites").text("路径站点：" + site_names);
 			if(creNotSite == 0){
@@ -1231,6 +1370,12 @@
 			var siteId = $("#runsites").attr("title");
 			var peoNum = $("#peonum").attr("title");
 			if(jud_ln1 == 1 && jud_ln2 == 1){
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#h_creline").modal("hide");
 				$.ajax({
 					url : "servlet/ManageLineServlet",
 					type : "POST",
@@ -1259,21 +1404,19 @@
 								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
-								tab += "<td class='text-success'>"+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
 								tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
 							}else{
 								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
 								tab += "<td>"+obj_lines[i].linelist.name+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
-								tab += "<td>"+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.num+"</td>";
 								tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
 							}
 							
 							tab += "<td style='width:60px;'><a id='"+obj_lines[i].linelist.name;
 							tab += "' onclick=javascript:linedetail('"+obj_lines[i].linelist.lineId+"','"+obj_lines[i].linelist.name+"') href='javascript:;' title='"+i+"'>查看</a></td>";
-							tab += "<td style='width:60px;'><a class='jimomo'>修改</a></td>";
+							tab += "<td style='width:60px;'><a  onclick=javascript:modifyline('" + obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.lineId+"')>修改</a></td>";
 							
 							tab += "<td style='width:60px;'  id='dline' onclick=javascript:linedelete('"+obj_lines[i].linelist.lineId+"',";
 							tab += "'"+obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.siteId+"','"+obj_lines[i].linelist.num+"',";
@@ -1284,6 +1427,7 @@
  						$("#linetab_con").html(tab);		
  						$("#surecreLsite").hide("1000");	
 						$("#outcreLsite").hide("1000");	
+						$("#suremodLsite").hide();
 						map.clearMap();
 						linedetail(obj_lines[obj_lines.length-1].linelist.lineId,obj_lines[obj_lines.length-1].linelist.name);
 						judgecreing = 0;
@@ -1292,6 +1436,9 @@
 						$(".hc_button").attr("disabled",false);
 						$("#surecreLsite").hide("1000");	
 						$("#outcreLsite").hide("1000");	
+						$("#suremodLsite").hide();
+						$("#waitprocess").modal("hide");
+						$("#h_creline").modal();
 					}
 				});
 			}
@@ -1299,11 +1446,162 @@
 				if(jud_ln1 == 0){
 					$("#judgeLN1").show();
 				}
-				if(jud_ln2 == 0){
+				else if(jud_ln2 == 0){
 					$("#judgeLN2").show();
 				}
 			}
 		});		
+		
+		function modifyline(nam,num){
+			modlineId = num;
+			modlineName = nam;
+			document.getElementById("lin_nam").value="";
+			$("#getallline").text("显示全部路线");
+			map.clearMap();
+			if(up==false){
+				document.getElementById("updown").click();  
+			}
+			judgecreing = 1;
+			$("#updown").attr("href","javascript:;");
+			$(".hc_button").attr("disabled","true");
+			$("#suremodLsite").hide();
+			$("#outcreLsite").show("1000");
+			$("#suremodLsite").show("1000");
+
+			var obj = eval(json_sites);
+			var tid = $("#"+nam).attr("title");
+			var allobj = eval(json_allsite);
+			var num = $("#modline").attr("title");
+			EditRoutes(allobj,obj[tid].sitelist);/////////////////////////////////////////
+		}
+		
+			
+		$("#hsure_cre1").click(function(){
+			var line_name = $("#lin_nam1").val();
+			var siteId = $("#runsites1").attr("title");
+			var peoNum = $("#peonum1").attr("title");
+			if(jud_ln1 == 1 && jud_ln2 == 1){
+				$("#waitprocess").modal({
+				  keyboard: false,
+				  backdrop:'static'
+				});
+				$("#finstaffline").hide();
+				$("#h_creline1").modal("hide");
+				$.ajax({
+					url : "servlet/ManageLineServlet",
+					type : "POST",
+					data : {
+						type : "9",
+						line_Id : modlineId,
+						line_name : line_name,
+						siteId : siteId,
+						peoNum : peoNum,
+					},
+					success : function(json_list) {
+						$("#hcre_page11").hide("1000");
+						$("#hcre_page21").show();
+						var arr = json_list.toString().split("&");
+						json_lines = arr[0];
+						json_sites = arr[1];
+						json_allsite = arr[2];
+						$("#linetab_con").text("");
+						$("#linetab_con").html("");
+						
+						var lines = json_lines;	
+						var obj_lines = eval(lines);
+						var tab = "";
+						for(var i=0;i<obj_lines.length;i++){
+							var index = i+1;
+							if(obj_lines[i].linelist.rate < 0){
+								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.name+"</td>";
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.siteId+"</td>";
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.num+"</td>";
+								tab += "<td class='text-success'>"+obj_lines[i].linelist.rate*(-100)+"%</td>";
+							}else{
+								tab += "<tr><th style='width:60px;' class='row_index'>"+index+"</th>" ;
+								tab += "<td>"+obj_lines[i].linelist.name+"</td>";
+								tab += "<td>"+obj_lines[i].linelist.siteId+"</td>";
+								tab += "<td>"+obj_lines[i].linelist.num+"</td>";
+								tab += "<td>"+obj_lines[i].linelist.rate*100+"%</td>";
+							}
+							
+							tab += "<td style='width:60px;'><a id='"+obj_lines[i].linelist.name;
+							tab += "' onclick=javascript:linedetail('"+obj_lines[i].linelist.lineId+"','"+obj_lines[i].linelist.name+"') href='javascript:;' title='"+i+"'>查看</a></td>";
+							tab += "<td style='width:60px;'><a  onclick=javascript:modifyline('" + obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.lineId+"')>修改</a></td>";
+							
+							tab += "<td style='width:60px;'  id='dline' onclick=javascript:linedelete('"+obj_lines[i].linelist.lineId+"',";
+							tab += "'"+obj_lines[i].linelist.name+"','"+obj_lines[i].linelist.siteId+"','"+obj_lines[i].linelist.num+"',";
+							tab += "'"+obj_lines[i].linelist.rate+"') href='javascript:;'  data-toggle='modal' data-target='#de_line'><a>删除</a></td>    ";
+						
+						}
+						
+ 						$("#linetab_con").html(tab);		
+ 						$("#surecreLsite").hide("1000");	
+						$("#outcreLsite").hide("1000");	
+						$("#suremodLsite").hide("1000");
+						map.clearMap();
+						linedetail(obj_lines[obj_lines.length-1].linelist.lineId,obj_lines[obj_lines.length-1].linelist.name);
+						judgecreing = 0;
+						$("#updown").attr("href","#linetable");
+						$("#getallline").text("显示全部路线");
+						$(".hc_button").attr("disabled",false);
+						$("#surecreLsite").hide("1000");	
+						$("#outcreLsite").hide("1000");	
+						$("#suremodLsite").hide("1000");
+						modlineId = -1;
+						$("#waitprocess").modal("hide");
+						$("#h_creline1").modal();
+					}
+				});
+			}
+			else{
+				if(jud_ln1 == 0){
+					$("#judgeLN11").show();
+				}
+				else if(jud_ln2 == 0){
+					$("#judgeLN21").show();
+				}
+			}
+		});		
+		
+		function h_creLine1(newline){
+			var site_ids = newline[0].siteId;
+			var site_names = newline[0].name;
+			
+			for(var i=1;i<newline.length;i++){
+				site_ids += "," + newline[i].siteId; 
+				site_names += "-" + newline[i].name;
+			}
+			var obj_lines = eval(json_allsite);
+			site_names += "-" + obj_lines[0].allsite.name;
+			$("#lin_nam1").val(modlineName);
+			$("#runsites1").attr("title",site_ids);
+			$("#runsites1").text("路径站点：" + site_names);
+			$("#peonum1").attr("title","预计人数请创建后查看");
+			$("#peonum1").text("预计人数：请创建后查看");
+		}
+		
+		$("#modstaffline").click(function (){
+			$("#waitprocess").modal({
+			  keyboard: false,
+			  backdrop:'static'
+			});
+			$("#finstaffline").hide();
+			
+			$.ajax({
+				url : "servlet/ManageLineServlet",
+				type : "POST",
+				data : {
+					type : "10",
+				},
+				success : function(re) {
+					$("#waitingpro").hide("1000");
+					$("#finstaffline").show("1000");
+					$("#waitprocess").modal(); 
+				}
+			});
+		});
 	</script>
 <div>
  	

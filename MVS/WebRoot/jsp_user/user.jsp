@@ -89,10 +89,19 @@
 				</button>
 				</c:if>
 				<c:if test="${admin7!=null}">
-				<button type="button" class="list-group-item  btn-menu btn_text" id="map_site" onclick="window.location.href='servlet/MapSiteServlet'">
+				<button type="button" class="list-group-item  btn-menu btn_text" id="map_site" >
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-					站点管理
+					站点管理<span style="float:right;"
+						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 				</button>
+				<div class="list-group j-child-menu" style="display:none;">
+					<c:if test="${admin2!=null}">
+					<button type="button" class="list-group-item " id="map_site" onclick="window.location.href='servlet/MapSiteServlet'">站点维护</button>
+					</c:if>
+					<c:if test="${admin1!=null}">
+					<button type="button" class="list-group-item" id="show_site">数据统计</button>
+					</c:if>
+				</div>
 				<button id="manage-admin" type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -168,6 +177,11 @@
             <p id="w-modal-p3"></p>
          </div>
          <div class="modal-footer">
+         	<div>
+		<form action="servlet/ShowSiteServlet?type=3" method="post" >
+			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出乘车人员</button>
+			
+		</form>
             <button type="button" id="w-modal-close"  class="btn btn-default" 
                data-dismiss="modal" >关闭
             </button>
@@ -222,6 +236,11 @@
 		$("#a_person_info").click(function(){
 			$("#content").load("<%=path%>/person_info.jsp");
 		});
+		
+		$("#show_site").click(function(){
+				$("#content").load("<%=basePath%>jsp_user/show_site.jsp");
+		});
+		
 	</script>
 </body>
 </html>

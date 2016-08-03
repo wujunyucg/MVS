@@ -1,12 +1,18 @@
 package edu.swjtu.dao;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.Test;
 
 import edu.swjtu.impl.LineDaoImpl;
+import edu.swjtu.impl.LineRecordDaoImpl;
+import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.model.Line;
+import edu.swjtu.model.LineRecord;
+import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
 
 public class LineDaoTest {
@@ -66,5 +72,51 @@ public class LineDaoTest {
 	@Test
 	public void testDeleteAll() throws ClassNotFoundException, SQLException{
 		System.out.println(new LineDaoImpl().deleteAllLine( new DBUtil().getCon()));
+	}
+	
+	@Test
+	public void testGAll() throws ClassNotFoundException, SQLException{
+		ArrayList<LineRecord> list = new LineRecordDaoImpl().getAllLineRecord( new DBUtil().getCon());
+		for(int i=0;i<list.size();i++)
+			System.out.println(list.get(i).getStaffIds());
+	}
+	
+	@Test
+	public void testWeekDay() throws Exception{
+		new LineRecordDaoImpl().getLineRecordByWeekDate(new DBUtil().getCon(), "2016-7-13");
+	}
+	
+	@Test
+	public void testLineRecord() throws ClassNotFoundException, SQLException{
+		ArrayList<Line> linelist = null;
+		ArrayList<Staff> stafflist = new StaffDaoImpl().getAllStaff(new DBUtil().getCon());
+		linelist = new LineDaoImpl().getAllLine(new DBUtil().getCon());
+		Date dt=new Date();     
+		SimpleDateFormat matter1=new SimpleDateFormat("yyyy-MM-dd");     
+		System.out.println();
+		LineRecord rec = new LineRecord();
+		for(int i=0;i<linelist.size();i++){
+			
+			rec.setDate(matter1.format(dt).toString());
+			rec.setLineId(linelist.get(i).getLineId());
+			rec.setNum(linelist.get(i).getNum());
+			rec.setRate(linelist.get(i).getRate()*(-1.0));
+			rec.setStaffIds("");
+			for(int j=0;j<stafflist.size();j++){
+				if(stafflist.get(j).getLineId() == linelist.get(i).getLineId()){
+					rec.setStaffIds(rec.getStaffIds() + stafflist.get(j).getStaffId() + ",");
+				}
+			}
+			if(rec.getStaffIds()!=null&&rec.getStaffIds().endsWith(",")){
+				rec.setStaffIds(rec.getStaffIds().substring(0, rec.getStaffIds().length()-1));
+			}
+			
+			new LineRecordDaoImpl().addLineRecord(rec, new DBUtil().getCon());
+			
+			
+		}
+		
+		
+		
 	}
 }

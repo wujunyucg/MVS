@@ -4,7 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
 
 import javax.mail.internet.NewsAddress;
 import javax.xml.parsers.DocumentBuilder;
@@ -45,14 +50,14 @@ public class AdminDaoTest {
 	String xmlPath = "C:/Users/asus1/git/MVS/MVS/src/quartz_job.xml";
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test() throws ClassNotFoundException, SQLException, SAXException, IOException, ParserConfigurationException {
+	public void test() throws ClassNotFoundException, SQLException, SAXException, IOException, ParserConfigurationException, ParseException {
 		DBUtil db = new DBUtil();
 		Connection con = db.getCon();
-		String[] aa = "aaa,bbb,ccc".split(",");
-		System.out.println(aa.toString());
-		ArrayList<String> s = new ArrayList<String>();
-		for(int i=0;i<3;i++)
-			s.add(aa[i]);
+		HashSet<String > s = new HashSet<String>();
+		s.add("1");
+		s.add("2");
+		s.add("3");
+		s.add("4");
 		System.out.println(s.toString().replace("[", "").replace("]", "").replace(" ", ""));
 	}
 	
