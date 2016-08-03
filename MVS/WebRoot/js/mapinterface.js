@@ -335,7 +335,7 @@ function place_search(name){
 			var satation={
 					siteId:1,
 					peoNum:0,
-					lineId:"1",
+					lineId:"",
 					order:1,
 					delay:1,
 					latitude:result.poiList.pois[0].location.lat,
@@ -361,9 +361,9 @@ function p_s(name,ctn){
 		//for(var i=0;i<result.poiList.pois.length;i++){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 			var satation={
-					siteId:0,
+					siteId:,
 					peoNum:0,
-					lineId:"1",
+					lineId:"",
 					order:0,
 					delay:0,
 					latitude:result.poiList.pois[0].location.lat,
@@ -376,8 +376,6 @@ function p_s(name,ctn){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 			EditSatation2(satation,marker,ctn);
 	});
-		
-	
 }
 var siteable=0;
 function EditSatation2(data,marker,ctn){
@@ -402,7 +400,7 @@ function EditSatation2(data,marker,ctn){
 	//console.log(data);
 	sbm[0].onclick=function(){
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
-		data.lineId=parseInt(route.val());
+		data.lineId=route.val();
 		data.order=parseInt(num.val());
 		data.name=document.getElementById('satation-name').value;
 		data.address=document.getElementById('satation-address').value;
