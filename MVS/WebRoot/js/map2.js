@@ -186,6 +186,8 @@
 			setListener(marker,data)
 			return marker;
 		}
+		
+	
 		function satationsmarker2(data){
 			var marker=new AMap.Marker({
 				  position:[data.longitude,data.latitude],
