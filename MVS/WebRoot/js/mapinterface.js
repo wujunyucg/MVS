@@ -361,7 +361,7 @@ function p_s(name,ctn){
 		//for(var i=0;i<result.poiList.pois.length;i++){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 			var satation={
-					siteId:,
+					siteId:0,
 					peoNum:0,
 					lineId:"",
 					order:0,
@@ -400,8 +400,8 @@ function EditSatation2(data,marker,ctn){
 	//console.log(data);
 	sbm[0].onclick=function(){
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
-		data.lineId=route.val();
-		data.order=parseInt(num.val());
+		data.lineId=$('#satation-route').val();
+		data.order=parseInt($('#satation-number').val());
 		data.name=document.getElementById('satation-name').value;
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
