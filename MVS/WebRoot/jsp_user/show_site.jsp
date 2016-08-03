@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <p id="w-modal-p3"></p>
          </div>
          <div class="modal-footer">
-         <form action="servlet/ShowSiteServlet?type=2" method="post" >
+         <form action="servlet/ShowSiteServlet?type=3" method="post" >
 			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
 			
 		</form>

@@ -179,7 +179,7 @@
          <div class="modal-footer">
          	<div>
 		<form action="servlet/ShowSiteServlet?type=3" method="post" >
-			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
+			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出乘车人员</button>
 			
 		</form>
             <button type="button" id="w-modal-close"  class="btn btn-default" 
