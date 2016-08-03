@@ -100,11 +100,12 @@ public class APPLocationServlet extends HttpServlet {
 
 						String[] mylo = coord.split(",");
 
-						double dis = Double.parseDouble(Lines.getDistance(
-								mylo[0], mylo[1], site.getLatitude() + "",
-								site.getLongitude() + ""));
-						System.out.println("dis="+dis);
-						if (dis*1000 < 50) {
+						double dis = Lines.Distance(
+								Double.parseDouble(mylo[0]),
+								Double.parseDouble(mylo[1]),
+								site.getLatitude(), site.getLongitude());
+						System.out.println("dis=" + dis);
+						if (dis < 50) {
 							// 签到成功后存入每日记录表
 							DayRecord dr = new DayRecord();
 							dr.setDay_date(DateUtil.getDate());
@@ -114,11 +115,11 @@ public class APPLocationServlet extends HttpServlet {
 							DayRecordDaoImpl drd = new DayRecordDaoImpl();
 							int r = drd.addOneRecord(con, dr);
 							if (r > 0) {
-								pw.write(dis+"");
+								pw.write(dis + "");
 							} else {
 								pw.write("no");
 							}
-						}else{
+						} else {
 							pw.write("no");
 						}
 					} else {
