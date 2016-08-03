@@ -4,6 +4,7 @@ public class DayRecord {
 	private int dayId;
 	private String day_staffNumber;
 	private int day_siteId;
+	private int day_lineId;
 	private String day_date;
 	public int getDayId() {
 		return dayId;
@@ -28,5 +29,11 @@ public class DayRecord {
 	}
 	public void setDay_staffNumber(String day_staffNumber) {
 		this.day_staffNumber = day_staffNumber;
+	}
+	public int getDay_lineId() {
+		return day_lineId;
+	}
+	public void setDay_lineId(int day_lineId) {
+		this.day_lineId = day_lineId;
 	}
 }

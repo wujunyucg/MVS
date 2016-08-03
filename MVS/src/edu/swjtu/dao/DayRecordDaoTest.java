@@ -23,6 +23,7 @@ public class DayRecordDaoTest {
 		r.setDay_date("2012-01-02");
 		r.setDay_siteId(5881);
 		r.setDay_staffNumber("2014100001");
+		r.setDay_lineId(1001);
 		System.out.println(new DayRecordDaoImpl().addOneRecord(
 				new DBUtil().getCon(), r));
 	}

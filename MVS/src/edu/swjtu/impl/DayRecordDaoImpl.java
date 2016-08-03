@@ -17,17 +17,19 @@ public class DayRecordDaoImpl implements DayRecordDao{
 		r.setDay_siteId(rs.getInt("day_siteId"));
 		r.setDay_staffNumber(rs.getString("day_staffNum"));
 		r.setDayId(rs.getInt("day_id"));
+		r.setDay_lineId(rs.getInt("day_lineId"));
 		return r;
 	}
 	
 	@Override
 	public int addOneRecord(Connection con, DayRecord record)
 			throws SQLException {
-		String sql = "insert into dayrecord values(null,?,?,?)";
+		String sql = "insert into dayrecord values(null,?,?,?,?)";
 		PreparedStatement pstm = con.prepareStatement(sql);
 		pstm.setString(1, record.getDay_staffNumber());
 		pstm.setInt(2, record.getDay_siteId());
 		pstm.setString(3, record.getDay_date());
+		pstm.setInt(4, record.getDay_lineId());
 		return pstm.executeUpdate();
 	}
 
