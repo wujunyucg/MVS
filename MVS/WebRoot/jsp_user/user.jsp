@@ -177,6 +177,11 @@
             <p id="w-modal-p3"></p>
          </div>
          <div class="modal-footer">
+         	<div>
+		<form action="servlet/ShowSiteServlet?type=2" method="post" >
+			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
+			
+		</form>
             <button type="button" id="w-modal-close"  class="btn btn-default" 
                data-dismiss="modal" >关闭
             </button>
