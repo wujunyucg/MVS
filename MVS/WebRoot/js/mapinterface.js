@@ -333,15 +333,15 @@ function place_search(name){
 		//for(var i=0;i<result.poiList.pois.length;i++){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 			var satation={
-					siteId:1,
+					siteId:"",
 					peoNum:0,
 					lineId:"",
-					order:1,
-					delay:1,
+					order:"",
+					delay:"",
 					latitude:result.poiList.pois[0].location.lat,
 					longitude:result.poiList.pois[0].location.lng,
 					address:name,
-					name:name	
+					name:""	
 			};
 			satationsmarker(satation);
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
@@ -361,15 +361,15 @@ function p_s(name,ctn){
 		//for(var i=0;i<result.poiList.pois.length;i++){
 			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
 			var satation={
-					siteId:0,
+					siteId:"",
 					peoNum:0,
 					lineId:"",
-					order:0,
-					delay:0,
+					order:"",
+					delay:"",
 					latitude:result.poiList.pois[0].location.lat,
 					longitude:result.poiList.pois[0].location.lng,
 					address:name,
-					name:name,
+					name:"",
 					bufftag:0
 			};
 			var marker=satationsmarker(satation);
@@ -401,7 +401,7 @@ function EditSatation2(data,marker,ctn){
 	sbm[0].onclick=function(){
 		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
 		data.lineId=$('#satation-route').val();
-		data.order=parseInt($('#satation-number').val());
+		data.order=$('#satation-number').val();
 		data.name=document.getElementById('satation-name').value;
 		data.address=document.getElementById('satation-address').value;
 		data.peoNum=parseInt($('#satation-people').val());
@@ -441,10 +441,10 @@ function addclicksite(ctn){
 		marker.setPosition(e.lnglat);
 			var data={
 					siteId:"",
-					peoNum:"",
+					peoNum:0,
 					lineId:"",
-					order:0,
-					delay:1,
+					order:"",
+					delay:"",
 					latitude:e.lnglat.lat,
 					longitude:e.lnglat.lng,
 					address:"",
