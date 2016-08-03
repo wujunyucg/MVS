@@ -21,5 +21,11 @@ public interface LineRecordDao {
 	
 	public LineRecord getLineRecordById(int linerecordId,Connection con) throws SQLException;
 	
-	public ArrayList getAllLineRecord(Connection con) throws SQLException;
+	public ArrayList<LineRecord> getAllLineRecord(Connection con) throws SQLException;
+	
+	public ArrayList<LineRecord> getLineRecordByDayDate(Connection con, String date) throws SQLException;
+	
+	public ArrayList<LineRecord> getLineRecordByWeekDate(Connection con,String date) throws SQLException, Exception;
+	
+	public ArrayList<LineRecord> getLineRecordByMonthDate(Connection con,String date) throws SQLException;
 }

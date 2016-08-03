@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import edu.swjtu.dao.LineRecordDao;
+import edu.swjtu.model.Car;
 import edu.swjtu.model.LineRecord;
+import edu.swjtu.model.SiteRecord;
 
 /**
  * LineRecord实现
@@ -101,7 +103,7 @@ public class LineRecordDaoImpl implements LineRecordDao {
 	}
 
 	@Override
-	public ArrayList getAllLineRecord(Connection con) throws SQLException {
+	public ArrayList<LineRecord> getAllLineRecord(Connection con) throws SQLException {
 		ArrayList<LineRecord> linerecList = new ArrayList<LineRecord>(); 
 		String sql = "select * from linerecord";
 		try {
@@ -113,6 +115,56 @@ public class LineRecordDaoImpl implements LineRecordDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+		return linerecList;
+	}
+
+	@Override
+	public ArrayList<LineRecord> getLineRecordByDayDate(Connection con,String date) throws SQLException {
+		ArrayList<LineRecord> list = new ArrayList<LineRecord>();
+		String sql = "select * from linerecord where lineRecord_date=?";
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, date);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()){
+				list.add(getLineRecordOne(rs)) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
+
+	@Override
+	public ArrayList<LineRecord> getLineRecordByWeekDate(Connection con,
+			String date) throws Exception {
+		String sql =null;
+		PreparedStatement pstm;
+		ArrayList<LineRecord> linerecList = new ArrayList<LineRecord>(); 
+		String []week= new SiteRecordDaoImpl().dayForWeek(date);
+		for(int i=0;i<7;i++){
+			sql = "select * from linerecord where lineRecord_date = ?";
+			 pstm = con.prepareStatement(sql);
+			 pstm.setString(1, week[i]);
+			 ResultSet rs = pstm.executeQuery();
+			 while(rs.next()){
+				 linerecList.add(getLineRecordOne(rs));
+				}
+		}
+		return linerecList;
+	}
+
+	@Override
+	public ArrayList<LineRecord> getLineRecordByMonthDate(Connection con,
+			String date) throws SQLException {
+		ArrayList<LineRecord> linerecList = new ArrayList<LineRecord>(); 
+		String sql = "select *from linerecord where lineRecord_date like '%" + date + "%'";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		while (rs.next()) {
+			linerecList.add(getLineRecordOne(rs));
 		}
 		return linerecList;
 	}
