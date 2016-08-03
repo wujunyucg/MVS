@@ -73,6 +73,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <p id="w-modal-p3"></p>
          </div>
          <div class="modal-footer">
+         <form action="servlet/ShowSiteServlet?type=2" method="post" >
+			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
+			
+		</form>
             <button type="button" id="w-modal-close"  class="btn btn-default" 
                data-dismiss="modal" >关闭
             </button>
@@ -187,6 +191,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 	$("#w-modal-but").css("display","none");
 				 	$("#w-modal-div").css("overflow","auto");
 				 	$("#w-modal-div").css("height","300px");
+				 	$("#w-modal-export").css("display","inline");
 				 	$("#w-modal").modal('show');
 		         }
 		         });

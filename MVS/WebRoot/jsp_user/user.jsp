@@ -178,7 +178,7 @@
          </div>
          <div class="modal-footer">
          	<div>
-		<form action="servlet/ShowSiteServlet?type=2" method="post" >
+		<form action="servlet/ShowSiteServlet?type=3" method="post" >
 			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
 			
 		</form>
