@@ -111,6 +111,7 @@ public class APPLocationServlet extends HttpServlet {
 							dr.setDay_date(DateUtil.getDate());
 							dr.setDay_siteId(site.getSiteId());
 							dr.setDay_staffNumber(sf.getNumber());
+							dr.setDay_lineId(sf.getLineId());
 
 							DayRecordDaoImpl drd = new DayRecordDaoImpl();
 							int r = drd.addOneRecord(con, dr);

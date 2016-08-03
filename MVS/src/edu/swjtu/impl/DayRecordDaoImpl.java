@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import edu.swjtu.dao.DayRecordDao;
 import edu.swjtu.model.DayRecord;
@@ -48,9 +49,9 @@ public class DayRecordDaoImpl implements DayRecordDao{
 	}
 
 	@Override
-	public ArrayList<DayRecord> getRecordBySiteId(Connection con, int siteId)
+	public HashSet<DayRecord> getRecordBySiteId(Connection con, int siteId)
 			throws SQLException {
-		ArrayList<DayRecord> list = new ArrayList<DayRecord>();
+		HashSet<DayRecord> list = new HashSet<DayRecord>();
 		String sql = "select * from dayrecord where day_siteId = ?";
 		PreparedStatement pstm = con.prepareStatement(sql);
 		pstm.setInt(1, siteId);

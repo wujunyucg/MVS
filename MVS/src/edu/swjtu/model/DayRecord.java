@@ -36,4 +36,18 @@ public class DayRecord {
 	public void setDay_lineId(int day_lineId) {
 		this.day_lineId = day_lineId;
 	}
+	
+	//复写为了加入hashset去重
+	@Override
+	public int hashCode() {
+		return this.day_staffNumber.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof DayRecord)){
+			return false;
+		}
+		DayRecord d = (DayRecord)obj;
+		return d.day_staffNumber.equals(this.day_staffNumber);
+	}
 }

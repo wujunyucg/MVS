@@ -3,6 +3,7 @@ package edu.swjtu.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import edu.swjtu.model.DayRecord;
 
@@ -33,5 +34,5 @@ public interface DayRecordDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<DayRecord> getRecordBySiteId(Connection con,int siteId) throws SQLException;
+	public HashSet<DayRecord> getRecordBySiteId(Connection con,int siteId) throws SQLException;
 }
