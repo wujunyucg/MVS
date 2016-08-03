@@ -14,6 +14,29 @@ import edu.swjtu.intelligent.SearchRoute;
 
 public class Lines {
 	
+	/**
+	 * 根据两点经纬度计算距离
+	 */
+	public static double Distance(double long1, double lat1, double long2,
+			double lat2) {
+		double a, b, R;
+		R = 6378137; // 地球半径
+		lat1 = lat1 * Math.PI / 180.0;
+		lat2 = lat2 * Math.PI / 180.0;
+		a = lat1 - lat2;
+		b = (long1 - long2) * Math.PI / 180.0;
+		double d;
+		double sa2, sb2;
+		sa2 = Math.sin(a / 2.0);
+		sb2 = Math.sin(b / 2.0);
+		d = 2
+				* R
+				* Math.asin(Math.sqrt(sa2 * sa2 + Math.cos(lat1)
+						* Math.cos(lat2) * sb2 * sb2));
+		return d;
+	}
+	
+	
 	public double lineLength(int lineId, Connection con) throws SQLException{
 		Line line = null;
 		line = new LineDaoImpl().getLineById(con, lineId);
@@ -23,43 +46,33 @@ public class Lines {
 		Site s1 = null, s2 = null;
 		
 		for(int i=0;i<site_ids.length-1;i++){
-			s1 = sdi
+			s1 = sdi.getSiteById(Integer.valueOf(site_ids[i]).intValue(), con);
+			s2 = sdi.getSiteById(Integer.valueOf(site_ids[i+1]).intValue(), con);
+			if(s1 != null&&s2 != null){
+				all_len += Distance(s1.getLongitude(),s1.getLatitude(),s2.getLongitude(),s2.getLatitude());
+			}
 		}
+		return all_len;
 	}
 	
-	/**
-	 * 根据两点经纬度计算距离
-	 */
-	private static double EARTH_RADIUS = 6378.137; 
-	   
-    private static double rad(double d) { 
-        return d * Math.PI / 180.0; 
-    }
-	public static String getDistance(String lat1Str, String lng1Str, String lat2Str, String lng2Str) {
-        Double lat1 = Double.parseDouble(lat1Str);
-        Double lng1 = Double.parseDouble(lng1Str);
-        Double lat2 = Double.parseDouble(lat2Str);
-        Double lng2 = Double.parseDouble(lng2Str);
-         
-        double radLat1 = rad(lat1);
-        double radLat2 = rad(lat2);
-        double difference = radLat1 - radLat2;
-        double mdifference = rad(lng1) - rad(lng2);
-        double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(difference / 2), 2)
-                + Math.cos(radLat1) * Math.cos(radLat2)
-                * Math.pow(Math.sin(mdifference / 2), 2)));
-        distance = distance * EARTH_RADIUS;
-        distance = Math.round(distance * 10000) / 10000;
-        String distanceStr = distance+"";
-        distanceStr = distanceStr.
-            substring(0, distanceStr.indexOf("."));
-         
-        return distanceStr;
-    }
+	
 	
 	/**
 	 * 优先队列比较
 	 */
+	public Comparator<LineRecord> OrderIsdn = new Comparator<LineRecord>() {
+		@Override
+		public int compare(LineRecord o1, LineRecord o2) {
+			if (Double.parseDouble(o1.getStaffIds()) > Double.parseDouble(o2.getStaffIds())) {
+				return -1;
+			} else if (Double.parseDouble(o1.getStaffIds()) < Double.parseDouble(o2.getStaffIds())) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	};
+	
 	public Comparator<LineRecord> OrderIsdn1 = new Comparator<LineRecord>() {
 		@Override
 		public int compare(LineRecord o1, LineRecord o2) {
@@ -76,9 +89,9 @@ public class Lines {
 	public Comparator<LineRecord> OrderIsdn2 = new Comparator<LineRecord>() {
 		@Override
 		public int compare(LineRecord o1, LineRecord o2) {
-			if (Double.parseDouble(o1.getStaffIds()) < Double.parseDouble(o2.getStaffIds())) {
+			if (Double.parseDouble(o1.getStaffIds()) > Double.parseDouble(o2.getStaffIds())) {
 				return -1;
-			} else if (Double.parseDouble(o1.getStaffIds()) > Double.parseDouble(o2.getStaffIds())) {
+			} else if (Double.parseDouble(o1.getStaffIds()) < Double.parseDouble(o2.getStaffIds())) {
 				return 1;
 			} else {
 				return 0;
