@@ -392,15 +392,9 @@ function EditSatation2(data,marker,ctn){
 	$('#satation-lng').val(s);
 	$('#satation-name').val(data.name);
 	$('#satation-address').val(data.address);
-	var route=$('#satation-route option');
-//	console.log(data.lineId);
-	route[data.lineId].selected='selected';
-	//console.log(data.order);
-	var num=$('#satation-number option');
-	//console.log(data.number);
-	num[data.order].selected='selected';
+	$('#satation-route').val(data.lineId);
+	$('#satation-number').val(data.order);
 	$('#satation-people').val(data.peoNum);
-	//$('#satation-delay').val(data.delay);
 	info(s,ctn);
 	//var sbm=document.getElementById('sbm');
 	var sbm=ctn.getElementsByTagName('button');	
@@ -438,7 +432,7 @@ function addclicksite(ctn){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
-			icon:"icons/satation2.svg",
+			icon:"icons/satations.svg",
 			//location:e.lnglat
 		});
 		marker.hide();
@@ -448,9 +442,9 @@ function addclicksite(ctn){
 		var ll=e;
 		marker.setPosition(e.lnglat);
 			var data={
-					siteId:0,
-					peoNum:0,
-					lineId:0,
+					siteId:"",
+					peoNum:"",
+					lineId:"",
 					order:0,
 					delay:1,
 					latitude:e.lnglat.lat,
@@ -641,9 +635,11 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 	var ss=data.lineName;
 	//console.log(ss);
 	if(ss.indexOf("智能")>=0){
+		console.log("智能站点");
 		marker.setIcon('icons/znzd.svg');
 	}
 	if(onroute){
+		console.log("线路上的点");
 		marker.setIcon('icons/newrtsizt.svg');
 	}
 	//console.log(i+" "+index);
@@ -671,8 +667,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 		contextMenu.addItem("路线径点", function() {
 			path.push(data);
 			//console.log("pppppppppppppppp"+path);
-			ii[index]=index2;
-			wei[ii[index]]=1;
+ 			wei[ii[index]]=1;
 			showPolyline(path,poly,wei);
 			marker.setIcon('icons/newrtsizt.svg');
 			markers.push(marker);
