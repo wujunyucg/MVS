@@ -61,5 +61,19 @@ public class DayRecordDaoImpl implements DayRecordDao{
 		}
 		return list;
 	}
+	
+	@Override
+	public HashSet<DayRecord> getRecordByLineId(Connection con, int lineId)
+			throws SQLException {
+		HashSet<DayRecord> list = new HashSet<DayRecord>();
+		String sql = "select * from dayrecord where day_lineId = ?";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		pstm.setInt(1, lineId);
+		ResultSet rs = pstm.executeQuery();
+		while(rs.next()){
+			list.add(getOneRecord(rs));
+		}
+		return list;
+	}
 
 }

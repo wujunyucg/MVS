@@ -35,4 +35,14 @@ public interface DayRecordDao {
 	 * @throws SQLException
 	 */
 	public HashSet<DayRecord> getRecordBySiteId(Connection con,int siteId) throws SQLException;
+	/**
+	 * 根据线路id找到所有记录
+	 * 2016年8月4日下午1:58:29
+	 * @author jimolonely
+	 * @param con
+	 * @param siteId
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashSet<DayRecord> getRecordByLineId(Connection con,int siteId) throws SQLException;
 }
