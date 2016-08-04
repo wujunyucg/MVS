@@ -60,19 +60,6 @@ public class Lines {
 	/**
 	 * 优先队列比较
 	 */
-	public Comparator<LineRecord> OrderIsdn = new Comparator<LineRecord>() {
-		@Override
-		public int compare(LineRecord o1, LineRecord o2) {
-			if (Double.parseDouble(o1.getStaffIds()) > Double.parseDouble(o2.getStaffIds())) {
-				return -1;
-			} else if (Double.parseDouble(o1.getStaffIds()) < Double.parseDouble(o2.getStaffIds())) {
-				return 1;
-			} else {
-				return 0;
-			}
-		}
-	};
-	
 	public Comparator<LineRecord> OrderIsdn1 = new Comparator<LineRecord>() {
 		@Override
 		public int compare(LineRecord o1, LineRecord o2) {

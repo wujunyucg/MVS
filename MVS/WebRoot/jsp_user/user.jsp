@@ -19,6 +19,9 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
+
+
+
 <link rel="stylesheet" type="text/css" href="css/j-css/j-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
@@ -79,15 +82,22 @@
 				</button>
 				</c:if>
 				<c:if test="${admin3!=null}">
-				<button type="button" class="list-group-item  btn-menu btn_text" onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">
+				<button type="button" class="list-group-item  btn-menu btn_text" id="map_line" >
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-					线路管理
+					线路管理<span style="float:right;"
+						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 				</button>
+				<div class="list-group j-child-menu" style="display:none;">
+					<button type="button" class="list-group-item " id="man_line" onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">线路维护</button>
+					<button type="button" class="list-group-item" id="statics_line">数据统计</button>
+				</div>
 				<button type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon">
 					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
 				</button>
 				</c:if>
+				
+				
 				<c:if test="${admin7!=null}">
 				<button type="button" class="list-group-item  btn-menu btn_text" id="map_site" >
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -240,7 +250,9 @@
 		$("#show_site").click(function(){
 				$("#content").load("<%=basePath%>jsp_user/show_site.jsp");
 		});
-		
+		$("#statics_line").click(function(){
+				$("#content").load("<%=request.getContextPath()%>/jsp_user/statistics_line.jsp");
+		});
 	</script>
 </body>
 </html>
