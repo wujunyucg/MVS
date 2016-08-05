@@ -514,7 +514,7 @@ function Routeshowsizt(sites,isAll){
 			siteOnroutes(sites[i].allsite,path,markers,k,poly,wei);
 			var ss=sites[i].allsite.lineName;
 			//console.log(ss);
-			if(ss.indexOf("智能")<0)
+			if(ss.indexOf("_Z")<0)
 				k++;
 		}
 	}
@@ -543,12 +543,12 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 	//console.log(data);
 	var ss=data.lineName;
 	//console.log(ss);
-	if(ss.indexOf("智能")>=0){
+	if(ss.indexOf("_Z")>=0){
 		marker.setIcon('icons/znzd.svg');
 	}
 	var ss=data.lineName;
 	//console.log(ss);
-	if(ss.indexOf("智能")<0){
+	if(ss.indexOf("_Z")<0){
 	//var ii;
 	//console.log(i+" "+index);
 	AMap.event.addListener(marker, 'click',function(e){
@@ -633,7 +633,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 	//console.log(data);
 	var ss=data.lineName;
 	//console.log(ss);
-	if(ss.indexOf("智能")>=0){
+	if(ss.indexOf("_Z")>=0){
 		console.log("智能站点");
 		marker.setIcon('icons/znzd.svg');
 	}
@@ -647,7 +647,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute){
 		info(marker.getPosition(),conten);
 	});
 //	console.log(ss);
-	if((ss.indexOf("智能")<0)||onroute){
+	if((ss.indexOf("_Z")<0)||onroute){
 	AMap.event.addListener(marker, 'rightclick',function(e){
 		//info();
 		var contextMenu=new AMap.ContextMenu();

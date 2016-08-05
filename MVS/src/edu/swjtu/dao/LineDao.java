@@ -11,6 +11,8 @@ public interface LineDao {
 	
 	public int addLine(Line line,Connection con) throws SQLException;
 	
+	public int addLineAndId(Line line,Connection con) throws SQLException;
+	
 	public int addMoreLine(ArrayList<Line> linelist,Connection con) throws SQLException;
 	
 	public int deleteLine(int lineId,Connection con) throws SQLException;

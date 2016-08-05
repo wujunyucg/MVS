@@ -255,8 +255,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						s_date : s_date,
 					},
 					success : function(json_list) {
-						if(json_list != "no"){
-						
+						if(json_list != "no"&&json_list != null && json_list !=""){
+						//alert(json_list);
 							linenames = "";
 							linerates = "";
 							$("#expstatic1").show("1000");
@@ -282,6 +282,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      					tab += "<thead><tr><th>#</th><th>路线名称</th>";
 	         				tab += "<th>所经站点</th><th>总人数</th><th>乘坐率</th><th>查看乘车人员名单</th><th>导出乘车人员名单</th></tr></thead><tbody>";
 							for(var i=0;i<obj_linerecords.length;i++){
+								if(obj_lines[i].linelist == undefined){
+									alert("1");
+									continue;
+								}
 								linenames += obj_lines[i].linelist.name + ",";
 								linerates += obj_linerecords[i].linereclist.rate + ",";
 								barChartData.labels.push(obj_lines[i].linelist.name);

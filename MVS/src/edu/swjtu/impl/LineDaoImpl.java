@@ -171,4 +171,18 @@ public class LineDaoImpl implements LineDao {
 		}
 		return line.getLineId();
 	}
+
+	@Override
+	public int addLineAndId(Line line, Connection con) throws SQLException {
+		String sql = "insert into line values(?,?,?,?,?,?)";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		pstm.setInt(1, line.getLineId());
+		pstm.setString(2, line.getSiteId());
+		pstm.setInt(3, line.getNum());
+		pstm.setString(4, line.getCarId());
+		pstm.setString(5, line.getName());
+		pstm.setDouble(6, line.getRate());
+		
+		return pstm.executeUpdate();
+	}
 }

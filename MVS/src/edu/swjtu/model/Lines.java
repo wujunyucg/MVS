@@ -209,7 +209,7 @@ public class Lines {
 			SQLException {
 		ArrayList<Line> list = new LineDaoImpl().getAllLine(con);
 		for (int i = 0; i < list.size(); i++) {
-			list.get(i).setName("智能路线" + list.get(i).getLineId());
+			list.get(i).setName("智能路线" + list.get(i).getLineId() + "_Z");
 			new LineDaoImpl().updateLine(con, list.get(i));
 		}
 		Site site = new Site();
@@ -367,7 +367,7 @@ public class Lines {
 		list = new LineDaoImpl().getAllLine(con);
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getName().equals(name)) {
-				name = name + "*";
+				name = name + "_";
 				i = 0;
 				continue;
 			}
@@ -390,7 +390,7 @@ public class Lines {
 					.getName());
 			if (lid != -1) {
 				list.get(i).setLineId(lid);
-				list.get(i).setName("智能路线" + list.get(i).getLineId());
+				list.get(i).setName("智能路线" + list.get(i).getLineId() + "_Z");
 				list.get(i).setName(reNewName(list.get(i), con));
 			}
 			new LineDaoImpl().updateLine(con, list.get(i));
@@ -610,7 +610,8 @@ public class Lines {
 				newLineName += sLineName[k] + ",";
 			}
 			// 去掉最后的分号
-			if (key != 0) {
+			if (key != 0 && newLineIds.length() > 0) {
+				System.out.println(newLineIds.length());
 				newLineIds = newLineIds.substring(0, newLineIds.length() - 1);
 				newOrder = newOrder.substring(0, newOrder.length() - 1);
 				newLineName = newLineName
@@ -744,6 +745,35 @@ public class Lines {
 		}
 		
 		new StaffDaoImpl().updateListStaff(allstaff, con);
+		
+	}
+	
+	public void modifyLineName(String old_name, int lineId, Connection con) throws SQLException{
+		Line line = null;
+		line = new LineDaoImpl().getLineById(con, lineId);
+		ArrayList<Site> allsite = new ArrayList<Site>();
+		allsite = new SiteDaoImpl().getAllSite(con);
+		int flag = 0;
+		for(int i=0;i<allsite.size();i++){
+			String[] linenames = allsite.get(i).getLineName().split(",");
+			if(linenames.length > 0){
+				flag = 0;
+				for(int j=0;j<linenames.length;j++){
+					if(linenames[j].equals(old_name)){
+						linenames[j] = line.getName();
+						flag = 1;
+					}
+				}
+				if(flag == 1){
+					String newnames = linenames[0];
+					for(int j=1;j<linenames.length;j++){
+						newnames += "," + linenames[j];
+					}
+					allsite.get(i).setLineName(newnames);
+					new SiteDaoImpl().updateSite(allsite.get(i), con);
+				}
+			}
+		}
 		
 	}
 	

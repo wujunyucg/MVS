@@ -358,7 +358,7 @@ public class ManageLineServlet extends HttpServlet {
 							break;
 						}
 					}
-					if(line_name.contains("&")){
+					if(line_name.contains("&")||line_name.contains("_")||line_name.contains("Z")){
 						pw.write("no");
 						pw.close();
 					}
@@ -456,27 +456,37 @@ public class ManageLineServlet extends HttpServlet {
 				String line_name = request.getParameter("line_name");
 				String siteId = request.getParameter("siteId");
 				siteId += ",0";
-
+					
 				Line line = new Line();
 				line.setCarId("未安排");
 				line.setName(line_name);
 				line.setNum(-1);
 				line.setRate(0.0);
 				line.setSiteId(siteId);
+				line.setLineId(Integer.valueOf(line_id).intValue());
+				
 				Line delete_line = null;
 				delete_line = new LineDaoImpl().getLineById(con, Integer.valueOf(line_id).intValue());
 				
-				if(delete_line.getRate() < 0.0 && delete_line.getRate() != 0.0){	//智能路线的删除
-					new Lines().deleteIntelLine(delete_line,con);//智能路线的一连串删除
-				}else{			//手动创建路线的删除
-					new Lines().deleteOneLine(delete_line, con);
+				if(delete_line.getSiteId().equals(siteId)){
+					delete_line.setCarId("未安排");
+					String oldname = delete_line.getName();
+					delete_line.setName(line_name + "_Z");
+					new LineDaoImpl().updateLine(con, delete_line);
+					new Lines().modifyLineName(oldname,delete_line.getLineId(),con);
+				}else{
+					if(delete_line.getRate() < 0.0 && delete_line.getRate() != 0.0){	//智能路线的删除
+						new Lines().deleteIntelLine(delete_line,con);//智能路线的一连串删除
+					}else{			//手动创建路线的删除
+						new Lines().deleteOneLine(delete_line, con);
+					}
+					new LineDaoImpl().addLineAndId(line, con);
+					Line temp_line = null;
+					temp_line = new LineDaoImpl().getLineByName(con, line.getName());
+					line.setLineId(temp_line.getLineId());
+					new Lines().modifyLineNum(line,con);
 				}
 				
-				new LineDaoImpl().addLine(line, con);
-				Line temp_line = null;
-				temp_line = new LineDaoImpl().getLineByName(con, line.getName());
-				line.setLineId(temp_line.getLineId());
-				new Lines().modifyLineNum(line,con);
 
 				/*JSON数据返回*/
 				ArrayList<Line> list = null;

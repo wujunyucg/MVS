@@ -263,7 +263,7 @@
       </div>
 	
 	
-		<div class="btn-group" style="position:fixed;top:150px;right:0px;z-index: 600;">
+		<div class="btn-group" style="position:fixed;top:270px;right:0px;z-index: 400;">
 				<button type="button" class="btn btn-primary dropdown-toggle hc_button" style="width:130px;"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					智能生成路线&nbsp; <span class="caret"></span>
@@ -273,10 +273,10 @@
 					<li><a  class="icreline" href="javascript:;" data-toggle="modal" onclick="javascript:icreLine(1)">对所有站点规划</a></li>
 				</ul>
 			</div>
-			<div style="position:fixed;top:190px;right:0px;">
+			<div style="position:fixed;top:150px;right:0px;">
 				<button type="button" id="getallline" class="btn btn-primary hc_button"  style="width:130px;" data-toggle="modal" title="${linelist.size()}">隐藏全部路线</button>
 			</div>
-			<div class="btn-group"  style="position:fixed;top:230px;right:0px;z-index: 500;">
+			<div class="btn-group"  style="position:fixed;top:190px;right:0px;z-index: 600;">
 				<button type="button" class="btn btn-primary dropdown-toggle hc_button"  style="width:130px;"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					显示/隐藏站点 <span class="caret"></span>
@@ -286,7 +286,7 @@
 					<li><a id="showallsite" href="javascript:;" title="json_allsite">显示全部站点</a></li>
 				</ul>
 			</div>
-			<div class="btn-group"  style="position:fixed;top:270px;right:0px;z-index: 400;">
+			<div class="btn-group"  style="position:fixed;top:230px;right:0px;z-index: 500;">
 				<button type="button" class="btn btn-primary dropdown-toggle hc_button"  style="width:130px;"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					手动创建路线&nbsp; <span class="caret"></span>
@@ -297,7 +297,7 @@
 				</ul>
 			</div>
 			<div  style="position:fixed;top:310px;right:0px;">
-				<button type="button"  style="width:130px;" id="modstaffline" class="btn btn-success" data-toggle="modal">生成员工路线</button>
+				<button type="button"  style="width:130px;" id="modstaffline" class="btn btn-success hc_button" data-toggle="modal">生成员工路线</button>
 			</div>
 			<div  style="position:fixed;top:350px;right:0px;">
 				<button type="button"  style="width:130px;" id="surecreLsite" class="btn btn-success" data-toggle="modal">确认所选路线</button>
@@ -836,7 +836,7 @@
 			map.clearMap();
 			judgecreing = 0;
 			$("#shownotsite").text("显示未排站点");
-			$("#shownotsite").text("显示未排站点");
+			$("#showallsite").text("显示全部站点");
 			$("#updown").attr("href","#linetable");
 			$("#getallline").text("隐藏全部路线");
 			$("#getallline").click();  
@@ -1425,8 +1425,6 @@
 						}
 						
  						$("#linetab_con").html(tab);		
- 						$("#surecreLsite").hide("1000");	
-						$("#outcreLsite").hide("1000");	
 						$("#suremodLsite").hide();
 						map.clearMap();
 						linedetail(obj_lines[obj_lines.length-1].linelist.lineId,obj_lines[obj_lines.length-1].linelist.name);
@@ -1436,6 +1434,9 @@
 						$(".hc_button").attr("disabled",false);
 						$("#surecreLsite").hide("1000");	
 						$("#outcreLsite").hide("1000");	
+						
+						document.getElementById("outcreLsite").click();  
+						
 						$("#suremodLsite").hide();
 						$("#waitprocess").modal("hide");
 						$("#h_creline").modal();
@@ -1454,6 +1455,7 @@
 		
 		function modifyline(nam,num){
 			modlineId = num;
+			alert(modlineId);
 			modlineName = nam;
 			document.getElementById("lin_nam").value="";
 			$("#getallline").text("显示全部路线");
@@ -1541,7 +1543,13 @@
 						$("#outcreLsite").hide("1000");	
 						$("#suremodLsite").hide("1000");
 						map.clearMap();
-						linedetail(obj_lines[obj_lines.length-1].linelist.lineId,obj_lines[obj_lines.length-1].linelist.name);
+						var i;
+						for(i=0;i<obj_lines.length;i++){
+							if(obj_lines[i].linelist.lineId == modlineId){
+								break;
+							}
+						}
+						linedetail(obj_lines[i].linelist.lineId,obj_lines[i].linelist.name);
 						judgecreing = 0;
 						$("#updown").attr("href","#linetable");
 						$("#getallline").text("显示全部路线");
@@ -1566,6 +1574,10 @@
 		});		
 		
 		function h_creLine1(newline){
+			jud_ln1 = 1;
+			jud_ln2 = 1;
+			$("#judgeLN11").hide();
+			$("#judgeLN21").hide();
 			var site_ids = newline[0].siteId;
 			var site_names = newline[0].name;
 			
@@ -1575,6 +1587,13 @@
 			}
 			var obj_lines = eval(json_allsite);
 			site_names += "-" + obj_lines[0].allsite.name;
+			
+			var temp1 = modlineName.substring(modlineName.length-1,modlineName.length);	//Z
+			var temp2 = modlineName.substring(modlineName.length-2,modlineName.length-1);	//_
+			if(temp1 == "Z" && temp2 == "_"){
+				modlineName = modlineName.substring(0,modlineName.length-2);	//Z
+			}
+			
 			$("#lin_nam1").val(modlineName);
 			$("#runsites1").attr("title",site_ids);
 			$("#runsites1").text("路径站点：" + site_names);
