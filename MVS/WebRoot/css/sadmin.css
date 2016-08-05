@@ -1,9 +1,9 @@
 @CHARSET "UTF-8";
-
 .navbar{
-	background-color: #020202 !important;
-	color:#ffff80!important;
-	border-color: #fff !important;
+	background-color: #3c434d !important;
+	color:#f3f9fd !important;
+	border-color:#3c434d !important;
+	margin-right: 5px !important;
 }
 #main{
 	margin-top:50px;
@@ -16,7 +16,7 @@
 	width: 15%;
 	min-height: 2500px;
 	min-width:50px;
-	background-color: #ececec;
+	background-color: #3c434d;
 	margin-right: 10px;
 }
 #content{
@@ -24,14 +24,15 @@
 	margin-left: 16% ;
 }
 .btn-menu{
-	background-color: #ececec !important;
+	background-color: #2c343f !important;
 	height:40px !important;
-	color: #3c3c3c !important;
-	border:1px solid #fff !important;
+	color: #7e8287 !important;
+	border:1px solid #2c343f !important;
 }
 .btn-menu:hover{
-	background-color: #f9f9f9!important;
+	background-color: #232a32!important;
+	color: #fff !important;
 }
-#nav_toggle:hover{
-	background-color:#ccc !important;
+#j_nav_toggle:hover img{
+	opacity: 0.5;
 }

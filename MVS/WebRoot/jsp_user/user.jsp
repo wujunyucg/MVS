@@ -34,14 +34,11 @@
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="#">超级管理员后台</a>
-		<button id="j_nav_toggle" type="button" class="btn btn-default"
-			aria-label="Left Align"
-			style="margin-top:13px;color:#fff;background-color:#101010;border:0;">
-			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-		</button>
-	</div>
-	<div id="navbar" class="navbar-collapse collapse">
+		<a style="float:left;"class="navbar-brand" href="#"><b>超级管理员后台</b></a> <a id="j_nav_toggle"
+			href="javascript:;"> <img alt="菜单栏搜索" src="images/caidan.png"
+			style="float:left;width:40px;height:50px;">
+		</a> </div>
+		<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="javascript:;" id="a_person_info">设置</a></li>
 			<li><a href="#">Help</a></li>
@@ -62,101 +59,101 @@
 		<div id="j-left-menu">
 			<div class="list-group">
 				<c:if test="${admin1!=null||admin2!=null}">
-				<button type="button"
-					class="list-group-item btn-menu btn_text">
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-					人员管理 <span style="float:right;"
-						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-				</button>
-				<div class="list-group j-child-menu" style="display:none;">
-					<c:if test="${admin2!=null}">
-					<button type="button" class="list-group-item " id="manange_staff">数据维护</button>
-					</c:if>
-					<c:if test="${admin1!=null}">
-					<button type="button" class="list-group-item" id="synch_staff">数据同步</button>
-					</c:if>
-				</div>
-				<button type="button" style="display:none;"
-					class="list-group-item btn-menu btn_icon">
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-				</button>
-				</c:if>
-				<c:if test="${admin3!=null}">
-				<button type="button" class="list-group-item  btn-menu btn_text" id="map_line" >
-					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-					线路管理<span style="float:right;"
-						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-				</button>
-				<div class="list-group j-child-menu" style="display:none;">
-					<button type="button" class="list-group-item " id="man_line" onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">线路维护</button>
-					<button type="button" class="list-group-item" id="statics_line">数据统计</button>
-				</div>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon">
-					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-				</button>
-				</c:if>
-				
-				
-				<c:if test="${admin7!=null}">
-				<button type="button" class="list-group-item  btn-menu btn_text" id="map_site" >
-					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-					站点管理<span style="float:right;"
-						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-				</button>
-				<div class="list-group j-child-menu" style="display:none;">
-					<c:if test="${admin2!=null}">
-					<button type="button" class="list-group-item " id="map_site" onclick="window.location.href='servlet/MapSiteServlet'">站点维护</button>
-					</c:if>
-					<c:if test="${admin1!=null}">
-					<button type="button" class="list-group-item" id="show_site">数据统计</button>
-					</c:if>
-				</div>
-				<button id="manage-admin" type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon">
-					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-				</button>
-				</c:if>
-
-				<c:if test="${admin9!=null}">
-				<button type="button"
-					class="list-group-item btn-menu btn_text">
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-					车辆管理 <span style="float:right;"
-						class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+					<button type="button" class="list-group-item btn-menu btn_text">
+						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+						人员管理 <span style="float:right;"
+							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
-					<c:if test="${admin10!=null}">
-						<button type="button" class="list-group-item" id="cre_car">
-							新建车辆数据
-							</button>
-							</c:if>
-							<button type="button" class="list-group-item" id="man_car">
-								数据维护与查询
-								</button>
+						<c:if test="${admin2!=null}">
+							<button type="button" class="list-group-item " id="manange_staff">数据维护</button>
+						</c:if>
+						<c:if test="${admin1!=null}">
+							<button type="button" class="list-group-item" id="synch_staff">数据同步</button>
+						</c:if>
 					</div>
 					<button type="button" style="display:none;"
 						class="list-group-item btn-menu btn_icon">
 						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-						</button>
-					</c:if>
-					<c:if test="${admin5!=null}">
-						<button type="button" class="list-group-item  btn-menu btn_text">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-							班次管理 <span style="float:right;"
-								class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-						</button>
-						<div class="list-group j-child-menu" style="display:none;">
-							<c:if test="${admin6!=null}">
-							<button type="button" class="list-group-item add-arrange">新增班次</button>
-							</c:if>
-							<button type="button" class="list-group-item manage-arrange">数据维护</button>
-						</div>
-						<button type="button" style="display:none;"
-							class="list-group-item  btn-menu btn_icon">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						</button>
+					</button>
+				</c:if>
+				<c:if test="${admin3!=null}">
+					<button type="button" class="list-group-item  btn-menu btn_text"
+						id="map_line">
+						<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
+						线路管理<span style="float:right;"
+							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+					</button>
+					<div class="list-group j-child-menu" style="display:none;">
+						<button type="button" class="list-group-item " id="man_line"
+							onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">线路维护</button>
+						<button type="button" class="list-group-item" id="statics_line">数据统计</button>
+					</div>
+					<button type="button" style="display:none;"
+						class="list-group-item  btn-menu btn_icon">
+						<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
+					</button>
+				</c:if>
+
+
+				<c:if test="${admin7!=null}">
+					<button type="button" class="list-group-item  btn-menu btn_text"
+						id="map_site">
+						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+						站点管理<span style="float:right;"
+							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+					</button>
+					<div class="list-group j-child-menu" style="display:none;">
+						<c:if test="${admin2!=null}">
+							<button type="button" class="list-group-item " id="map_site"
+								onclick="window.location.href='servlet/MapSiteServlet'">站点维护</button>
 						</c:if>
+						<c:if test="${admin1!=null}">
+							<button type="button" class="list-group-item" id="show_site">数据统计</button>
+						</c:if>
+					</div>
+					<button id="manage-admin" type="button" style="display:none;"
+						class="list-group-item  btn-menu btn_icon">
+						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+					</button>
+				</c:if>
+
+				<c:if test="${admin9!=null}">
+					<button type="button" class="list-group-item btn-menu btn_text">
+						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+						车辆管理 <span style="float:right;"
+							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+					</button>
+					<div class="list-group j-child-menu" style="display:none;">
+						<c:if test="${admin10!=null}">
+							<button type="button" class="list-group-item" id="cre_car">
+								新建车辆数据</button>
+						</c:if>
+						<button type="button" class="list-group-item" id="man_car">
+							数据维护与查询</button>
+					</div>
+					<button type="button" style="display:none;"
+						class="list-group-item btn-menu btn_icon">
+						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+					</button>
+				</c:if>
+				<c:if test="${admin5!=null}">
+					<button type="button" class="list-group-item  btn-menu btn_text">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						班次管理 <span style="float:right;"
+							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+					</button>
+					<div class="list-group j-child-menu" style="display:none;">
+						<c:if test="${admin6!=null}">
+							<button type="button" class="list-group-item add-arrange">新增班次</button>
+						</c:if>
+						<button type="button" class="list-group-item manage-arrange">数据维护</button>
+					</div>
+					<button type="button" style="display:none;"
+						class="list-group-item  btn-menu btn_icon">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					</button>
+				</c:if>
 			</div>
 			<div class="panel panel-default j-no-radous">
 				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
@@ -167,40 +164,40 @@
 		</div>
 	</div>
 
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="w-modal" tabindex="-1" role="dialog" 
-   aria-labelledby="w-modal-label" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close" id="w-modal-close2"
-               data-dismiss="modal" aria-hidden="true">
-                  &times;
-            </button>
-            <h4 class="modal-title" id="w-modal-label">
-              <p id= "w-modal-p1"></p>
-            </h4>
-         </div>
-         <div class="modal-body">
-           <div id = "w-modal-div"></div>
-           <p id="w-modal-p2"></p>
-            <p id="w-modal-p3"></p>
-         </div>
-         <div class="modal-footer">
-         <form action="servlet/ShowSiteServlet?type=3" method="post" >
-			<button type="submit" id="w-modal-export"  class="btn btn-primary" style="display:none">导出报表</button>
-			
-		
-            <button type="button" id="w-modal-close"  class="btn btn-default" 
-               data-dismiss="modal" >关闭
-            </button>
-            <button type="button" class="btn btn-primary" id="w-modal-but" onclick="javascript:update()">
-               提交更改
-            </button></form>
-         </div>
-      </div><!-- /.modal-content -->
-</div><!-- /.modal -->	
-</div>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="w-modal" tabindex="-1" role="dialog"
+		aria-labelledby="w-modal-label" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" id="w-modal-close2"
+						data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="w-modal-label">
+						<p id="w-modal-p1"></p>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div id="w-modal-div"></div>
+					<p id="w-modal-p2"></p>
+					<p id="w-modal-p3"></p>
+				</div>
+				<div class="modal-footer">
+					<form action="servlet/ShowSiteServlet?type=3" method="post">
+						<button type="submit" id="w-modal-export" class="btn btn-primary"
+							style="display:none">导出报表</button>
+
+
+						<button type="button" id="w-modal-close" class="btn btn-default"
+							data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" id="w-modal-but"
+							onclick="javascript:update()">提交更改</button>
+					</form>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
 	<!-- jimo -->
 	<div id="load_modal" class="modal fade" id="myModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
@@ -252,7 +249,7 @@
 		});
 		$("#statics_line").click(function(){
 				$("#content").load("<%=request.getContextPath()%>/jsp_user/statistics_line.jsp");
-		});
+						});
 	</script>
 </body>
 </html>

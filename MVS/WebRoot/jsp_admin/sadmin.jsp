@@ -38,12 +38,10 @@ $.ajaxSetup ({
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">超级管理员后台</a>
-			<button id="nav_toggle" type="button" class="btn btn-default"
-				aria-label="Left Align"
-				style="margin-top:8px;color:#fff;background-color:#000;border:0;">
-				<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-			</button>
+			<a style="float:left;"class="navbar-brand" href="#"><b>超级管理员后台</b></a> <a id="j_nav_toggle"
+			href="javascript:;"> <img alt="菜单栏搜索" src="images/caidan.png"
+			style="float:left;width:40px;height:50px;">
+		</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
@@ -163,7 +161,7 @@ $.ajaxSetup ({
 		});
 
 			var turn = true;
-			$("#nav_toggle")
+			$("#j_nav_toggle")
 					.click(
 							function() {
 								if (turn) {
@@ -181,12 +179,12 @@ $.ajaxSetup ({
 															$(this)
 																	.css(
 																			"cssText",
-																			"background-color:#f9f9f9!important");
+																			"background-color:#232a32!important");
 														} else {
 															$(this)
 																	.css(
 																			"cssText",
-																			"background-color:#ececec!important");
+																			"background-color:#2c343f!important");
 														}
 													});
 								} else {
@@ -202,12 +200,12 @@ $.ajaxSetup ({
 															$(this)
 																	.css(
 																			"cssText",
-																			"background-color:#f9f9f9!important");
+																			"background-color:#232a32!important");
 														} else {
 															$(this)
 																	.css(
 																			"cssText",
-																			"background-color:#ececec!important");
+																			"background-color:#2c343f!important");
 														}
 													});
 								}
@@ -221,10 +219,10 @@ $.ajaxSetup ({
 												function() {
 													$(this)
 															.css("cssText",
-																	"background-color:#ececec!important");
+																	"background-color:#2c343f!important");
 												});
 								$(this).css("cssText",
-										"background-color:#f9f9f9!important");
+										"background-color:#232a32!important");
 							});
 			$(".btn_icon")
 					.click(
@@ -234,10 +232,10 @@ $.ajaxSetup ({
 												function() {
 													$(this)
 															.css("cssText",
-																	"background-color:#ececec!important");
+																	"background-color:#2c343f!important");
 												});
 								$(this).css("cssText",
-										"background-color:#f9f9f9!important");
+										"background-color:#232a32!important");
 							});
 		});
 	</script>
