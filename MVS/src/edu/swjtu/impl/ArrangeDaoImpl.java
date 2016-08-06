@@ -203,4 +203,23 @@ public class ArrangeDaoImpl implements ArrangeDao {
 			return arr;
 		}
 	}
+
+	@Override
+	public int updateArr(Connection con, Arrange arr) throws SQLException {
+		String sql = "update  arrange set arrange_name=?,arrange_date=?"
+				+ ",arrange_time=? where arrange_id=?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setString(1, arr.getName());
+			pstm.setString(2, arr.getDate());
+			pstm.setString(3, arr.getTime());
+			pstm.setInt(4, arr.getArrangeId());
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
 }

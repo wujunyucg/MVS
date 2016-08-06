@@ -127,9 +127,16 @@ public class ManageArrangeServlet extends HttpServlet {
 				for (Arrange arr : arrList) {
 					Line l = ldi.getLineById(con, arr.getLineId());
 					Car c = cdi.getCarById(arr.getCarId(), con);
-					if (null != l && null != c) {
-						arrData.add(new ArrCarLine(arr, c, l));
+					if (null == c) {
+						c = new Car();
+						c.setLicensePlate("未知");
+						c.setDriver("未知");
 					}
+					if (null == l) {
+						l = new Line();
+						l.setName("未知");
+					}
+					arrData.add(new ArrCarLine(arr, c, l));
 				}
 				session.setAttribute("arr_date", date);
 				session.setAttribute("arr_type", type);

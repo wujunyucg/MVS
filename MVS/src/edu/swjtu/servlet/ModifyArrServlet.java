@@ -53,7 +53,31 @@ public class ModifyArrServlet extends HttpServlet {
 				} else {
 					pw.write("no");
 				}
-			} else if (type.equals("3")) {// 导出
+			} else if(type.equals("2")){
+				//修改
+				PrintWriter pw = response.getWriter();
+				int id = Integer.parseInt(request.getParameter("id"));
+				String name = request.getParameter("name");
+				String date  = request.getParameter("date");
+				String time = request.getParameter("time");
+				
+				Arrange arr = adi.getArrById(id, con);
+				
+				if(null!=arr){
+					arr.setName(name);
+					arr.setDate(date);
+					arr.setTime(time);
+					int re = adi.updateArr(con, arr);
+					if(re>0){
+						pw.write("yes");
+					}else{
+						pw.write("no");
+					}
+				}else{
+					pw.write("no");
+				}
+				pw.close();
+			}else if (type.equals("3")) {// 导出
 				String dt = request.getParameter("arr_date");
 				String date = request.getSession().getAttribute("arr_date")
 						.toString();

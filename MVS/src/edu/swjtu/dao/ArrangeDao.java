@@ -120,4 +120,14 @@ public interface ArrangeDao {
 	 * @throws SQLException
 	 */
 	public Arrange getArrByDateAndTime(Connection con,String date,String time) throws SQLException;
+	/**
+	 * 更新排班
+	 * 2016年8月6日下午4:03:55
+	 * @author jimolonely
+	 * @param con
+	 * @param arr
+	 * @return
+	 * @throws SQLException
+	 */
+	public int updateArr(Connection con ,Arrange arr) throws SQLException;
 }

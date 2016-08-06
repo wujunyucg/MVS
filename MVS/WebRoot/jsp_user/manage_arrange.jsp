@@ -296,7 +296,7 @@
 					var text = t.text();
 				 	// 创建替换的input 对象  
                 	var $input = $("<input type='text'>").css("background-color",  
-                        t.css("background-color")).width(t.width());
+                        t.css("background-color")).width(t.width()-10);
 					t.html("");
 					$input.val(text);
 					t.append($input);
@@ -304,6 +304,10 @@
 				take.text("保存");
 			}else{
 				var td = $(this).parent();
+				var ok = true;
+				var ar_name;
+				var ar_date;
+				var ar_time;
 				td.siblings(".can_change").each(function(){
 					var p = $(this);
 					var t = p.children(":input");
@@ -313,15 +317,41 @@
 						$("#modal_content").text("有空格，不行");
 						alert($("#modal_content").text())
 						$("#msg_modal").modal('show');
-						return false;
+						ok =  false;
 					}
 					p.html(text);
 				});
 				//异步提交修改
-				
+				if(ok){
+				var ar_id = td.siblings().first().text();
+				ar_name = td.siblings(".can_change").first().text();
+				ar_date = td.siblings(".can_change").first().next().text();
+				ar_time = td.siblings(".can_change").first().next().next().text();
+				alert(ar_date+" "+ar_name+" "+ar_id)
+				$.ajax({
+					url:"servlet/ModifyArrServlet",
+					type:"POST",
+					data:{
+						deltype:"2",
+						id:ar_id,
+						name :ar_name,
+						date : ar_date,
+						time:ar_time
+					},
+					success:function(re){
+						if(re=="yes"){
+							$("#modal_content").text("修改成功");
+							$("#msg_modal").modal('show');
+						}else{
+							$("#modal_content").text("修改失败");
+							$("#msg_modal").modal('show');
+						}
+					},error:function(){
+						alert("服务器故障");
+					}
+				});
+				}
 				take.text("修改");
-				//$("#modal_content").text("修改成功");
-				//$("#msg_modal").modal('show');
 			}
 		});
 		
