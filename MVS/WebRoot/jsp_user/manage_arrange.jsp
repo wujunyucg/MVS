@@ -108,7 +108,7 @@
 		<li><a id="page_pre" href="javascript:;" aria-label="Previous">
 				<span aria-hidden="true">&laquo;</span>
 		</a></li>
-		<c:forEach begin="1" end="${arr_total}" varStatus="status">
+		<c:forEach begin="${ arrStartPage-10>0?arrStartPage-10:1}" end="${arrStartPage+10<arr_total?arrStartPage+10:arr_total}" varStatus="status">
 			<c:choose>
 				<c:when test="${arrStartPage == status.index}">
 					<li class="active arr-page"><a href="javascript:;">${status.index}</a></li>
