@@ -65,7 +65,7 @@
 		</div>
 		<br />
 		<div id="arr_part" style="display:none;">
-			<div id="" style="width:360px;" class="alert alert-warning"
+			<div id="" style="width:360px;margin:0 !important;" class="alert"
 				role="alert">
 				<h3 id="month_arr_num">第1个班次</h3>
 				<p></p>
@@ -119,10 +119,10 @@
 					class="btn btn-primary">下一次</button>
 			</div>
 			<br />
+		</div>
 			<button id="crearr_btn_fin" type="button" style="width:360px;"
 				class="btn btn-primary">确定</button>
 			<br /> <br />
-		</div>
 		<button id="crearr_btn_multi" type="button" style="width:360px;"
 			class="btn btn-primary">按次排班</button>
 	</div>
@@ -439,7 +439,7 @@
 									});
 								}
 							} else {
-								alert("kong")
+								alert("请完善信息")
 							}
 						});
 

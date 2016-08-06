@@ -20,10 +20,10 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.css">
-<link rel="stylesheet" type="text/css"
-	href="css/bootstrap/bootstrap-datetimepicker.min.css">
+<link href="css/bootstrap/bootstrap-datetimepicker.min.css"
+	rel="stylesheet" media="screen">
 <script type="text/javascript"
-	src="scripts/bootstrap-datetimepicker.min.js"></script>
+	src="scripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
 <script type="text/javascript"
 	src="scripts/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="scripts/ajaxfileupload.js"></script>
@@ -39,13 +39,14 @@
 		<c:if test="${admin6!=null}">
 		<button id="arr_btn_multi_del"disabled="disabled"
 		style="float:left;margin-right:10px;"type="button" class="btn btn-default">删除</button></c:if>
-		<div style="float:left;" class="input-group date form_date col-md-2"
-			data-date="" data-date-format="yyyy-mm">
-			<input id="arr_date" class="form-control" size="16" type="text"
-				value="${arr_date}" readonly> <span
-				class="input-group-addon"><span
-				class="glyphicon glyphicon-calendar"></span></span>
-		</div>
+		<div style="float:left;" class="date input-group form_date col-md-2"
+				data-date="" data-date-format="yyyy-mm">
+				<input id="arr_date" size="16"value="${arr_date}"
+					class="form-control" type="text" placeholder="请选择班次月份"
+					style=" -webkit-border-radius: 0; -moz-border-radius: 0;border-radius: 0;"
+					readonly> <span class="input-group-addon"><span
+					class="glyphicon glyphicon-calendar"></span></span>
+			</div>
 		<button id="arr_show_by_month" type="button" class="btn btn-primary">按月查看
 		</button>
 		<button id="arr_show_all" type="button" class="btn btn-primary">全部班次
@@ -256,13 +257,6 @@
 		//日期只选择年月
 		$('.form_date').datetimepicker({
 			language : 'zh-CN',
-			/*format : 'yyyy-mm',
-			autoclose : true,
-			todayBtn : 1,
-			todayHighlight : 1,
-			startView : 'year',
-			minView : 'year',
-			maxView : 'decade'*/
 			weekStart : 1,
 			todayBtn : 1,
 			autoclose : 1,
@@ -327,7 +321,6 @@
 				ar_name = td.siblings(".can_change").first().text();
 				ar_date = td.siblings(".can_change").first().next().text();
 				ar_time = td.siblings(".can_change").first().next().next().text();
-				alert(ar_date+" "+ar_name+" "+ar_id)
 				$.ajax({
 					url:"servlet/ModifyArrServlet",
 					type:"POST",
