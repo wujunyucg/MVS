@@ -419,16 +419,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						var datac = "";
 						var tab = "";
 						datac += "<div class='page-header'><h2>详细路线统计分析与优化建议 <small>针对当前正在使用的所有线路</small></h2></div>"
-						datac += "<div class='demo-chat'>";
+						datac += "<div>";
 						datac += "<h4 >各条路线——乘坐率（%）和路程数（5km）柱状图</h4>";
 						datac += "<div id='legend1' style=' float:right;margin-right:30px;padding: 0;display: block;'></div>"
-						datac += "<canvas id='canvas_1' style=' height: 50%;width: 97%;margin: 0;padding: 0;display: block;'></canvas></div>";
-						datac += "<div class='demo-chat'><hr/><h4 >左图为各条路线中乘坐率（%）较低路线 ， 右图为各条路线中路程数（5km）较高路线</h4>";
-						datac += "<canvas id='canvas_2' style=' float:left; height: 40%;width: 45%;margin: 0;padding: 0;display: block;'></canvas>";
-						datac += "<canvas id='canvas_3' style=' float:right;  height: 40%;width: 45%;margin-right:30px;padding: 0;display: block;'></canvas></div>";
+						datac += "<div class='demo-chat'><canvas id='canvas_1' style=' height: 330px;width: 97%;margin: 0;padding: 0;display: block;'></canvas></div></div>";
+						datac += "<div><hr/><h4 >左图为各条路线中乘坐率（%）较低路线 ， 右图为各条路线中路程数（5km）较高路线</h4>";
+						datac += "<div class='demo-chat'><canvas id='canvas_2' style=' float:left; height: 200px;width: 45%;margin: 0;padding: 0;display: block;'></canvas></div>";
+						datac += "<div class='demo-chat'><canvas id='canvas_3' style=' float:right;  height: 200px;width: 45%;margin-right:30px;padding: 0;display: block;'></canvas></div></div>";
 						datac += "<div style='clear:both' id='advice1'></div>"
-						datac += "<div class='demo-chat'><br/><hr/><h4 >各条路线以乘坐率和路程数为判断标准，所得到由优至劣的各条路线综合评价排序后的柱状图</h4>";
-						datac += "<canvas id='canvas_4' style=' height: 50%;width: 97%;margin: 0;padding: 0;display: block;'></canvas></div>";
+						datac += "<div><br/><hr/><h4 >各条路线以乘坐率和路程数为判断标准，所得到由优至劣的各条路线综合评价排序后的柱状图</h4>";
+						datac += "<div class='demo-chat'><canvas id='canvas_4' style=' height: 330px;width: 97%;margin: 0;padding: 0;display: block;'></canvas></div></div>";
 						datac += "<div style='clear:both'id='advice2'></div>"
 						$("#lineadvicedata").html(datac);	
 						$("#linetabledate").text("");
