@@ -3,4 +3,13 @@
 .mypage1{
 	float:left !important;
 	width: 98%;
+	
 }
+
+body{ 
+	overflow: auto !important;
+}
+ 
+.modal{ 
+	overflow: auto !important;
+} 

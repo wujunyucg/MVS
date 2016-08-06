@@ -54,7 +54,7 @@
 	&nbsp;
 	
 	<c:if test="${admin10!=null}">
-	<div style="float:right;">
+	<div style="float:right;margin-right:23px;">
 		<form action="servlet/ExportCarData" method="post">
 			<button type="submit" class="btn btn-primary">导出全部数据</button>
 		</form>
@@ -324,7 +324,7 @@
 
  
   
-	<div  class="pagenumber"">
+	<div  class="pagenumber" style="float:right;margin-right:23px;">
 		<nav>
 		<ul class="pagination">
 			<c:if test="${page_index == 1 }">
@@ -335,7 +335,7 @@
 				<span aria-hidden="true">&laquo;</span></a></li>
 			</c:if>
 			<c:if test="${allpage != null }">
-					<c:forEach var="i" begin='1' end='${allpage}' varStatus="status">		
+					<c:forEach var="i" begin='${page_index-5>0?page_index-5:1}' end='${page_index+5<allpage?page_index+5:allpage}' varStatus="status">		
 					<c:choose>			
 						<c:when test="${page_index == status.index }">
 							<li class="active"><a href="javascript:;" class="pagechoice" id="${status.index}" title="${status.index}">${status.index}</a></li>

@@ -20,11 +20,11 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-	<link rel="stylesheet" type="text/css" href="css/create_user.css">
 	<link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap.min.css">
 	<script src='scripts/jquery.js'></script>
 	<script src='scripts/bootstrap.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="css/create_user.css">
 
 	<script type="text/javascript">
 		function myload() {
@@ -92,7 +92,7 @@
 			</table></tr>
 	</div>
 
-	<div class="table-responsive"  style="height:400px;overflow-y:auto">	
+	<div class="table-responsive"  style="max-height:400px;overflow-y:auto">	
 		<table class="table">	
 			<c:if test="${list != null }">
 				<c:forEach items="${list}" var="admin">
@@ -107,7 +107,7 @@
 	</div>
 	</div>
 			<button id="btn_next" type="button" class="btn btn-primary" data-toggle="modal" 
-			data-target="#myModal"disabled="disabled" style="align:left">下一步</button>
+			data-target="#myModal" disabled="disabled" style="align:right;">下一步</button>
 	</div>
 	<br/>
 	
@@ -134,10 +134,10 @@
 		  
 		   <div id="page3" class="mypage3">
 	      	<div class="modal-body">
-		      	<div id="result" class="alert alert-success" role="alert" style="display:none;">已成功创建了一个用户</div>
+		      	<div class="alert alert-success" role="alert">已成功创建了一个用户</div>
 		      </div>
 		      <div class="modal-footer">
-		       	<button id="btn_ne" type="button" class="btn btn-primary">确认</button>
+		       	<button id="btn_ne" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
 		      </div>
 		  </div>
 		  
@@ -145,7 +145,6 @@
 	  </div>
 	</div>
 	
-	</div>
 	
 	
 	
@@ -162,7 +161,8 @@
 			//控制页面的切换
 			
 			$("#btn_ne").click(function() {
-				window.location.href="jsp_admin/sadmin.jsp"; 
+				$(".modal-backdrop").hide();
+				$("#content").load("<%=request.getContextPath()%>/servlet/CreateUserServlet");
 			});
 				
 			$("#btn_next").click(function() {
@@ -186,7 +186,6 @@
 				$("#show_number").text("用户帐号：" + usernumber);
 				$("#show_password").text("用户密码：" + userpassword);		
 				$("#show_power").text("用户角色：" + adminname);
-				
 			});
 
 			//当文本框文字改变监听
@@ -273,28 +272,24 @@
 						url : "servlet/CreUserNSServlet",
 						type : "POST",
 						data : {
-							type : "1",
+							type : "2",
 							userNumber : usernumber,
 							userPassword : userpassword,
 							adminId : adminid,
 						},
 						success : function(re) {
-						$("#result").show();
 						if ("yes" == re) {
-							$("#btn_finish").attr("data-dismiss", "modal");
 							$("#page2").hide("1000");
 							$("#page3").show();
-						} else {
-							$("#result").removeClass("alert-success");
-							$("#result").addClass("alert-danger");
-							$("#result").text("抱歉，未知原因创建失败");
+							
 						}
 					}
-					});
-				}else{
-					
+				});
 				}
 			});
+			
+			
+			
 		});
 	</script>
 	
