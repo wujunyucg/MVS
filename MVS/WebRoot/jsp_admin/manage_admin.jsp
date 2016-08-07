@@ -261,15 +261,15 @@
 			var powerIds = "";
 			$(".admin_modify").click(
 					function() {
-
+						$("#result").hide();
 						var nowModify = $(this).parent().prev().prev().prev()
 								.prev().text();
-						if (nowModify != lastModify) {
+						//if (nowModify != lastModify) {
 							lastModify = nowModify;
 							$("#page2").hide();
 							$("#page3").hide();
 							$("#page1").show();
-						}
+						//}
 						//取得此行的角色名称
 						var adminname = $(this).parent().prev().prev().prev()
 								.text();
