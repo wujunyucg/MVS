@@ -1474,7 +1474,7 @@
 			var tid = $("#"+nam).attr("title");
 			var allobj = eval(json_allsite);
 			var num = $("#modline").attr("title");
-			EditRoutes(allobj,obj[tid].sitelist);/////////////////////////////////////////
+			EditRoutes(allobj,obj[tid].sitelist,nam);/////////////////////////////////////////
 		}
 		
 			
