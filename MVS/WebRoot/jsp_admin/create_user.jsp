@@ -106,19 +106,19 @@
 	<br/>
 	</div>
 	</div>
-			<button id="btn_next" type="button" class="btn btn-primary" data-toggle="modal" 
-			data-target="#myModal" disabled="disabled" style="align:right;">下一步</button>
+			<button id="btn_next" type="button" class="btn btn-primary" disabled="disabled" style="float:right;">下一步</button>
 	</div>
 	<br/>
+	<br/>
 	
-	
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
+ 
+	<div class="modal fade" id="myM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">创建用户</h4>
-	      </div>
+	    <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"aria-label="Close">
+				<span aria-hidden="true">&times;</span></button><h4 class="modal-title">创建用户</h4></div>
+				
 	      <div id="page2" class="mypage">
 	      	<div class="modal-body">
 		      	<div class="alert alert-info" role="alert">下面是您创建的用户信息，若核实无误，请点击-确认创建</div>
@@ -144,7 +144,7 @@
 	    </div>
 	  </div>
 	</div>
-	
+ 
 	
 	
 	
@@ -156,16 +156,18 @@
 		var numkey = 0;
 		var powkey = 0;
 		var paskey = 1;
-		$(function() {
 
 			//控制页面的切换
 			
 			$("#btn_ne").click(function() {
+				
 				$(".modal-backdrop").hide();
 				$("#content").load("<%=request.getContextPath()%>/servlet/CreateUserServlet");
+				
 			});
 				
 			$("#btn_next").click(function() {
+				$("#myM").modal("show");
 			
 				$("#page2").show();
 				$("#page3").hide();
@@ -281,16 +283,12 @@
 						if ("yes" == re) {
 							$("#page2").hide("1000");
 							$("#page3").show();
-							
 						}
 					}
 				});
 				}
 			});
 			
-			
-			
-		});
 	</script>
 	
 	

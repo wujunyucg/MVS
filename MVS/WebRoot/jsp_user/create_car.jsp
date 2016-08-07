@@ -134,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div><!-- row -->
 
 	<br/>
-			<button id="createcar" type="button" class="btn btn-primary" data-toggle="modal">下一步</button>
+			<button id="createcar" type="button" class="btn btn-primary" >下一步</button>
 	</div><!-- create_car1 -->
 
 	
@@ -234,6 +234,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		
 		$("#createcar").click(function() {
+				$("#sure_cre").modal("show");
 				$("#cre_page1").hide();
 				$("#cre_page2").hide();
 				
