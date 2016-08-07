@@ -197,14 +197,14 @@
 				  icon:"icons/satationOnRoute.svg",
 				  zIndex:100
 			});
-			console.log(data.lineId);
 			if(data.lineId==null||data.lineId==""){
 				marker.setIcon('icons/satations.svg');
-				//alert("OK");
+			}
+			if(data.lineName.indexOf("_Z")>=0){
+				marker.setIcon('icons/znzd.svg');
 			}
 			var conten=SatationContent(data);
 			AMap.event.addListener(marker, 'click',function (e){
-				//data=marker.getPosition(); 
 				marker.setDraggable(false);
 				var conten=SatationContent(data);
 				info(marker.getPosition(),conten);	
@@ -219,7 +219,6 @@
 				markers.push(marker);
 			}
 			for (var i = 0; i < data.length; i += 1) {
-				//console.log("testmar"+data[i]+"  "+i+data[i].lng);
 				markers[i]=setmarker(data[i],markers);
 				markers.push(marker);
 			}
