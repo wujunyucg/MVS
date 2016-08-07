@@ -6,6 +6,7 @@ function moveTocenter(loction){
 	map.setCenter(loction);
 }
 
+
 //展示所有员工数据
 
 
@@ -217,7 +218,7 @@ function showroute(paths,id,name){
 		}
 		//console.log(path[0]+paths[i].longitude+paths[i]. latitude);
 	}  
-	path.push([104.067475,30.654737]);
+	path.push([fac_lon,fac_lan]);
 	//ss[0]=sitemarkers;
 	map.plugin("AMap.DragRoute",function(){
 		route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE,{
@@ -239,14 +240,8 @@ function showroute(paths,id,name){
 		route.search(); //查询导航路径并开启拖拽导航
 		route2[id]=route;
 		//当路径完成时的事件
-	//	console.log("enter serach-----");
-		//console.log(id);
 		AMap.event.addListener(route,'complete',function(e){
-			//alert("OK");
-			//alert(e.data.routes[0].steps[0].action);
-		//	console.log("-------------------------enter complete-----");
 			AMap.event.addListener(route,'addway',function(e){
-				//alert("dd");
 			});	
 			//参考这个格式
 			//var trs=$('#result table tr');
@@ -254,7 +249,6 @@ function showroute(paths,id,name){
 			$('#result').css("display","inline");
 			$('#addroute').css("display","none");
 			var trs=document.getElementById("routenumber");
-		//	console.log(paths[0].lineId);
 			trs.innerHTML=name;
 			var tds=document.getElementById("time-distance").getElementsByTagName("td");
 			tds[0].innerHTML=e.data.routes[0].time/60+"分钟";
@@ -487,6 +481,13 @@ function addclicksite(ctn){
 var index2=0;
 var ii=[];
 function Routeshowsizt(sites,isAll){
+	var car_fac=new AMap.Marker({
+		 position:[fac_lon,fac_lan],
+		  raiseOnDrag:true,
+		  map: map,
+		  icon: "icons/car_factory.svg",
+		  zIndex:300
+	});
 	var path=[];
 	var markers=[];
 	var wei=[];
@@ -663,7 +664,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute,lName){
 	}
 }  
 var rsitesmk=[];
-var terminal=[104.067475,30.654737];
+var terminal=[fac_lon,fac_lan];
 
 function showPolyline(data,poly,wei){
 	var path2=[];
@@ -682,9 +683,21 @@ function showPolyline(data,poly,wei){
 
 //右键不能点击
 function setroutesitesmk(data,isAll){
-	if((data.lineId==""||data.lineId==null)||isAll){
+	if(isAll == 2){
+		var car_fac=new AMap.Marker({
+			 position:[fac_lon,fac_lan],
+			  raiseOnDrag:true,
+			  map: map,
+			  icon: "icons/car_factory.svg",
+			  zIndex:300
+		});
+		rsitesmk.push(car_fac);
+	}
+	else if((data.lineId==""||data.lineId==null)||isAll){
 		rsitesmk.push(satationsmarker2(data));
 	}
+	
+	
 }
 //隐藏
 function hideroutesitesmk(){
@@ -700,6 +713,13 @@ function showroutesitesmk(){
 }
 //EditRoutes(hhj_satations,pp);
 function EditRoutes(sites,route,lname){
+	var car_fac=new AMap.Marker({
+		 position:[fac_lon,fac_lan],
+		  raiseOnDrag:true,
+		  map: map,
+		  icon: "icons/car_factory.svg",
+		  zIndex:300
+	});
 	var path=[];
 	var markers=[];
 	var wei=[];

@@ -673,12 +673,17 @@
 
 	</div>
 
+	<script type="text/javascript">
+	var fac_lan = ${fac_latitude};
+		var fac_lon = ${fac_longitude};
+	</script>
 
-	<script type="text/javascript" src="js/satation.js"></script>
+ 	<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
-  		<script type="text/javascript" src="js/mapinterface.js"></script>  
+  	<script type="text/javascript" src="js/mapinterface.js"></script>  
 	<script type="text/javascript" src="js/testroute.js"></script> 
+
 	<script type="text/javascript">
 
 		var max_length = "-1";
@@ -694,6 +699,7 @@
 		var judgecreing = 0;
 		var modlineId = -1;
 		var modlineName = "";
+		
 		
 		
 		$("#max_len").hide();
@@ -803,8 +809,13 @@
 					$("#shownotsite").text("显示未排站点");
 				}
 				for(var i=0;i<allobj.length;i++){
-					setroutesitesmk(allobj[i].allsite,1);
+					if(allobj[i].allsite.siteId == 0){
+						setroutesitesmk(allobj[0].allsite,2);
+					}else{
+						setroutesitesmk(allobj[i].allsite,1);
+					}
 				}
+				
 				$("#showallsite").text("隐藏全部站点");
 			}
 			else if($("#showallsite").text() == "隐藏全部站点"){
@@ -821,8 +832,14 @@
 					$("#showallsite").text("显示全部站点");
 				}
 				for(var i=0;i<allobj.length;i++){
-					setroutesitesmk(allobj[i].allsite,0);
+					if(allobj[i].allsite.siteId == 0){
+						setroutesitesmk(allobj[0].allsite,2);
+					}else{
+						setroutesitesmk(allobj[i].allsite,0);
+					}
+					
 				}
+				setroutesitesmk(allobj[0].allsite,2);
 				$("#shownotsite").text("隐藏未排站点");
 			}
 			else if($("#shownotsite").text() == "隐藏未排站点"){
@@ -1455,7 +1472,6 @@
 		
 		function modifyline(nam,num){
 			modlineId = num;
-			alert(modlineId);
 			modlineName = nam;
 			document.getElementById("lin_nam").value="";
 			$("#getallline").text("显示全部路线");
@@ -1622,8 +1638,8 @@
 			});
 		});
 	</script>
-<div>
- 	
-</div>
+	
+
+	
   </body>
 </html>
