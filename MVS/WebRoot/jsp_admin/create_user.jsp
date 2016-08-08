@@ -112,11 +112,11 @@
 	<br/>
 	
  
-	<div class="modal fade" id="myM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog">
+	<div class="modal fade" id="myM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	    <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal"aria-label="Close">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span></button><h4 class="modal-title">创建用户</h4></div>
 				
 	      <div id="page2" class="mypage">
@@ -268,7 +268,11 @@
 
 			//点击完成后保存用户数据到数据库
 			$("#btn_finish").click(function() {
-				//$("#btn_finish").attr("data-dismiss", "modal");
+				$(".close").hide();
+				$("#myM").attr("keyboard",true);
+				$("#myM").attr("backdrop","'static'");
+				alert($("#myM").attr("data-backdrop"));
+ 					//keyboard: false,
 				if(adminid != null && adminid != ""){
 					$.ajax({
 						url : "servlet/CreUserNSServlet",

@@ -89,6 +89,10 @@ public class ManageLineServlet extends HttpServlet {
 					json_allsite.get(j).put("allsite", allsite.get(j));  
 					
 				}
+				Site fac = null;
+				fac = new SiteDaoImpl().getSiteById(0, con);
+				request.getSession().setAttribute("fac_latitude",fac.getLatitude());
+				request.getSession().setAttribute("fac_longitude",fac.getLongitude());
 				request.getSession().setAttribute("linelist",list);
 				request.getSession().setAttribute("json_sitelist",json_sitelist.toString());
 				request.getSession().setAttribute("json_linelist",json_linelist.toString());

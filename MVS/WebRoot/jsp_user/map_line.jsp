@@ -23,19 +23,7 @@
 	<meta http-equiv="description" content="This is my page">
 
 	<link rel="stylesheet" type="text/css" href="css/map/layout.css">
-	<link rel="stylesheet" type="text/css" href="css/j-css/map-theme.css">
-	<link rel="stylesheet" type="text/css"
-		href="css/bootstrap/bootstrap.min.css">
-
-	<script src='scripts/jquery.js'></script>
-	<script src='scripts/bootstrap.min.js'></script>
 	<!-- map- -->
-	<link rel="stylesheet"
-		href="http://cache.amap.com/lbs/static/main1119.css" />
-	<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-	<script src="http://webapi.amap.com/js/marker.js"></script>
-	<script type="text/javascript"
-		src="http://webapi.amap.com/maps?v=1.3&key=12f941dddbe64260f57468811bb77c77&plugin=AMap.DistrictSearch,AMap.PlaceSearch,AMap.AdvancedInfoWindow,AMap.Driving,AMap.MapType"></script>
 	<script type="text/javascript"
 		src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 
@@ -43,104 +31,9 @@
   
   <body>
     
-<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="#">超级管理员后台</a>
-		<button id="j_nav_toggle" type="button" class="btn btn-default"
-			aria-label="Left Align"
-			style="margin-top:13px;color:#fff;background-color:#101010;border:0;">
-			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-		</button>
-	</div>
-	<div id="navbar" class="navbar-collapse collapse">
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">设置</a></li>
-			<li><a href="#">Help</a></li>
-			<li class="dropdown dropdown-toggle "><a href="#"
-				class="dropdown-toggle" id="dropdownMenu_user"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					咸鱼的梦想<span class="caret"></span>
-			</a>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu_user">
-					<li><a href="#">个人信息</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#">退出</a></li>
-				</ul></li>
-		</ul>
-	</div>
-	</nav>
-	<div id="j-main">
-		<div id="j-left-menu">
-			<div class="list-group">
-				<button type="button"
-					class="j-btn-active list-group-item btn-menu btn_text create-admin">
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-					管理人员 <span style="float:right;"class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-				</button>
-				<div class="list-group j-child-menu" style="display:none;">
-					<button type="button" class="list-group-item">增加</button>
-					<button type="button" class="list-group-item">查询</button>
-					<button type="button" class="list-group-item">显示</button>
-				</div>
-				<button type="button" style="display:none;"
-					class="list-group-item btn-menu btn_icon create-admin">
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text create-user">
-					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-					管理线路
-				</button>
-				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
-					<button type="button" class="list-group-item" onclick="addroute()">增加</button>
-					<button type="button" class="list-group-item" onclick="map.clearMap();showAllRoute(hhj_satation)">显示</button>
-				</div>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon create-user">
-					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-				</button>
-				<button type="button" id="manager-satation-btn"
-					class="list-group-item  btn-menu btn_text manage-admin">
-					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-					<span >管理站点</span>
-				</button>
-				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
-					<button type="button" class="list-group-item" onclick="addsatation()">增加</button>
-					<button type="button" class="list-group-item" onclick="Showallsatation()">显示</button>
-				</div>
-				<button id="manage-admin" type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-admin">
-					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					管理车辆
-				</button>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					管理班次
-				</button>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				</button>
-			</div>
-			<div class="panel panel-default j-no-radous">
-				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
-			</div>
-		</div>
-		<div id="content">
-			<div id='container' style="margin-left:15%;margin-top:50px;width:85%;height: 95%"></div>
+			<div id='container' style="min-width:400px;margin-left: 230px;width:auto;height:auto;margin-top:50px;"></div>
 		
 			<div id="info">
-				<h1>
-					<h1>
 			</div>
 			<div id="myPageTop"
 				style="position: absolute; top:175px; right:100px;">
@@ -311,7 +204,7 @@
 			</div>
 	
 			
-		  <div id="show_linetable" class="panel panel-group panel-default" id="accordion" style="position:fixed;bottom:0px;left:15%;right:0px;">
+		  <div id="show_linetable" class="panel panel-group panel-default" id="accordion" style="position:fixed;bottom:-21px;left:230px;;right:0px;z-index:800;">
 			<a id="updown" class="collapsed" role="button" data-toggle="collapse" href="#linetable" aria-expanded="true"
 				aria-controls="linetable">
 				<div class="panel-heading" role="tab" id="headingThree" style="background-color:#000000;">
@@ -671,10 +564,9 @@
 
 
 
-	</div>
 
 	<script type="text/javascript">
-	var fac_lan = ${fac_latitude};
+		var fac_lan = ${fac_latitude};
 		var fac_lon = ${fac_longitude};
 	</script>
 
@@ -715,55 +607,6 @@
 			linedetail(obj_lt[i].linelist.lineId,obj_lt[i].linelist.name);
 		}
 	
-		var turn = true;
-		var openMenus = new Array();//存放展开的子menu的div
-		$("#j_nav_toggle").click(function(){
-			if(turn){
-				openMenus = [];//clear
-				$(".j-child-menu").each(function(){
-					if($(this).css("display")=="block"){
-						openMenus.push($(this));//若展开的，则加入
-					}
-				});
-				
-				$(".j-child-menu").hide();
-				$("#j-left-menu").css("width","4%");
-				$("#content").css("marginLeft","4%");
-				$(".btn_text").hide();
-				$(".btn_icon").show();
-				turn = false;
-			}else{
-				for(var i=0;i<openMenus.length;i++){
-					openMenus[i].show();//显示出来
-				}
-				$("#j-left-menu").css("width","15%");
-				$("#content").css("marginLeft","15%");
-				$(".btn_text").show();
-				$(".btn_icon").hide();
-				turn = true;
-			}
-		});
-		
-		$(".btn_text").click(function(){
-			
-			$(this).next("div").slideToggle("1000");
-		});
-		//调节地图大小
-		var turn = false;
-		$("#j_nav_toggle").click(function() {
-			if (turn) {
-				$("#container").css("margin-left", "15%");
-				$("#container").css("width", "85%");
-				$("#show_linetable").css("left", "15%");
-				turn = false;
-			} else {
-				$("#container").css("margin-left", "4%");
-				$("#container").css("width", "96%");
-				$("#show_linetable").css("left", "4%");
-				turn = true;
-			}
-		});
-		
 		var up=true;
 		$("#updown").click(function(){
 			if(judgecreing == 0){
