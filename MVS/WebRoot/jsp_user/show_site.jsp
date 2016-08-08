@@ -24,7 +24,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css"
 	href="css/bootstrap/bootstrap-datetimepicker.min.css">
 <script src='chartjs/js/Chart.js'></script>
-<script src='scripts/jquery.js'></script>
 <script src='scripts/bootstrap-datetimepicker.min.js'></script>
 <script src='scripts/bootstrap.min.js'></script>
 

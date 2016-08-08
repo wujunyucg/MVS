@@ -663,8 +663,8 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute,lName){
 		});	
 	}
 }  
-//var rsitesmk=[];
-//var terminal=[fac_lon,fac_lan];
+var rsitesmk=[];
+var terminal=[];
 
 function showPolyline(data,poly,wei){
 	var path2=[];

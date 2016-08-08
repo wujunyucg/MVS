@@ -592,7 +592,7 @@
 		var modlineId = -1;
 		var modlineName = "";
 		
-		
+		terminal=[fac_lon,fac_lan];
 		
 		$("#max_len").hide();
 		$("#kil").hide();

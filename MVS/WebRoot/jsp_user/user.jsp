@@ -119,11 +119,11 @@
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
 						<c:if test="${admin2!=null}">
-							<button type="button" class="list-group-item " id="map_site1"
+							<button type="button" class="list-group-item opMenu" id="map_site1"
 								>站点维护</button>
 						</c:if>
 						<c:if test="${admin1!=null}">
-							<button type="button" class="list-group-item opMenu" id="show_site">数据统计</button>
+							<button type="button" class="list-group-item  opMenu" id="show_site">数据统计</button>
 						</c:if>
 					</div>
 					<button id="manage-admin" type="button" style="display:none;"

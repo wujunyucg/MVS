@@ -18,12 +18,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 		
 	<link rel="stylesheet" type="text/css" href="css/create_user.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
-	<script src='scripts/jquery.min.js'></script>
 	<script src='scripts/bootstrap.min.js'></script>
 
 
-	<link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="scripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="scripts/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
