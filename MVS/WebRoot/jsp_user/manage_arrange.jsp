@@ -104,6 +104,7 @@
 		</div>
 	</c:if>
 	<!-- 异步分页 -->
+	<b>共${arr_total}页,每页10条数据</b>
 	<nav>
 	<ul class="pagination" style="magin:0 auto !important; ">
 		<li><a id="page_pre" href="javascript:;" aria-label="Previous">
