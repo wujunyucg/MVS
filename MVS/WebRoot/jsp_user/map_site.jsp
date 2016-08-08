@@ -94,7 +94,7 @@
  
 	
 
-		<div id='container' style="min-width:400px;margin-left: 230px;width:auto;height:auto;margin-top:50px;"></div>
+		<div id='container' style="margin-top:50px;"></div>
 			<div id="info">
 			</div>
 			<div id="myPageTop"
@@ -170,7 +170,7 @@
       <div id='panel'></div>
 <span id="addroute-number"></span>
       
-     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:-21px;left:230px;;right:0px;z-index:800;"> 
+     <div id="collasped" class="panel-group accordionLS" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:-21px;left:230px;;right:0px;z-index:800;"> 
   <div class="panel panel-default">
     <a id="updown" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" >
     <div class="panel-heading" role="tab" id="headingThree" style="background-color:#000000;">
