@@ -120,9 +120,7 @@
 			</div>
 			<br />
 		</div>
-			<button id="crearr_btn_fin" type="button" style="width:360px;"
-				class="btn btn-primary">确定</button>
-			<br /> <br />
+			 <br />
 		<button id="crearr_btn_multi" type="button" style="width:360px;"
 			class="btn btn-primary">按次排班</button>
 	</div>
@@ -162,10 +160,6 @@
 	<div style="margin-left:370px;display:none;" id="arr_car_div">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<button type="button" class="btn btn-default"
-					aria-label="Left Align">
-					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>上一步
-				</button>
 				<button disabled="disabled" id="crearr_btn_car" type="button"
 					class="btn btn-primary">确定</button>
 				已自动过滤掉不合适的车辆（座位数，保修日期），请选择车辆
@@ -409,7 +403,6 @@
 									}
 									ads+=lineIds[carIds.length-1];
 									cds+=carIds[carIds.length-1];
-									alert(ads+" "+cds)
 									var d = $("#crearr_input_date").val();
 									
 									$("#crearr_msg").text("信息正在存储，请稍后");
