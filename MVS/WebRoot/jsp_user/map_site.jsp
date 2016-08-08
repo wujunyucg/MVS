@@ -19,12 +19,8 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/map/layout.css">
-<link rel="stylesheet" type="text/css" href="css/j-css/map-theme.css">
-<link rel="stylesheet" type="text/css"
-	href="css/bootstrap/bootstrap.min.css">
 
-<script src='scripts/jquery.js'></script>
-<script src='scripts/bootstrap.min.js'></script>
+
 <!-- map- -->
 <link rel="stylesheet"
 	href="http://cache.amap.com/lbs/static/main1119.css" />
@@ -101,99 +97,8 @@
 
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="#">超级管理员后台</a>
-		<button id="j_nav_toggle" type="button" class="btn btn-default"
-			aria-label="Left Align"
-			style="margin-top:13px;color:#fff;background-color:#101010;border:0;">
-			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-		</button>
-	</div>
-	<div id="navbar" class="navbar-collapse collapse">
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">设置</a></li>
-			<li><a href="#">Help</a></li>
-			<li class="dropdown dropdown-toggle "><a href="#"
-				class="dropdown-toggle" id="dropdownMenu_user"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					咸鱼的梦想<span class="caret"></span>
-			</a>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu_user">
-					<li><a href="#">个人信息</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="#">退出</a></li>
-				</ul></li>
-		</ul>
-	</div>
-	</nav>
-	<div id="j-main">
-		<div id="j-left-menu">
-			<div class="list-group">
-				<button type="button"
-					class="j-btn-active list-group-item btn-menu btn_text create-admin">
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-					管理人员 <span style="float:right;"class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
-				</button>
-				<div class="list-group j-child-menu" style="display:none;">
-					<button type="button" class="list-group-item">增加</button>
-					<button type="button" class="list-group-item">查询</button>
-					<button type="button" class="list-group-item">显示</button>
-				</div>
-				<button type="button" style="display:none;"
-					class="list-group-item btn-menu btn_icon create-admin">
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text create-user">
-					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-					管理线路
-				</button>
-				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
-					<button type="button" class="list-group-item" onclick="addroute()">增加</button>
-					<button type="button" class="list-group-item" onclick="map.clearMap();showAllRoute(hhj_satation)">显示</button>
-				</div>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon create-user">
-					<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-				</button>
-				<button type="button" id="manager-satation-btn"
-					class="list-group-item  btn-menu btn_text manage-admin">
-					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-					<span >管理站点</span>
-				</button>
-				<div id="manager-satation" class="list-group j-child-menu" style="display:none;">
-					<button type="button" class="list-group-item" onclick="addsatation()">增加</button>
-					<button type="button" class="list-group-item" onclick="Showallsatation()">显示</button>
-				</div>
-				<button id="manage-admin" type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-admin">
-					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					管理车辆
-				</button>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				</button>
-				<button type="button"
-					class="list-group-item  btn-menu btn_text manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					管理班次
-				</button>
-				<button type="button" style="display:none;"
-					class="list-group-item  btn-menu btn_icon manage-user">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				</button>
-			</div>
-			<div class="panel panel-default j-no-radous">
-				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
-			</div>
-		</div>
-		<div id="content">
+	
+		
 			<div id='container' style="margin-left:15%;margin-top:50px;width:85%;height: 95%"></div>
 			<div id="info">
 			</div>
@@ -267,7 +172,7 @@
       
       </div>
       <div id='panel'></div>
-      </div>
+
       
      <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 85%"> 
   <div class="panel panel-default">
@@ -309,30 +214,32 @@
 </div>
  
  </div> 
-	<div id="load_modal" class="modal fade" id="myModal" tabindex="-1"
+	<div id="ww-load_modal" class="modal fade"  tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-body">
+				<div class="modal-body" id="ww-modal-boay">
 					<b>正在加载，请稍后...</b>
 				</div>
 				<div class="modal-footer">
-				 <button type="button" id="w-modal-but2"  class="btn btn-default" 
+				 <button type="button" id="ww-modal-but2"  class="btn btn-default" 
               style="display:none" >确定
             </button>
-				 <button type="button" id="w-modal-but"  class="btn btn-default" 
+				 <button type="button" id="ww-modal-but"  class="btn btn-default" 
               style="display:none" >确定
             </button>
-            <button type="button" id="w-modal-close"  class="btn btn-default" 
+            <button type="button" id="ww-modal-close"  class="btn btn-default" 
                data-dismiss="modal" style="display:none" >取消
             </button>
          </div>
 			</div>
 			
 		</div>
-	</div>
+	      </div>
 	<span id="return_satationinfo"></span>
-	<script type="text/javascript" src="js/satation.js"></script>
+	
+</body>
+<script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
 		<script type="text/javascript" src="js/mapinterface.js"></script>
@@ -364,43 +271,10 @@
 			}
       }});
 	});
-	
-	var turn = true;
-	var openMenus = new Array();//存放展开的子menu的div
-	
-	$("#j_nav_toggle").click(function(){
-	
-		if(turn){
-			openMenus = [];//clear
-			$(".j-child-menu").each(function(){
-				if($(this).css("display")=="block"){
-					openMenus.push($(this));//若展开的，则加入
-				}
-			});
-			
-			$(".j-child-menu").hide();
-			$("#j-left-menu").css("width","4%");
-			$("#content").css("marginLeft","4%");
-			$(".btn_text").hide();
-			$(".btn_icon").show();
-			turn = false;
-		}else{
-			for(var i=0;i<openMenus.length;i++){
-				openMenus[i].show();//显示出来
-			}
-			$("#j-left-menu").css("width","15%");
-			$("#content").css("marginLeft","15%");
-			$(".btn_text").show();
-			$(".btn_icon").hide();
-			turn = true;
-		}
 	});
 	
-	$(".btn_text").click(function(){
-		
-		$(this).next("div").slideToggle("1000");
-	});
-});
+	
+	
 		//调节地图大小
 		var sitelist,stafflist;
  
@@ -461,22 +335,7 @@
 					staffmarker(stafflist[i]);
 			}
 		}
-		var turn = false;
-		$("#j_nav_toggle").click(function() {
-			if (turn) {
-				$("#container").css("margin-left", "15%");
-				$("#container").css("width", "85%");
-				$("#collasped").css("margin-left", "15%");
-				$("#collasped").css("width", "85%");
-				turn = false;
-			} else {
-				$("#container").css("margin-left", "4%");
-				$("#container").css("width", "96%");
-				$("#collasped").css("margin-left", "4%");
-				$("#collasped").css("width", "96%");
-				turn = true;
-			}
-		});
+		
 		var up=true;
 		$("#updown").click(function() {
 			if(up){
@@ -494,24 +353,24 @@ var json="{\"slist\":[";
 var s="-1",arr=new Array();
 	var num;
 		function autosite(){
-		$(".modal-body").html("请选择是全部生成(清除以往数据)或为未匹配站点员工生成站点");
-		$("#w-modal-but2").css("display","inline");
-		$("#w-modal-but").css("display","inline");
-		$("#w-modal-close").css("display","inline");
-		$("#w-modal-but").html("全部生成");
-		$("#w-modal-but2").html("部分生成");
-		$("#w-modal-close").html("取消");
-		$("#w-modal-but").attr("onclick","kmeans();");
-		$("#w-modal-but2").attr("onclick","kmeans2();");
-		$("#load_modal").modal('show');
+		$("#ww-modal-body").html("请选择是全部生成(清除以往数据)或为未匹配站点员工生成站点");
+		$("#ww-modal-but2").css("display","inline");
+		$("#ww-modal-but").css("display","inline");
+		$("#ww-modal-close").css("display","inline");
+		$("#ww-modal-but").html("全部生成");
+		$("#ww-modal-but2").html("部分生成");
+		$("#ww-modal-close").html("取消");
+		$("#ww-modal-but").attr("onclick","kmeans();");
+		$("#ww-modal-but2").attr("onclick","kmeans2();");
+		$("#ww-load_modal").modal('show');
 		}
 		
 		
 		function kmeans(){
-		$(".modal-body").html("正在处理中......");
-		$("#w-modal-but2").css("display","none");
-		$("#w-modal-but").css("display","none");
-		$("#w-modal-close").css("display","none");
+		$("#ww-modal-body").html("正在处理中......");
+		$("#ww-modal-but2").css("display","none");
+		$("#ww-modal-but").css("display","none");
+		$("#ww-modal-close").css("display","none");
 		$.ajax({ 
 		type:"post",
 		url: "servlet/ManageSiteServlet",
@@ -534,10 +393,10 @@ var s="-1",arr=new Array();
 	}
 	
 	function kmeans2(){
-		$(".modal-body").html("正在处理中......");
-		$("#w-modal-but2").css("display","none");
-		$("#w-modal-but").css("display","none");
-		$("#w-modal-close").css("display","none");
+		$("#ww-modal-body").html("正在处理中......");
+		$("#ww-modal-but2").css("display","none");
+		$("#ww-modal-but").css("display","none");
+		$("#ww-modal-close").css("display","none");
 		
 		$.ajax({ 
 		type:"post",
@@ -622,9 +481,9 @@ function satationSuit2(lng,lat,sta){
             document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
          },
 		success: function(request){
-			$(".modal-body").html("生成站点完毕");
-			$("#w-modal-close").css("display","inline");
-			$("#w-modal-close").html("确定");
+			$("#ww-modal-body").html("生成站点完毕");
+			$("#ww-modal-close").css("display","inline");
+			$("#ww-modal-close").html("确定");
 			var list = eval('(' + request + ')');
 		 	sitelist = list.nsitelist;
 		 	stafflist=list.stafflist;
@@ -700,6 +559,7 @@ $("#site_table td").click(function() {
          });
   }
   var dis=true;
+  
   function disp(){
   	if(dis){
   		map.clearMap();
@@ -718,5 +578,4 @@ $("#site_table td").click(function() {
   	}
   }
 	</script>
-</body>
 </html>

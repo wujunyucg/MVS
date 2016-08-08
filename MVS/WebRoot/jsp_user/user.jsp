@@ -114,8 +114,8 @@
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
 						<c:if test="${admin2!=null}">
-							<button type="button" class="list-group-item " id="map_site"
-								onclick="window.location.href='servlet/MapSiteServlet'">站点维护</button>
+							<button type="button" class="list-group-item " id="map_site1"
+								>站点维护</button>
 						</c:if>
 						<c:if test="${admin1!=null}">
 							<button type="button" class="list-group-item" id="show_site">数据统计</button>
@@ -262,6 +262,9 @@
 		
 		$("#statics_line").click(function(){
 				$("#content").load("<%=request.getContextPath()%>/jsp_user/statistics_line.jsp");
+		});
+		$("#map_site1").click(function(){
+				$("#content").load("<%=basePath%>servlet/MapSiteServlet");
 		});
 	</script>
 </body>
