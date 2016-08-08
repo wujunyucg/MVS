@@ -62,7 +62,6 @@ public class MapSiteServlet extends HttpServlet {
 			LineDaoImpl ldi = new LineDaoImpl();
 			ArrayList<Line> lineList = ldi.getAllLine(con);
 			 request.getSession().setAttribute("site_line_list", lineList);
-			 System.out.println(lineList.size());
 			 request.getRequestDispatcher("../jsp_user/map_site.jsp").forward(request,response);
 			
 			

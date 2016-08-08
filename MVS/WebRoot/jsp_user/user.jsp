@@ -219,6 +219,7 @@
 		</div>
 	</div>
 
+
 	<script type="text/javascript">
 		//异步加载代码
 		$(".manage-arrange").click(function(){
@@ -265,6 +266,7 @@
 		});
 		$("#map_site1").click(function(){
 				$("#content").load("<%=basePath%>servlet/MapSiteServlet");
+				
 		});
 	</script>
 </body>

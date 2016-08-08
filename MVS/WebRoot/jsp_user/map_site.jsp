@@ -1,36 +1,32 @@
- <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@page import="edu.swjtu.intelligent.PlanRoute"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-<base href="<%=basePath%>">
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'map_arrange.jsp' starting page</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
 
-<title>My JSP 'mynavbar.jsp' starting page</title>
-
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/map/layout.css">
-
-
-<!-- map- -->
-<link rel="stylesheet"
-	href="http://cache.amap.com/lbs/static/main1119.css" />
-<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-<script src="http://webapi.amap.com/js/marker.js"></script>
-<script type="text/javascript"
-	src="http://webapi.amap.com/maps?v=1.3&key=12f941dddbe64260f57468811bb77c77&plugin=AMap.DistrictSearch,AMap.PlaceSearch,AMap.AdvancedInfoWindow,AMap.Driving,AMap.MapType"></script>
-<script type="text/javascript"
-	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
-<style type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/map/layout.css">
+	<!-- map- -->
+	<script type="text/javascript"
+		src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+ <style type="text/css">
 	#addsatation-info ul{
 		list-style-type:none;
 		width:90%;
@@ -93,13 +89,12 @@
 		}
 	</style>
 </head>
-
-
-
-<body>
+  
+  <body>
+ 
 	
-		
-			<div id='container' style="margin-left:15%;margin-top:50px;width:85%;height: 95%"></div>
+
+		<div id='container' style="min-width:400px;margin-left: 230px;width:auto;height:auto;margin-top:50px;"></div>
 			<div id="info">
 			</div>
 			<div id="myPageTop"
@@ -171,10 +166,11 @@
       <div id="route-info">
       
       </div>
+      <span id="return_satationinfo"></span>
       <div id='panel'></div>
-
+<span id="addroute-number"></span>
       
-     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:0px;right:0px;width: 85%"> 
+     <div id="collasped" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"  style="position:fixed;bottom:-21px;left:230px;;right:0px;z-index:800;"> 
   <div class="panel panel-default">
     <a id="updown" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" >
     <div class="panel-heading" role="tab" id="headingThree" style="background-color:#000000;">
@@ -213,7 +209,7 @@
   </div>
 </div>
  
- </div> 
+
 	<div id="ww-load_modal" class="modal fade"  tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -236,16 +232,71 @@
 			
 		</div>
 	      </div>
-	<span id="return_satationinfo"></span>
 	
-</body>
+
 <script type="text/javascript" src="js/satation.js"></script>
 	<script type="text/javascript" src="js/map2.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
-		<script type="text/javascript" src="js/mapinterface.js"></script>
-	<!-- <script type="text/javascript" src="js/testroute.js"></script> -->
+  	<script type="text/javascript" src="js/mapinterface.js"></script>  
+
+
+
 	<script type="text/javascript">
-	$(function(){
+	
+
+
+
+
+
+
+
+
+var dis=true;
+  
+  function disp(){
+  	if(dis){
+  		map.clearMap();
+  		dis=false;
+  	}
+  	else{
+  		for(var i=0;i<sitelist.length;i++){
+				if(sitelist[i].lineId>=0){
+					satationsmarker(sitelist[i]);
+				}
+			}
+		for(var i=0;i<stafflist.length;i++){
+					staffmarker(stafflist[i]);
+		}
+		dis=true;
+  	}
+  }
+  
+  
+	var sitelist,stafflist;
+ 
+            var hhj_ctn;
+$(function(){
+hhj_ctn=document.getElementById('addsatation-info').innerHTML;
+			 console.log(hhj_ctn);
+		var site='${json_site_list}';
+		var list = eval('(' + site + ')');
+		 sitelist = list.sitelist;
+			map.setCity('成都');
+		for(var i=0;i<sitelist.length;i++){
+				if(sitelist[i].lineId>=0){
+					satationsmarker(sitelist[i]);
+				}
+			}
+			
+		var staff='${json_staff_list}';
+		 list = eval('(' + staff + ')');
+		 stafflist = list.stafflist;
+		 
+		 for(var i=0;i<stafflist.length;i++){
+		 	//console.log(stafflist[i]);
+					staffmarker(stafflist[i]);
+					
+			}
 	$('#listselect').change(function () {
 		var id = $(this).val();
 		if(id==-1)
@@ -271,37 +322,12 @@
 			}
       }});
 	});
+	
+	
+	
 	});
 	
 	
-	
-		//调节地图大小
-		var sitelist,stafflist;
- 
-            var hhj_ctn;
-		$(window).load(function(){
-			 hhj_ctn=document.getElementById('addsatation-info').innerHTML;
-			 console.log(hhj_ctn);
-		var site='${json_site_list}';
-		var list = eval('(' + site + ')');
-		 sitelist = list.sitelist;
-			map.setCity('成都');
-		for(var i=0;i<sitelist.length;i++){
-				if(sitelist[i].lineId>=0){
-					satationsmarker(sitelist[i]);
-				}
-			}
-			
-		var staff='${json_staff_list}';
-		 list = eval('(' + staff + ')');
-		 stafflist = list.stafflist;
-		 
-		 for(var i=0;i<stafflist.length;i++){
-		 	//console.log(stafflist[i]);
-					staffmarker(stafflist[i]);
-					
-			}
-		});
 		function showall(){
 			//map.setCity('成都');
 			map.clearMap();
@@ -558,24 +584,10 @@ $("#site_table td").click(function() {
          }
          });
   }
-  var dis=true;
+		
   
-  function disp(){
-  	if(dis){
-  		map.clearMap();
-  		dis=false;
-  	}
-  	else{
-  		for(var i=0;i<sitelist.length;i++){
-				if(sitelist[i].lineId>=0){
-					satationsmarker(sitelist[i]);
-				}
-			}
-		for(var i=0;i<stafflist.length;i++){
-					staffmarker(stafflist[i]);
-		}
-		dis=true;
-  	}
-  }
 	</script>
+
+	
+  </body>
 </html>
