@@ -31,7 +31,7 @@
   
   <body>
     
-			<div id='container' style="min-width:400px;margin-left: 230px;width:auto;height:auto;margin-top:50px;"></div>
+			<div id='container' style="margin-top:50px;"></div>
 		
 			<div id="info">
 			</div>
@@ -204,7 +204,7 @@
 			</div>
 	
 			
-		  <div id="show_linetable" class="panel panel-group panel-default" id="accordion" style="position:fixed;bottom:-21px;left:230px;;right:0px;z-index:800;">
+		  <div id="show_linetable" class="panel panel-group panel-default accordionLS" id="accordion" style="position:fixed;bottom:-21px;left:230px;;right:0px;z-index:800;">
 			<a id="updown" class="collapsed" role="button" data-toggle="collapse" href="#linetable" aria-expanded="true"
 				aria-controls="linetable">
 				<div class="panel-heading" role="tab" id="headingThree" style="background-color:#000000;">
@@ -1480,6 +1480,8 @@
 				}
 			});
 		});
+		
+		
 	</script>
 	
 

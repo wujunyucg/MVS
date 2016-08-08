@@ -20,6 +20,7 @@
 <meta http-equiv="description" content="This is my page">
 
 
+
 <!-- map- -->
 	<link rel="stylesheet"
 		href="http://cache.amap.com/lbs/static/main1119.css" />
@@ -41,11 +42,10 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-header">
-		<a style="float:left;"class="navbar-brand" href="#"><b>超级管理员后台</b></a> <a id="j_nav_toggle"
-			href="javascript:;"> <img alt="菜单栏搜索" src="images/caidan.png"
-			style="float:left;width:40px;height:50px;">
+	<nav class="navbar navbar-inverse navbar-fixed-top"  id="upHAInfor" style="margin-left:230px;height:60px;">
+	<div>
+		 <a id="j_nav_toggle" href="javascript:;"> <img alt="菜单栏搜索" src="images/caidan.png"
+			style="float:left;width:40px;">
 		</a> </div>
 		<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
@@ -54,7 +54,7 @@
 			<li class="dropdown dropdown-toggle "><a href="#"
 				class="dropdown-toggle" id="dropdownMenu_user"
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					咸鱼的梦想<span class="caret"></span>
+					咸鱼的梦想 <span class="caret"></span>&nbsp;&nbsp;
 			</a>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu_user">
 					<li><a href="#">个人信息</a></li>
@@ -66,41 +66,46 @@
 	</nav>
 	<div id="j-main">
 		<div id="j-left-menu">
+			<div class="upPowerName">
+				<ul class="">
+					<li><a class="supManBac" style="text-decoration: none;">
+					<span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span><span class="opMenu">普通管理员后台</span></a></li>
+				</ul>
+			</div>
 			<div class="list-group">
 				<c:if test="${admin1!=null||admin2!=null}">
 					<button type="button" class="list-group-item btn-menu btn_text">
 						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-						人员管理 <span style="float:right;"
-							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						<span class="opMenu">人员管理</span> <span style="float:right;"
+							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
 						<c:if test="${admin2!=null}">
-							<button type="button" class="list-group-item " id="manange_staff">数据维护</button>
+							<button type="button" class="list-group-item opMenu" id="manange_staff">数据维护</button>
 						</c:if>
 						<c:if test="${admin1!=null}">
-							<button type="button" class="list-group-item" id="synch_staff">数据同步</button>
+							<button type="button" class="list-group-item opMenu" id="synch_staff">数据同步</button>
 						</c:if>
 					</div>
 					<button type="button" style="display:none;"
-						class="list-group-item btn-menu btn_icon">
-						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+						class="list-group-item btn-menu btn_icon opMenu1">
+						<span class="glyphicon glyphicon-thumbs-up opMenu" aria-hidden="true"></span>
 					</button>
 				</c:if>
 				<c:if test="${admin3!=null}">
 					<button type="button" class="list-group-item  btn-menu btn_text"
 						id="map_line">
 						<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-						线路管理<span style="float:right;"
-							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						<span class="opMenu">线路管理</span><span style="float:right;"
+							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
-						<button type="button" class="list-group-item " id="man_line"
-							>线路维护</button>
-						<button type="button" class="list-group-item" id="statics_line">数据统计</button>
+						<button type="button" class="list-group-item opMenu" id="man_line">线路维护</button>
+						<button type="button" class="list-group-item opMenu" id="statics_line">数据统计</button>
 					</div>
 					<button type="button" style="display:none;"
-						class="list-group-item  btn-menu btn_icon">
-						<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
+						class="list-group-item  btn-menu btn_icon opMenu1">
+						<span class="glyphicon glyphicon-magnet opMenu" aria-hidden="true"></span>
 					</button>
 				</c:if>
 
@@ -109,8 +114,8 @@
 					<button type="button" class="list-group-item  btn-menu btn_text"
 						id="map_site">
 						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-						站点管理<span style="float:right;"
-							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						<span class="opMenu">站点管理</span><span style="float:right;"
+							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
 						<c:if test="${admin2!=null}">
@@ -118,59 +123,61 @@
 								>站点维护</button>
 						</c:if>
 						<c:if test="${admin1!=null}">
-							<button type="button" class="list-group-item" id="show_site">数据统计</button>
+							<button type="button" class="list-group-item opMenu" id="show_site">数据统计</button>
 						</c:if>
 					</div>
 					<button id="manage-admin" type="button" style="display:none;"
-						class="list-group-item  btn-menu btn_icon">
-						<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+						class="list-group-item  btn-menu btn_icon opMenu1">
+						<span class="glyphicon glyphicon-eye-open opMenu" aria-hidden="true"></span>
 					</button>
 				</c:if>
 
 				<c:if test="${admin9!=null}">
 					<button type="button" class="list-group-item btn-menu btn_text">
 						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-						车辆管理 <span style="float:right;"
-							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						<span class="opMenu">车辆管理 </span><span style="float:right;"
+							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
 						<c:if test="${admin10!=null}">
-							<button type="button" class="list-group-item" id="cre_car">
+							<button type="button" class="list-group-item opMenu" id="cre_car">
 								新建车辆数据</button>
 						</c:if>
-						<button type="button" class="list-group-item" id="man_car">
+						<button type="button" class="list-group-item opMenu" id="man_car">
 							数据维护与查询</button>
 					</div>
 					<button type="button" style="display:none;"
-						class="list-group-item btn-menu btn_icon">
+						class="list-group-item btn-menu btn_icon opMenu1">
 						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 					</button>
 				</c:if>
 				<c:if test="${admin5!=null}">
-					<button type="button" class="list-group-item  btn-menu btn_text">
+					<button type="button" class="list-group-item  btn-menu btn_text ">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						班次管理 <span style="float:right;"
-							class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+						<span class="opMenu">班次管理</span> <span style="float:right;"
+							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
 						<c:if test="${admin6!=null}">
-							<button type="button" class="list-group-item add-arrange">新增班次</button>
+							<button type="button" class="list-group-item add-arrange opMenu">新增班次</button>
 						</c:if>
-						<button type="button" class="list-group-item manage-arrange">数据维护</button>
+						<button type="button" class="list-group-item manage-arrange opMenu">数据维护</button>
 					</div>
 					<button type="button" style="display:none;"
-						class="list-group-item  btn-menu btn_icon">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						class="list-group-item  btn-menu btn_icon opMenu1">
+						<span class="glyphicon glyphicon-user " aria-hidden="true"></span>
 					</button>
 				</c:if>
 			</div>
-			<div class="panel panel-default j-no-radous">
-				<div class="panel-body">一些注释讲解之类的，这下面太空了</div>
+			<div class="panel panel-default j-no-radous opMenu">
+				<div class="panel-body opMenu">一些注释讲解之类的，这下面太空了</div>
 			</div>
 		</div>
+		
 		<div id="content">
 			<h1>欢迎您登录咸鱼的梦想厂车管理后台</h1>
 		</div>
+		
 	</div>
 
 	<!-- 模态框（Modal） -->
@@ -218,7 +225,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<script type="text/javascript">
 		//异步加载代码

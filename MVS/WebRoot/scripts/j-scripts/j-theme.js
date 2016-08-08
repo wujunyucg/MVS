@@ -1,5 +1,6 @@
 $(function(){
 	var turn = true;
+	var judgeCJNT = false;
 	var openMenus = new Array();//存放展开的子menu的div
 	$("#j_nav_toggle").click(function(){
 		if(turn){
@@ -10,22 +11,37 @@ $(function(){
 				}
 			});
 			
-			$(".j-child-menu").hide();
-			$("#j-left-menu").hide();
-			$("#j-left-menu").css("width","60px");
-			$("#content").css("marginLeft","10px");
-			$(".btn_text").hide();
-			$(".btn_icon").show();
+			//$(".j-child-menu").hide();
+			//$("#j-left-menu").hide();
+			$(".opMenu").hide("500");
+			$("#j-left-menu").css("width","58px");
+			$("#content").css("marginLeft","68px");
+			$("#j-left-menu").css("width","58px");
+			$("#upHAInfor").css("marginLeft","58px");
+			console.log($("#accordion"));
+			if($(".accordionLS") != undefined){
+				$(".accordionLS").css("left","58px");
+			}
+			
+			//$(".btn_text").hide();
+			//$(".btn_icon").show();
 			turn = false;
 		}else{
 			for(var i=0;i<openMenus.length;i++){
 				openMenus[i].show();//显示出来
 			}
-			$("#j-left-menu").show();
-			$("#j-left-menu").css("width","15%");
-			$("#content").css("marginLeft","16%");
-			$(".btn_text").show();
-			$(".btn_icon").hide();
+			//$("#j-left-menu").show();
+			$("#j-left-menu").css("width","230px");
+			$("#content").css("marginLeft","240px");
+			$("#j-left-menu").css("width","230px");
+			$("#upHAInfor").css("marginLeft","230px");
+			if($(".accordionLS") != undefined){
+				$(".accordionLS").css("left","230px");
+			}
+			
+			$(".opMenu").show("500");
+			//$(".btn_text").show();
+			//$(".btn_icon").hide();
 			turn = true;
 		}
 	});
@@ -38,17 +54,35 @@ $(function(){
 			if(tt.text()!=t.text()){
 				tt.next("div").slideUp("500");
 				var ar  = tt.children("span").last();
-				ar.removeClass().addClass("glyphicon glyphicon-menu-down");
+				ar.removeClass().addClass("glyphicon glyphicon-menu-down opMenu");
 			}
 		});
 		t.next("div").slideToggle("1000");
 		//右边的箭头
 		var ar  = t.children("span").last();
 		if(ar.hasClass("glyphicon-menu-down")){
-			ar.removeClass().addClass("glyphicon glyphicon-menu-up");
+			ar.removeClass().addClass("glyphicon glyphicon-menu-up opMenu");
 		}else{
-			ar.removeClass().addClass("glyphicon glyphicon-menu-down");
+			ar.removeClass().addClass("glyphicon glyphicon-menu-down opMenu");
 		}
 	});
 	
+	$("#j-left-menu").mouseenter(function(){
+		if(!turn){
+			var s = event.fromElement || event.relatedTarget; 
+           // if (!this.contains(s)){   
+				$("#j_nav_toggle").click();
+				judgeCJNT = true;
+           // }
+		}
+	});
+	$("#j-left-menu").mouseleave(function(){
+		if(judgeCJNT){
+			var s = event.fromElement || event.relatedTarget; 
+        //    if (!this.contains(s)){   
+				$("#j_nav_toggle").click();
+				judgeCJNT = false;
+            }
+		//}
+	});
 });
