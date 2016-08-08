@@ -1,57 +1,105 @@
-*{margin:0;padding:0;}
+* {
+	margin: 0;
+	padding: 0;
+}
 
+body{
+	background-image: url("../images/login-bg.jpg");
+	background-repeat: no-repeat;
+	background-size:100%;
+}
 /*body{
   background-image:url("../images/bg.png" ) ;
   background-repeat: repeat;
   font-family:'Open Sans',sans-serif;
 }*/
-
-#login{
-  width:400px;
-  margin:150px auto;
-  transition:opacity 1s;
-  -webkit-transition:opacity 1s;
-  background:#ffffff;
+#login {
+	position: relative;
+	width: 400px;
+	margin: 150px auto;
+	transition: opacity 1s;
+	-webkit-transition: opacity 1s;
+	text-align: center;
 }
 
-#login h1{
-  background:#222;
-  padding:20px 0;
-  font-size:140%;
-  font-weight:300;
-  text-align:center;
-  color:#fff;
+#mask {
+	width: 400px;
+	height: 431px;
+	background-color: #cedfd9;
+	filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+	-webkit-filter: blur(5px); /* Chrome, Opera */
+	-moz-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: blur(5px);
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=5, MakeShadow=false);
+	/* IE6~IE9 */
+	
+	 filter:alpha(opacity=70);  
+      -moz-opacity:0.7;  
+      -khtml-opacity: 0.7;  
+      opacity: 0.7; 
 }
 
-form{
-  
-  padding:6% 4%;
+#login h1 {
+	position: absolute;
+	top: 10px;
+	width: 400px; 
+	padding : 20px 0;
+	font-size: 140%;
+	font-weight: 300;
+	text-align: center;
+	color: #fff;
 }
 
-input[type="text"],input[type="password"]{
-  width:100%;
-  background:#fff;
-  margin-bottom:4%;
-  border:1px solid #ccc;
-  padding:4%;
-  font-family:'Open Sans',sans-serif;
-  font-size:95%;
-  color:#555;
+input[type="text"], input[type="password"] {
+	position: absolute;
+	width: 360px;
+	left:20px;
+	background:#e9f1ee;
+	border: 1px solid #ccc;
+	padding: 3%;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 95%;
+	color: #555;
+	z-index: 1000;
+	border-radius:5px;
+}
+#name{
+	top:110px;
+}
+#valid{
+	top:230px;
+}
+#pass{
+	top:170px;
+}
+input[type="submit"] {
+	position: absolute;
+	top:320px;
+	width: 360px;
+	left:20px;
+	background: #5598ae;
+	border: 0;
+	padding: 3%;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 100%;
+	color: #fff;
+	cursor: pointer;
+	transition: background .3s;
+	-webkit-transition: background .3s;
+	border-radius:5px;
 }
 
-input[type="submit"]{
-  width:100%;
-  background:#222;
-  border:0;
-  padding:4%;
-  font-family:'Open Sans',sans-serif;
-  font-size:100%;
-  color:#fff;
-  cursor:pointer;
-  transition:background .3s;
-  -webkit-transition:background .3s;
+input[type="submit"]:hover {
+	background: #2288bb;
+}
+.valitype{
+	position:absolute;
+	width:400px;
+	text-align:center;
+	top:290px;
 }
 
-input[type="submit"]:hover{
-  background:#2288bb;
+label{
+	color:#f5f5f5;
 }

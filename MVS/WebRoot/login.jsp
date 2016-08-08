@@ -30,35 +30,39 @@
 	}
 
 	$(function() {
-		$("#submit_btn").click(function() {
+		$("#submit_btn").click(function(){
 			var name = $("#name").val();
 			var pass = $("#pass").val();
 			var type = $("input:radio[name='admin']:checked").val();
 			var validCode = $("#valid").val();
 			//alert(name+" "+pass+" "+type+" "+validCode)
 			if (name != "" && pass != "" && validCode != "" && type != "") {
-				$("#load_modal").modal('show');
+				$("#modal_text").text("正在验证，请稍后...");
+				$("#msg_modal").modal('show');
 				$.ajax({
 					url : "servlet/LoginServlet",
 					type : "POST",
-					data : {
-						username : name,
-						password : pass,
-						type:type,
-						valid:validCode
-					},
+					data : 
+						$("#form_id").serialize()+"&type="
+						+type+"&valid="
+						+validCode
+					,
 					success : function(re) {
-						$("#load_modal").modal('hide');
+						$(".modal-backdrop").hide();
+						$("#msg_modal").modal('hide');
 						if (re == "valid") {
-							alert("验证码错误")
+							$("#modal_text").text("验证码错误");
+							$("#msg_modal").modal('show');
 						}else if("admin"==re){
 							window.location.href = "<%=path%>/jsp_admin/sadmin.jsp";
 						}else if("user"==re){
 							window.location.href = "<%=path%>/jsp_user/user.jsp";
 						}else if("noadmin"==re){
-							alert("没有角色")
+							$("#modal_text").text("没有角色");
+							$("#msg_modal").modal('show');
 						}else{
-							$("#modal_error").modal('show');
+							$("#modal_text").text("用户名或密码错误");
+							$("#msg_modal").modal('show');
 						}
 					},
 					error : function() {
@@ -66,55 +70,48 @@
 					}
 				});
 				return false;//记得添加
+			}else{
+				$("#modal_text").text("不能为空");
+				$("#msg_modal").modal('show');
+				return false;
 			}
+			});
 		});
-	});
 </script>
 </head>
 <body>
 	<div id="login">
+		<div id="mask">3</div>
 		<h1>厂车管理后台</h1>
 		<form id="form_id">
 			<input id="name" name="username" type="text" placeholder="用户名" /> <input
 				name="password" id="pass" type="password" placeholder="密码" /> <input
-				id="valid" name="validtion" type="text" placeholder="验证码,不区分大小写" />
-			<div>
+				id="valid" name="validtion" type="text" placeholder="验证码,字母小写" />
+			<div class="valitype">
 				<img id="validationCode" alt="验证码图片" title="验证码图片"
 					src="<%=path%>/validationCodeServlet.png"
-					onclick="refreshCode(this)" /> <label>
-					<input type="radio" name="admin" id="inlineRadio1"
-					value="1"> 超级管理员</label> 
-					&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="radio"
+					onclick="refreshCode(this)" /> <label> <input type="radio"
+					name="admin" id="inlineRadio1" value="1"> 超级管理员
+				</label> &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="radio"
 					name="admin" id="inlineRadio2" value="2" checked="checked">
-					普通管理员</label> &nbsp;&nbsp;&nbsp;&nbsp;
-					<label><input type="radio"
-					name="admin" id="inlineRadio3" value="3"> 员工</label>
-				
+					普通管理员</label>
 			</div>
 			<input id="submit_btn" type="submit" value="登    录"
 				style="margin-top:10px;" />
 		</form>
 	</div>
 
-	<!-- 加载的模态框 -->
-	<div id="load_modal" class="modal fade" tabindex="-1" role="dialog"
-		aria-labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-sm">
-			<h3 class="modal-content">
-				<span id="modal_text">正在验证，请稍后...</span>
-			</h3>
+	<!-- 提示信息模态框 -->
+	<div id="msg_modal" class="modal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<b id="modal_text">正在加载，请稍后...</b>
+				</div>
+			</div>
 		</div>
 	</div>
-	<!-- 登陆失败的提示框 -->
-	<div id="modal_error" class="modal fade" tabindex="-1" role="dialog"
-		aria-labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-sm">
-			<h3 class="modal-content">
-				用户名或密码错误</span>
-			</h3>
-		</div>
-	</div>
-
 	<script type="text/javascript">
 		/** 
 		 * 刷新验证码 
