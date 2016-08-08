@@ -20,6 +20,15 @@
 <meta http-equiv="description" content="This is my page">
 
 
+<!-- map- -->
+	<link rel="stylesheet"
+		href="http://cache.amap.com/lbs/static/main1119.css" />
+	<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+	<script src="http://webapi.amap.com/js/marker.js"></script>
+	<script type="text/javascript"
+		src="http://webapi.amap.com/maps?v=1.3&key=12f941dddbe64260f57468811bb77c77&plugin=AMap.DistrictSearch,AMap.PlaceSearch,AMap.AdvancedInfoWindow,AMap.Driving,AMap.MapType"></script>
+
+
 
 
 <link rel="stylesheet" type="text/css" href="css/j-css/j-theme.css">
@@ -86,7 +95,7 @@
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
 						<button type="button" class="list-group-item " id="man_line"
-							onclick="window.location.href='<%=path%>/servlet/ManageLineServlet?type=1'">线路维护</button>
+							>线路维护</button>
 						<button type="button" class="list-group-item" id="statics_line">数据统计</button>
 					</div>
 					<button type="button" style="display:none;"
@@ -212,7 +221,6 @@
 
 	<script type="text/javascript">
 		//异步加载代码
-		
 		$(".manage-arrange").click(function(){
 			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=path%>/servlet/ManageArrangeServlet");
@@ -247,9 +255,14 @@
 		$("#show_site").click(function(){
 				$("#content").load("<%=basePath%>jsp_user/show_site.jsp");
 		});
+		
+		$("#man_line").click(function(){
+				$("#content").load("<%=basePath%>/servlet/ManageLineServlet?type=1");
+		});
+		
 		$("#statics_line").click(function(){
 				$("#content").load("<%=request.getContextPath()%>/jsp_user/statistics_line.jsp");
-						});
+		});
 	</script>
 </body>
 </html>
