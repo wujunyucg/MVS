@@ -80,6 +80,7 @@
 </script>
 </head>
 <body>
+	<div class="bg" >1</div>
 	<div id="login">
 		<div id="mask">3</div>
 		<h1>厂车管理后台</h1>
@@ -96,6 +97,7 @@
 					name="admin" id="inlineRadio2" value="2" checked="checked">
 					普通管理员</label>
 			</div>
+			<hr id="mhr"></hr>
 			<input id="submit_btn" type="submit" value="登    录"
 				style="margin-top:10px;" />
 		</form>
