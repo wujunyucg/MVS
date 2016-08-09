@@ -586,15 +586,15 @@ function siteOnroutes(data,path,markers,index,poly,wei){
 			}
 		},0);
 		
-		contextMenu.addItem("查看路线", function(){
-			var path2=[];
-			for(var i=0;i<path.length;i++){
-				if(wei[i]==1)
-					path2.push(path[i]);
-			}
-			showroute(path2,1,"线路1");
-			poly.hide();
-		}, 3); 
+//		contextMenu.addItem("查看路线", function(){
+//			var path2=[];
+//			for(var i=0;i<path.length;i++){
+//				if(wei[i]==1)
+//					path2.push(path[i]);
+//			}
+//			showroute(path2,1,"线路1");
+//			poly.hide();
+//		}, 3); 
 		contextMenu.addItem("取消设置", function(){
 			if(marker.getIcon() == 'icons/newrtsizt.svg'){
 			  	marker.setIcon(temp_icon);
@@ -655,18 +655,18 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute,lName){
 				}
 			},0);
 			
-			contextMenu.addItem("查看路线", function(){
-				var path2=[];
-				for(var i=0;i<path.length;i++){
-					if(wei[i]==1)
-						path2.push(path[i]);
-				}
-				showroute(path2,1,"线路1");
-				poly.hide();
-			}, 3); 
+//			contextMenu.addItem("查看路线", function(){
+//				var path2=[];
+//				for(var i=0;i<path.length;i++){
+//					if(wei[i]==1)
+//						path2.push(path[i]);
+//				}
+//				showroute(path2,1,"线路1");
+//				poly.hide();
+//			}, 3); 
 			contextMenu.addItem("取消设置", function(){
 				if(marker.getIcon() == 'icons/newrtsizt.svg'){
-				  	marker.tIcon(temp_staIcon);
+				  	marker.setIcon(temp_staIcon);
 					wei[ii[index]]=0;
 					console.log(wei);
 					showPolyline(path,poly,wei);

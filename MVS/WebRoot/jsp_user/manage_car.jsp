@@ -83,7 +83,6 @@
 					<th>品牌</th>
 					<th>司机</th>
 					<th>座位数</th>
-					<th>排班名称</th>
 					<th style="width:100px;">查看详情</th>
 					<c:if test="${admin10!=null}">
 					<th style="width:100px;">维护数据</th>
@@ -100,7 +99,6 @@
 							<td>${car.getBrand()}</td>
 							<td>${car.getDriver()}</td>
 							<td>${car.getNumber()}</td>
-							<td>${arrangeName.get(status.index)}</td>
 							<td style="width:100px;"><a class="car_detail" id="${car.getCarId()}" href="" 
 							data-toggle="modal" data-target="#myModal" onclick="javascript:cardetail('${pageSize*(page_index-1)+status.index+1}',
 							'${car.getLicensePlate()}', '${car.getBrand()}', '${car.getRegistrationDate()}', '${car.getInsuranceDate()}', 
@@ -144,10 +142,12 @@
 							<div class="form-control" id="brand" aria-describedby="sizing-addon2" readonly></div></div><br/>
 						</div>
 					</div><div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">班次名称</span>
-							<div class="form-control" id="arrangeId" aria-describedby="sizing-addon2" readonly></div></div><br/>
-						</div>
+							<input type="text" class="form-control" id="arrangeId2" aria-describedby="sizing-addon2" readonly>
+							</div><br/>
+						</div></div>
+					<div class="row">
 						<div class="col-md-4">
 							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">座位数</span>
 							<div class="form-control" id="number" aria-describedby="sizing-addon2" readonly></div>
@@ -213,10 +213,11 @@
 							<input type="text" class="form-control" id="brand1" aria-describedby="sizing-addon2"></div><br/>
 						</div>
 					</div><div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">班次名称</span>
 							<input type="text" class="form-control" id="arrangeId1" aria-describedby="sizing-addon2" readonly></div><br/>
-						</div>
+						</div></div>
+					<div class="row">
 						<div class="col-md-4">
 							<div class="input-group"><span class="input-group-addon" id="sizing-addon2">座位数</span>
 							<input type="text" class="form-control" id="number1" aria-describedby="sizing-addon2">
@@ -523,8 +524,7 @@
 			}
 			
 			$("#license").html(lic);
-			
-			$("#arrangeId").html(arrN);
+			$("#arrangeId2").val(arrN);
 			
 			$("#driver").html(dri);
 			$("#number").html(num);  
