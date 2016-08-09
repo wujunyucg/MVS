@@ -413,33 +413,32 @@ function EditSatation2(data,marker,ctn){
 		info2.close();
 		marker.hide();
 	};
-	//console.log("4");
+
 }
 
-
-//addclicksite(hhj_ctn);
-///satationsmarker(pp[0]);
 var enableclick=1;
 function addclicksite(ctn){
-	var mapclick;
-	enableclick=1;
+	var mapclick;	
 	$('#exitclick').bind('click',function(){
 		AMap.event.removeListener(mapclick); 
-		alert("OK");
 		enableclick=0;
 		map.on('click',function(e){
-			alert('do nothing');
 			enableclick=0;
 		});
 	});
+	enableclick=1;
 	mapclick=map.on('click',function(e){
+		var aa=$('.dropdown-menu a');
+		aa[0].bind('click',function(){
+			enableclick=1;
+		});
 		if(enableclick==1){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
 			icon:"icons/satation2.svg",
-			//location:e.lnglat
 		});
+			
 		marker.hide();
 		if(siteable==0){
 		marker.show();
