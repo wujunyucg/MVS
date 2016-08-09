@@ -89,9 +89,9 @@
 								<td class="can_change">${arr.getArrName()}</td>
 								<td class="can_change">${arr.getDate()}</td>
 								<td class="can_change">${arr.getTime()}</td>
-								<td class="can_change">${arr.getLineName()}</td>
-								<td class="can_change">${arr.getLicensePlate()}</td>
-								<td class="can_change">${arr.getDriver()}</td>
+								<td >${arr.getLineName()}</td>
+								<td >${arr.getLicensePlate()}</td>
+								<td >${arr.getDriver()}</td>
 								<c:if test="${admin6!=null}">
 								<td><a class="arr_modify" href="javascript:;">修改</a></td>
 								<td><a class="arr_delete" href="javascript:;">删除</a></td>
@@ -291,7 +291,7 @@
 					var text = t.text();
 				 	// 创建替换的input 对象  
                 	var $input = $("<input type='text'>").css("background-color",  
-                        t.css("background-color")).width(t.width()-10);
+                        t.css("background-color")).width(t.width()-50);
 					t.html("");
 					$input.val(text);
 					t.append($input);
@@ -310,7 +310,7 @@
 					if(""==text){
 						
 						$("#modal_content").text("有空格，不行");
-						alert($("#modal_content").text())
+						//alert($("#modal_content").text())
 						$("#msg_modal").modal('show');
 						ok =  false;
 					}
@@ -346,6 +346,7 @@
 				});
 				}
 				take.text("修改");
+				$("#msg_modal").modal('hide');
 			}
 		});
 		

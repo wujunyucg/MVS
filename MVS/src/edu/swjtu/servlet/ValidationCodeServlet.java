@@ -91,9 +91,9 @@ public class ValidationCodeServlet extends HttpServlet {
         configurableCaptchaService.setFontFactory(fontFactory);  
         // 随机字符生成器,去除掉容易混淆的字母和数字,如o和0等  
         wordFactory = new RandomWordFactory();  
-        wordFactory.setCharacters("abcdefghkmnpqstwxyz23456789+-*/@*%");  
-        wordFactory.setMaxLength(6);  
-        wordFactory.setMinLength(5);  
+        wordFactory.setCharacters("abcdefghkmnpqstwxyz123456789");  
+        wordFactory.setMaxLength(5);  
+        wordFactory.setMinLength(4);  
         configurableCaptchaService.setWordFactory(wordFactory);  
         // 自定义验证码图片背景  
         MyCustomBackgroundFactory backgroundFactory = new MyCustomBackgroundFactory();  
@@ -114,8 +114,8 @@ public class ValidationCodeServlet extends HttpServlet {
         textRenderer.setTopMargin(3);  
         configurableCaptchaService.setTextRenderer(textRenderer);  
         // 验证码图片的大小  
-        configurableCaptchaService.setWidth(90);  
-        configurableCaptchaService.setHeight(32);  
+        configurableCaptchaService.setWidth(70);  
+        configurableCaptchaService.setHeight(25);  
     }  
     /** 
      * 自定义验证码图片背景,主要画一些噪点和干扰线 
@@ -128,7 +128,7 @@ public class ValidationCodeServlet extends HttpServlet {
             int imgWidth = image.getWidth();  
             int imgHeight = image.getHeight();  
             // 填充为白色背景  
-            graphics.setColor(Color.WHITE);  
+            graphics.setColor(Color.LIGHT_GRAY);  
             graphics.fillRect(0, 0, imgWidth, imgHeight);  
             // 画100个噪点(颜色及位置随机)  
             for(int i = 0; i < 100; i++) {  
