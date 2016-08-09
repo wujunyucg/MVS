@@ -223,7 +223,7 @@
 				</div>
 				<div class="modal-footer">
 					<button id="btn_delete" type="button" class="btn btn-danger">确定</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-default my-btn-cancel" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -444,6 +444,10 @@
 			//下面是对角色的删除
 			$(".admin_delete").click(
 					function() {
+						$("#btn_delete").show();
+						$("#btn_delete").attr("disabled",false);
+						$(".my-btn-cancel").text("取消");
+						$("#delete_info").html("严重警告：<br />您将删除此角色，并且角色下面的所有用户都将不存在，仍继续吗？");
 						//取得此行的角色名称
 						var adminname = $(this).parent().prev().prev().prev()
 								.prev().text();
@@ -453,7 +457,8 @@
 
 						$("#btn_delete").click(
 								function() {
-									$(this).attr("disabled", true);
+									var tt = $(this);
+									tt.attr("disabled", true);
 									$.ajax({
 										url : "servlet/ManageAdminServlet2",
 										type : "POST",
@@ -470,6 +475,8 @@
 												//在页面上移出表格的这一行
 												$(thisDelete).parent().parent()
 														.remove();
+												tt.hide();
+												$(".my-btn-cancel").text("确定");
 											} else {
 												$("#delete_info").text(
 														"未知原因删除失败");
