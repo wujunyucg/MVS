@@ -416,10 +416,10 @@ function EditSatation2(data,marker,ctn){
 
 }
 
-
+var enableclick=1;
 function addclicksite(ctn){
 	var mapclick;	
-	var enableclick=1;
+	enableclick=1;
 	$('#exitclick').bind('click',function(){
 		AMap.event.removeListener(mapclick); 
 		enableclick=0;
@@ -427,14 +427,12 @@ function addclicksite(ctn){
 	enableclick=1;
 	mapclick=map.on('click',function(e){
 		var aa=$('.dropdown-menu a');
-		
 		if(enableclick==1){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
 			icon:"icons/satation2.svg",
 		});
-			
 		marker.hide();
 		if(siteable==0){
 		marker.show();
