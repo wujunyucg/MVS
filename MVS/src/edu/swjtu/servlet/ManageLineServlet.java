@@ -133,7 +133,7 @@ public class ManageLineServlet extends HttpServlet {
 					System.out.println("not null");
 				}
 				try {
-					if(new LineDaoImpl().deleteAllLine(con) >= 0){
+						new LineDaoImpl().deleteAllLine(con);
 						new Lines().deleteLineOfSite(con);
 						ArrayList<Line> linelist = new ArrayList<Line>();
 						request.getSession().setAttribute("pr",pr);
@@ -184,7 +184,6 @@ public class ManageLineServlet extends HttpServlet {
 						System.out.println("$"+json_linelist);
 						pw.write(json_s);
 						
-					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -475,7 +474,11 @@ public class ManageLineServlet extends HttpServlet {
 				if(delete_line.getSiteId().equals(siteId)){
 					delete_line.setCarId("未安排");
 					String oldname = delete_line.getName();
-					delete_line.setName(line_name + "_Z");
+					if(delete_line.getRate()<0.0&&delete_line.getRate()!=0.0){
+						delete_line.setName(line_name + "_Z");
+					}else{
+						delete_line.setName(line_name);
+					}
 					new LineDaoImpl().updateLine(con, delete_line);
 					new Lines().modifyLineName(oldname,delete_line.getLineId(),con);
 				}else{
