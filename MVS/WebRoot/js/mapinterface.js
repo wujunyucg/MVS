@@ -452,7 +452,8 @@ function addclicksite(ctn){
 				pageSize:10,
 				//panel:'panel'
 			});
-			//console.log("ddddddddddd");
+			
+
 			satation_search.searchNearBy("街|路|道", e.lnglat,200,function(status,result){
 				//console.log(marker.getPosition());
 				if(result.poiList.pois.length){
