@@ -18,12 +18,6 @@ public class Powers {
 			"班次查询","班次数据维护",
 			"站点数据维护",
 			"新车入厂","查询车辆信息","车辆数据维护"};
-	final static String[]power_n={
-		"A","D","C","F",
-		"A","D","C","F",
-		"A","D","C","F","E",
-		"A","D","C","F","E",
-		"A","D","C","F","E"};
 	final static String[]powerType = {
 		"人员管理","线路管理","排班管理","站点管理","车辆管理"	
 	};
@@ -53,15 +47,15 @@ public class Powers {
 		String[]powers = ids.split(",");
 		Set<Integer> set = new HashSet<Integer>();//集合为了保证数据不重复 
 		for(int i=0;i<powers.length;i++){
-			if(powers[i].contains("人员")){
+			if(powers[i].equals("0")||powers[i].equals("1")||powers[i].equals("2")){
 				set.add(0);
-			}else if(powers[i].contains("线路")){
+			}else if(powers[i].equals("3")||powers[i].equals("4")){
 				set.add(1);
-			}else if(powers[i].contains("班次")){
+			}else if(powers[i].equals("5")||powers[i].equals("6")){
 				set.add(2);
-			}else if(powers[i].contains("站点")){
+			}else if(powers[i].equals("7")){
 				set.add(3);
-			}else if(powers[i].contains("车")){
+			}else if(powers[i].equals("8")||powers[i].equals("9")||powers[i].equals("10")){
 				set.add(4);
 			}
 		}
@@ -74,46 +68,10 @@ public class Powers {
 	
 	public static String getPowerType_CU(String ids){
 		String[]powers = ids.split(",");
-		Set<Integer> set = new HashSet<Integer>();//集合为了保证数据不重复 
-		for(int i=0;i<powers.length;i++){
-			int id = Integer.parseInt(powers[i]);
-			if(id<8){
-				set.add(id/4);
-			}else{
-				set.add((id+2)/5);
-			}
-		}
 		String p = "";
-		for(int i : set){
-			p+=powerType[i] + "(";
-			if(i<2){
-				for(int j=0;j<powers.length;j++){
-					if(Integer.parseInt(powers[j]) >= i*4 && Integer.parseInt(powers[j]) <= i*4+3)
-						p += power_n[Integer.parseInt(powers[j])] + " ";
-					else if(Integer.parseInt(powers[j]) > i*4+3)
-						break;
-				}
-			}
-			else if(i==2){
-				for(int j=0;j<powers.length;j++){
-					if(Integer.parseInt(powers[j]) >= 8 && Integer.parseInt(powers[j]) <= 12)
-						p += power_n[Integer.parseInt(powers[j])] + " ";
-					else if(Integer.parseInt(powers[j]) > 12)
-						break;
-				}
-			}
-			else{
-				for(int j=0;j<powers.length;j++){
-					if(Integer.parseInt(powers[j]) >= i*5-2 && Integer.parseInt(powers[j]) <= i*5+2)
-						p += power_n[Integer.parseInt(powers[j])] + " ";
-					else if(Integer.parseInt(powers[j]) > i*5+2)
-						break;
-				}
-			}
-			p = p.substring(0,p.length()-1); 
-			p += ") , ";
+		for(int i=0;i<powers.length;i++){
+			p+=power[Integer.parseInt(powers[i])]+" ";
 		}
-		p = p.substring(0,p.length()-1); 
 		return p;
 	}
 }
