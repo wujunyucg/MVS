@@ -420,7 +420,7 @@ function EditSatation2(data,marker,ctn){
 //addclicksite(hhj_ctn);
 ///satationsmarker(pp[0]);
 function addclicksite(ctn){
-	map.on('click',function(e){
+	var mapclick=map.on('click',function(e){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
@@ -473,6 +473,9 @@ function addclicksite(ctn){
 			marker.hide();
 			siteable=0;
 		}
+	});
+	$('#exitclick').bind('click',function(){
+		mapclick.removeListener('click');
 	});
 }
 

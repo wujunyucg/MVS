@@ -1,10 +1,11 @@
 /** 地图控件部分 **/
+	    var terminal=[104.067475,30.654737];
 		var map = new AMap.Map('container', {
 			resizeEnable: true,
 			zoom:18,
-			city:'成都',
 			isHotspot: true,
 			keyboardEnable:true,
+			center:terminal
  		});
 		map.plugin(["AMap.MapType"],function(){
 			//地图类型切换
@@ -20,6 +21,7 @@
 			var tool = new AMap.ToolBar({autoPosition:true});
 			map.addControl(tool);    
 		});
+		map.setCenter(terminal);
 		var route2;
 		//拖曳导航路径
 		function Dragroute(path,satations,isadd){
@@ -197,14 +199,14 @@
 				  icon:"icons/satationOnRoute.svg",
 				  zIndex:100
 			});
+			console.log(data.lineId);
 			if(data.lineId==null||data.lineId==""){
 				marker.setIcon('icons/satations.svg');
-			}
-			if(data.lineName.indexOf("_Z")>=0){
-				marker.setIcon('icons/znzd.svg');
+				//alert("OK");
 			}
 			var conten=SatationContent(data);
 			AMap.event.addListener(marker, 'click',function (e){
+				//data=marker.getPosition(); 
 				marker.setDraggable(false);
 				var conten=SatationContent(data);
 				info(marker.getPosition(),conten);	
@@ -219,6 +221,7 @@
 				markers.push(marker);
 			}
 			for (var i = 0; i < data.length; i += 1) {
+				//console.log("testmar"+data[i]+"  "+i+data[i].lng);
 				markers[i]=setmarker(data[i],markers);
 				markers.push(marker);
 			}
@@ -387,14 +390,14 @@
 					$("#load_modal").modal('show');
 					var list = eval('(' + request + ')');
 				 	sitelist = list.sitelist;
-				 	var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
+					var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
 					for(var i=0;i<sitelist.length;i++){
 						satationsmarker(sitelist[i]);
 						if(sitelist[i].name=="0")
 							continue;
-						tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineName+'</td><td>'+sitelist[i].order+'</td></tr>';
+						tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
 						}
-				
+					alert(tab);
 					tab=tab+'</tbody>';
 					$("#site_table").html(tab);
 					$("#site_table td").click(function() {
@@ -405,7 +408,7 @@
 		             var  tr=$(this).parent().attr("id");
 		               satationsmarker(sitelist[tr]);
 		               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-		               $("#"+tr).css('background-color','#CCFFFF');
+		               $("#"+tr).css('background-color','red');
 		        
 		           
 		            });
@@ -429,14 +432,11 @@
 				$("#load_modal").modal('show');
 				var list = eval('(' + request + ')');
 			 	sitelist = list.sitelist;
-			 	var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
+				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
 				for(var i=0;i<sitelist.length;i++){
 					satationsmarker(sitelist[i]);
-					if(sitelist[i].name=="0")
-						continue;
-					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineName+'</td><td>'+sitelist[i].order+'</td></tr>';
-					}
-			
+					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+				}
 				tab=tab+'</tbody>';
 				$("#site_table").html(tab);
 				$("#site_table td").click(function() {
@@ -447,7 +447,7 @@
 	             var  tr=$(this).parent().attr("id");
 	               satationsmarker(sitelist[tr]);
 	               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-	               $("#"+tr).css('background-color','#CCFFFF');
+	               $("#"+tr).css('background-color','red');
 	        
 	           
 	            });
@@ -471,14 +471,12 @@
 					$("#load_modal").modal('show');
 				var list = eval('(' + request + ')');
 			 	sitelist = list.sitelist;
-			 	var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th><th>站点所属线路次序</th></tr></thead><tbody class="scrollTbody">';
+				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
 				for(var i=0;i<sitelist.length;i++){
+				
 					satationsmarker(sitelist[i]);
-					if(sitelist[i].name=="0")
-						continue;
-					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineName+'</td><td>'+sitelist[i].order+'</td></tr>';
-					}
-			
+					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+				}
 				tab=tab+'</tbody>';
 				$("#site_table").html(tab);
 				$("#site_table td").click(function() {
@@ -489,13 +487,13 @@
 	             var  tr=$(this).parent().attr("id");
 	               satationsmarker(sitelist[tr]);
 	               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
-	               $("#"+tr).css('background-color','#CCFFFF');
+	               $("#"+tr).css('background-color','red');
 	        
 	           
 	            });
 		    
 	      }});
 	}
-	function exitfclick(){
-	 	map.on('click',function(){}); 
-	  }
+	function exitclick(){
+		map.on('click',function(){});
+	}
