@@ -558,10 +558,18 @@
 						<div id="finstaffline">
 							<div class="modal-body">
 					        	<div class="alert alert-success" role="alert">已成功生成员工的乘车路线信息</div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-					      </div>
+					     	</div>
+					      	<div class="modal-footer">
+					        	<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+					      	</div>
+						</div>
+						<div id="errortaffline">
+							<div class="modal-body">
+					        	<div class="alert alert-danger" role="alert">未安排完全部站点或其他数据错误，无法生成！</div>
+					     	</div>
+					      	<div class="modal-footer">
+					        	<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+					      	</div>
 						</div>
 				</div>
 			</div>
@@ -857,6 +865,7 @@
 				  backdrop:'static'
 				});
 				$("#finstaffline").hide();
+				$("#errortaffline").hide();
 				$("#in_creline").modal("hide");////////////////////////////////////////////////////
 				var choice = "0";
 				if(choice_icre == 0){
@@ -1031,6 +1040,7 @@
 				  backdrop:'static'
 				});
 				$("#finstaffline").hide();
+				$("#errortaffline").hide();
 				$("#de_line").modal("hide");///////////////////////////////
 		
 			$.ajax({
@@ -1240,6 +1250,7 @@
 				  backdrop:'static'
 				});
 				$("#finstaffline").hide();
+				$("#errortaffline").hide();
 				$("#h_creline").modal("hide");
 				$.ajax({
 					url : "servlet/ManageLineServlet",
@@ -1352,6 +1363,7 @@
 				  backdrop:'static'
 				});
 				$("#finstaffline").hide();
+				$("#errortaffline").hide();
 				$("#h_creline1").modal("hide");
 				$.ajax({
 					url : "servlet/ManageLineServlet",
@@ -1471,6 +1483,7 @@
 			  backdrop:'static'
 			});
 			$("#finstaffline").hide();
+			$("#errortaffline").hide();
 			
 			$.ajax({
 				url : "servlet/ManageLineServlet",
@@ -1480,7 +1493,13 @@
 				},
 				success : function(re) {
 					$("#waitingpro").hide("1000");
-					$("#finstaffline").show("1000");
+					if(re == "yes"){
+						$("#finstaffline").show("1000");
+						$("#errortaffline").hide();
+					}else if(re == "no"){
+						$("#errortaffline").show("1000");
+						$("#finstaffline").hide();
+					}
 					$("#waitprocess").modal(); 
 				}
 			});
