@@ -496,3 +496,6 @@
 		    
 	      }});
 	}
+	function exitfclick(){
+	 	map.on('click',function(){}); 
+	  }

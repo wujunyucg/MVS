@@ -134,6 +134,7 @@
 <button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
 <button onclick="disnone()"  class="btn btn-primary">隐藏</button> 
 </div>
+<button id="exitclick" onclick="exitfclick();$('#exitclick').css('display','none')" style="position:absolute;display:none;top:190px;right:165px" class="btn btn-primary">退出点击选点</button> 
      <div style="position:absolute;right:160px;top:190px;">
     
 
@@ -144,7 +145,7 @@
   </button>
 
   <ul class="dropdown-menu" aria-labelledby="dLabel">
-  <li><a onclick="console.log(hhj_ctn);addclicksite(hhj_ctn)">点击选点</a></li>
+  <li><a onclick="addclicksite(hhj_ctn);$('#exitclick').css('display','inline')">点击选点</a></li>
      <li> <a onclick="showinput()"> 搜索选点</a></li>
       <li> <a onclick="javascript:autosite()"> 自动生成</a></li>
   </ul>
@@ -590,7 +591,7 @@ $("#site_table td").click(function() {
          });
   }
 		
-  
+   
 	</script>
 
 	
