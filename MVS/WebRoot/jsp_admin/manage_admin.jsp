@@ -218,7 +218,7 @@
 				</div>
 				<div class="modal-body">
 					<h4 id="delete_info" style="color:red;">
-						严重警告：<br />您将删除此角色，并且角色下面的所有用户都将不存在，任继续吗？
+						严重警告：<br />您将删除此角色，并且角色下面的所有用户都将不存在，仍继续吗？
 					</h4>
 				</div>
 				<div class="modal-footer">
