@@ -89,7 +89,7 @@
 	  <div class="panel-heading">
 	 		<tr><table>
 						<th style="width:210px">管理角色</th>
-						<th>角色权限 （说明： A:增加   D:删除   C:更新   F:查看   E:导出）</th>
+						<th>角色权限 </th>
 			</table></tr>
 	</div>
 

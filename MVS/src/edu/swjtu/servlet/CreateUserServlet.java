@@ -80,9 +80,12 @@ public class CreateUserServlet extends HttpServlet {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+		
+		
+		
 
-	//	for(int i=0;i<list.size();i++)
-	//		list.get(i).setPowerId(new Powers().getPowerType_CU(list.get(i).getPowerId()));
+		for(int i=0;i<list.size();i++)
+			list.get(i).setPowerId(new Powers().getPowerType_CU(list.get(i).getPowerId()));
 		
 		request.getSession().setAttribute("list", list);
         request.getRequestDispatcher("../jsp_admin/create_user.jsp").forward(request, response);
