@@ -128,7 +128,7 @@
 		</div>
 			 <br />
 		<button id="crearr_btn_multi" type="button" style="width:360px;"
-			class="btn btn-primary">按次排班</button>
+			class="btn btn-primary">加班车</button>
 	</div>
 
 	<div style="margin-left:370px;display:none;" id="arr_line_div">
