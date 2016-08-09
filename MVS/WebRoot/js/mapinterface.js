@@ -419,8 +419,21 @@ function EditSatation2(data,marker,ctn){
 
 //addclicksite(hhj_ctn);
 ///satationsmarker(pp[0]);
+var enableclick=1;
 function addclicksite(ctn){
-	var mapclick=map.on('click',function(e){
+	var mapclick;
+	enableclick=1;
+	$('#exitclick').bind('click',function(){
+		AMap.event.removeListener(mapclick); 
+		alert("OK");
+		enableclick=0;
+		map.on('click',function(e){
+			alert('do nothing');
+			enableclick=0;
+		});
+	});
+	mapclick=map.on('click',function(e){
+		if(enableclick==1){
 		var marker=new AMap.Marker({
 			map:map,
 			draggable:true,
@@ -479,14 +492,9 @@ function addclicksite(ctn){
 			marker.hide();
 			siteable=0;
 		}
+		}
 	});
-	$('#exitclick').bind('click',function(){
-		AMap.event.removeListener(mapclick); 
-		alert("OK");
-		map.on('click',function(e){
-			alert('do nothing');
-		});
-	});
+	
 }
 
 
