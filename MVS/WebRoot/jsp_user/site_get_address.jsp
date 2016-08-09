@@ -5,7 +5,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%
-		response.sendRedirect(path+"/jsp_admin/sadmin.jsp");
+	if (null == session.getAttribute("user")) {
+		response.sendRedirect(path+"/jsp_user/user.jsp");
+		return;
+	}
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>

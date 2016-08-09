@@ -6,7 +6,10 @@
 			+ path + "/";
 %>
 <%
+		if (null == session.getAttribute("user")) {
 		response.sendRedirect(path+"/jsp_admin/sadmin.jsp");
+		return;
+	}
 %>
 <!DOCTYPE>
 <html>
