@@ -40,12 +40,11 @@ $.ajaxSetup ({
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top"  id="upHAInfor" style="margin-left:230px;height:60px;">
 	<div>
-		 <a id="j_nav_toggle" href="javascript:;"> <img alt="菜单栏搜索" src="images/caidan.png"
+		 <a id="j_nav_toggle" href="javascript:;" type="button" > <img alt="菜单栏搜索" src="images/caidan.png"
 			style="float:left;width:40px;">
 		</a> </div>
 		<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="javascript:;" id="a_person_info">设置</a></li>
 			<li><a href="#">Help</a></li>
 			<li class="dropdown dropdown-toggle "><a href="#"
 				class="dropdown-toggle" id="dropdownMenu_user"
@@ -53,9 +52,9 @@ $.ajaxSetup ({
 					咸鱼的梦想 <span class="caret"></span>&nbsp;&nbsp;
 			</a>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenu_user">
-					<li><a href="#">个人信息</a></li>
+					<li><a href="javascript:;" id="a_person_info">设置</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="#">退出</a></li>
+					<li><a id="fin_exit"href="javascript:;">退出</a></li>
 				</ul></li>
 		</ul>
 	</div>
@@ -120,9 +119,6 @@ $.ajaxSetup ({
 					class="list-group-item  btn-menu btn_icon data-export">
 					<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
 				</button>
-			</div>
-			<div class="panel panel-default opMenu">
-				<div class="panel-body opMenu">一些注释讲解之类的，这下面太空了</div>
 			</div>
 		</div>
 	
@@ -219,7 +215,23 @@ $.ajaxSetup ({
 		$(".main-page").click(function(){
 			
 		});
-		
+		/*退出*/
+		$("#fin_exit").click(function(){
+			$.ajax({
+				url:"servlet/LoginServlet",
+				type:"POST",
+				data:{type:"3"},
+				async:false,
+				success:function(re){
+					if(re=="yes"){
+						window.location.reload();
+					}
+				},
+				error:function(){
+					alert("服务器错误")
+				}
+			});
+		});
 	</script>
 </body>
 </html>
