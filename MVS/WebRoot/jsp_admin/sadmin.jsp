@@ -7,10 +7,10 @@
 %>
 <%
 	//不能直接通过链接访问
-	//if (null == session.getAttribute("user")) {
-	//	response.sendRedirect(path+"/login.jsp");
-	//	return;
-	//}
+	if (null == session.getAttribute("user")) {
+		response.sendRedirect(path+"/login.jsp");
+		return;
+	}
 %>
 <!DOCTYPE html>
 <html>

@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 
 		String name = request.getParameter("username");
 		String password = request.getParameter("password");
-		/*type=1:超级管理员2：普通管理员3：员工*/
+		/*type=1:超级管理员2：普通管理员*/
 		int type = Integer.parseInt(request.getParameter("type"));
 		String validCode = request.getParameter("valid");
 		
@@ -103,8 +103,6 @@ public class LoginServlet extends HttpServlet {
 					}else{
 						pw.write("noadmin");
 					}
-				}else if(3==type){
-					
 				}
 				// System.out.println("yes");
 			} else {

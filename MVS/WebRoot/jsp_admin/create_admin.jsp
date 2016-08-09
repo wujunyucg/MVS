@@ -5,7 +5,9 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%
+		response.sendRedirect(path+"/jsp_admin/sadmin.jsp");
+%>
 <!DOCTYPE>
 <html>
 <head>
