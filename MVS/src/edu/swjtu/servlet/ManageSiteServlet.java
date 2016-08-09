@@ -292,10 +292,8 @@ public class ManageSiteServlet extends HttpServlet {
 				site.setBufftag(0);
 				site.setDelay(5);
 				site.setLatitude(jo.getDouble("latitude"));
-				site.setLongitude(jo.getDouble("longitude"));
-				site.setLineId(jo.getString("lineId"));
+				site.setLongitude(jo.getDouble("longitude"));			
 				site.setName(jo.getString("name"));
-				site.setOrder(jo.getString("order"));
 				site.setPeoNum(jo.getInt("peoNum"));
 				site.setSiteId(0);
 				SiteDaoImpl sdi = new SiteDaoImpl();
