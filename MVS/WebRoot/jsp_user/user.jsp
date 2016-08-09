@@ -82,7 +82,7 @@
 				<c:if test="${admin1!=null||admin2!=null}">
 					<button type="button" class="list-group-item btn-menu btn_text">
 						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-						<span class="opMenu">人员管理</span> <span style="float:right;"
+						<span class="opMenu">员工管理</span> <span style="float:right;"
 							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
@@ -98,24 +98,25 @@
 						<span class="glyphicon glyphicon-thumbs-up opMenu" aria-hidden="true"></span>
 					</button>
 				</c:if>
-				<c:if test="${admin3!=null}">
-					<button type="button" class="list-group-item  btn-menu btn_text"
-						id="map_line">
-						<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
-						<span class="opMenu">线路管理</span><span style="float:right;"
+				<c:if test="${admin9!=null}">
+					<button type="button" class="list-group-item btn-menu btn_text">
+						<span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+						<span class="opMenu">车辆管理 </span><span style="float:right;"
 							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
-						<button type="button" class="list-group-item opMenu" id="man_line">线路维护</button>
-						<button type="button" class="list-group-item opMenu" id="statics_line">数据统计</button>
+						<c:if test="${admin10!=null}">
+							<button type="button" class="list-group-item opMenu" id="cre_car">
+								新建车辆数据</button>
+						</c:if>
+						<button type="button" class="list-group-item opMenu" id="man_car">
+							数据维护与查询</button>
 					</div>
 					<button type="button" style="display:none;"
-						class="list-group-item  btn-menu btn_icon opMenu1">
-						<span class="glyphicon glyphicon-magnet opMenu" aria-hidden="true"></span>
+						class="list-group-item btn-menu btn_icon opMenu1">
+						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 					</button>
 				</c:if>
-
-
 				<c:if test="${admin7!=null}">
 					<button type="button" class="list-group-item  btn-menu btn_text"
 						id="map_site">
@@ -137,26 +138,23 @@
 						<span class="glyphicon glyphicon-eye-open opMenu" aria-hidden="true"></span>
 					</button>
 				</c:if>
-
-				<c:if test="${admin9!=null}">
-					<button type="button" class="list-group-item btn-menu btn_text">
-						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-						<span class="opMenu">车辆管理 </span><span style="float:right;"
+				<c:if test="${admin3!=null}">
+					<button type="button" class="list-group-item  btn-menu btn_text"
+						id="map_line">
+						<span class="glyphicon glyphicon-magnet" aria-hidden="true"></span>
+						<span class="opMenu">线路管理</span><span style="float:right;"
 							class="glyphicon glyphicon-menu-down opMenu" aria-hidden="true"></span>
 					</button>
 					<div class="list-group j-child-menu" style="display:none;">
-						<c:if test="${admin10!=null}">
-							<button type="button" class="list-group-item opMenu" id="cre_car">
-								新建车辆数据</button>
-						</c:if>
-						<button type="button" class="list-group-item opMenu" id="man_car">
-							数据维护与查询</button>
+						<button type="button" class="list-group-item opMenu" id="man_line">线路维护</button>
+						<button type="button" class="list-group-item opMenu" id="statics_line">数据统计</button>
 					</div>
 					<button type="button" style="display:none;"
-						class="list-group-item btn-menu btn_icon opMenu1">
-						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+						class="list-group-item  btn-menu btn_icon opMenu1">
+						<span class="glyphicon glyphicon-magnet opMenu" aria-hidden="true"></span>
 					</button>
 				</c:if>
+
 				<c:if test="${admin5!=null}">
 					<button type="button" class="list-group-item  btn-menu btn_text ">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
