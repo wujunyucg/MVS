@@ -23,7 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 		
 	<link rel="stylesheet" type="text/css" href="css/create_user.css">
-	<script src='scripts/bootstrap.min.js'></script>
 
 
     <link href="css/bootstrap/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">

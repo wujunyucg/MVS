@@ -316,7 +316,7 @@
 							<div id="result" class="alert alert-success" role="alert">已成功新建线路</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">查看线路</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" id="moEr1">查看线路</button>
 						</div>
 					</div>
 			</div>
@@ -357,7 +357,7 @@
 						</div>
 						<div class="modal-footer">
 							<button id="btn_pre" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-							<button id="hsure_cre1" type="button" class="btn btn-primary">确认修改</button>
+							<button id="hsure_cre1" type="button" class="btn btn-primary" >确认修改</button>
 						</div>
 					</div>
 
@@ -368,7 +368,7 @@
 							<div id="result" class="alert alert-success" role="alert">已成功修改线路</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">查看线路</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" id="moEr2">查看线路</button>
 						</div>
 					</div>
 			</div>
@@ -390,7 +390,7 @@
 						<div class="alert alert-danger" role="alert">您尚未设置路线所经站点！</div>
 					</div>
 				<div class="modal-footer">
-        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal" id="moEr3">关闭</button>
       </div>
     </div>
     </div>
@@ -482,7 +482,7 @@
 							<div id="result" class="alert alert-success" role="alert">已成功智能规划满足条件的所有线路</div>
 						</div>
 						<div class="modal-footer">
-							<button id="sea_fin" type="button" class="btn btn-primary" data-dismiss="modal">查看线路</button>
+							<button id="sea_fin" type="button" class="btn btn-primary" data-dismiss="modal" id="moEr4">查看线路</button>
 						</div>
 					</div>
 					<div id="cre_page4" class="mypage4">
@@ -529,7 +529,7 @@
 							<div class="alert alert-success" role="alert">已成功删除该车辆数据信息</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"  data-dismiss="modal" id="moEr">确认并刷新</button></div>
+							<button type="button" class="btn btn-primary"  data-dismiss="modal" id="moEr5">确认并刷新</button></div>
 						</div>
 				</div>
 			</div>
@@ -560,7 +560,7 @@
 					        	<div class="alert alert-success" role="alert">已成功生成员工的乘车路线信息</div>
 					     	</div>
 					      	<div class="modal-footer">
-					        	<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+					        	<button type="button" class="btn btn-default" data-dismiss="modal" id="moEr6">确定</button>
 					      	</div>
 						</div>
 						<div id="errortaffline">
@@ -568,7 +568,7 @@
 					        	<div class="alert alert-danger" role="alert">未安排完全部站点或其他数据错误，无法生成！</div>
 					     	</div>
 					      	<div class="modal-footer">
-					        	<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+					        	<button type="button" class="btn btn-default" data-dismiss="modal" id="moEr7">确定</button>
 					      	</div>
 						</div>
 				</div>
@@ -938,7 +938,7 @@
 							$("#cre_page3").hide();
 						}
 						$("#waitprocess").modal("hide");
-						$("#in_creline").modal();
+						$("#in_creline").modal("show");
 					}
 				});
 			}
@@ -1092,7 +1092,7 @@
 	 						$("#linetab_con").html(tab);			
 							$("#outcreLsite").click();  
 							$("#waitprocess").modal("hide");
-							$("#de_line").modal();
+							$("#de_line").modal("show");
 						}
 						
 				});
@@ -1163,6 +1163,7 @@
 							line_id : modlineId,
 						},
 						success : function(re) {
+							
 							if (re == "yes") {
 								$("#judgeLN2").hide();
 								jud_ln2 = 1;
@@ -1262,6 +1263,7 @@
 						peoNum : peoNum,
 					},
 					success : function(json_list) {
+						jud_ln1 = 0;
 						$("#hcre_page1").hide("1000");
 						$("#hcre_page2").show();
 						var arr = json_list.toString().split("&");
@@ -1315,7 +1317,7 @@
 						
 						$("#suremodLsite").hide();
 						$("#waitprocess").modal("hide");
-						$("#h_creline").modal();
+						$("#h_creline").modal("show");
 					}
 				});
 			}
@@ -1435,7 +1437,7 @@
 						$("#suremodLsite").hide("1000");
 						modlineId = -1;
 						$("#waitprocess").modal("hide");
-						$("#h_creline1").modal();
+						$("#h_creline1").modal("show");
 					}
 				});
 			}
@@ -1500,12 +1502,30 @@
 						$("#errortaffline").show("1000");
 						$("#finstaffline").hide();
 					}
-					$("#waitprocess").modal(); 
+					$("#waitprocess").modal("show"); 
 				}
 			});
 		});
 		
-		$("#moEr").click(function(){
+		$("#moEr1").click(function(){
+			$(".modal-backdrop").hide();
+		});
+		$("#moEr2").click(function(){
+			$(".modal-backdrop").hide();
+		});
+		$("#moEr3").click(function(){
+			$(".modal-backdrop").hide();
+		});
+		$("#moEr4").click(function(){
+			$(".modal-backdrop").hide();
+		});
+		$("#moEr5").click(function(){
+			$(".modal-backdrop").hide();
+		});
+		$("#moEr6").click(function(){
+			$(".modal-backdrop").hide();
+		});
+		$("#moEr7").click(function(){
 			$(".modal-backdrop").hide();
 		});
 	</script>

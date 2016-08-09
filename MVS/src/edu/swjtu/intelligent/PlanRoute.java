@@ -282,7 +282,7 @@ public class PlanRoute {
 		prioQue.add(sr);
 		while (!prioQue.isEmpty()) {
 			sr = prioQue.poll();
-			// System.out.println(sr.pass_path);
+			 System.out.println(sr.pass_path+"---");
 			if (sr.notpass_path.size() == 0) {
 				return sr.weight;
 			} else {
