@@ -453,14 +453,19 @@ function addclicksite(ctn){
 				//panel:'panel'
 			});
 			//console.log("ddddddddddd");
-			satation_search.searchNearBy("街", e.lnglat,200,function(status,result){
+			satation_search.searchNearBy("街|路|道", e.lnglat,200,function(status,result){
 				//console.log(marker.getPosition());
-				data.longitude=marker.getPosition().lng;
-				data.latitude=marker.getPosition().lat;
-				data.address=result.poiList.pois[0].name;
-				var conten=SatationContent(data);
-				info(marker.getPosition(),conten);
-				EditSatation2(data,marker,ctn);	
+				if(result.poiList.pois.length){
+					data.longitude=marker.getPosition().lng;
+					data.latitude=marker.getPosition().lat;
+					data.address=result.poiList.pois[0].name;
+					var conten=SatationContent(data);
+					info(marker.getPosition(),conten);
+					EditSatation2(data,marker,ctn);	
+				}
+				else{
+					alert("不能选择这里");
+				}
 			});
 			AMap.event.addListener(marker, 'click',function(e){
 				var conten=SatationContent(data);
@@ -475,7 +480,7 @@ function addclicksite(ctn){
 		}
 	});
 	$('#exitclick').bind('click',function(){
-		mapclick.removeListener('click');
+		AMap.event.removeListener(mapclick); 
 	});
 }
 
@@ -655,7 +660,7 @@ function siteOnroutes2(data,path,markers,index,poly,wei,onroute,lName){
 			}, 3); 
 			contextMenu.addItem("取消设置", function(){
 				if(marker.getIcon() == 'icons/newrtsizt.svg'){
-				  	marker.setIcon(temp_staIcon);
+				  	marker.tIcon(temp_staIcon);
 					wei[ii[index]]=0;
 					console.log(wei);
 					showPolyline(path,poly,wei);
