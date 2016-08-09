@@ -225,15 +225,15 @@ function pagination(page1){
 				if(userlist[i].adminId == ${admin.getAdminId() }){
 				   
 	         tab = tab+'<td id="tr'+st+'1"> ${admin.getName()}</td>'
-	            +'<td id="tr'+st+'2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1(\''+userlist[i].number+'\',\''+userlist[i].password+'\', \'${admin.getName()}\',\''+userlist[i].type+'\')">查看详情</a></td>'
+	            +'<td id="tr'+st+'2"><a href="javascript:;" data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1(\''+userlist[i].number+'\',\''+userlist[i].password+'\', \'${admin.getName()}\',\''+userlist[i].type+'\')">查看详情</a></td>'
 	            +'<td id="tr'+st+'3">'
-	            +'<a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2(\''+userlist[i].userId+'\',\''+userlist[i].number+'\',\''+userlist[i].password+'\',\'${admin.getName()}\',\''+userlist[i].type+'\',\''+st+'\',\$(this).parent().parent().attr(\'id\'))">'
+	            +'<a data-toggle="modal" href="javascript:;" data-target="#myModal" onclick="javascript:layer2(\''+userlist[i].userId+'\',\''+userlist[i].number+'\',\''+userlist[i].password+'\',\'${admin.getName()}\',\''+userlist[i].type+'\',\''+st+'\',\$(this).parent().parent().attr(\'id\'))">'
 	            +'修改</a></td>';
 	         
 	           }
 	           
 	           </c:forEach>
-	            tab=tab+'<td><a onclick="javascript:deleteone(\''+userlist[i].userId+'\',\''+st+'\')"  data-toggle="modal"  data-target="#myModal">删除</a></td>'
+	            tab=tab+'<td><a href="javascript:;" onclick="javascript:deleteone(\''+userlist[i].userId+'\',\''+st+'\')"  data-toggle="modal"  data-target="#myModal">删除</a></td>'
 	          	+'</tr>';
 	          	 st++;
          }  
@@ -308,11 +308,11 @@ function checkall(){
             <td id="tr${status.index}0">${user.getNumber()}</td>
              <c:forEach items="${user_admin_list}" var="admin" varStatus="status1" >
            <c:if test="${user.getAdminId() == admin.getAdminId() }"> <td id="tr${status.index}1"> ${admin.getName()}</td>
-            <td id="tr${status.index}2"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer1('${user.getNumber()}','${user.getPassword()}', '${admin.getName()}','${user.getType()}')">查看详情</a></td>
-            <td id="tr${status.index}3"><a data-toggle="modal"  data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index},$(this).parent().parent().attr('id'))">修改</a></td>
+            <td id="tr${status.index}2"><a data-toggle="modal" href="javascript:;" data-target="#myModal" onclick="javascript:layer1('${user.getNumber()}','${user.getPassword()}', '${admin.getName()}','${user.getType()}')">查看详情</a></td>
+            <td id="tr${status.index}3"><a data-toggle="modal" href="javascript:;" data-target="#myModal" onclick="javascript:layer2('${user.getUserId()}','${user.getNumber()}','${user.getPassword()}','${admin.getName()}','${user.getType()}',${status.index},$(this).parent().parent().attr('id'))">修改</a></td>
            </c:if>
             </c:forEach>
-            <td><a onclick="javascript:deleteone('${user.getUserId()}','${status.index}')"  data-toggle="modal"  data-target="#myModal">删除</a></td>
+            <td><a href="javascript:;" onclick="javascript:deleteone('${user.getUserId()}','${status.index}')"  data-toggle="modal"  data-target="#myModal">删除</a></td>
           </tr>
            </c:forEach>
 	    </tr>

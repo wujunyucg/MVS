@@ -120,10 +120,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            <td>${staff.getName()}</td>
            <td>${staff.getDepartment()}</td>
             <td>${staff.getGroup()}</td>
-            <td ><a data-toggle="modal"  data-target="#w-modal" onclick="javascript:layer1('${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">查看详情</a></td>
+            <td ><a data-toggle="modal" href="javascript:;" data-target="#w-modal" onclick="javascript:layer1('${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">查看详情</a></td>
             <c:if test="${admin0!=null}">
-            <td ><a data-toggle="modal"  data-target="#w-modal" onclick="javascript:layer2('${staff.getStaffId()}','${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">修改</a></td>
-            <td><a onclick="javascript:deleteone('${staff.getStaffId()}')"  data-toggle="modal"  data-target="#w-modal">删除</a></td>
+            <td ><a data-toggle="modal" href="javascript:;" data-target="#w-modal" onclick="javascript:layer2('${staff.getStaffId()}','${staff.getNumber()}','${staff.getName()}', '${staff.getDepartment()}','${staff.getGroup()}','${staff.getArrangeId()}','${staff.getLineId()}','${staff.getSiteId()}','${staff.getAddress()}')">修改</a></td>
+            <td><a onclick="javascript:deleteone('${staff.getStaffId()}')"   href="javascript:;" data-toggle="modal"  data-target="#w-modal">删除</a></td>
             </c:if>
           </tr>
           </c:forEach>
@@ -147,7 +147,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </a>
     </li>
     </c:if>
-    <c:forEach var="i" begin="${staff_begin_page}" end="${staff_begin_page+4<staff_page_all?staff_begin_page+4:staff_page_all }">
+    <c:forEach var="i" begin="${staff_begin_page-10>0?staff_begin_page-10:1}" end="${staff_begin_page+10<staff_page_all?staff_begin_page+10:staff_page_all }">
     <c:if test="${i == staff_page }">
     <li id="li${i}" class="active" ><a id="li_a${i}" onclick="">${i}</a></li>
     </c:if>
