@@ -529,7 +529,7 @@
 							<div class="alert alert-success" role="alert">已成功删除该车辆数据信息</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"  data-dismiss="modal">确认并刷新</button></div>
+							<button type="button" class="btn btn-primary"  data-dismiss="modal" id="moEr">确认并刷新</button></div>
 						</div>
 				</div>
 			</div>
@@ -1505,7 +1505,9 @@
 			});
 		});
 		
-		
+		$("#moEr").click(function(){
+			$(".modal-backdrop").hide();
+		});
 	</script>
 	
 
