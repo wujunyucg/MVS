@@ -416,22 +416,18 @@ function EditSatation2(data,marker,ctn){
 
 }
 
-var enableclick=1;
+
 function addclicksite(ctn){
 	var mapclick;	
+	var enableclick=1;
 	$('#exitclick').bind('click',function(){
 		AMap.event.removeListener(mapclick); 
 		enableclick=0;
-		map.on('click',function(e){
-			enableclick=0;
-		});
 	});
 	enableclick=1;
 	mapclick=map.on('click',function(e){
 		var aa=$('.dropdown-menu a');
-		aa[0].bind('click',function(){
-			enableclick=1;
-		});
+		
 		if(enableclick==1){
 		var marker=new AMap.Marker({
 			map:map,
