@@ -71,6 +71,11 @@ $.ajaxSetup ({
 			</div>
 			<div class="list-group">
 				<button type="button"
+					class="list-group-item btn-menu btn_text main-page">
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					<span class="opMenu">主页</span>
+				</button>
+				<button type="button"
 					class="list-group-item btn-menu btn_text create-admin">
 					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 					<span class="opMenu">创建角色</span>
@@ -210,7 +215,10 @@ $.ajaxSetup ({
 		
 	});
 	
-	
+	/*主页面加载*/
+		$(".main-page").click(function(){
+			
+		});
 		
 	</script>
 </body>

@@ -79,6 +79,11 @@
 				</ul>
 			</div>
 			<div class="list-group">
+				<button type="button"
+					class="list-group-item btn-menu main-page">
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					<span class="opMenu">主页</span>
+				</button>
 				<c:if test="${admin1!=null||admin2!=null}">
 					<button type="button" class="list-group-item btn-menu btn_text">
 						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
@@ -277,6 +282,11 @@
 		$("#map_site1").click(function(){
 				$("#content").load("<%=basePath%>servlet/MapSiteServlet");
 				
+		});
+		
+		/*主页面加载*/
+		$(".main-page").click(function(){
+			
 		});
 	</script>
 </body>
