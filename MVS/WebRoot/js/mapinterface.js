@@ -468,6 +468,9 @@ function addclicksite(ctn){
 					alert("不能选择这里");
 				}
 			});
+			
+			
+			
 			AMap.event.addListener(marker, 'click',function(e){
 				var conten=SatationContent(data);
 				info(marker.getPosition(),conten);
