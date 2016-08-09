@@ -526,8 +526,13 @@ public class ManageLineServlet extends HttpServlet {
 				pw.write(json_s);
 			}
 			else if(type.equals("10")){
-				new Lines().modifyLineOfStaff(con);
-				
+				try{
+					new Lines().modifyLineOfStaff(con);
+				}catch (Exception e) {
+					pw.write("no");
+					pw.close();
+				}
+				pw.write("yes");
 			}
 		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block
