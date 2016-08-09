@@ -122,7 +122,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var site_list=list.site_list;
 				var sr_list=list.sr_list;
 			    var arr=new Array();
-			    
+			    alert(site_list.length);
+			     alert(sr_list.length);
 			  	$("#nospan").css("display","inline");
 			  	$("#canvas").remove();
 			  	$("#export").css("display","none");
@@ -140,7 +141,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				datasets : [
 			
 				{
-				fillColor : "rgba(151,187,205,0.5)",
+				fillColor : "rgba( 52 ,97, 130,1.0",
 				strokeColor : "rgba(151,187,205,0.8)",
 				highlightFill : "rgba(151,187,205,0.75)",
 				highlightStroke : "rgba(151,187,205,1)",
