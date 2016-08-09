@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="form-group">
     <div class="input-group">
   <div class="input-group-addon">搜索类型</div>
-    <select class="form-control" id="select">
+    <select class="form-control" id="select" value="day">
   <option value="day" >天</option>
    <option value="week">周</option>
   <option value="month">月</option>
@@ -62,11 +62,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		</form>
 	</div>
-
-		
-			<div id="canvasp"class="demo-chat" style="position:relative;width:80%;overflow :auto;left:5%;top:10px;height:600px;">
+<br>
+		<div class="panel panel-default">
+	      <div class="panel-heading">
+	         <h4 class="panel-title">
+	            <a data-toggle="collapse" id="collapse1" 
+	               href="#collapseOne">
+	               统计柱状图
+	            </a>
+	         </h4>
+	      </div>
+	      <div id="collapseOne" class="panel-collapse collapse in">
+	         <div class="panel-body" id="chartdata">
+	        	<span id="nospan">  未查找到相应数据信息</span>
+	        	 <div id="canvasp" class="demo-chat" style="position:relative;width:90%;overflow :auto;left:5%;top:10px;height:600px;">
 				<canvas id="canvas" style="height:580px" ></canvas>
 			</div>
+	         </div>
+	          <div id="lineadvice">
+	          </div>
+	         
+	      </div>
+	   </div>
+			
 	
 	
 	
@@ -78,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			language : 'zh-CN',
 			format: 'yyyy-mm-dd',
 			startDate:'2015-01-01',
-			endDate:'2015-07-31',
+			endDate:'2015-10-31',
 			weekStart : 1,
 			todayBtn : 1,
 			autoclose : 1,
@@ -88,7 +106,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			forceParse : 0,
 		});	
 	function check(){
-	
    		$.ajax({ 
 				type:"post",
 				url: "<%=basePath%>servlet/ShowSiteServlet", 
@@ -100,11 +117,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		          alert('修改失败，请重新修改');
 		         },
 				success: function(request){
+				
 				var list = eval('(' + request + ')');
 				var site_list=list.site_list;
 				var sr_list=list.sr_list;
 			    var arr=new Array();
-			  
+			    
+			  	$("#nospan").css("display","inline");
+			  	$("#canvas").remove();
+			  	$("#export").css("display","none");
+			  	if(site_list!=""){
+			  	$("#nospan").css("display","none");
 			    for(var i=0;i<site_list.length;i++){
 			    	arr[i]=site_list[i].name;
 			    }
@@ -125,12 +148,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 				]
 				}
-				$("#canvas").remove();
+				
 				$("#canvasp").append('<canvas id="canvas" style="height:580px" ></canvas>');
 				var ctx = document.getElementById("canvas").getContext("2d");
 				chartBar = new Chart(ctx).Bar(barChartData, {
 					barDatasetSpacing : 20,
 				});
+			
 				$("#export").css("display","inline");
 				
 				
@@ -183,7 +207,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 	$("#w-modal").modal('show');
 		         }
 		         });
-		      
+		      }
             // => activeBars is an array of bars on the canvas that are at the same position as the click event.
             };
 		   }		

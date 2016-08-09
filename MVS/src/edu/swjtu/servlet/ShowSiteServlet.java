@@ -96,7 +96,6 @@ public class ShowSiteServlet extends HttpServlet {
 		 response.setContentType("text/html;charset=UTF-8");
 		String type = request.getParameter("type");
 		String date = request.getParameter("date");
-		
 		DBUtil db =new DBUtil();
 		try {
 			Connection con = db.getCon();
@@ -109,7 +108,8 @@ public class ShowSiteServlet extends HttpServlet {
 				ArrayList<Site> siteList = new ArrayList<Site>();
 				for(SiteRecord  sr :srList){
 					Site site = sdi.getSiteById(sr.getSiteId(), con);
-					siteList.add(site);
+					if(site!=null)
+						siteList.add(site);
 				}
 				request.getSession().setAttribute("site_list", siteList);
 				request.getSession().setAttribute("sr_list", srList);
