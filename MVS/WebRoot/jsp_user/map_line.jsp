@@ -1436,8 +1436,11 @@
 						$("#outcreLsite").hide("1000");	
 						$("#suremodLsite").hide("1000");
 						modlineId = -1;
+						alert("1");
 						$("#waitprocess").modal("hide");
+						alert("1");
 						$("#h_creline1").modal("show");
+						alert("1");
 					}
 				});
 			}
