@@ -134,7 +134,7 @@
 <button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
 <button onclick="disnone()"  class="btn btn-primary">隐藏</button> 
 </div>
-<button id="exitclick" onclick="exitfclick();$('#exitclick').css('display','none')" style="position:absolute;display:none;top:190px;right:165px" class="btn btn-primary">退出点击选点</button> 
+<button id="exitclick" onclick="$('#exitclick').css('display','none')" style="position:absolute;display:none;top:190px;right:165px" class="btn btn-primary">退出点击选点</button> 
      <div style="position:absolute;right:160px;top:190px;">
     
 
