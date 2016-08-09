@@ -25,10 +25,6 @@
 <meta http-equiv="description" content="This is my page">
 
 <link type="text/css" rel="stylesheet" href="css/create_admin.css">
-<link rel="stylesheet" type="text/css"
-	href="css/bootstrap/bootstrap.min.css">
-<script src='scripts/jquery.js'></script>
-<script src='scripts/bootstrap.min.js'></script>
 
 <script type="text/javascript">
 	function myload() {

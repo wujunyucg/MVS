@@ -23,7 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
 	 <style>
 	 .td1{width:100px;}
 	 table td{ text-align:center}
@@ -104,7 +103,6 @@ function update(){
 			+'\','+$("#userstatus").val()+'\''
 			+',\$(this).parent().parent().attr(\'id\'))">修改</a>';
 			//alert(tr);
-			alert(lay2);
 	   	 	$("#"+tr+"0").html(name);		
            	$("#"+tr+"1").html(ad);
            	$("#"+tr+"2").html(lay1);		
@@ -395,8 +393,6 @@ function checkall(){
    
   </body>
   
-  <script src="scripts/jquery.min.js"></script>
-  <script src="scripts/bootstrap.min.js"></script>
  
 </html>
     

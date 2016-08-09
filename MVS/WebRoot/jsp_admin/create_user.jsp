@@ -25,10 +25,6 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	
-	<link rel="stylesheet" type="text/css"
-	href="css/bootstrap/bootstrap.min.css">
-	<script src='scripts/jquery.js'></script>
-	<script src='scripts/bootstrap.min.js'></script>
 	<link rel="stylesheet" type="text/css" href="css/create_user.css">
 
 	<script type="text/javascript">
@@ -143,6 +139,7 @@
 		      </div>
 		      <div class="modal-footer">
 		       	<button id="btn_ne" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+		       	<button id="btn_find" type="button" class="btn btn-success" data-dismiss="modal">查看用户</button>
 		      </div>
 		  </div>
 		  
@@ -163,7 +160,10 @@
 		var paskey = 1;
 
 			//控制页面的切换
-			
+			$("#btn_find").click(function (){
+				$(".modal-backdrop").hide();
+				$("#content").load("<%=basePath%>/servlet/ManageUserServlet?random" + Math.random());
+			});
 			$("#btn_ne").click(function() {
 				
 				$(".modal-backdrop").hide();
@@ -276,7 +276,6 @@
 				$(".close").hide();
 				$("#myM").attr("keyboard",true);
 				$("#myM").attr("backdrop","'static'");
-				alert($("#myM").attr("data-backdrop"));
  					//keyboard: false,
 				if(adminid != null && adminid != ""){
 					$.ajax({
