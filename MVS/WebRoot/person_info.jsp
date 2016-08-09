@@ -37,11 +37,16 @@
 	</div>
 	<div style="margin-left:180px;">
 		<div class="panel panel-default per-info-div" id="per_name_div">
-			<div class="panel-heading">用户名(用于登录)</div>
+			<div class="panel-heading">修改用户名(用于登录)</div>
 			<div class="form-group" style="padding:10px;">
 				<label for="exampleInputEmail1">用户名</label> <input type="text"
 					class="form-control" id="per_input_name" placeholder="username"
 					value="${user.getNumber()}">
+			</div>
+			<div class="form-group" style="padding:10px;">
+				<label for="exampleInputEmail1">密码</label> <input type="password"
+					class="form-control" id="input_name_pass"
+					placeholder="password" value="">
 			</div>
 			<button id="per_btn_name" type="button" class="btn btn-primary"
 				style="margin:10px;">确认修改</button>
@@ -95,7 +100,8 @@
 		/*修改用户名*/
 		$("#per_btn_name").click(function() {
 			var n = $("#per_input_name").val();
-			if(""==n){
+			var pass = $("#input_name_pass").val();
+			if(""==n||pass==""){
 				return ;
 			}
 			$.ajax({
@@ -103,15 +109,18 @@
 				type : "POST",
 				data : {
 					type : "1",
-					name : n
+					name : n,
+					pass: pass
 				},
 				success : function(re) {
 					if(re=="yes"){
-						alert("yes")
+						alert("修改成功")
 					}else if(re=="same"){
-						alert("same")
+						alert("没有修改，因为一样")
+					}else if(re=="error"){
+						alert("密码错误")
 					}else{
-						alert("no")
+						alert("修改失败")
 					}
 				},
 				error : function() {

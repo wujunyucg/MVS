@@ -25,47 +25,54 @@ public class UserInfoServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		DBUtil db = new DBUtil();
 		Connection con = null;
 		String type = request.getParameter("type");
-		
+
 		try {
 			con = db.getCon();
 			UserDaoImpl udi = new UserDaoImpl();
 			PrintWriter pw = response.getWriter();
-			
+
 			User u = (User) request.getSession().getAttribute("user");
-			if(type.equals("1")){
+			if (type.equals("1")) {
 				String name = request.getParameter("name");
-				
+				String pass = request.getParameter("pass");
+
 				User uu = udi.getUserByNumber(name, con);
-				if(null!=uu){
-					System.out.println("u:"+u.getUserId()+" uu:"+uu.getUserId());
+				if (null != uu) {
+					System.out.println("u:" + u.getUserId() + " uu:"
+							+ uu.getUserId());
 				}
-				if(null!=uu&&null!=u&&uu.getUserId()!=u.getUserId()){
+				if (null != uu && null != u && uu.getUserId() != u.getUserId()) {
 					pw.write("same");
-				}else if(null!=u){
-					u.setNumber(name);
-					int re = udi.updateUser(u, con);
-					if(0<re){
-						pw.write("yes");
-					}else{
-						pw.write("no");
+				} else if (null != u) {
+					if (!pass.equals(u.getPassword())) {
+						pw.write("error");
+					} else {
+						u.setNumber(name);
+						int re = udi.updateUser(u, con);
+						if (0 < re) {
+							pw.write("yes");
+						} else {
+							pw.write("no");
+						}
 					}
 				}
-			}else if(type.equals("2")){
+			} else if (type.equals("2")) {
 				String pass = request.getParameter("oldPass");
-				System.out.println("pass:"+pass+" upass:"+u.getPassword());
-				if(!pass.equals(u.getPassword())){
+				System.out
+						.println("pass:" + pass + " upass:" + u.getPassword());
+				if (!pass.equals(u.getPassword())) {
 					pw.write("notpass");
-				}else{
+				} else {
 					String newPass = request.getParameter("newPass");
 					u.setPassword(newPass);
 					int re = udi.updateUser(u, con);
-					if(0<re){
+					if (0 < re) {
 						pw.write("yes");
-					}else{
+					} else {
 						pw.write("no");
 					}
 				}
@@ -75,8 +82,8 @@ public class UserInfoServlet extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			if(null!=con){
+		} finally {
+			if (null != con) {
 				try {
 					db.closeCon(con);
 				} catch (SQLException e) {
