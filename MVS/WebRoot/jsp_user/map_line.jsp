@@ -1436,11 +1436,11 @@
 						$("#outcreLsite").hide("1000");	
 						$("#suremodLsite").hide("1000");
 						modlineId = -1;
-						alert("1");
+						alert("4");
 						$("#waitprocess").modal("hide");
-						alert("1");
+						alert("5");
 						$("#h_creline1").modal("show");
-						alert("1");
+						alert("6");
 					}
 				});
 			}
@@ -1454,7 +1454,7 @@
 			}
 		});		
 		
-		function h_creLine1(newline){
+		function h_creLine11(newline){
 			jud_ln1 = 1;
 			jud_ln2 = 1;
 			$("#judgeLN11").hide();

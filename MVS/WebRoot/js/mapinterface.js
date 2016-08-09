@@ -750,10 +750,13 @@ function EditRoutes(sites,route,lname){
 		if(path22==null||path22==""||path22==[]||path22.length < 0){
 			$("#suremodLsite").attr("data-target","#linesiteNull");
 		}else{
+			alert("1");
 			$("#suremodLsite").attr("data-target","#h_creline1");
+			alert("2");
 			$("#hcre_page11").show();
 			$("#hcre_page21").hide();
-			h_creLine1(path22);
+			alert("3");
+			h_creLine11(path22);
 		}
 	});
 	/*路线*/
