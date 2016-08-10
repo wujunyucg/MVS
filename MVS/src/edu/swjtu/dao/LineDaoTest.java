@@ -104,13 +104,14 @@ public class LineDaoTest {
 			rec.setStaffIds("");
 			for(int j=0;j<stafflist.size();j++){
 				if(stafflist.get(j).getLineId() == linelist.get(i).getLineId()){
+					System.out.println("111");
 					rec.setStaffIds(rec.getStaffIds() + stafflist.get(j).getStaffId() + ",");
 				}
 			}
 			if(rec.getStaffIds()!=null&&rec.getStaffIds().endsWith(",")){
 				rec.setStaffIds(rec.getStaffIds().substring(0, rec.getStaffIds().length()-1));
 			}
-			
+			System.out.println(rec.getStaffIds());
 			new LineRecordDaoImpl().addLineRecord(rec, new DBUtil().getCon());
 			
 			

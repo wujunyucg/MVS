@@ -34,15 +34,21 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/html;charset=UTF-8");
+		/*type=1:超级管理员2：普通管理员3:退出*/
+		int type = Integer.parseInt(request.getParameter("type"));
+		PrintWriter pw = response.getWriter();
 
+		if(3==type){
+			request.getSession().removeAttribute("user");
+			pw.write("yes");
+			return;
+		}
+		
 		String name = request.getParameter("username");
 		String password = request.getParameter("password");
-		/*type=1:超级管理员2：普通管理员*/
-		int type = Integer.parseInt(request.getParameter("type"));
 		String validCode = request.getParameter("valid");
 		
 		Connection con = null;
-		PrintWriter pw = response.getWriter();
 		HttpSession session = request.getSession();
 		
 		//System.out.println(session.getAttribute("validationCode"));

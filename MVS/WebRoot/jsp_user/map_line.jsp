@@ -201,11 +201,11 @@
 				<button type="button"  style="width:130px;" id="surecreLsite" class="btn btn-success" data-toggle="modal">确认所选路线</button>
 			</div>
 			<div  style="position:fixed;top:390px;right:0px;">
-				<button type="button"  style="width:130px;" id="outcreLsite" class="btn btn-danger" data-toggle="modal">退出路线编辑</button>
+				<button type="button"  style="width:130px;" id="outcreLsite" class="btn btn-danger">退出路线编辑</button>
 			</div>
 			
 			<div  style="position:fixed;top:350px;right:0px;">
-				<button type="button"  style="width:130px;" id="suremodLsite" class="btn btn-success" data-toggle="modal">确认修改路线</button>
+				<button type="button"  style="width:130px;" id="suremodLsite" class="btn btn-success" >确认修改路线</button>
 			</div>
 	
 			
@@ -401,7 +401,7 @@
 			<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"aria-label="Close">
 					<span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">新建车辆</h4></div>
+						<h4 class="modal-title" id="myModalLabel">新建线路</h4></div>
 					<div id="cre_page1" class="mypage">
 						<div class="modal-body">
 							<div class="alert alert-info" role="alert">请填写下列自动生成路线所需信息：</div>
@@ -454,7 +454,7 @@
 											无限制——每条路线都满足最低乘坐率要求；<br/>
 											自定义——手动输入每条路线的最长千米数，且填写(千米)为单位数据；<br/>
 											车厂距最远站点路程的3/2——所有站点中距离车场最远站点与车场距离的3/2最为最大路程数<br>
-											<b>该智能生成路线会删除之前所有路线信息,重新规划路线</b>
+											<b>对所有站点智能生成路线会删除之前所有路线信息,重新规划路线</b>
 										</div>
 						</div>
 						<div class="modal-footer">
@@ -860,13 +860,6 @@
 			}
 			if(min_rec!=null&&min_rec!=""&&max_len!=null&&max_len!=""){
 			
-				$("#waitprocess").modal({
-				  keyboard: false,
-				  backdrop:'static'
-				});
-				$("#finstaffline").hide();
-				$("#errortaffline").hide();
-				$("#in_creline").modal("hide");////////////////////////////////////////////////////
 				var choice = "0";
 				if(choice_icre == 0){
 					choice = "6";
@@ -881,16 +874,22 @@
 							min_rec : min_rec,
 							max_len : max_len,
 						},
+						beforeSend:function(){
+							$("#in_creline").modal("hide");
+							$(".modal-backdrop").remove();
+							$("#waitprocess").modal({
+					  			keyboard: false,
+					  			backdrop:'static'
+							});
+							$("#finstaffline").hide();
+							$("#errortaffline").hide();
+						
+						
+						},
 						success : function(json_list) {
 							fin = true;
-							$("#hcre_page1").hide("1000");
-							$("#hcre_page2").show();
-								
 						if (json_list != "no") {
-							$("#cre_page1").hide();
-							$("#cre_page2").hide("1000");
-							$("#cre_page3").show();
-							$("#cre_page4").hide();
+							
 							
 							var arr = json_list.toString().split("&");
 							json_lines = arr[0];
@@ -927,19 +926,35 @@
 								tab += "'"+obj_lines[i].linelist.rate+"') href='javascript:;'  data-toggle='modal' data-target='#de_line'><a>删除</a></td>    ";
 							
 							}
-							
-	 						$("#linetab_con").html(tab);	
-	 						$("#outcreLsite").click();  
+							$("#waitprocess").modal("hide");
+							setTimeout(function(){
+								$("#in_creline").modal("show");
+		 						
+		 						$("#cre_page1").hide();
+								$("#cre_page2").hide("1000");
+								$("#cre_page3").show();
+								$("#cre_page4").hide(); 
+								
+								$("#linetab_con").html(tab);	
+		 						$("#outcreLsite").click(); 
+	 						},200);
 	 						
 						} else{
-							$("#cre_page4").show();
-							$("#cre_page1").hide();
-							$("#cre_page2").hide("1000");
-							$("#cre_page3").hide();
+							$("#waitprocess").modal("hide");
+							setTimeout(function(){
+							     $("#in_creline").modal("show");
+								$("#cre_page4").show();
+								$("#cre_page1").hide();
+								$("#cre_page2").hide("1000");
+								$("#cre_page3").hide();
+							},500);
+							//$("#waitprocess").modal("hide");
+							//$(".modal-backdrop").remove();
+							
 						}
-						$("#waitprocess").modal("hide");
-						$("#in_creline").modal("show");
-					}
+						
+					},
+					
 				});
 			}
 			else{
@@ -1092,7 +1107,9 @@
 	 						$("#linetab_con").html(tab);			
 							$("#outcreLsite").click();  
 							$("#waitprocess").modal("hide");
-							$("#de_line").modal("show");
+							setTimeout(function(){
+								$("#de_line").modal("show");
+							},500);
 						}
 						
 				});
@@ -1215,7 +1232,7 @@
 		function h_creLine(newline){
 			var site_ids = newline[0].siteId;
 			var site_names = newline[0].name;
-			
+			jud_ln1 = 0;
 			
 			var num = newline[0].peoNum;
 			if(creNotSite == 1){
@@ -1317,7 +1334,9 @@
 						
 						$("#suremodLsite").hide();
 						$("#waitprocess").modal("hide");
-						$("#h_creline").modal("show");
+						setTimeout(function(){
+							$("#h_creline").modal("show");
+						},500);
 					}
 				});
 			}
@@ -1360,13 +1379,7 @@
 			var siteId = $("#runsites1").attr("title");
 			var peoNum = $("#peonum1").attr("title");
 			if(jud_ln1 == 1 && jud_ln2 == 1){
-				$("#waitprocess").modal({
-				  keyboard: false,
-				  backdrop:'static'
-				});
-				$("#finstaffline").hide();
-				$("#errortaffline").hide();
-				$("#h_creline1").modal("hide");
+				
 				$.ajax({
 					url : "servlet/ManageLineServlet",
 					type : "POST",
@@ -1377,9 +1390,19 @@
 						siteId : siteId,
 						peoNum : peoNum,
 					},
+					beforeSend:function(){
+						$("#h_creline1").modal("hide");
+						$(".modal-backdrop").remove();
+						$("#waitprocess").modal({
+						  keyboard: false,
+						  backdrop:'static'
+						});
+						$("#finstaffline").hide();
+						$("#errortaffline").hide();
+						
+					},
 					success : function(json_list) {
-						$("#hcre_page11").hide("1000");
-						$("#hcre_page21").show();
+						
 						var arr = json_list.toString().split("&");
 						json_lines = arr[0];
 						json_sites = arr[1];
@@ -1432,15 +1455,15 @@
 						$("#updown").attr("href","#linetable");
 						$("#getallline").text("显示全部路线");
 						$(".hc_button").attr("disabled",false);
-						$("#surecreLsite").hide("1000");	
-						$("#outcreLsite").hide("1000");	
-						$("#suremodLsite").hide("1000");
 						modlineId = -1;
-						alert("4");
+					},
+					complete: function () {
 						$("#waitprocess").modal("hide");
-						alert("5");
-						$("#h_creline1").modal("show");
-						alert("6");
+						setTimeout(function(){
+							$("#h_creline1").modal("show");
+							$("#hcre_page11").hide();
+							$("#hcre_page21").show();
+						},500);
 					}
 				});
 			}
@@ -1511,26 +1534,27 @@
 		});
 		
 		$("#moEr1").click(function(){
-			$(".modal-backdrop").hide();
+			$(".modal-backdrop").remove();
 		});
 		$("#moEr2").click(function(){
-			$(".modal-backdrop").hide();
+			$(".modal-backdrop").remove();
 		});
 		$("#moEr3").click(function(){
-			$(".modal-backdrop").hide();
+			$(".modal-backdrop").remove();
 		});
 		$("#moEr4").click(function(){
-			$(".modal-backdrop").hide();
+			$(".modal-backdrop").remove();
 		});
 		$("#moEr5").click(function(){
-			$(".modal-backdrop").hide();
+			$(".modal-backdrop").remove();
 		});
 		$("#moEr6").click(function(){
-			$(".modal-backdrop").hide();
+			$(".modal-backdrop").remove();
 		});
 		$("#moEr7").click(function(){
-			$(".modal-backdrop").hide();
+			$(".modal-backdrop").remove();
 		});
+		
 	</script>
 	
 
