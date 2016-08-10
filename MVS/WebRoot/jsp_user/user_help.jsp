@@ -17,12 +17,14 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
+<link rel="stylesheet" type="text/css"
+	href="css/bootstrap/bootstrap.min.css">
+<script src='scripts/jquery.js'></script>
 </head>
 <body>
-	<h1>管理员后台</h1>
+	<h1>管理员后台-帮助文档</h1>
 	<hr>
-	<div style="float:left;">
+	<div style="float: left">
 		<div class="panel panel-default">
 			<div class="panel-heading" style="width: 150px;">帮助目录</div>
 			<div class="list-group">

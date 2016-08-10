@@ -55,7 +55,7 @@
 		</a> </div>
 		<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="javascript:;" id="user_help">Help</a></li>
+			<li><a href="<%=path%>/jsp_user/user_help.jsp" target="_blank">Help</a></li>
 			<li class="dropdown dropdown-toggle "><a href="#"
 				class="dropdown-toggle" id="dropdownMenu_user"
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -231,27 +231,8 @@
 		</div>
 	</div>
 
-	<!-- help modal
-<div class="modal fade" id="help_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body" id="help_content">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
 	
 	<script type="text/javascript">
-		$("#content").load("<%=path%>/jsp_user/user_help.jsp");
 		//异步加载代码
 		$(".manage-arrange").click(function(){
 			$("#load_modal").modal('show');//显示加载框
@@ -320,11 +301,6 @@
 					alert("服务器错误")
 				}
 			});
-		});
-		
-		$("#user_help").click(function(){
-			$("#help_modal").modal('show');
-			$("#help_content").load("<%=path%>/jsp_user/user_help.jsp");
 		});
 	</script>
 </body>
