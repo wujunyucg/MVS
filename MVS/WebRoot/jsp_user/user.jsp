@@ -79,7 +79,7 @@
 			</div>
 			<div class="list-group">
 				<button type="button"
-					class="list-group-item btn-menu main-page">
+					class="list-group-item btn-menu main-page" id="firPage">
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span class="opMenu">主页</span>
 				</button>
@@ -231,9 +231,31 @@
 		</div>
 	</div>
 
+			<div class="modal fade" id="notFindFac" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" id="myModalLabel">数据错误</h4>
+		      </div>
+		      <div class="modal-body">
+		      		<div class="alert alert-danger" role="alert">
+						未设置车厂位置，不可操作路线信息，请前往站点管理设置车厂的相关信息。
+					</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="goToSetFac">设置车厂位置</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
 	
 	<script type="text/javascript">
 		//异步加载代码
+		$("#firPage").click(function(){
+			$("#content").load("<%=path%>/jsp_user/firstPage.jsp");
+		});
+		
 		$(".manage-arrange").click(function(){
 			$("#load_modal").modal('show');//显示加载框
 			$("#content").load("<%=path%>/servlet/ManageArrangeServlet");
@@ -270,7 +292,33 @@
 		});
 		
 		$("#man_line").click(function(){
-				$("#content").load("<%=basePath%>/servlet/ManageLineServlet?type=1");
+				$.ajax({
+						url : "servlet/ManageLineServlet",
+						type : "POST",
+						data : {
+							type : "11",
+						},
+						success : function(re) {
+							if (re == "yes") {
+								$("#content").load("<%=basePath%>/servlet/ManageLineServlet?type=1");
+							} 
+							else {
+								$("#content").html("");
+								$("#content").text("");
+								$("#notFindFac").modal({
+					  				keyboard: false,
+					  				backdrop:'static'
+								});
+							}
+						}
+					});
+		});
+		
+		$("#goToSetFac").click(function(){
+			$("#notFindFac").modal("hide");
+			setTimeout(function(){
+				$("#content").load("<%=basePath%>servlet/MapSiteServlet");
+			},500);
 		});
 		
 		$("#statics_line").click(function(){
@@ -282,9 +330,9 @@
 		});
 		
 		/*主页面加载*/
-		$(".main-page").click(function(){
-			$("#content").load("<%=path%>/jsp_user/user_help.jsp");
-		});
+//		$(".main-page").click(function(){
+//			$("#content").load("<%=path%>/jsp_user/user_help.jsp");
+//		});
 		/*退出*/
 		$("#fin_exit").click(function(){
 			$.ajax({

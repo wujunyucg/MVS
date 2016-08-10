@@ -275,5 +275,24 @@ public class SiteDaoImpl implements SiteDao {
 		}
 		return staffList;
 	}
+	
+	@Override
+	public int addSiteAndId(Site site, Connection con) throws SQLException {
+		String sql = "insert into site values(?,?,?,?,?,?,?,?,?,?,?)";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		
+		pstm.setInt(1,site.getSiteId());
+		pstm.setDouble(2,site.getLatitude());
+		pstm.setDouble(3,site.getLongitude());
+		pstm.setString(4,site.getAddress());
+		pstm.setInt(5,site.getPeoNum());
+		pstm.setString(6,site.getName());
+		pstm.setString(7,site.getLineId());
+		pstm.setString(8,site.getOrder());
+		pstm.setInt(9,site.getDelay());
+		pstm.setInt(10,site.getBufftag());
+		pstm.setString(11,site.getLineName());
+		return pstm.executeUpdate();
+	}
 
 }

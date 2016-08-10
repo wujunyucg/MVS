@@ -747,14 +747,12 @@ function EditRoutes(sites,route,lname){
 				path22.push(path[i]);
 		}
 		if(path22==null||path22==""||path22==[]||path22.length < 0){
-			$("#suremodLsite").attr("data-target","#linesiteNull");
+			
+			$("#linesiteNull").modal("show");
 		}else{
-			alert("1");
-			$("#suremodLsite").attr("data-target","#h_creline1");
-			alert("2");
+			$("#h_creline1").modal("show");
 			$("#hcre_page11").show();
 			$("#hcre_page21").hide();
-			alert("3");
 			h_creLine11(path22);
 		}
 	});

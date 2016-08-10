@@ -574,7 +574,7 @@
 				</div>
 			</div>
 		</div>
-
+	
 
 
 
@@ -590,6 +590,9 @@
 	<script type="text/javascript" src="js/testroute.js"></script> 
 
 	<script type="text/javascript">
+
+
+
 
 		var max_length = "-1";
 		var jud_r = 0;
@@ -1439,7 +1442,6 @@
 						
 						}
 						
- 						$("#linetab_con").html(tab);		
  						$("#surecreLsite").hide("1000");	
 						$("#outcreLsite").hide("1000");	
 						$("#suremodLsite").hide("1000");
@@ -1456,14 +1458,19 @@
 						$("#getallline").text("显示全部路线");
 						$(".hc_button").attr("disabled",false);
 						modlineId = -1;
-					},
-					complete: function () {
+						
 						$("#waitprocess").modal("hide");
 						setTimeout(function(){
 							$("#h_creline1").modal("show");
 							$("#hcre_page11").hide();
 							$("#hcre_page21").show();
+							
+							$("#linetab_con").html(tab);	
+		 					$("#outcreLsite").click(); 
 						},500);
+					},
+					complete: function () {
+						
 					}
 				});
 			}

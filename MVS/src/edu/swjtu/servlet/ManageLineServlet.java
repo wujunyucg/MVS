@@ -537,6 +537,17 @@ public class ManageLineServlet extends HttpServlet {
 				}
 				pw.write("yes");
 			}
+			else  if(type.equals("11")){	//判断有无车厂
+				Site site = null;
+				site = new SiteDaoImpl().getSiteById(0, con);
+				if(site == null){
+					pw.write("no");
+				}else{
+					pw.write("yes");
+				}
+			}else{
+				
+			}
 		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

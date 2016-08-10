@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import edu.swjtu.model.Line;
 import edu.swjtu.model.Site;
 
 /**
@@ -99,4 +100,6 @@ public interface SiteDao {
 	int updateListSite(ArrayList<Site> siteList, Connection con);
 	int deleteAllSite(Connection con);
 	ArrayList<Site> getBuffSite(Connection con);
+	
+	public int addSiteAndId(Site site, Connection con) throws SQLException ;
 }
