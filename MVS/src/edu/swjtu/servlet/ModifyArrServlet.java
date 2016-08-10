@@ -25,6 +25,8 @@ import edu.swjtu.impl.CarDaoImpl;
 import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.model.ArrCarLine;
 import edu.swjtu.model.Arrange;
+import edu.swjtu.model.Car;
+import edu.swjtu.model.Line;
 import edu.swjtu.util.DBUtil;
 
 public class ModifyArrServlet extends HttpServlet {
@@ -53,31 +55,31 @@ public class ModifyArrServlet extends HttpServlet {
 				} else {
 					pw.write("no");
 				}
-			} else if(type.equals("2")){
-				//修改
+			} else if (type.equals("2")) {
+				// 修改
 				PrintWriter pw = response.getWriter();
 				int id = Integer.parseInt(request.getParameter("id"));
 				String name = request.getParameter("name");
-				String date  = request.getParameter("date");
+				String date = request.getParameter("date");
 				String time = request.getParameter("time");
-				
+
 				Arrange arr = adi.getArrById(id, con);
-				
-				if(null!=arr){
+
+				if (null != arr) {
 					arr.setName(name);
 					arr.setDate(date);
 					arr.setTime(time);
 					int re = adi.updateArr(con, arr);
-					if(re>0){
+					if (re > 0) {
 						pw.write("yes");
-					}else{
+					} else {
 						pw.write("no");
 					}
-				}else{
+				} else {
 					pw.write("no");
 				}
 				pw.close();
-			}else if (type.equals("3")) {// 导出
+			} else if (type.equals("3")) {// 导出
 				String dt = request.getParameter("arr_date");
 				String date = request.getSession().getAttribute("arr_date")
 						.toString();
@@ -96,31 +98,41 @@ public class ModifyArrServlet extends HttpServlet {
 				CarDaoImpl cdi = new CarDaoImpl();
 				LineDaoImpl ldi = new LineDaoImpl();
 				for (Arrange arr : arrList) {
-					 data.add(new
-					 ArrCarLine(arr,cdi.getCarById(arr.getCarId(), con),
-					 ldi.getLineById(con, arr.getLineId())));
+					Car c = cdi.getCarById(arr.getCarId(), con);
+					if (null == c) {
+						c = new Car();
+						c.setLicensePlate("未知");
+						c.setDriver("未知");
+					}
+					Line l = ldi.getLineById(con, arr.getLineId());
+					if (null == l) {
+						l = new Line();
+						l.setName("线路");
+					}
+					data.add(new ArrCarLine(arr, c, l));
 				}
 				// export
 				OutputStream out = response.getOutputStream();
 				response.reset();
-				//设置导出Excel报表的导出形式
-			    response.setContentType("application/vnd.ms-excel");
-			    response.setHeader("Content-Disposition","attachment;filename="+date+".xls");
+				// 设置导出Excel报表的导出形式
+				response.setContentType("application/vnd.ms-excel");
+				response.setHeader("Content-Disposition",
+						"attachment;filename=" + date + ".xls");
 				ExportArrExcel<ArrCarLine> ex = new ExportArrExcel<ArrCarLine>();
 				String[] headers = { "arrid", "班次名称", "日期", "发车时间", "线路名称",
 						"车牌号", "司机" };
 				ex.export("班次表", headers, data, out);
 				out.flush();
 				out.close();
-			}else if(type.equals("4")){
+			} else if (type.equals("4")) {
 				PrintWriter pw = response.getWriter();
-				String[]ids = request.getParameter("multiDelIds").split(",");
+				String[] ids = request.getParameter("multiDelIds").split(",");
 				System.out.println(ids.length);
 				int cnt = 0;
-				for(int i=0;i<ids.length;i++){
-					cnt+=adi.delArrById(con, Integer.parseInt(ids[i]));
+				for (int i = 0; i < ids.length; i++) {
+					cnt += adi.delArrById(con, Integer.parseInt(ids[i]));
 				}
-				pw.write(cnt+"");
+				pw.write(cnt + "");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

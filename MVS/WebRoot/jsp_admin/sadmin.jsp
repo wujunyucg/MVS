@@ -45,7 +45,7 @@ $.ajaxSetup ({
 		</a> </div>
 		<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">Help</a></li>
+			<li><a href="javascript:;"id="admin_help">Help</a></li>
 			<li class="dropdown dropdown-toggle "><a href="#"
 				class="dropdown-toggle" id="dropdownMenu_user"
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -123,20 +123,12 @@ $.ajaxSetup ({
 		</div>
 	
 	<div id="main">
-		<div id="content">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h2 class="panel-title">欢迎您</h2>
-				</div>
-				<div class="panel-body">
-					您上次登录的时间是：${lastLoginTime}
-				</div>
-			</div>
-		</div>
+		<div id="content"></div>
 	</div>
 	
 	<script type="text/javascript">
 		$(function() {
+			$("#content").load("<%=path%>/jsp_admin/admin_help.jsp");
 			var cnt = -1;//表示页面的编号
 			$(".create-admin").click(function(){
 				cnt = 0;
@@ -213,7 +205,7 @@ $.ajaxSetup ({
 	
 	/*主页面加载*/
 		$(".main-page").click(function(){
-			
+			$("#content").load("<%=path%>/jsp_admin/admin_help.jsp");
 		});
 		/*退出*/
 		$("#fin_exit").click(function(){
