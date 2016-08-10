@@ -453,14 +453,13 @@ function addclicksite(ctn){
 			};
 			var satation_search=new AMap.PlaceSearch({
 				keywords :name, //搜索关键字为“超市”的poi
-				city:'成都',
-				citylimit:true, 
+				city:'成都', 
 				pageSize:10,
 				//panel:'panel'
 			});
 			
 
-			satation_search.searchNearBy("", e.lnglat,200,function(status,result){
+			satation_search.searchNearBy("", e.lnglat,600,function(status,result){
 				//console.log(marker.getPosition());
 			
 					data.longitude=marker.getPosition().lng;
