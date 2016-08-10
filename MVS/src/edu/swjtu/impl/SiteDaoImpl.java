@@ -144,6 +144,22 @@ public class SiteDaoImpl implements SiteDao {
 		return rs;
 	}
 	
+	public int updateterSite(Site site, Connection con) {
+		String sql = "update  site set site_id = ? where site_id = ?";
+		int rs;
+		try {
+			PreparedStatement pstm = con.prepareStatement(sql);
+			pstm.setInt(1, 0);
+			pstm.setInt(2, site.getSiteId());
+			rs = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return rs;
+	}
+	
+	
 	@Override
 	public int updateListSite(ArrayList<Site> siteList, Connection con) {
 		String sql = "update  site set site_id = ?,site_latitude = ?,site_longitude = ?,site_address = ?,site_peoNum = ?,site_name = ?,site_lineId = ?,site_order = ?,site_delay = ?,site_bufftag=?,site_lineName=? where site_id = ?";

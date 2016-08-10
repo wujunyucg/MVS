@@ -491,6 +491,7 @@ function search(){
   function immed_manual(){
   	$("#w-modal-but").attr("disabled",true);
   	$("#w-modal-but").html("同步");
+  	$("#w-modal-but").css("display","inline");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
   	var content='<form id="immedadd"><div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工工号：</label><input type="text" class="form-control" id="staff_number"  name = "staff_number" placeholder="员工工号" style="width: 300px"></div>'
@@ -585,6 +586,7 @@ function search(){
   	$("#w-modal-but").html("同步");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
+  	$("#w-modal-but").css("display","inline");
   	$("#w-modal-but").attr("onclick","");	
   	var content='<form id="immedadd" enctype="multipart/form-data"> <div class="form-group"> <label for="exampleInputFile">File input</label><input id="upload" type="file" name="staff_excel"><p class="help-block">选择您想导入的EXCEL文件</p>'
   				+'<a href="/MVS/download/2014112155.xlsx">模板下载</a></div>'
@@ -665,6 +667,7 @@ function search(){
   	$("#w-modal-but").html("同步");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
+  	$("#w-modal-but").css("display","inline");
   	var content='<form id="immedadd"><div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工工号：</label><input type="text" class="form-control" id="staff_number"  name = "staff_number" placeholder="员工工号" style="width: 300px"></div>'
   				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工姓名：</label><input type="text" class="form-control" name = "staff_name" placeholder="员工姓名" style="width: 300px"></div>'
   				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工部门：</label><input type="text" class="form-control" name = "staff_department" placeholder="员工部门" style="width: 300px"></div>'
@@ -750,6 +753,7 @@ function search(){
   	$("#w-modal-but").html("同步");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
+  	$("#w-modal-but").css("display","inline");
   	$("#w-modal-but").attr("onclick","");	
   	var content='<form id="immedadd" enctype="multipart/form-data"> <div class="form-group"> <label for="exampleInputFile">File input</label><input id="upload" type="file" name="staff_excel"><p class="help-block">选择您想导入的EXCEL文件</p>'
   				+'<a href="/MVS/download/2014112155.xlsx">模板下载</a></div>'

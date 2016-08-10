@@ -134,6 +134,10 @@
 <button  class="btn btn-primary" onclick="javascript:p_s($('#stressname').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
 <button onclick="disnone()"  class="btn btn-primary">隐藏</button> 
 </div>
+<div id="ternamediv"  class="form-inline" style="position:absolute;display:none;top:470px;right:165px" > <input type="" class="form-control" id="tername" placeholder="现在未有终点，请输入">&nbsp;&nbsp;&nbsp;
+<button  class="btn btn-primary" onclick="javascript:p_s1($('#tername').val(),hhj_ctn)">确认</button>&nbsp;&nbsp;&nbsp;
+<button onclick="$('#ternamediv').css('display','none')"  class="btn btn-primary">隐藏</button> 
+</div>
 <button id="exitclick" onclick="$('#exitclick').css('display','none')" style="position:absolute;display:none;top:190px;right:165px" class="btn btn-primary">退出点击选点</button> 
      <div style="position:absolute;right:160px;top:190px;">
     
@@ -168,7 +172,12 @@
        </c:forEach>
        </c:if>
       </select> </div>    
+    
+      <div  style="position:absolute;top:280px"><button  style="width:160px" class="btn btn-primary" onclick="terminal()">管理终点</button></div>    
   </div>  
+   
+  
+  
       <div id="route-info">
       
       </div>
@@ -591,7 +600,145 @@ $("#site_table td").click(function() {
          });
   }
 		
-   
+		function terminal(){
+	
+			$.ajax({ 
+			type:"post",
+			url: "<%=basePath%>servlet/ManageSiteServlet", 
+			contenttype :"application/x-www-form-urlencoded;charset=utf-8",
+			data:{
+					type:8,
+			}, 
+			error: function(request) {
+	           // document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+	         },
+	         success:function(request){
+	         map.clearMap();
+	         if(request=="0"){
+	         	$("#ternamediv").css("display","inline");
+	         }
+	         else{
+	       	  var list = eval('(' + request + ')');
+			 	var site = list.terminal;		
+			 
+				satationsmarker(site);
+	         }
+	         	
+	         }
+	         });
+		}
+   function p_s1(name,ctn){
+	var satation_search=new AMap.PlaceSearch({
+		keywords :name, //搜索关键字为“超市”的poi
+		city:'成都',
+		citylimit:true,
+		pageSize:1,
+		//panel:'panel'
+	});
+	satation_search.search(name,function(status,result){
+		//for(var i=0;i<result.poiList.pois.length;i++){
+			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
+			var satation={
+					siteId:"",
+					peoNum:0,
+					lineName:"null",
+					order:"",
+					delay:0,
+					latitude:result.poiList.pois[0].location.lat,
+					longitude:result.poiList.pois[0].location.lng,
+					address:name,
+					name:"",
+					bufftag:0
+			};
+			var marker=satationsmarker(satation);
+			map.setCenter([result.poiList.pois[0].location.lng,result.poiList.pois[0].location.lat]);
+			EditSatationter(satation,marker,ctn);
+	});
+}
+
+function EditSatationter(data,marker,ctn){
+	map.on('click',function(e){
+		marker.hide();
+	});
+	document.getElementById('addsatation-info').innerHTML="";
+	document.getElementById('addsatation-info').innerHTML=ctn;
+	var s=[data.longitude,data.latitude];
+	var ctn=document.getElementById('info-satation');
+	//console.log(document.getElementById('satation-lng'));
+	$('#satation-lng').val(s);
+	$('#satation-name').val(data.name);
+	$('#satation-address').val(data.address);
+	$('#satation-route').val(data.lineName);
+	$('#satation-number').val(data.order);
+	$('#satation-people').val(data.peoNum);
+	info(s,ctn);
+	//var sbm=document.getElementById('sbm');
+	var sbm=ctn.getElementsByTagName('button');	
+	//console.log(sbm);
+	//console.log(data);
+	sbm[0].onclick=function(){
+		//document.getElementById('result_satationinfo').innerHTML=data.name+","+data.address+","+data.longitude+""+data.latitude+","+data.lineId+","+","+data.siteId+","+data.peoNum+","+data.delay;
+		
+		data.order=$('#satation-number').val();
+		data.name=document.getElementById('satation-name').value;
+		data.address=document.getElementById('satation-address').value;
+		data.peoNum=parseInt($('#satation-people').val());
+		///console.log(data);
+		//alert("增加成功");
+		satationsmarker(data);
+		var json=JSON.stringify(data);
+		Addsitedatater(json.toString());
+		marker.hide();
+		map.on('click',function(e){});
+		siteable=0;
+		info2.close();
+	};
+	sbm[1].onclick=function(){
+		info2.close();
+		marker.hide();
+	};
+
+}
+
+function Addsitedatater(Data){
+		$.ajax({ 
+			type:"post",
+			url: "servlet/ManageSiteServlet",
+			data:{
+					type:9,
+					json:Data
+			}, 
+			error: function(request) {
+	            //document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+	         },
+			success: function(request){
+				$("#w-modal-close").css("display","inline");
+				$(".modal-body").html("添加成功");
+				$("#load_modal").modal('show');
+				var list = eval('(' + request + ')');
+			 	sitelist = list.sitelist;
+				var tab='<thead class="fixedThead"><tr><th>#</th><th>站点名称</th><th>站点地址</th><th>站点人数</th><th>站点所属线路</th></tr></thead><tbody class="scrollTbody">';
+				for(var i=0;i<sitelist.length;i++){
+					satationsmarker(sitelist[i]);
+					tab=tab+'<tr id="'+i+'"><td>'+(i+1)+'</td><td>'+sitelist[i].name+'</td><td>'+sitelist[i].address+'</td><td>'+sitelist[i].peoNum+'</td><td>'+sitelist[i].lineId+'</td></tr>';
+				}
+				tab=tab+'</tbody>';
+				$("#site_table").html(tab);
+				$("#site_table td").click(function() {
+	 			$("tr").each(function() {
+	 				$(this).css('background-color','white');
+	 			})
+	 				map.clearMap();
+	             var  tr=$(this).parent().attr("id");
+	               satationsmarker(sitelist[tr]);
+	               map.setCenter([sitelist[tr].longitude,sitelist[tr].latitude]);
+	               $("#"+tr).css('background-color','red');
+	        
+	           
+	            });
+		    
+	      }});
+	}
 	</script>
 
 	

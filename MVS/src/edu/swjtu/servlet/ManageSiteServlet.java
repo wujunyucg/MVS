@@ -390,6 +390,42 @@ public class ManageSiteServlet extends HttpServlet {
 				//System.out.println(123);
 				//response.sendRedirect("../jsp_user/site_get_address.jsp");
 			}
+			else if(request.getParameter("type").equals("8")){
+				SiteDaoImpl sdi =new SiteDaoImpl();
+				Site site = sdi.getSiteById(0, con);
+				if(site==null)
+					 out.print(0);
+				else{
+					JSONObject jsonObject = new JSONObject();  
+			        jsonObject.put("terminal", site);  
+			        out.print(jsonObject.toString());
+				}
+				out.close();
+			}
+			else if(request.getParameter("type").equals("9")){
+				String json=request.getParameter("json");
+				JSONObject jo = JSONObject.fromObject(json);
+				Site site =new Site();
+				site.setAddress(jo.getString("address"));
+				site.setBufftag(0);
+				site.setDelay(0);
+				site.setLatitude(jo.getDouble("latitude"));
+				site.setLongitude(jo.getDouble("longitude"));			
+				site.setName("终点");
+				site.setPeoNum(jo.getInt("peoNum"));
+				site.setSiteId(0);
+				SiteDaoImpl sdi = new SiteDaoImpl();
+				sdi.addOneSite(site, con);
+				site = sdi.getSiteByName("终点", con);
+				System.out.println(site.getSiteId());
+				site.setSiteId(0);
+				sdi.updateterSite(site, con);
+				ArrayList<Site> siteList = sdi.getAllSite(con);
+				 JSONObject jsonObject = new JSONObject();  
+			        jsonObject.put("sitelist", siteList); 
+			        out.write(jsonObject.toString());
+					out.close();
+			}
 		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();
