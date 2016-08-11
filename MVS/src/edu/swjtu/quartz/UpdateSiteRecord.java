@@ -5,6 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
 import edu.swjtu.impl.DayRecordDaoImpl;
 import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.LineRecordDaoImpl;
@@ -19,9 +23,10 @@ import edu.swjtu.model.SiteRecord;
 import edu.swjtu.util.DBUtil;
 import edu.swjtu.util.DateUtil;
 
-public class UpdateSiteRecord {
+public class UpdateSiteRecord implements Job {
 	
-	public void update(){
+	 public void execute(JobExecutionContext arg0) throws JobExecutionException{
+		
 		DayRecordDaoImpl drd = new DayRecordDaoImpl();
 		SiteRecordDaoImpl srd = new SiteRecordDaoImpl();
 		LineRecordDaoImpl lrd = new LineRecordDaoImpl();

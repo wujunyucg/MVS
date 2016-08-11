@@ -45,10 +45,10 @@ public class RouteTest {
 		fac_site.setDelay(1);
 
 		fac_site.setLatitude(30.655826);
-		fac_site.setLineId(1);
+		//fac_site.setLineId(1);
 		fac_site.setLongitude(104.065349);
 		fac_site.setName("1");
-		fac_site.setOrder(1);
+		//fac_site.setOrder(1);
 		fac_site.setPeoNum(0);
 		fac_site.setSiteId(99);
 		

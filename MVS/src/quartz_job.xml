@@ -15,4 +15,20 @@
             </cron>     
         </trigger>     
 </schedule>
+<schedule> 
+    	<job>          
+            <name>UpdateSiteRecord</name>     
+            <group>UpdateRecord</group>      
+            <job-class>edu.swjtu.quartz.UpdateSiteRecord</job-class>   
+         </job>              
+        <trigger>       
+            <cron>       
+                <name>triger2</name>       
+                <group> UpdateRecordg </group>      
+                <job-name>UpdateSiteRecord</job-name>      
+                <job-group>UpdateRecord</job-group>      
+                <cron-expression>0 10 0 * * ?</cron-expression>     
+            </cron>     
+        </trigger>     
+</schedule>
 </job-scheduling-data>
