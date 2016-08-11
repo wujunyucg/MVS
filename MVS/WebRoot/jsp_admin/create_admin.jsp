@@ -65,26 +65,26 @@
 	<div id="page2" class="mypage " style="display: none;">
 		<button id="btn_select_all" type="button" class="btn btn-default">全选</button>
 
-		<p class="bg-success text-primary">人员管理</p>
-		<button type="button" class="btn btn-default btn-single-power">人员数据维护</button>
-		<button type="button" class="btn btn-default btn-single-power">人员数据同步</button>
-		<button type="button" class="btn btn-default btn-single-power">人员信息查询</button>
+		<p class="bg-success text-primary">员工管理</p>
+		<button type="button" class="btn btn-default btn-single-power">人员维护</button>
+		<button type="button" class="btn btn-default btn-single-power">人员同步</button>
+		<button type="button" class="btn btn-default btn-single-power">人员查询</button>
 
+<p class="bg-success text-primary">车辆管理</p>
+		<button type="button" class="btn btn-default btn-single-power">新车入厂</button>
+		<button type="button" class="btn btn-default btn-single-power">车辆查询</button>
+		<button type="button" class="btn btn-default btn-single-power">车辆维护</button>
+		
+		<p class="bg-info text-primary">站点管理</p>
+		<button type="button" class="btn btn-default btn-single-power">站点维护</button>
+		
 		<p class="bg-info text-primary">线路管理</p>
-		<button type="button" class="btn btn-default btn-single-power">安排线路</button>
-		<button type="button" class="btn btn-default btn-single-power">查询线路</button>
+		<button type="button" class="btn btn-default btn-single-power">线路维护</button>
+		<button type="button" class="btn btn-default btn-single-power">线路查询</button>
 
 		<p class="bg-success text-primary">排班管理</p>
 		<button type="button" class="btn btn-default btn-single-power">班次查询</button>
-		<button type="button" class="btn btn-default btn-single-power">班次数据维护</button>
-
-		<p class="bg-info text-primary">站点管理</p>
-		<button type="button" class="btn btn-default btn-single-power">站点数据维护</button>
-
-		<p class="bg-success text-primary">车辆管理</p>
-		<button type="button" class="btn btn-default btn-single-power">新车入厂</button>
-		<button type="button" class="btn btn-default btn-single-power">查询车辆信息</button>
-		<button type="button" class="btn btn-default btn-single-power">车辆数据维护</button>
+		<button type="button" class="btn btn-default btn-single-power">班次维护</button>
 
 		<p class="text-primary">
 			<button type="button" class="btn btn-default" id="btn_pre2">上一步</button>
