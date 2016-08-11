@@ -80,9 +80,9 @@
 </script>
 </head>
 <body>
-	<div class="bg" >1</div>
+	<div class="bg" > </div>
 	<div id="login">
-		<div id="mask">3</div>
+		<div id="mask"> </div>
 		<h1>厂车管理后台</h1>
 		<form id="form_id">
 			<input id="name" name="username" type="text" placeholder="用户名" /> <input
