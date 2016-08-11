@@ -95,7 +95,7 @@ $.ajaxSetup ({
 				<button type="button"
 					class="list-group-item  btn-menu btn_text manage-admin">
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-					<span class="opMenu">管理角色</span>
+					<span class="opMenu">角色管理</span>
 				</button>
 				<button id="manage-admin" type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon manage-admin">
@@ -104,7 +104,7 @@ $.ajaxSetup ({
 				<button type="button"
 					class="list-group-item  btn-menu btn_text manage-user">
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					<span class="opMenu">管理用户</span>
+					<span class="opMenu">用户管理</span>
 				</button>
 				<button type="button" style="display:none;"
 					class="list-group-item  btn-menu btn_icon manage-user">
