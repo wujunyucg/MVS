@@ -21,7 +21,9 @@ import edu.swjtu.util.DBUtil;
 
 public class BuffToStaff implements Job {
 	public void execute(JobExecutionContext context) throws JobExecutionException { 
+		
 		DBUtil db = new DBUtil();
+		  
 		Connection con;
 		try {
 			con = db.getCon();

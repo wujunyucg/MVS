@@ -4,6 +4,6 @@ public class Test {
 
 	@org.junit.Test
 	public void testUpdate(){
-		new UpdateSiteRecord().update();
+		//new UpdateSiteRecord().update();
 	}
 }
