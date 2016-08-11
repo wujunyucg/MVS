@@ -322,6 +322,20 @@
     <servlet-name>ExportStaffStati</servlet-name>
     <servlet-class>edu.swjtu.excel.ExportStaffStati</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>FirstPageServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.FirstPageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>AFirstPageServlet</servlet-name>
+    <servlet-class>edu.swjtu.servlet.AFirstPageServlet</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -360,5 +374,13 @@
   <servlet-mapping>
     <servlet-name>ExportStaffStati</servlet-name>
     <url-pattern>/servlet/ExportStaffStati</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FirstPageServlet</servlet-name>
+    <url-pattern>/servlet/FirstPageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AFirstPageServlet</servlet-name>
+    <url-pattern>/servlet/AFirstPageServlet</url-pattern>
   </servlet-mapping>
 </web-app>

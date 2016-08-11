@@ -295,4 +295,14 @@ public class SiteDaoImpl implements SiteDao {
 		return pstm.executeUpdate();
 	}
 
+	@Override
+	public int getTotalNumber(Connection con) throws SQLException {
+		String sql = "select count(*) from site";
+		PreparedStatement pstm = con.prepareStatement(sql);
+		ResultSet rs = pstm.executeQuery();
+		rs.next();//移到第一条数据
+		int sum = rs.getInt(1);
+		return sum;
+	}
+
 }

@@ -23,7 +23,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	<img src="icons/firstPage.jpg" style="width:100%;height:145px;margin-left:-10px;">
+	<div style="height:145px;margin-left:-10px;background-image: url(icons/firpage${backPicture }.jpg);background-size:100%;">
+		<br/><br/><br/>
+		<h3 style="color:#ffffff;font-weight:bold;">&nbsp;&nbsp;欢迎进入咸鱼的梦想厂车管理后台</h3>
+		<h4 style="color:#ffffff;">&nbsp;&nbsp;&nbsp;Welcome Administrator</h4>
+	</div>
+	
 	<div class="panel panel-default" style="margin-left:-10px;">
   		<div class="panel-body">
 			 <h4><span class="glyphicon glyphicon-time" style="float:left;"></span>
@@ -35,14 +40,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<br/>
 	<div class="panel panel-default" style="margin-left:-10px;">
   		<div class="panel-heading">数据数量展示</div>
- 		<div class="panel-body">
-			  <div class="progress-bar progress-bar-info" style="width: 20px;height:20px;">
-			</div>
- 		</div>
-	</div>
-	
-	
+  			<ul class="list-group">
+			  <li class="list-group-item">
+			  	<div style="width:210px;float:left;"><p style="font-weight:bold;float:left;">员工数据现有数量： </p>${totalNumber[0] }</div>
+			  	<div style="width:120px;float:left;"><p style="font-weight:bold;float:left;">所占总数据比重：</p></div>
+			  	<div class="progress" style="margin-bottom: 0px;">
+			  		<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: ${totalRate[0]}">
+			  		</div>
+				</div>
+			  </li>
+			  <li class="list-group-item">
+			  	<div style="width:210px;float:left;"><p style="font-weight:bold;float:left;">车辆数据现有数量： </p>${totalNumber[1] }</div>
+			  	<div style="width:120px;float:left;"><p style="font-weight:bold;float:left;">所占总数据比重：</p></div>
+			  	<div class="progress" style="margin-bottom: 0px;">
+			  		<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: ${totalRate[1]}">
+			  		</div>
+				</div>
+			 </li>
+			  <li class="list-group-item">
+			  	<div style="width:210px;float:left;"><p style="font-weight:bold;float:left;">站点数据现有数量： </p>${totalNumber[2] }</div>
+			  	<div style="width:120px;float:left;"><p style="font-weight:bold;float:left;">所占总数据比重：</p></div>
+			  	<div class="progress" style="margin-bottom: 0px;">
+			  		<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: ${totalRate[2]}">
+			  		</div>
+				</div>
+				</li>
+			  <li class="list-group-item">
+			  	<div style="width:210px;float:left;"><p style="font-weight:bold;float:left;">线路数据现有数量： </p>${totalNumber[3] }</div>
+			  	<div style="width:120px;float:left;"><p style="font-weight:bold;float:left;">所占总数据比重：</p></div>
+			  	<div class="progress" style="margin-bottom: 0px;">
+			  		<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: ${totalRate[3]}">
+			  		</div>
+				</div>
+				</li>
+			  <li class="list-group-item">
+			  	<div style="width:210px;float:left;"><p style="font-weight:bold;float:left;">排班数据现有数量： </p>${totalNumber[4] }</div>
+			  	<div style="width:120px;float:left;"><p style="font-weight:bold;float:left;">所占总数据比重：</p></div>
+			  	<div class="progress" style="margin-bottom: 0px;">
+			  		<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: ${totalRate[4]}">
+			  		</div>
+				</div>
+				</li>
+			</ul>
+  		</div>
+  		
+  		
+  		<div class="panel panel-default" style="margin-left:-10px;">
+  			<div class="panel-heading">基本操作流程</div>
+  				<div class="alert alert-info" role="alert" style="margin-top:5px;">下图为系统的基本操作流程，详细操作请点击右上角help查询。</div>
+  				<p style="text-align:center;"><img src="icons/operapro.png" style="width:60%;"></p>
+  		</div>
+ 		
 	<script language=JavaScript>
+	
+		
+	
+	
 		document.getElementById('time').innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());
 		setInterval("document.getElementById('time').innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);
 	</script>

@@ -1,6 +1,7 @@
 package edu.swjtu.dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,4 +186,6 @@ public interface StaffDao {
 	 * @return
 	 */
 	public Staff getStaffByNumberS(String number,Connection con);
+	
+	public int getTotalNumber(Connection con) throws SQLException;
 }

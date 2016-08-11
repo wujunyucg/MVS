@@ -130,4 +130,6 @@ public interface ArrangeDao {
 	 * @throws SQLException
 	 */
 	public int updateArr(Connection con ,Arrange arr) throws SQLException;
+	
+	public int getTotalNumber(Connection con) throws SQLException;
 }

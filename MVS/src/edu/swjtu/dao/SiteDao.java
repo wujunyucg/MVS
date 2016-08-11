@@ -102,4 +102,6 @@ public interface SiteDao {
 	ArrayList<Site> getBuffSite(Connection con);
 	
 	public int addSiteAndId(Site site, Connection con) throws SQLException ;
+	
+	public int getTotalNumber(Connection con) throws SQLException;
 }

@@ -128,6 +128,7 @@ $.ajaxSetup ({
 	
 	<script type="text/javascript">
 		$(function() {
+			$("#content").load("<%=path%>/servlet/AFirstPageServlet");
 			var cnt = -1;//表示页面的编号
 			$(".create-admin").click(function(){
 				cnt = 0;
@@ -204,7 +205,7 @@ $.ajaxSetup ({
 	
 	/*主页面加载*/
 		$(".main-page").click(function(){
-			$("#content").load("<%=path%>/jsp_admin/admin_help.jsp");
+			$("#content").load("<%=path%>/servlet/AFirstPageServlet");
 		});
 		/*退出*/
 		$("#fin_exit").click(function(){

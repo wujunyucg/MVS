@@ -5,13 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import net.sf.json.JSONObject;
+
 import org.junit.Test;
 
 import edu.swjtu.impl.LineDaoImpl;
 import edu.swjtu.impl.LineRecordDaoImpl;
+import edu.swjtu.impl.SiteDaoImpl;
 import edu.swjtu.impl.StaffDaoImpl;
 import edu.swjtu.model.Line;
 import edu.swjtu.model.LineRecord;
+import edu.swjtu.model.Site;
 import edu.swjtu.model.Staff;
 import edu.swjtu.util.DBUtil;
 
@@ -116,8 +120,46 @@ public class LineDaoTest {
 			
 			
 		}
+	}
+	
+	@Test
+	public void testSite() throws ClassNotFoundException, SQLException{
+		Site site =new Site();
+		site.setAddress("123");
+		site.setBufftag(0);
+		site.setDelay(0);
+		site.setLatitude(99.1);
+		site.setLongitude(99.1);			
+		site.setName("终点");
+		site.setPeoNum(1);
+		site.setSiteId(0);
+		SiteDaoImpl sdi = new SiteDaoImpl();
+		if(sdi.getSiteById(0, new DBUtil().getCon()) == null){
+			sdi.addOneSite(site, new DBUtil().getCon());
+			site = sdi.getSiteByName("终点", new DBUtil().getCon());
+			sdi.updateterSite(site, new DBUtil().getCon());
+		}else{
+			sdi.updateSite(site, new DBUtil().getCon());
+		}
 		
-		
+	}
+	@Test
+	public void testSite1() throws ClassNotFoundException, SQLException{
+		Site site =new Site();
+		site.setAddress("123");
+		site.setBufftag(0);
+		site.setDelay(0);
+		site.setLatitude(3.1);
+		site.setLongitude(3.1);			
+		site.setName("终点");
+		site.setPeoNum(1);
+		site.setSiteId(1);
+		SiteDaoImpl sdi = new SiteDaoImpl();
+		if(sdi.getSiteById(0, new DBUtil().getCon()) == null){
+			sdi.addSiteAndId(site, new DBUtil().getCon());
+		}else{
+			sdi.updateSite(site, new DBUtil().getCon());
+		}
 		
 	}
 }

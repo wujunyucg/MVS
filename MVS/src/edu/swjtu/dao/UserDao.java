@@ -94,4 +94,6 @@ public interface UserDao {
 	 */
 	public int deleteUserByAdminId(int adminId,Connection con) throws SQLException;
 	
+	public int getTotalNumber(Connection con) throws SQLException;
+	
 }

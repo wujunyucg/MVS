@@ -180,7 +180,7 @@
 		</div>
 		
 		<div id="content">
-			<h1>欢迎您登录咸鱼的梦想厂车管理后台</h1>
+			<h1></h1>
 		</div>
 		
 	</div>
@@ -251,9 +251,10 @@
 	
 	
 	<script type="text/javascript">
+		$("#content").load("<%=path%>/servlet/FirstPageServlet");
 		//异步加载代码
 		$("#firPage").click(function(){
-			$("#content").load("<%=path%>/jsp_user/firstPage.jsp");
+			$("#content").load("<%=path%>/servlet/FirstPageServlet");
 		});
 		
 		$(".manage-arrange").click(function(){

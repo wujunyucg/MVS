@@ -62,4 +62,6 @@ public interface LineDao {
 	
 	public int getLineIdByName(Connection con,String name) throws SQLException;
 	
+	public int getTotalNumber(Connection con) throws SQLException;
+	
 }
