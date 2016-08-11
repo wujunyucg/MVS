@@ -418,7 +418,6 @@ public class ManageSiteServlet extends HttpServlet {
 				sdi.addOneSite(site, con);
 				site = sdi.getSiteByName("终点", con);
 				System.out.println(site.getSiteId());
-				site.setSiteId(0);
 				sdi.updateterSite(site, con);
 				ArrayList<Site> siteList = sdi.getAllSite(con);
 				 JSONObject jsonObject = new JSONObject();  
