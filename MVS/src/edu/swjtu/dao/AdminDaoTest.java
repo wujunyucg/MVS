@@ -30,9 +30,6 @@ import javax.xml.xpath.XPathFactory;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.jxls.exception.ParsePropertyException;
-import net.sf.jxls.transformer.XLSTransformer;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
@@ -67,51 +64,51 @@ public class AdminDaoTest {
 	String xmlPath = "C:/Users/asus1/git/MVS/MVS/src/quartz_job.xml";
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test() throws ClassNotFoundException, SQLException, SAXException, IOException, ParserConfigurationException, ParseException, ParsePropertyException, InvalidFormatException {
-		// 创建柱状图  
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
-        // 装载数据  
-        dataset.setValue(6, "Profit", "Jane");  
-        dataset.setValue(3, "Profit2", "Jane");  
-        dataset.setValue(7, "Profit", "Tom");  
-        dataset.setValue(6, "Profit2", "Tom");  
-        dataset.setValue(8, "Profit", "Jill");  
-        dataset.setValue(9, "Profit2", "Jill");  
-        dataset.setValue(5, "Profit", "Johh");  
-        dataset.setValue(8, "Profit2", "Johh");  
-        dataset.setValue(12, "Profit", "Fred");  
-        dataset.setValue(11, "Profit2", "Fred");  
-        // 产生柱状图  
-        // JFreeChart chart = ChartFactory.createBarChart("标题", "x轴标志", "y轴标志",  
-        // 设置数据, 设置图形显示方向, 是否显示图形, 是否进行提示, 是否配置报表存放地址);  
-  
-        // 3D柱状图  
-        JFreeChart chart = ChartFactory.createBarChart("站点统计报表", "站点", "搭乘人数",  
-                dataset, PlotOrientation.VERTICAL, true, true, false);  
-        // 解决中文乱码  
-        CategoryPlot plot = chart.getCategoryPlot();  
-        CategoryAxis domainAxis = plot.getDomainAxis();  
-        NumberAxis numberAxis = (NumberAxis) plot.getRangeAxis();  
-  
-        TextTitle textTitle = chart.getTitle();  
-        textTitle.setFont(new Font("黑体", Font.PLAIN, 20));  
-        domainAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 11));  
-        domainAxis.setLabelFont(new Font("宋体", Font.PLAIN, 12));  
-        numberAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 11));  
-        numberAxis.setLabelFont(new Font("宋体", Font.PLAIN, 12));  
-  
-        chart.getLegend().setItemFont(new Font("宋体", Font.PLAIN, 12));  
-  
-        try {  
-            
-            // 保存图片到指定位置  
-             ChartUtilities.saveChartAsJPEG(new File("d:\\bar.png"), chart, 
-            500,  
-            300);  
-        } catch (Exception e) {  
-            System.err.println("Problem occurred creating chart.");  
-        }  
-	}
+//	public void test() throws ClassNotFoundException, SQLException, SAXException, IOException, ParserConfigurationException, ParseException, ParsePropertyException, InvalidFormatException {
+//		// 创建柱状图  
+//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
+//        // 装载数据  
+//        dataset.setValue(6, "Profit", "Jane");  
+//        dataset.setValue(3, "Profit2", "Jane");  
+//        dataset.setValue(7, "Profit", "Tom");  
+//        dataset.setValue(6, "Profit2", "Tom");  
+//        dataset.setValue(8, "Profit", "Jill");  
+//        dataset.setValue(9, "Profit2", "Jill");  
+//        dataset.setValue(5, "Profit", "Johh");  
+//        dataset.setValue(8, "Profit2", "Johh");  
+//        dataset.setValue(12, "Profit", "Fred");  
+//        dataset.setValue(11, "Profit2", "Fred");  
+//        // 产生柱状图  
+//        // JFreeChart chart = ChartFactory.createBarChart("标题", "x轴标志", "y轴标志",  
+//        // 设置数据, 设置图形显示方向, 是否显示图形, 是否进行提示, 是否配置报表存放地址);  
+//  
+//        // 3D柱状图  
+//        JFreeChart chart = ChartFactory.createBarChart("站点统计报表", "站点", "搭乘人数",  
+//                dataset, PlotOrientation.VERTICAL, true, true, false);  
+//        // 解决中文乱码  
+//        CategoryPlot plot = chart.getCategoryPlot();  
+//        CategoryAxis domainAxis = plot.getDomainAxis();  
+//        NumberAxis numberAxis = (NumberAxis) plot.getRangeAxis();  
+//  
+//        TextTitle textTitle = chart.getTitle();  
+//        textTitle.setFont(new Font("黑体", Font.PLAIN, 20));  
+//        domainAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 11));  
+//        domainAxis.setLabelFont(new Font("宋体", Font.PLAIN, 12));  
+//        numberAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 11));  
+//        numberAxis.setLabelFont(new Font("宋体", Font.PLAIN, 12));  
+//  
+//        chart.getLegend().setItemFont(new Font("宋体", Font.PLAIN, 12));  
+//  
+//        try {  
+//            
+//            // 保存图片到指定位置  
+//             ChartUtilities.saveChartAsJPEG(new File("d:\\bar.png"), chart, 
+//            500,  
+//            300);  
+//        } catch (Exception e) {  
+//            System.err.println("Problem occurred creating chart.");  
+//        }  
+//	}
 	
 	/**
 	 * 测试
