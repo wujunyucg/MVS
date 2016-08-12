@@ -589,7 +589,7 @@ function search(){
   	$("#w-modal-but").css("display","inline");
   	$("#w-modal-but").attr("onclick","");	
   	var content='<form id="immedadd" enctype="multipart/form-data"> <div class="form-group"> <label for="exampleInputFile">File input</label><input id="upload" type="file" name="staff_excel"><p class="help-block">选择您想导入的EXCEL文件</p>'
-  				+'<a href="/MVS/download/2014112155.xlsx">模板下载</a></div>'
+  				+'<a href="/MVS/download/员工导入模板.xlsx">模板下载</a></div>'
   				+'<input name = "type" value="2" style="display:none;"></form>';
   	$("#w-modal-div").html(content);
   	$("#w-modal-but").attr("onclick","javascript:addexcel();");	
