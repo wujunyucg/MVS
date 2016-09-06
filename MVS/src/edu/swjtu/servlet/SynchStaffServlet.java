@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import net.sf.json.util.NewBeanInstanceStrategy;
 
 import org.hamcrest.core.IsNull;
@@ -57,6 +59,7 @@ public class SynchStaffServlet extends HttpServlet {
 	
 	@SuppressWarnings({ "static-access", "deprecation" })
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		  response.setContentType("text/html;charset=UTF-8");
 		DBUtil db = new DBUtil();
 		PrintWriter out = response.getWriter();
 		if(request.getParameter("type").equals("0")){
@@ -94,6 +97,8 @@ public class SynchStaffServlet extends HttpServlet {
 				String department = request.getParameter("staff_department");
 				String group = request.getParameter("staff_group");
 				String address = request.getParameter("staff_address");
+				String lati = request.getParameter("staff_lati");
+				String longti = request.getParameter("staff_long");
 				Staff staff = sdi.getStaffByNumber(number, con);
 				Staff staff1 = new Staff();
 				staff1.setNumber(number);
@@ -101,6 +106,9 @@ public class SynchStaffServlet extends HttpServlet {
 				staff1.setDepartment(department);
 				staff1.setGroup(group);;
 				staff1.setAddress(address);
+				staff1.setLati(Double.parseDouble(lati));
+				staff1.setLongti(Double.parseDouble(longti));
+				staff1.setSiteId(-1);
 				sdi.addOneStaff(staff1, con);
 				SynchDaoImpl sydi = new SynchDaoImpl();
 				Synch synch = new Synch();
@@ -171,16 +179,15 @@ public class SynchStaffServlet extends HttpServlet {
 								out.print(7);
 							}	
 							else{
-								sdi.addListStaff(staffList, con);
-								SynchDaoImpl sydi = new SynchDaoImpl();
-								Synch synch = new Synch();
-								synch.setName((String)request.getSession().getAttribute("userName")==null?"管理员":(String)request.getSession().getAttribute("userName"));
-								Date date1 = new Date();     
-								 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
-								 String str1 = sdf1.format(date1); 
-								synch.setTime(str1);
-								sydi.addSynch(synch, con);
-								out.print(5);
+								
+								
+							/*	*/
+								
+								JSONObject jo= new JSONObject();
+								jo.put("stafflist", staffList);
+								
+								out.print(jo.toString());
+								
 							}
 							db.closeCon(con);
 						}
@@ -218,6 +225,10 @@ public class SynchStaffServlet extends HttpServlet {
 				bstaff.setDepartment(department);
 				bstaff.setGroup(group);;
 				bstaff.setAddress(address);
+				String lati = request.getParameter("staff_lati");
+				String longti = request.getParameter("staff_long");
+				bstaff.setLati(Double.parseDouble(lati));
+				bstaff.setLongti(Double.parseDouble(longti));
 				bsdi.addOneBuffStaff(bstaff, con);
 				out.print(1);
 				//System.out.println(bstaff.getNumber());
@@ -285,8 +296,11 @@ public class SynchStaffServlet extends HttpServlet {
 								bstaff.setAddress(staff.getAddress());
 								bstaffList.add(bstaff);
 							}
-							bsdi.addListBuffStaff(bstaffList, con);
-							out.print(5);
+							JSONObject jo= new JSONObject();
+							jo.put("bstafflist", bstaffList);
+							
+							out.print(jo.toString());
+							
 						}
 						db.closeCon(con);
 					}
@@ -321,6 +335,72 @@ public class SynchStaffServlet extends HttpServlet {
 				out.close();
 		
 		}
-	}
+		else if(request.getParameter("type").equals("6")){		
+			
+			StaffDaoImpl sdi = new StaffDaoImpl();
+			Connection con;
+			try {
+				con = db.getCon();
+				
+				String jo  = request.getParameter("staffs");
+				System.out.println(jo);
+				JSONArray jsono = JSONArray.fromObject(jo);
+				ArrayList<Staff> stafflist = new ArrayList<Staff>();
+				for(int i=0;i<jsono.size();i++){
+					JSONObject jso = (JSONObject) jsono.get(i);
+					Staff staff = (Staff) JSONObject.toBean(jso,Staff.class);
+					stafflist.add(staff);
+				}
+				sdi.addListStaff(stafflist, con);
+				SynchDaoImpl sydi = new SynchDaoImpl();
+				Synch synch = new Synch();
+				synch.setName((String)request.getSession().getAttribute("userName")==null?"管理员":(String)request.getSession().getAttribute("userName"));
+				Date date1 = new Date();     
+				 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+				 String str1 = sdf1.format(date1); 
+				synch.setTime(str1);
+				sydi.addSynch(synch, con);
+				con.close();
+				out.print(1);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			else if(request.getParameter("type").equals("7")){		
+				
+				StaffDaoImpl sdi = new StaffDaoImpl();
+				Connection con;
+				try {
+					con = db.getCon();
+					
+					String jo  = request.getParameter("staffs");
+					System.out.println(jo);
+					JSONArray jsono = JSONArray.fromObject(jo);
+					ArrayList<BuffStaff> stafflist = new ArrayList<BuffStaff>();
+					for(int i=0;i<jsono.size();i++){
+						JSONObject jso = (JSONObject) jsono.get(i);
+						BuffStaff buffStaff = (BuffStaff) JSONObject.toBean(jso,BuffStaff.class);
+						stafflist.add(buffStaff);
+					}
+					BuffStaffDaoImpl bsdi = new BuffStaffDaoImpl();
+					bsdi.addListBuffStaff(stafflist, con);
+					
+					con.close();
+					out.print(1);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+	
+			}
+		}
 
 }

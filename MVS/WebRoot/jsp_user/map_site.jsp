@@ -482,7 +482,7 @@ function satationSuit2(lng,lat,sta){
 		pageSize:10,
 		//panel:'panel'
 	});
-	console.log([lng,lat]);
+	
 	satation_search.searchNearBy("街|路|道",[lng,lat],300,function(status,result){
 	
 		var dd=result.poiList.pois[0].name+","+result.poiList.pois[0].location+'';//+result.poiList.pois[0].address;

@@ -22,7 +22,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	
+	<script type="text/javascript"
+		src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+		
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -184,7 +186,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     </c:if>
     
-
+<p id="time" style="display:none"></p>
   </body>
    
    <script>
@@ -199,6 +201,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	}
                </c:otherwise>
            </c:choose>
+           
+ var addresslist= new Array();
+ var addressindex=0;
  $("#w-modal-div").css("overflow","");
 $("#w-modal-div").css("height","");
 $(window).load(searchcontent());
@@ -241,7 +246,7 @@ $(window).load(searchcontent());
 	  else
 	  	tab=tab+'<tr><td class="td1">所属站点</td><td>'+site.name+'</td></tr>';
 	  
-	 tab=tab +'<tr><td class="td1">员工地址</td><td>'+address+'</td></tr>'
+	 tab=tab +'<tr><td class="td1">员工地址</td><td id="staff_address">'+address+'</td></tr>'
 	  +'</table>';
 	   document.getElementById("w-modal-p1"). innerHTML = '查看详情';
 	  document.getElementById("w-modal-div"). innerHTML = tab;
@@ -477,7 +482,7 @@ function search(){
   	$("#w-modal-but").html("修改周期");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
-  	var content='<form id="immedadd"><div class="form-group form-inline"><select id="quartz_type" name ="time" class="form-control">'
+  	var content='<form id="changetime"><div class="form-group form-inline"><select id="quartz_type" name ="time" class="form-control">'
   			+'<option value = "day">天</option>'
   			+'<option value = "week">周</option>'
   	 		+'<option value = "month">月</option>'
@@ -494,13 +499,17 @@ function search(){
   	$("#w-modal-but").css("display","inline");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
-  	var content='<form id="immedadd"><div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工工号：</label><input type="text" class="form-control" id="staff_number"  name = "staff_number" placeholder="员工工号" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工姓名：</label><input type="text" class="form-control" name = "staff_name" placeholder="员工姓名" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工部门：</label><input type="text" class="form-control" name = "staff_department" placeholder="员工部门" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control" name = "staff_group" placeholder="员工组别" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工地址：</label><input type="text" class="form-control" name = "staff_address" placeholder="员工地址" style="width: 300px"></div>'
+  	var content='<form id="immedadd">'
+  				+'<div class="form-group form-inline "><label for="exampleInputName2" style="font-size: 15px">员工工号：</label><input type="text" class="form-control immedadd1" id="staff_number"  name = "staff_number" placeholder="员工工号" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工姓名：</label><input type="text" class="form-control immedadd1" name = "staff_name" placeholder="员工姓名" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工部门：</label><input type="text" class="form-control immedadd1" name = "staff_department" placeholder="员工部门" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control immedadd1" name = "staff_group" placeholder="员工组别" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工地址：</label><input type="text" class="form-control immedadd1" id="staff_address" name = "staff_address" placeholder="员工地址" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline" style="display:none"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control " id = "staff_lati" name = "staff_lati"placeholder="员工组别" style="display:none;width: 300px"></div>'
+  				+'<div class="form-group form-inline" style="display:none"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control " id = "staff_long" name = "staff_long" placeholder="员工组别" style="display:none;width: 300px"></div>'
   				+'<input name = "type" value="1" style="display:none;"></form>';
   $("#w-modal-div").html(content);
+  
   $(function(){
   $(".form-control").blur(function(){
   		if($(this).val()==""){	
@@ -512,6 +521,7 @@ function search(){
   			$("#w-modal-p2").html("");
   		}
   		if($(this).attr("id")=="staff_number" && $(this).val()!=""){
+  		
   			$.ajax({ 
 				type:"post",
 				url: "<%=basePath%>servlet/SynchStaffServlet", 
@@ -520,7 +530,7 @@ function search(){
 								number :$(this).val() ,			
 					},
 				error: function(request) {
-		          alert('修改失败，请重新修改');
+		         
 		         },
 				success: function(request){
 				if(request == 1){
@@ -545,12 +555,18 @@ function search(){
 		      }});
   		}
   		var flag = 0;
-  		$(".form-control").each(function() {
+  		$(".immedadd1").each(function() {
   		
-  		if($(this).val()=="")
+  		if($(this).val()==""){
   			flag = 1;
+  			
+  			
+  		}
+  			
   		});
+  		
   		if(flag == 0 &&  $("#w-modal-p3").html()=="员工工号可用"){
+ 
   			$("#w-modal-but").attr("disabled",false);
   			$("#w-modal-but").attr("onclick","javascript:addone();");
   		}
@@ -559,13 +575,25 @@ function search(){
 	});
 	});
   }
+  var iss=0;
   function addone(){
+  		var address= new Object();
+  		
+  		p_s($("#staff_address").val(),address,1,-1,-1);
+  		//while(!iss);
+  		
+  }
+  function addonename(address){
+  	$("#w-modal-p3").html("");
+  		$("#staff_lati").val(address.latitude);
+  		$("#staff_long").val(address.longitude);
+  		
   		$.ajax({ 
 		type:"post",
 		url: "<%=basePath%>servlet/SynchStaffServlet", 
 		data:$('#immedadd').serialize(), 
 		error: function(request) {
-            document.getElementById("p2"). innerHTML = '同步失败，请重新同步';
+           	$("#w-modal-p2").html('同步失败，请重新同步');
          },
 		success: function(request){
 		if(request == 1){
@@ -574,15 +602,14 @@ function search(){
 			$("#w-modal-but").attr("disabled",true); 	
 		}
         else{
-        	document.getElementById("p2"). innerHTML = '修改失败，请重新修改';
+        	document.getElementById("p2"). innerHTML = '同步失败，请重新修改';
         }
 	    
       }});
        pagination(${staff_page});
   }
-  
   function immed_excel(){
-  	//$("#w-modal-but").attr("disabled",true);
+  	$("#w-modal-but").attr("disabled",false);
   	$("#w-modal-but").html("同步");
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
@@ -616,6 +643,7 @@ function search(){
             type: 'post', 
             url: '<%=basePath%>servlet/SynchStaffServlet?type=2',
             success: function(data) { 
+            
                 if(data==1){
   					$("#w-modal-p2").html("文件有错，请审核后提交");
   					$("#w-modal-p2").css("color","red");
@@ -636,12 +664,7 @@ function search(){
                 	$("#w-modal-p2").css("color","red");
   					$("#w-modal-p2").css("font-size","20px");
                 }
-                else if(data == 5){
-                	$("#w-modal-p2").html("同步成功");
-                	$("#w-modal-p2").css("color","blue");
-                	$("#w-modal-p2").css("font-size","20px");
-                	$("#w-modal-but").attr("disabled",true);
-                }
+               
                 else if(data == 6){
                 	$("#w-modal-p2").html("文件中有未填项，请审核后提交");
                 	$("#w-modal-p2").css("color","red");
@@ -654,12 +677,60 @@ function search(){
                 	$("#w-modal-p2").css("font-size","20px");
                 	$("#w-modal-but").attr("disabled",true);
                 }
-                
+                 else {
+                 addresslist= new Array();
+                 addressindex=0;
+                	 var list = eval('(' + data + ')');
+                	var stafflist=list.stafflist;
+                	for(var i =0 ;i<stafflist.length;i++)
+                	{
+                		var address = new Object();
+                		p_s(stafflist[i].address,address,3,i,stafflist);
+                	}
+                	
+                	
+                	
+                	
+                	
+                }
                 
             }
            // $(this).resetForm(); // 提交后重置表单
         });
         pagination(${staff_page});
+  }
+  
+  function addexcel_manual2(stafflist){
+ 	
+  
+                	for(var i=0;i<addresslist.length;i++){
+                		stafflist[addresslist[i].index].lati=addresslist[i].latitude;
+                		stafflist[addresslist[i].index].longti=addresslist[i].longitude;
+                	}
+                	console.log(stafflist);
+                	$.ajax({ 
+				type:"post",
+				url: "<%=basePath%>servlet/SynchStaffServlet", 
+				data:{
+								type : "6",
+								staffs:JSON.stringify( stafflist )	
+					},
+				error: function(request) {
+		          alert('修改失败，请重新修改');
+		         },
+				success: function(request){
+				if(request == 1 ){
+					$("#w-modal-p2").html("同步成功");
+                	$("#w-modal-p2").css("color","blue");
+                	$("#w-modal-p2").css("font-size","20px");
+                	$("#w-modal-but").attr("disabled",true);
+				}
+		        else{
+		        	
+		        }
+			    
+		      }});
+  	
   }
   
   function time_manual(){
@@ -668,15 +739,17 @@ function search(){
   	$("#w-modal-p3").html("");
   	$("#w-modal-p2").html("");
   	$("#w-modal-but").css("display","inline");
-  	var content='<form id="immedadd"><div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工工号：</label><input type="text" class="form-control" id="staff_number"  name = "staff_number" placeholder="员工工号" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工姓名：</label><input type="text" class="form-control" name = "staff_name" placeholder="员工姓名" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工部门：</label><input type="text" class="form-control" name = "staff_department" placeholder="员工部门" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control" name = "staff_group" placeholder="员工组别" style="width: 300px"></div>'
-  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工地址：</label><input type="text" class="form-control" name = "staff_address" placeholder="员工地址" style="width: 300px"></div>'
+  	var content='<form id="immedadd"><div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工工号：</label><input type="text" class="form-control timemanual" id="staff_number"  name = "staff_number" placeholder="员工工号" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工姓名：</label><input type="text" class="form-control timemanual" name = "staff_name" placeholder="员工姓名" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工部门：</label><input type="text" class="form-control timemanual" name = "staff_department" placeholder="员工部门" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control timemanual" name = "staff_group" placeholder="员工组别" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline"><label for="exampleInputName2" style="font-size: 15px">员工地址：</label><input type="text" class="form-control timemanual" id="staff_address" name = "staff_address" placeholder="员工地址" style="width: 300px"></div>'
+  				+'<div class="form-group form-inline" style="display:none"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control " id = "staff_lati" name = "staff_lati"placeholder="员工组别" style="display:none;width: 300px"></div>'
+  				+'<div class="form-group form-inline" style="display:none"><label for="exampleInputName2" style="font-size: 15px">员工组别：</label><input type="text" class="form-control " id = "staff_long" name = "staff_long" placeholder="员工组别" style="display:none;width: 300px"></div>'
   				+'<input name = "type" value="3" style="display:none;"></form>';
   $("#w-modal-div").html(content);
   $(function(){
-  $(".form-control").blur(function(){
+  $(".timemanual").blur(function(){
   		if($(this).val()==""){	
   			$("#w-modal-p2").html("请输入完整内容");
   			$("#w-modal-p2").css("color","red");
@@ -697,13 +770,13 @@ function search(){
 		          alert('修改失败，请重新修改');
 		         },
 				success: function(request){
-				if(request == 1){
+				if(request == 1 || request ==2){
 					$("#w-modal-p3").html("员工工号已有，请详细审核信息");
   					$("#w-modal-p3").css("color","red");
   					$("#w-modal-p3").css("font-size","20px");
   					
 				}
-		        else if(request == 2){
+		        else if(request == 3){
 		        	 $("#w-modal-p3").html("员工工号可用");
   					$("#w-modal-p3").css("color","blue");
   					$("#w-modal-p3").css("font-size","20px");
@@ -713,21 +786,32 @@ function search(){
 		      }});
   		}
   		var flag = 0;
-  		$(".form-control").each(function() {
+  		$(".timemanual").each(function() {
   		
   		if($(this).val()=="")
   			flag = 1;
   		});
   		if(flag == 0 &&  $("#w-modal-p3").html()=="员工工号可用"){
   			$("#w-modal-but").attr("disabled",false);
-  			$("#w-modal-but").attr("onclick","javascript:addone_time();");
+  			$("#w-modal-but").attr("onclick","javascript:addone_time1();");
   		}			
 		});
 	});
   }
   
-  function addone_time(){
-  	$.ajax({ 
+  function addone_time1(){
+  
+  $("#w-modal-p3").html("");
+  var address = new  Object();
+  	p_s($("#staff_address").val(),address,2,-1,-1);
+  	
+
+  }
+  
+  function addone_time2(address){
+  $("#staff_lati").val(address.latitude);
+  		$("#staff_long").val(address.longitude);
+  $.ajax({ 
 		type:"post",
 		url: "<%=basePath%>servlet/SynchStaffServlet", 
 		data:$('#immedadd').serialize(), 
@@ -745,7 +829,6 @@ function search(){
         }
 	    
       }});
-
   }
   
   function time_excel(){
@@ -779,7 +862,8 @@ function search(){
   	 $("#immedadd").ajaxSubmit({
             type: 'post', 
             url: '<%=basePath%>servlet/SynchStaffServlet?type=4',
-            success: function(data) { 
+            success: function(data) {
+           
                 if(data==1){
   					$("#w-modal-p2").html("文件有错，请审核后提交");
   					$("#w-modal-p2").css("color","red");
@@ -800,12 +884,7 @@ function search(){
                 	$("#w-modal-p2").css("color","red");
   					$("#w-modal-p2").css("font-size","20px");
                 }
-                else if(data == 5){
-                	$("#w-modal-p2").html("记录已上传,到达同步时间即可同步");
-                	$("#w-modal-p2").css("color","blue");
-                	$("#w-modal-p2").css("font-size","20px");
-                	$("#w-modal-but").attr("disabled",true);
-                }
+                
                 else if(data == 6){
                 	$("#w-modal-p2").html("文件中有未填项，请审核后提交");
                 	$("#w-modal-p2").css("color","red");
@@ -818,18 +897,60 @@ function search(){
                 	$("#w-modal-p2").css("font-size","20px");
                 	$("#w-modal-but").attr("disabled",true);
                 }
+                else {
+               		 addresslist= new Array();
+                	 addressindex=0;
+                	 var list = eval('(' + data + ')');
+                	
+                	var bstafflist=list.bstafflist;
+                	for(var i =0 ;i<bstafflist.length;i++)
+                	{
+                		var address = new Object();
+                		p_s(bstafflist[i].address,address,4,i,bstafflist);
+                	}
+                	
+                	
+                }
                 
             }
            // $(this).resetForm(); // 提交后重置表单
         });
   }
   
-  
+  function addexcel_time2(stafflist){
+  		for(var i=0;i<addresslist.length;i++){
+                		stafflist[addresslist[i].index].lati=addresslist[i].latitude;
+                		stafflist[addresslist[i].index].longti=addresslist[i].longitude;
+                	}
+                	
+                	$.ajax({ 
+				type:"post",
+				url: "<%=basePath%>servlet/SynchStaffServlet", 
+				data:{
+								type : "7",
+								staffs:JSON.stringify( stafflist )	
+					},
+				error: function(request) {
+		          alert('修改失败，请重新修改');
+		         },
+				success: function(request){
+				if(request == 1 ){
+					$("#w-modal-p2").html("记录已上传,到达同步时间即可同步");
+                	$("#w-modal-p2").css("color","blue");
+                	$("#w-modal-p2").css("font-size","20px");
+                	$("#w-modal-but").attr("disabled",true);
+				}
+		        else{
+		        	
+		        }
+			    
+		      }});
+  }
   function change(){
   	$.ajax({ 
 		type:"post",
 		url: "<%=basePath%>servlet/SynchStaffServlet", 
-		data:$('#immedadd').serialize(), 
+		data:$('#changetime').serialize(), 
 		error: function(request) {
             document.getElementById("p2"). innerHTML = '同步失败，请重新同步';
          },
@@ -847,5 +968,49 @@ function search(){
       pagination(${staff_page});
   }
  
+ function p_s(name,address,tag,tag2,tag3){
+	var satation_search=new AMap.PlaceSearch({
+		keywords :name, //搜索关键字为“超市”的poi
+		city:'成都',
+		citylimit:true,
+		pageSize:1,
+		//panel:'panel'
+	});
+	
+	satation_search.search(name,function(status,result){
+		//for(var i=0;i<result.poiList.pois.length;i++){
+		
+			address.latitude=result.poiList.pois[0].location.lat;
+			address.longitude=result.poiList.pois[0].location.lng;
+			
+			if(tag==1)
+				addonename(address);
+			if(tag==2)
+				addone_time2(address);
+			if(tag==3){
+				
+				address.index=tag2;
+				addresslist.push(address);
+				addressindex++;
+				if(tag3.length==addressindex){
+					addexcel_manual2(tag3);
+				}
+			}
+			if(tag==4){
+				
+				address.index=tag2;
+				addresslist.push(address);
+				addressindex++;
+				if(tag3.length==addressindex){
+					addexcel_time2(tag3);
+				}
+			}
+				
+		
+			
+	});
+	
+
+}
   </script>
 </html>

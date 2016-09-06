@@ -42,6 +42,8 @@ public class BuffToStaff implements Job {
 					staff.setGroup(bstaff.getGroup());
 					staff.setName(bstaff.getName());
 					staff.setNumber(bstaff.getNumber());
+					staff.setLati(bstaff.getLati());
+					staff.setLongti(bstaff.getLongti());
 					staffList.add(staff);
 					bsdi.updateBuffStaff(bstaff, con);
 					

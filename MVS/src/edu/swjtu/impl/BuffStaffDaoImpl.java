@@ -21,6 +21,8 @@ public class BuffStaffDaoImpl implements BuffStaffDao {
 		bstaff.setNumber(rs.getString("staff_number"));
 		bstaff.setBuffFlag(rs.getInt("staff_buffflag"));
 		bstaff.setId(rs.getInt("staff_id"));
+		bstaff.setLati(rs.getDouble("staff_lati"));
+		bstaff.setLongti(rs.getDouble("staff_long"));
 		return bstaff;
 	}
 	
@@ -33,12 +35,14 @@ public class BuffStaffDaoImpl implements BuffStaffDao {
 		ps.setString(5,bstaff.getGroup());
 		ps.setString(6,bstaff.getAddress());
 		ps.setInt(7,0);
+		ps.setDouble(8,bstaff.getLati() );
+		ps.setDouble(9, bstaff.getLongti());
 	}
 	
 	@Override
 	public int addOneBuffStaff(BuffStaff bstaff, Connection con) {
 		
-		String sql = "insert into buff_staff (staff_id,staff_number,staff_name,staff_department,staff_group,staff_address,staff_buffflag) values (? , ?,?,?,?,?,?)";
+		String sql = "insert into buff_staff (staff_id,staff_number,staff_name,staff_department,staff_group,staff_address,staff_buffflag,staff_lati,staff_long) values (?,?,? , ?,?,?,?,?,?)";
 		int rs;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);
@@ -54,7 +58,7 @@ public class BuffStaffDaoImpl implements BuffStaffDao {
 	@Override
 	public int addListBuffStaff(ArrayList<BuffStaff> bstaffList, Connection con) {
 		BuffStaff bstaff = new BuffStaff();
-		String sql = "insert into buff_staff (staff_id,staff_number,staff_name,staff_department,staff_group,staff_address,staff_buffflag) values (? , ?,?,?,?,?,?)";
+		String sql = "insert into buff_staff (staff_id,staff_number,staff_name,staff_department,staff_group,staff_address,staff_buffflag,staff_lati,staff_long) values (? , ?,? , ?,?,?,?,?,?)";
 		int [] rs = null;
 		try {
 			PreparedStatement pstm = con.prepareStatement(sql);

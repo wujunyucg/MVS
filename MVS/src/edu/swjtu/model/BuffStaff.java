@@ -8,6 +8,20 @@ public class BuffStaff {
 	private String group;
 	private String address;
 	private int buffFlag;
+	private double lati;
+	private double longti;
+	public double getLati() {
+		return lati;
+	}
+	public void setLati(double lati) {
+		this.lati = lati;
+	}
+	public double getLongti() {
+		return longti;
+	}
+	public void setLongti(double longti) {
+		this.longti = longti;
+	}
 	public int getId() {
 		return id;
 	}
